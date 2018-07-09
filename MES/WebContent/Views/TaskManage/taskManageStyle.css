@@ -1,0 +1,375 @@
+/* .TM_cframe */
+/* { */
+/* 	background: #dedede; */
+/* } */
+.TM_btn_select
+{
+    width: 24%;
+    height: 645px;
+    background-color: white;
+    margin: 35px 0 0 5.2%;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 3px;
+}
+.TM_btn_select p
+{
+	color: #989898;
+	text-align: center;
+	font-size: larger;
+	padding-top: 10%;
+}
+.TM_btn_select img
+{
+    width: 50%;
+    display: block;
+    margin: 150px auto;
+}
+.TM_content_layer
+{
+	height: inherit;
+	display: none;
+}
+.TM_backBtn
+{
+    display: inline-block;
+    height: 40px;
+    cursor: pointer;
+    margin: 15px 0 0 15px;
+}
+.selectBackBtn
+{
+	margin: 0 0 10px 0;
+}
+.TM_backBtn p
+{
+	padding: 10px;
+	display: inline-block;
+	color: #989898;
+}
+.TM_backBtn img
+{
+	width:30px;
+	height:30px;
+	padding: 5px;
+	float: left;
+}
+#stationVisionHolder
+{
+	overflow: scroll;
+	overflow-x: hidden;
+	height: 90%;
+}
+.TV_stationContainer
+{
+    max-width: 23.5%;
+    min-width: 285px;
+    height: 170px;
+	margin: 15px 0 0 15px;
+	display: inline-table;
+/* 	background: #fb3157; */
+	background: #53d769;
+/* 	cursor: pointer; */
+}
+.TV_small
+{
+	width: 100%;
+	height: 35px;
+	float: left;
+/* 	background: red; */
+	
+}
+.TV_small img
+{
+    height: 32px;
+    padding: 5px 10px;
+    display: block;
+	float: left;
+}
+.TV_stationHeader p
+{
+	display: block;
+	padding: 9px 0 0 0;
+	color: white;
+	
+}
+.TV_stationContent
+{
+	height: 120px;
+	display: block;
+	float: left;
+	width: 59%;
+}
+.TV_stationContent p, .TV_stationContent input
+{
+	display: block;
+    height: 18px;
+    margin: 0 0 3px 21px;
+    border: none;
+    color: white;
+    background: none;
+}
+#TV_timerContainer
+{
+    width: 40%;
+    float: right;
+    color: white;
+    border-left: 1px solid;
+}
+#TV_timerContainer img
+{
+    height: 70px;
+    margin: 0px auto;
+    padding: 0 0 5px 0;
+    display: block;
+}
+#TV_timerContainer p
+{
+    font-size: x-large;
+
+}
+.TV_stationHeader
+{
+	margin-bottom: 10px;
+	background:none;
+}
+#stationSortHolder
+{
+	margin: 15px;
+    float: right;
+    width: 90%;
+    height: 95.5%;
+}
+.sortContDivCont
+{
+	width:102%;
+	height: 94%;
+/* 	background: black; */
+}
+.sortContDiv
+{
+    height: 98%;
+/*     background: #f3f3f3; */
+}
+.sortContDivLeft
+{
+	float: left;
+    width: 20%;
+    margin-right: 10px;
+}
+.sortContDivRight
+{
+	float: left;
+    /* margin: 0 10px; */
+    width: 77%;
+    background: white;
+}
+.tmts_stationBtnDivCont
+{
+    width: 98%;
+    height: 44px;
+	background: white;
+	border-left: 5px solid #ff6666;
+    border-bottom: 1px solid #e0e6e8;
+    background-image: url(/MES/Public/icons/computerSignGray.svg);
+    background-size: 13%;
+    background-repeat: no-repeat;
+    background-position-x: 97%;
+    background-position-y: center;
+    cursor: pointer;
+    z-index: 0;
+}
+.tmts_stationBtnDivCont:hover
+{
+/*     border: 1px solid #ff6666; */
+    background-color: #ebebeb;
+/* 	border-left: 5px solid #ff6666; */
+/* 	box-shadow: 0px 0px 15px #9e9a9a; */
+/* 	-moz-box-shadow: 0px 0px 15px #9e9a9a; */
+/*     -webkit-box-shadow: 0px 0px 15px #9e9a9a; */
+/*     z-index: 9999; */
+}
+.sortStationListCont
+{
+    height: 92%;
+    width: 100%;
+}
+.tmts_stationContainer
+{
+    overflow-y: visible;
+    overflow-x: hidden;
+    max-height: 582px;
+}
+.tmts_stationBtnDivCont input
+{
+	pointer-events:none;
+	background: transparent;
+	border:none;
+    font-size: 14px;
+    color: #888888;
+    max-width: 70%;
+    padding: 3px 0 0 7px;
+}
+.TV_stationContainer input
+{
+	pointer-events:none;
+}
+.header_p
+{
+	color: #888888;
+    padding: 15px;
+	float: left;
+}
+.cont_header
+{
+    background: #ff6666;
+    border-bottom: 1px solid #ff6666;
+	width: 100%;
+	z-index: 9999;
+	height: 50px;
+}
+.input-icon-holderDiv
+{
+	float: left;
+	height: 50px;
+/*     width: 100%; */
+}
+.input-icon-holderDiv input
+{
+    float: left;
+    font-size: medium;
+    padding: 17px 0 0 0;
+    text-align: left;
+    background: none;
+}
+.icon-form
+{
+    height: 25px;
+    margin: 13px;
+    float: left;
+}
+.dnd-icon
+{
+	width: 4.5% !important;
+}
+.ts_searchInp
+{
+	width: 0%;
+	border-bottom: 1px solid #888888;
+	transition: 0.5s;
+}
+.WSSearchIn
+{
+	color: white;
+	border-bottom: 1px solid white;
+}
+.ts-loggedName-div input
+{
+	color: white;
+}
+.sortContDiv_nav
+{
+	height: 50px;
+	width: 100%;
+	border-bottom: 1px solid #e0e6e8;
+}
+.abas-list-head, .abas-list-holder
+{
+/* 	border-right:  1px solid #e0e6e8; */
+}
+.sort-list-head
+{
+/* 	background: blue; */
+	height: 50px;
+}
+.sort-list
+{
+	float: left;
+/* 	width: 49.9%; */
+	width: 50%;
+}
+.sort-list-holder
+{
+	height: 530px;
+	background:  #efefef;
+}
+.search-icon-form
+{
+	cursor: pointer;
+}
+.ts_sumTime
+{
+	width: 85px;
+}
+.sum-holderDiv
+{
+	float: right;
+}
+.sum-holderDiv img
+{
+	margin-left: 0px;
+}
+.stationName-holderDiv input
+{
+	width: 175px;
+}
+.dnd-container
+{
+/*     margin: 0 1%; */
+	height: 50px;
+	border: 1px solid #e0e6e8;
+	border-top: none;
+	background: white;
+}
+.dnd-container:mousedown
+{
+	background: red;
+}
+.dnd-container img
+{
+	float: right;
+	cursor: pointer;
+}
+.dnd-frame
+{
+	min-height: 50px;
+    margin: 8px 2% 0 2%;
+    max-height: 515px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    overflow: -moz-scrollbars-none;
+}
+.dnd-frame::-webkit-scrollbar {
+/*     width: 0px;  remove scrollbar space */
+/*     background: transparent;  optional: just make scrollbar invisible */
+    display: none;
+}
+.dnd-input-container
+{
+	width: 87%;
+	overflow: hidden;
+	height: 150px;
+/* 	background: red; */
+}
+.dnd-input-div
+{
+    width: 30.5%;
+	display: inline-table;
+	margin: 5px 0 0 5px;
+}
+.dnd-input-div input
+{
+	padding:2px 2px 2px 0;
+	color: black;
+	font-size: medium;
+	background: none;
+	width: 100%;
+}
+.dnd-input-cont
+{
+	
+}
+.dnd-downer
+{
+	display: none;
+}

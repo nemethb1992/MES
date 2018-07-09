@@ -1,0 +1,129 @@
+@charset "UTF-8";
+* {margin: 0px; padding: 0px; outline: 0px;}
+/* # */
+/* { */
+/* } */
+
+#loginFrame
+{
+	width: 800px;
+	height: 600px;
+	margin: 10% auto;
+}
+.FrameSides
+{
+	height: 100%;
+}
+#loginRightSide
+{
+	width: 60%;
+	background: white;
+	float: right;
+    color: #878782;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+#loginLeftSide
+{
+	width: 40%;
+	float: left;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background: #ff6666;
+
+}
+#loginPicture
+{
+	margin: 25px;
+    height: 85%;
+    background: url("/MES/Public/icons/pm_logo_white.svg");
+    background-repeat: no-repeat;
+}
+#FooterName
+{
+	height: 12%;
+	font-size: 14px;
+	color: white;
+	text-align: center;
+	font-family: mediumFont;
+}
+#LR_1
+{
+	width: 100%;
+}
+#LR_1 p
+{
+    padding: 30px 0 0 55px;
+    color: #b3b3b3;
+    font-size: 32px;
+    font-family: mediumFont;
+}
+#LR_2
+{
+	height: 27%;
+	display: block;
+	width: 100%;
+	padding-top: 8%;
+}
+#LR_2 img
+{
+	display: block;
+	margin: 0 auto;
+	height: 100%;
+}
+#LR_3
+{
+	width: 100%;
+	height: 12%;
+}
+#LR_3 p
+{
+	font-size: 20px;
+    padding: 30px 0 0 70px;
+}
+#LR_form
+{
+	margin: 0 auto;
+	
+}
+.inp_login
+{
+    width: 60%; 
+	margin: 0 auto;
+	height: 50px;        
+	border-style: none;
+	font-size: 19px;
+    display: block;
+    color: #878782;
+    background: #f2f2f2;
+    padding: 0 5%;
+}
+#inp_username
+{
+    border-top-left-radius: 10px; 
+    border-top-right-radius: 10px; 
+    border-bottom: 2px solid #e0e0e0;
+}
+#inp_pass
+{
+    border-bottom-left-radius: 10px; 
+    border-bottom-right-radius: 10px; 
+}
+#inp_enterbutton
+{
+
+    margin: 10px auto 0 auto;
+    height: 65px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.2s;
+    border-radius: 10px; 
+    text-align: center;
+    transition: 0.2s;
+    width: 70%; 
+}
+#inp_enterbutton:hover
+{
+    background: #ff6666;
+    color: white;
+}
+

@@ -1,0 +1,256 @@
+@charset "UTF-8";
+
+#leftwrap
+{
+	height: 100%;
+	width: 7%;
+    background: #ff6666;
+    float: left;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    text-align: center;
+    color: white;
+}
+#leftwrapImg
+{
+	height: 9%;
+	width: 100%;
+	display: block;
+    background: url("/MES/Public/icons/pm_logo_mini_white.svg");
+    background-repeat: no-repeat;
+    background-size: 70%;
+    background-position: center;
+}
+#content
+{
+	height: 100%;
+	background: white;
+	float: right;
+	width: 92%;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+#contentFrame
+{
+	height: 100%;
+	width: 93%;
+    border-radius: 5px;
+    background: white;
+    display: inline-block;
+}
+#contentHeader
+{
+	height: 20%;
+    padding: 18px;
+}
+#navigationContainer
+{
+	background: none !important;
+}
+#contentContainer
+{
+    height: 72.5%;
+/*     background: #f0f0f0; */
+    padding: 0 18px;
+}
+
+#timerContainer
+{
+	background: #00e68a;
+	z-index: 9999;
+}
+#timerContainer img
+{
+    height: 60px;
+    margin: 0px auto;
+    padding: 16px;
+    display: block;
+}
+#timerP
+{
+	color: white;
+	font-size: 32px;
+	text-align: center;
+	width: 100%;
+}
+.btn_navHeader
+{
+	height: 100%;
+	width: 300px;
+    background: #f5f5f5;
+    transition: 0.1s;
+}
+#btn_lejelentes
+{
+	float: left;
+    border-right: 1px solid #dedede;
+}
+#btn_megszakitas
+{
+	float: right;
+    border-left: 1px solid #dedede;
+}
+.inputContainer
+{
+	width: 29.95%;
+    min-width: 29%;
+    height: 75px;
+    margin: 5px 1.45%;
+    display: inline-block;
+    color: #989898;
+    background: white;
+}
+.inputContainer p
+{
+    height: 20px;
+    padding: 5px 0 0 5px;
+    
+}
+.inputContainer input
+{
+	width: 100%;
+	height: 61%;
+	border:none;
+	text-align: center;
+	font-size: larger;
+	font-family: lightFont;
+}
+.btn_leftNavigation
+{
+    width: auto;
+    height: 22.6%;
+    border-bottom: 1px solid #dedede;
+    color: #989898;
+    text-align: center;
+    background-repeat: no-repeat;
+    background-size: 25%;
+    background-position: center;
+    padding-top: 12px;
+    cursor: pointer;
+}
+.rightSide
+{
+    height: 100%;
+/*     min-width: 760px; */
+    min-width: 714px;
+    width: 79.7%;
+    float: left;
+    background: #f5f5f5;
+}
+.leftSide
+{
+	height: 100%;
+	min-width: 180px;
+	width: 20%;
+	float: left;
+	z-index: 0;
+}
+.btn_leftNavigation:hover
+{
+	background-color: #e6e6e6;
+}
+#btn_leftNav_1 {background-image: url("/MES/Public/icons/TV_btn_nav1.svg");}
+#btn_leftNav_2 {background-image: url("/MES/Public/icons/TV_btn_nav2.svg");}
+#btn_leftNav_3 {background-image: url("/MES/Public/icons/TV_btn_nav3.svg");}
+#btn_leftNav_4 {background-image: url("/MES/Public/icons/TV_btn_nav4.svg");}
+
+.rightCont
+{
+	height: 100%;
+	display: none;
+}
+#documentContainer
+{
+	width: 97%;
+	height: 95%;
+	background: white;
+}
+#documentFrame
+{
+	width: 100%;
+    overflow-x: hidden;
+    overflow-y: visible;
+    max-height: 450px;
+}
+#documentContainer p
+{
+	height:4%;
+	border-bottom: 1px solid #dedede;
+}
+.documentBlock
+{
+	width: auto;
+	height: 75px;
+	padding: 5px;
+	margin: 15px 8px 8px 15px;
+	border: 1px solid #e6e6e6;
+}
+.BigTextInput
+{
+    width: 96.6%;
+    height: 31%;
+}
+.BigTextInput textarea
+{
+    text-align: left;
+    word-wrap: break-word;
+    font-family: lightFont;
+    width: 97.5%;
+    border: none;
+    height: 135px;
+    resize: none;
+    font-size: larger;
+    padding: 0 1%;
+}
+.tab4_element
+{
+	width: 96.8%;
+	height: 48%;
+}
+.tab4_element textarea
+{
+	height: 220px;
+}
+#tab3_container
+{
+	padding: 5px 15px;
+}
+#tab3_table
+{
+	width: 100%;
+	height: 95%;
+}
+#tab3_table tbody
+{
+	background: white;
+	overflow: scroll;
+	overflow-x: hidden;
+}
+#tab3_table tr
+{
+	width: auto;
+	height: 32px;
+}
+#tab3_table th
+{
+	width: auto;
+	height: 40px;
+}
+#tab3_table td
+{
+	width: auto;
+}
+.navBtnInside_element
+{
+    width: 80%;
+    height: 20%;
+    display: block;
+    margin: 14px auto;
+    font-size: larger;
+    padding: 10px;
+    text-align: center;
+}
+.number_Input
+{
+    display: none;
+}
