@@ -1,5 +1,5 @@
 <%@include  file="/Views/Header.jsp"%>  
-	<div id='container' class='container'>
+	<div id='container' class='mycontainer'>
 		<div id='leftwrap'>
 			<div id='leftwrapImg'>
 			</div>

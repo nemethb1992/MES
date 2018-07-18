@@ -5,20 +5,24 @@ $(document).ready(function(){
 })
 
 function buttonEventHolderLogin()
-{
+{	
 	$('#inp_enterbutton').click(function(){
-//		loginEnter();
+		loginEnter();
 	})
 }
 
 function loginEnter()
 {
 	$.ajax({
-	    url:  '/' + path +'/Login',
+	    url:  '/MES/Login',
 	    data: {
 	    },
 	    success: function () {
-	    	$('#LR_form').submit();
+
+	    	  $( "#LR_form" ).submit();
+//	    		  console.log(result);
+	    	
 	    }
 	});
 }
+
