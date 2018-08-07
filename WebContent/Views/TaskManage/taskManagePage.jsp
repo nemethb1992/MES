@@ -5,7 +5,9 @@
 			</div>
 			<p>Menu</p>
 			<div class='sideMenuContainer'></div>
-			<div class='btn_logout'></div>
+			<form method='POST' action='${pageContext.request.contextPath}/Home'>
+			<input class='btn_logout' type='submit' value=''></input>
+			</form>
 		</div>
 			<div id='TM_Select_container_activity' class='TM_content_layer'>
 				<%@include  file="/Views/TaskManage/PageElements/activitySelect.jsp"%> 

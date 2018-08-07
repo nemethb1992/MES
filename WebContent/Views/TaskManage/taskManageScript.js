@@ -4,15 +4,28 @@ $(document).ready(function(){
 	ButtonScriptElements();
 	dnd_sortlist_scripts();
 	collect_list_ws();
+	
 });
 
 function TM_startUp()
 {
-	$('#TM_Select_container_activity').show();
-	for(i=0;i<5;i++)
-	{
-		$('.tmts_stationContainer').append("<div class='tmts_stationBtnDivCont'><input disabled class='si1'value='Station name "+i+"'><input disabled class='si3' value='Feladatok: 12'></div>");
-	}
+$('#TM_Select_container_activity').show();
+//	for(i=0;i<5;i++)
+//	{
+//		$('.tmts_stationContainer').append("<div class='tmts_stationBtnDivCont'><input disabled class='si1'value='Station name "+i+"'><input disabled class='si3' value='Feladatok: 12'></div>");
+//	}
+		
+		$.ajax({
+		    url:  '/MES/BuildUp',
+		    success: function (respond) {
+		    	
+		    	  $( ".tmts_stationContainer" ).append(respond[0]);
+		    	  $( ".dndf1" ).append(respond[1]);
+		    	  $( ".dndf2" ).append(respond[2]);
+//		    		  console.log(result);
+		    	
+		    }
+		});
 }
 function ButtonScriptElements()
 {
@@ -54,6 +67,7 @@ function ButtonScriptElements()
     $('.WSSearchImg').click(function(){
     	$('.WSSearchIn').focus();
     });
+
 }
 function dnd_sortlist_scripts()
 {
@@ -99,4 +113,18 @@ function collect_list_ws()
 			$('.appended-text').remove();
 		}
 	console.log(list);
+}
+function Station_Select(item)
+{
+	var station = $(item).attr("value");
+	$.ajax({
+	    url:  '/MES/Dashboard',
+	    data: {
+	     station: station,
+	     pass: $("#inp_pass").val()
+	    },
+	    success: function () {
+	    	
+	    }
+	});
 }

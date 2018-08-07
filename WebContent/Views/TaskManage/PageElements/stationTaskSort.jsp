@@ -39,7 +39,8 @@
 				
 				
 				
-				<div class='dnd-container'><img class='icon-form dnd-icon' src='${pageContext.request.contextPath}/Public/icons/listRowsGray.svg'>
+
+								<div class='dnd-container' value='3' onClick='Station_Select(this)'><div class='icon-form dnd-icon pass-item'></div>
 					<div class='dnd-input-container'>
 						<div class='dnd-upper'>
 							<div class='dnd-input-div'>
@@ -71,70 +72,7 @@
 						</div>
 					</div>
 				</div>
-								<div class='dnd-container'><img class='icon-form dnd-icon' src='${pageContext.request.contextPath}/Public/icons/listRowsGray.svg'>
-					<div class='dnd-input-container'>
-						<div class='dnd-upper'>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in1' value='input value'>
-							</div>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in2' value='input value'>
-							</div>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in3' value='input value'>
-							</div>
-						</div>
-						<div class='dnd-downer'>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in4' value='input value'>
-							</div>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in5' value='input value'>
-							</div>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in6' value='input value'>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class='dnd-container'><img class='icon-form dnd-icon' src='${pageContext.request.contextPath}/Public/icons/listRowsGray.svg'>
-					<div class='dnd-input-container'>
-						<div class='dnd-upper'>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in1' value='input value'>
-							</div>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in2' value='input value'>
-							</div>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in3' value='input value'>
-							</div>
-						</div>
-						<div class='dnd-downer'>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in4' value='input value'>
-							</div>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in5' value='input value'>
-							</div>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in6' value='input value'>
-							</div>
-						</div>
-					</div>
-				</div>
+	
 				
 
 				
@@ -148,38 +86,38 @@
 				
 				
 				
-				<div class='dnd-container'><img class='icon-form dnd-icon' src='${pageContext.request.contextPath}/Public/icons/listRowsGray.svg'>
-					<div class='dnd-input-container'>
-						<div class='dnd-upper'>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in1' value='input value'>
-							</div>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in2' value='input value'>
-							</div>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in3' value='input value'>
-							</div>
-						</div>
-						<div class='dnd-downer'>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in4' value='input value'>
-							</div>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in5' value='input value'>
-							</div>
-							<div class='dnd-input-div'>
-								<p>Input neve</p>
-								<input disabled class='dnd-input dnd-in6' value='input value'>
-							</div>
-						</div>
-					</div>
-				</div>
+<%-- 				<div class='dnd-container'><img class='icon-form dnd-icon' src='${pageContext.request.contextPath}/Public/icons/listRowsGray.svg'> --%>
+<!-- 					<div class='dnd-input-container'> -->
+<!-- 						<div class='dnd-upper'> -->
+<!-- 							<div class='dnd-input-div'> -->
+<!-- 								<p>Input neve</p> -->
+<!-- 								<input disabled class='dnd-input dnd-in1' value='input value'> -->
+<!-- 							</div> -->
+<!-- 							<div class='dnd-input-div'> -->
+<!-- 								<p>Input neve</p> -->
+<!-- 								<input disabled class='dnd-input dnd-in2' value='input value'> -->
+<!-- 							</div> -->
+<!-- 							<div class='dnd-input-div'> -->
+<!-- 								<p>Input neve</p> -->
+<!-- 								<input disabled class='dnd-input dnd-in3' value='input value'> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 						<div class='dnd-downer'> -->
+<!-- 							<div class='dnd-input-div'> -->
+<!-- 								<p>Input neve</p> -->
+<!-- 								<input disabled class='dnd-input dnd-in4' value='input value'> -->
+<!-- 							</div> -->
+<!-- 							<div class='dnd-input-div'> -->
+<!-- 								<p>Input neve</p> -->
+<!-- 								<input disabled class='dnd-input dnd-in5' value='input value'> -->
+<!-- 							</div> -->
+<!-- 							<div class='dnd-input-div'> -->
+<!-- 								<p>Input neve</p> -->
+<!-- 								<input disabled class='dnd-input dnd-in6' value='input value'> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 				
 				
 				

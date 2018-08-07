@@ -4,6 +4,10 @@
 			<div id='leftwrapImg'>
 			</div>
 			<p>Menu</p>
+			<div class='sideMenuContainer'></div>
+						<form method='POST' action='${pageContext.request.contextPath}/Home'>
+			<input class='btn_logout' type='submit' value=''></input>
+			</form>
 		</div>
 		<div id='contentFrame'>
 			<div id='contentHeader'>
@@ -13,34 +17,34 @@
 				</div>
 				<div id='navigationContainer' class='cc_element rightSide'>
 					<div id='btn_lejelentes' class='btn_navHeader'>
-					<p class='navBtnInside_element'>Lejent√©s</p>
-					<input class='number_Input navBtnInside_element' type='number'/>
+					<p class='navBtnInside_element'>LejentÈs</p>
+					<input class='number_Input navBtnInside_element' id=submit_input type='number'/>
 					</div>
 					<div id='btn_megszakitas' class='btn_navHeader'>
-					<p class='navBtnInside_element'>Megszak√≠t√°s</p>
+					<p class='navBtnInside_element'>MegszakÌt·s</p>
 					<input class='number_Input navBtnInside_element' type='number'/>
 					</div>
 				</div>
 			</div>
 			<div id='contentContainer'>
 				<div id='cc_leftNav' class='cc_element leftSide'>
-					<div id='btn_leftNav_1' class='btn_leftNavigation'>Azonos√≠t√≥k</div>
+					<div id='btn_leftNav_1' class='btn_leftNavigation'>AzonosÌtÛk</div>
 					<div id='btn_leftNav_2' class='btn_leftNavigation'>Dokumentumok</div>
-					<div id='btn_leftNav_3' class='btn_leftNavigation'>Darabjegyz√©k</div>
-					<div id='btn_leftNav_4' class='btn_leftNavigation'>Rendel√©si info</div>
+					<div id='btn_leftNav_3' class='btn_leftNavigation'>DarabjegyzÈk</div>
+					<div id='btn_leftNav_4' class='btn_leftNavigation'>RendelÈsi info</div>
 				</div>
 				<div id='cc_rightContent' class='cc_element rightSide'>
 					<div id='tab1_container' class='rightCont'>
-						<%@include  file="/Views/TaskView/PageElements/tab1.jsp"%> 
+<%-- 						<%@include  file="/Views/TaskView/PageElements/tab1.jsp"%>  --%>
 					</div>
 					<div id='tab2_container' class='rightCont'>
-						<%@include  file="/Views/TaskView/PageElements/tab2.jsp"%> 
+<%-- 						<%@include  file="/Views/TaskView/PageElements/tab2.jsp"%>  --%>
 					</div>
 					<div id='tab3_container' class='rightCont'>
-						<%@include  file="/Views/TaskView/PageElements/tab3.jsp"%> 
+<%-- 						<%@include  file="/Views/TaskView/PageElements/tab3.jsp"%>  --%>
 					</div>
 					<div id='tab4_container' class='rightCont'>
-						<%@include  file="/Views/TaskView/PageElements/tab4.jsp"%> 
+<%-- 						<%@include  file="/Views/TaskView/PageElements/tab4.jsp"%>  --%>
 					</div>					
 				</div>
 

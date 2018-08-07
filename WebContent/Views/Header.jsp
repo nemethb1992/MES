@@ -6,6 +6,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <script src="${pageContext.request.contextPath}/Public/js/jquery-3.2.1.js"></script>
         <script src="${pageContext.request.contextPath}/Public/js/jquery_cookie.js"></script>
+<%--         <script src="${pageContext.request.contextPath}/Views/TaskView/taskViewScript.js"></script> --%>
+<%--         <script src="${pageContext.request.contextPath}/Views/Login/loginScript.js"></script> --%>
+<%--         <script src="${pageContext.request.contextPath}/Views/TaskManage/taskManageScript.js"></script> --%>
     <link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/Public/icons/pm_logo_mini.ico"/>
         <style>
 <%--     <%@ include file="/Public/css/bootstrap.min.css"%> --%>
@@ -15,7 +18,7 @@
     <%@ include file="/Views/TaskManage/taskManageStyle.css"%>
     </style>
 
-    <script src="${pageContext.request.contextPath}/Views/Login/loginScript.js">
+    <script>
         <%@ include file="/Views/Login/loginScript.js"%>
         <%@ include file="/Views/TaskView/taskViewScript.js"%>
         <%@ include file="/Views/TaskManage/taskManageScript.js"%>

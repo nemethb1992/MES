@@ -13,13 +13,15 @@ function buttonEventHolderLogin()
 
 function loginEnter()
 {
+	
 	$.ajax({
-	    url:  '/MES/Login',
+	    url:  '/MES/Dashboard',
 	    data: {
+	     username: $("#inp_username").val(),
+	     pass: $("#inp_pass").val()
 	    },
 	    success: function () {
-
-	    	  $( "#LR_form" ).submit();
+//	    	  $( "#LR_form" ).submit();
 //	    		  console.log(result);
 	    	
 	    }

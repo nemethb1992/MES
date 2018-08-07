@@ -1,4 +1,4 @@
-package loginPackage;
+package Dashboard;
 
 import java.util.Hashtable;
 

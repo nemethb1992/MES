@@ -11,7 +11,7 @@
        				<div id='LR_1'><p id='p_loginName'></p></div>
        				<div id='LR_2'><img src='${pageContext.request.contextPath}/Public/icons/padlock.svg'></div>
        				<div id='LR_3'><p>Bejelentkezés:</p></div>
-       				<form id='LR_form' method='post' action='${pageContext.request.contextPath}/Login'>
+       				<form id='LR_form' method='POST' action='${pageContext.request.contextPath}/Dashboard'>
        				<input class='inp_login'  id='inp_username' type='text' Value=''>
        				<input class='inp_login' id='inp_pass' type='text'>
        				<input class='inp_login' id='inp_enterbutton' type='submit' value='Tovább'>
