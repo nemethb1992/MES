@@ -47,7 +47,7 @@ public class BuildUp extends HttpServlet {
     	int itemCount_li3 = li3.size();
     	ArrayList<String> layouts = new ArrayList<String>();
     	for (int i = 0; i < itemCount_li1; i++) {
-    		station += "<div class='tmts_stationBtnDivCont'><input disabled class='si1'value='Station name "+li1.get(i)+"'><input disabled class='si3' value='Feladatok: 12'></div>";
+    		station += "<div class='tmts_stationBtnDivCont'><input disabled class='si1'value='"+li1.get(i)+"'></div>";
     	}
       	for (int i = 0; i < itemCount_li2; i++) {
       		leftList += "			<div class='dnd-container' value='3' onClick='Station_Select(this)'><div class='icon-form dnd-icon pass-item'></div>\r\n" + 
@@ -117,9 +117,7 @@ public class BuildUp extends HttpServlet {
       				"					</div>\r\n" + 
       				"				</div>";
       	}
-      	System.out.println(station);
-      	System.out.println(leftList);
-      	System.out.println(rightList);
+
     	layouts.add(station);
     	layouts.add(leftList);
     	layouts.add(rightList);

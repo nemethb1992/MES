@@ -1,6 +1,7 @@
 package Operator;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -10,47 +11,63 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import Database.dbEntities;
+import Session.Session_Datas;
+import de.abas.ceks.jedp.EDPException;
+import de.abas.erp.common.ConnectionProperties;
+import de.abas.erp.common.DefaultCredentialsProvider;
+import de.abas.erp.common.type.IdImpl;
+import de.abas.erp.common.type.enums.EnumLanguageCode;
+import de.abas.erp.db.DbContext;
+import de.abas.erp.db.schema.part.Product;
+import de.abas.erp.db.util.ContextHelper;
+import phoenix.mes.abas.ObjectFactory;
+
 
 public class DataSheet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+	Session_Datas sess = new Session_Datas();
+	
     public DataSheet() {
         super();
     }
     
     	// TODO Azonosítani az aktuális gépet.
-    private ArrayList<String> DataSheet_Layout()
+    private ArrayList<String> DataSheet_Layout(String test)
     {
+
+           
     	ArrayList<String> li = new ArrayList<String>();
     	li.add("proba");
     	ArrayList<String> layouts = new ArrayList<String>();
     	// Tab 1
     	layouts.add("<div class='inputContainer cc_element'>\r\n" + 
-    						"	<p>Cikkszám</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
+    						"	<p>Munkaállomás</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
+    						"<div class='inputContainer cc_element'>\r\n" + 
+    						"	<p>Munkalapszám</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
     						"<div class='inputContainer cc_element'>\r\n" + 
     						"	<p>Cikkszám</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
     						"<div class='inputContainer cc_element'>\r\n" + 
-    						"	<p>Cikkszám</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
+    						"	<p>Keresőszó</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
     						"<div class='inputContainer cc_element'>\r\n" + 
-    						"	<p>Cikkszám</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
+    						"	<p>Megnevezés</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
     						"<div class='inputContainer cc_element'>\r\n" + 
-    						"	<p>Cikkszám</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
+    						"	<p>Felhasználás</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
     						"<div class='inputContainer cc_element'>\r\n" + 
-    						"	<p>Cikkszám</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
+    						"	<p>Művleti azonosító</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
     						"<div class='inputContainer cc_element'>\r\n" + 
-    						"	<p>Cikkszám</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
+    						"	<p>Keresőszó</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
     						"<div class='inputContainer cc_element'>\r\n" + 
-    						"	<p>Cikkszám</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
+    						"	<p>Megnevezés</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
     						"<div class='inputContainer cc_element'>\r\n" + 
-    						"	<p>Cikkszám</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
+    						"	<p>Beállítási idő</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
     						"<div class='inputContainer cc_element'>\r\n" + 
-    						"	<p>Cikkszám</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
+    						"	<p>Darabidő</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
     						"<div class='inputContainer cc_element'>\r\n" + 
-    						"	<p>Cikkszám</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
-    						"<div class='inputContainer cc_element'>\r\n" + 
-    						"	<p>Cikkszám</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
+    						"	<p>Nyitott mennyiség</p><input type='text' value='"+li.get(0)+"'/></div>\r\n" + 
     						"<div class='inputContainer BigTextInput cc_element'>\r\n" + 
-    						"	<p>Cikkszám</p><textarea>"+li.get(0)+"</textarea></div>");
+    						"	<p>Gyártási információ</p><textarea>"+li.get(0)+"</textarea></div>");
     	
     	// Tab 2
     	layouts.add("<div id='documentContainer' class='inputContainer cc_element'>\r\n" + 
@@ -71,10 +88,10 @@ public class DataSheet extends HttpServlet {
     	layouts.add("<table class=\"table cc_element\" id=\"tab3_table\">\r\n" + 
     			"		<tr>\r\n" + 
     			"			<th id=\"th_1\">Cikkszám</th>\r\n" + 
-    			"			<th id=\"th_2\">Keresöszó</th> \r\n" + 
-    			"			<th id=\"th_3\">Megnevezés</th>\r\n" + 
-    			"			<th id=\"th_4\">Megnevezés</th>\r\n" + 
-    			"			<th id=\"th_5\">Beépítendö menny.</th>\r\n" + 
+    			"			<th id=\"th_2\">Kereszőszó</th> \r\n" + 
+    			"			<th id=\"th_3\">Megnevezés 1</th>\r\n" + 
+    			"			<th id=\"th_4\">Megnevezés 2</th>\r\n" + 
+    			"			<th id=\"th_5\">Beépülő menny.</th>\r\n" + 
     			"		</tr>\r\n" + 
     			"	<tbody>\r\n" + 
     			"\r\n" + 
@@ -89,16 +106,33 @@ public class DataSheet extends HttpServlet {
     			"</table>");
     	// Tab 4
     	layouts.add("<div class='tab4_element inputContainer BigTextInput cc_element'>\r\n" + 
-    			"	<p>Szöveg 1</p><textarea>BigTextInputBigTextInputBigTextInputBigTextInputTextInputBigTextInputBigTextInputBigTextInpTextInputBigTextInputBigTextInputBigTextInpTextInputBigTextInputBigTextInputBigTextInpTextInputBigTextInputBigTextInputBigTextInpTextInputBigTextInputBigTextInputBigTextInpTextInputBigTextInputBigTextInputBigTextInpTextInputBigTextInputBigTextInputBigTextInpTextInputBigTextInputBigTextInputBigTextInpBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInput</textarea></div>\r\n" + 
+    			"	<p>Szöveg 1</p><textarea></textarea></div>\r\n" + 
     			"<div class='tab4_element inputContainer BigTextInput cc_element'>\r\n" + 
-    			"	<p>Szöveg 2</p><textarea>BigTextInputBigTextInputBigTextInputBigTextInputTextInputBigTextInputBigTextInputBigTextInpTextInputBigTextInputBigTextInputBigTextInpTextInputBigTextInputBigTextInputBigTextInpTextInputBigTextInputBigTextInputBigTextInpTextInputBigTextInputBigTextInputBigTextInpTextInputBigTextInputBigTextInputBigTextInpTextInputBigTextInputBigTextInputBigTextInpTextInputBigTextInputBigTextInputBigTextInpBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInputBigTextInput</textarea></div>\r\n" + 
+    			"	<p>Szöveg 2</p><textarea></textarea></div>\r\n" + 
     			"	");
+    	layouts.add(test);
     	return layouts;
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String data = "nem";
+   		final ConnectionProperties connectionProperties = new ConnectionProperties("abasdb.pmhu.local", ConnectionProperties.DEFAULT_EDP_PORT, "/mes".equals("/dmes") ? "pmk" : "dpmk", "MES");
+   		DbContext abasSession;
+		try {
+			abasSession = ObjectFactory.startAbasSession(Session_Datas.getUsername(), Session_Datas.getPassword(), EnumLanguageCode.Hungarian, true);
+	        final String testText = abasSession.load(Product.class, IdImpl.valueOf("(1620705,2,0)")).getDescr();
+	        data = testText;
+		} catch (EDPException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+// ArrayList li = dbE.SQLQueryRead();
+// for(int i = 0; i < li.size(); i++)
+// {
+// 	System.out.println(li.get(i));
+// }
 		
-		
-	    String json = new Gson().toJson(DataSheet_Layout());
+	    String json = new Gson().toJson(DataSheet_Layout(data));
 	    response.setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");
 	    response.getWriter().write(json);

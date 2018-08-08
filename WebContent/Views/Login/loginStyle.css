@@ -3,7 +3,13 @@
 /* # */
 /* { */
 /* } */
-
+#loginPicture
+{
+	margin: 25px;
+    height: 85%;
+    background: url("/MES/Public/icons/pm_logo_white.svg");
+    background-repeat: no-repeat;
+}
 #loginFrame
 {
 	width: 800px;
@@ -32,13 +38,7 @@
     background: #ff6666;
 
 }
-#loginPicture
-{
-	margin: 25px;
-    height: 85%;
-    background: url("/MES/Public/icons/pm_logo_white.svg");
-    background-repeat: no-repeat;
-}
+
 #FooterName
 {
 	height: 12%;

@@ -6,7 +6,20 @@ $(document).ready(function(){
 	collect_list_ws();
 	
 });
-
+function Station_Select(item)
+{
+	var station = $(item).attr("value");
+	$.ajax({
+	    url:  '/MES/Dashboard',
+	    data: {
+	     station: station,
+	     pass: $("#inp_pass").val()
+	    },
+	    success: function () {
+	    	
+	    }
+	});
+}
 function TM_startUp()
 {
 $('#TM_Select_container_activity').show();
@@ -113,18 +126,4 @@ function collect_list_ws()
 			$('.appended-text').remove();
 		}
 	console.log(list);
-}
-function Station_Select(item)
-{
-	var station = $(item).attr("value");
-	$.ajax({
-	    url:  '/MES/Dashboard',
-	    data: {
-	     station: station,
-	     pass: $("#inp_pass").val()
-	    },
-	    success: function () {
-	    	
-	    }
-	});
 }

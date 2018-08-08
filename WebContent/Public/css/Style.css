@@ -8,7 +8,17 @@
     font-family: lightFont;
     src: url("/MES/Public/fonts/Montserrat-Light.ttf");
 }
-
+.btn_logout
+{
+    width: 100%;
+    height: 70px;
+    background: url(/MES/Public/icons/logout.svg);
+    background-repeat: no-repeat;
+    background-size: 33%;
+    background-position: center;
+    border-bottom-left-radius: 5px;
+    cursor: pointer;
+}
 input
 {
 	font-family: lightFont;
@@ -70,17 +80,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff796d', end
     width: auto;
     height: 74%;
 }
-.btn_logout
-{
-    width: 100%;
-    height: 70px;
-    background: url(/MES/Public/icons/logout.svg);
-    background-repeat: no-repeat;
-    background-size: 33%;
-    background-position: center;
-    border-bottom-left-radius: 5px;
-    cursor: pointer;
-}
+
 #leftwrap P
 {
 	padding-top: 32%;

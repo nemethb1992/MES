@@ -8,6 +8,8 @@
 		<div class='input-icon-holderDiv'><img class='icon-form search-icon-form WSSearchImg' src='${pageContext.request.contextPath}/Public/icons/searchSignWhite.svg'><input class='ts_searchInp WSSearchIn' value=''></div>
 	</div>
 <div class='tmts_stationContainer'>
+
+				<div class='tmts_stationBtnDivCont'><input disabled class='si1'value='Név'></div>
 <!-- 	<div class='tmts_stationBtnDivCont'> -->
 <!-- 		<p class='si1'>Állomás neve</p> -->
 <!-- 		<p class='si3'>Feladatok: 12</p> -->
@@ -35,7 +37,6 @@
 		<div class='sortContDiv_ListHolder'>
 			<div class='abas-list-holder sort-list-holder sort-list'>
 				<div class='dnd-frame very-light-shadow dndf1'>
-				
 				
 				
 				

@@ -28,4 +28,16 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>Controllers_abasfe</name>
+			<type>2</type>
+			<location>//ABASFE.PMHU.LOCAL/dmes/Controllers</location>
+		</link>
+		<link>
+			<name>src_abasfe</name>
+			<type>2</type>
+			<location>//ABASFE.PMHU.LOCAL/dmes/src</location>
+		</link>
+	</linkedResources>
 </projectDescription>
