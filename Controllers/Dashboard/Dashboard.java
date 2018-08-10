@@ -33,15 +33,16 @@ public class Dashboard extends HttpServlet {
        Session_Datas sess = new Session_Datas();
        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
    		//request.setAttribute("books", bookRepo.listBooks());
+
     	   username = request.getParameter("username");
     	   pass = request.getParameter("pass");
-    	   Session_Datas.setUsername(username);
-    	   Session_Datas.setPassword(pass);
     	   layout = Integer.parseInt(request.getParameter("layout"));
    	}
        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-    
+    	   Session_Datas.setUsername(username);
+    	   Session_Datas.setPassword(pass);
+
     if(ac.activeDirectoryConn(username, pass))
     {
     	if(layout == 1)

@@ -71,7 +71,7 @@ public final class ObjectFactory {
 	 * @see de.abas.erp.db.internal.impl.jedp.MyJOISession#setPropertiesAndFlags(EDPSession)
 	 */
 	protected static void setEDPSessionProperties(EDPSession edpSession) throws EDPException {
-		edpSession.setDisplayMode(EDPSession.DISPLAYMODE_OPERATING);
+		edpSession.setDisplayMode(EDPSession.DISPLAYMODE_UNIVERSAL);
 		edpSession.enableLongLockMessages(true);
 		edpSession.enableNotes(true);
 		edpSession.enableTextMessages(true);

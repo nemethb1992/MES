@@ -6,8 +6,26 @@
 {
 	float: right;
 	cursor: pointer;
-    background-image: url(/MES/Public/icons/listRowsGray.svg);
-     background-size: 100%;
+    background-image: url(/MES/Public/icons/share-task.svg);
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.pass-item-remove
+{
+    background-image: url(/MES/Public/icons/remove-task.svg);
+    background-size: 60%;
+}
+.refresh_btn
+{
+    
+    height: 100%;
+    width: 50px;
+    float: right;
+    background-image: url(/MES/Public/icons/reload.svg);
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 .tmts_stationBtnDivCont
 {
@@ -336,13 +354,13 @@
 
 .dnd-frame
 {
-	min-height: 50px;
     margin: 8px 2% 0 2%;
     max-height: 515px;
     overflow-y: scroll;
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
 }
+
 .dnd-frame::-webkit-scrollbar {
 /*     width: 0px;  remove scrollbar space */
 /*     background: transparent;  optional: just make scrollbar invisible */

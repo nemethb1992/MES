@@ -16,9 +16,11 @@ import de.abas.erp.db.DatabaseIterator;
 import de.abas.erp.db.DbContext;
 import de.abas.erp.db.FieldSet;
 import de.abas.erp.db.Query;
+import de.abas.erp.db.field.TypedField;
 import de.abas.erp.db.schema.capacity.WorkCenter;
 import de.abas.erp.db.schema.materialsallocation.MaterialsAllocation;
 import de.abas.erp.db.schema.purchasing.Reservations;
+import de.abas.erp.db.schema.purchasing.SelectablePurchasing;
 import de.abas.erp.db.schema.workorder.WorkOrders;
 import de.abas.erp.db.selection.Conditions;
 import de.abas.erp.db.selection.Order;
@@ -29,7 +31,9 @@ import java.io.ObjectStreamException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Gyártási munkaállomás osztálya, AJO-ban implementálva.
@@ -114,7 +118,24 @@ public class WorkStationAjoImpl implements WorkStation {
 		 */
 		protected DatabaseIterator<WorkOrders> createWorkSlipIterator(SelectionBuilder<WorkOrders> selectionCriteria) {
 			final Query<WorkOrders> query = abasSession.createQuery(selectionCriteria.build());
-			query.setFields(FieldSet.of(Collections.singleton(WorkOrders.META.lastReservation)));
+			final Set<TypedField<? super WorkOrders>> fields = new HashSet<>(19);
+			// @see phoenix.mes.abas.TaskAjoImpl#getStartDate(DbContext)
+			fields.add(WorkOrders.META.startDateDay);
+			// @see phoenix.mes.abas.TaskAjoImpl.DetailsAjoImpl#loadDataFromWorkSlip()
+			fields.add(WorkOrders.META.idno);
+			fields.add(WorkOrders.META.usage);
+			fields.add(WorkOrders.META.setupTimeUnit);
+			fields.add(WorkOrders.META.setupTime);
+			fields.add(WorkOrders.META.setupTimeSec);
+			fields.add(WorkOrders.META.timeUnit);
+			fields.add(WorkOrders.META.timeLimUnit);
+			fields.add(WorkOrders.META.unitTimeSec);
+			fields.add(WorkOrders.META.elemQty);
+			fields.add(WorkOrders.META.unitQty);
+			fields.add(WorkOrders.META.product);
+			fields.add(WorkOrders.META.seriesOfOperations);
+			fields.add(WorkOrders.META.lastReservation);
+			query.setFields(FieldSet.of(fields));
 			query.setLazyLoad(false);
 			return query.iterator();
 		}
@@ -124,7 +145,8 @@ public class WorkStationAjoImpl implements WorkStation {
 		 * @return A munkalap végrehajtható, azaz nem anyaghiányos és az előző munkalap készre van jelentve?
 		 */
 		public boolean isExecutableWorkSlip(WorkOrders workSlip) {
-			Reservations reservation = (Reservations)workSlip.getLastReservation();
+abasSession.out().println("isExecutableWorkSlip()");
+			Reservations reservation = getReservation((Reservations)workSlip.getLastReservation());
 			if (isCompletedReservation(reservation)) {
 				return false;
 			}
@@ -149,6 +171,28 @@ public class WorkStationAjoImpl implements WorkStation {
 				}
 			}
 			return true;
+		}
+
+		private Reservations getReservation(Reservations reservationId) {
+			final SelectionBuilder<Reservations> criteria = SelectionBuilder.create(Reservations.class);
+			criteria.add(Conditions.eq(Reservations.META.id, reservationId));
+			final Query<Reservations> query = abasSession.createQuery(criteria.build());
+// TODO Mezők száma
+			final Set<TypedField<? super Reservations>> fields = new HashSet<>();
+			fields.add(Reservations.META.outstDelQty);
+			fields.add(Reservations.META.prevResSameLev);
+			fields.add(Reservations.META.scheduled);
+			fields.add(Reservations.META.elemType);
+			fields.add(Reservations.META.workSlip);
+			fields.add(Reservations.META.provMatTransition);
+			fields.add(Reservations.META.unitQty);
+			//fields.add(Reservations.META.itemText.getName());
+			query.setFields(FieldSet.of(fields));
+			query.setLazyLoad(false);
+			final DatabaseIterator<Reservations> reservationIterator = query.iterator();
+			final Reservations reservation = reservationIterator.next();
+			reservationIterator.close();
+			return reservation;
 		}
 
 		/**
@@ -391,6 +435,15 @@ public class WorkStationAjoImpl implements WorkStation {
 	@Override
 	public Task getNextExecutableTask(DbContext abasSession) {
 		return (new TaskManager(abasSession)).getNextExecutableTask();
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.WorkStation#setTaskExecutionOrder(de.abas.erp.common.type.Id, de.abas.erp.common.type.Id, de.abas.erp.db.DbContext)
+	 */
+	@Override
+	public void setTaskExecutionOrder(Id taskId, Id precedingTaskId, DbContext abasSession) {
+		final TaskAjoImpl task = new TaskAjoImpl(taskId, abasSession);
+		final WorkOrders workSlip = task.getWorkSlip(abasSession);
 	}
 
 }

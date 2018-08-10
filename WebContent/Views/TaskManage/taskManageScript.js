@@ -6,45 +6,118 @@ $(document).ready(function(){
 	collect_list_ws();
 	
 });
+function PC_Select(item)
+{
+	var pc = $(item).attr("value");
+	$.ajax({
+	    url:  '/MES/StationPC',
+	    data: {
+	    pc_name: pc
+	    },
+	    success: function (respond) {
+	    	//TODO Oszlopfrissítések
+	    	  $( ".tmts_stationContainer" ).empty();
+	    	  $( ".tmts_stationContainer" ).append(respond);
+
+	    }
+	});
+}
+function Group_Select(item)
+{
+	var group = $(item).attr("value");
+	$.ajax({
+	    url:  '/MES/StationGroup',
+	    data: {
+	    group_item: group
+	    },
+	    success: function (respond) {
+	    	  $( ".tmts_stationContainer" ).empty();
+	    	  $( ".tmts_stationContainer" ).append(respond);
+	    }
+	});
+}
 function Station_Select(item)
 {
+	  $( ".dndf2" ).empty();
+	  $( ".dndf1" ).empty();
 	var station = $(item).attr("value");
+	$(".station_label").val(station);
 	$.ajax({
-	    url:  '/MES/Dashboard',
+	    url:  '/MES/StationTaskList',
 	    data: {
 	     station: station,
-	     pass: $("#inp_pass").val()
 	    },
-	    success: function () {
+	    success: function (respond) {
+	    	  $( ".dndf2" ).append(respond);
 	    	
+	    }
+	});
+	$.ajax({
+	    url:  '/MES/AbasTaskList',
+	    data: {
+	     station: station,
+	    },
+	    success: function (respond) {
+	    	  $( ".dndf1" ).append(respond);
+	    	
+	    }
+	});
+}
+function AddToList(item)
+{
+	var value = $(item).attr("value");
+	$.ajax({
+	    url:  '/MES/AddToList',
+	    data: {
+	    value: value
+	    },
+	    success: function (respond) {
+	    	console.log(respond);
+
+	    }
+	});
+}
+function RemoveFromList(item)
+{
+	var value = $(item).attr("value");
+	$.ajax({
+	    url:  '/MES/RemoveFromList',
+	    data: {
+		    value: value
+	    },
+	    success: function (respond) {
+	    	console.log(respond);
 	    }
 	});
 }
 function TM_startUp()
 {
 $('#TM_Select_container_activity').show();
-//	for(i=0;i<5;i++)
-//	{
-//		$('.tmts_stationContainer').append("<div class='tmts_stationBtnDivCont'><input disabled class='si1'value='Station name "+i+"'><input disabled class='si3' value='Feladatok: 12'></div>");
-//	}
-		
-		$.ajax({
-		    url:  '/MES/BuildUp',
-		    success: function (respond) {
-		    	
-		    	  $( ".tmts_stationContainer" ).append(respond[0]);
-		    	  $( ".dndf1" ).append(respond[1]);
-		    	  $( ".dndf2" ).append(respond[2]);
-//		    		  console.log(result);
-		    	
-		    }
-		});
 }
+function BuildUp()
+{		
+	$.ajax({
+    url:  '/MES/BuildUp',
+    success: function (respond) {
+    	  $( ".tmts_stationContainer" ).empty();
+    	  $( ".dndf1" ).empty();
+    	  $( ".dndf2" ).empty();
+    	  $(".station_label").val("");
+    	  $( ".tmts_stationContainer" ).append(respond[0]);
+    }
+});
+	}
 function ButtonScriptElements()
 {
+
 	$('#btn_select_1').click(function(){
+		BuildUp();
 		$('.TM_content_layer').hide();
 		$('#TM_Select_container1').show();
+	});
+	
+	$('.refresh_btn').click(function(){
+		BuildUp();
 	});
 	$('#btn_select_2').click(function(){
 		$('.TM_content_layer').hide();

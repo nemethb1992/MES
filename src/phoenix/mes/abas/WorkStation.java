@@ -54,4 +54,6 @@ public interface WorkStation extends Serializable {
 	 */
 	Task getNextExecutableTask(DbContext abasSession);
 
+	void setTaskExecutionOrder(Id taskId, Id precedingTaskId, DbContext abasSession);
+
 }

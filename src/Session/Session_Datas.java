@@ -2,8 +2,6 @@ package Session;
 
 public class Session_Datas {
 
-
-
 	private static String username;
 	public static void setUsername(String value)
 	{
@@ -23,5 +21,13 @@ public class Session_Datas {
 	{
 	    return pass;
 	}
-	
+	private static String language;
+	public static void setLanguage(String value)
+	{
+		language = value;
+	}
+	public static String getLanguage()
+	{
+	    return language;
+	}
 }
