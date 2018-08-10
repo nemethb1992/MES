@@ -36,12 +36,12 @@ public class StationTaskList extends HttpServlet {
         	stationNo = Integer.parseInt(Station[1]);
         	
         	abasSession = ObjectFactory.startAbasSession(Session_Datas.getUsername(), Session_Datas.getPassword(), true);
-
+        	System.out.println("1 Station Session nyitás után");
         	li = ObjectFactory.createWorkStation(Station[0], stationNo, abasSession).getExecutableTasks(abasSession);
-        	
+        	System.out.println("2 Station Task lista lekérve");
           	for (Task task: li) {
           		final Task.Details taskDetails = task.getDetails(abasSession);
-          		layout += "			<div class='dnd-container'><div class='icon-form dnd-icon pass-item pass-item-remove' OnClick='RemoveFromList(this)' value='remove'></div>\r\n" + 
+          		layout += "			<div class='dnd-container' OnClick='TaskSizeSwitch(this)'><div class='icon-form dnd-icon pass-item pass-item-remove' OnClick='RemoveFromList(this)' value='remove'></div>\r\n" + 
           				"					<div class='dnd-input-container'>\r\n" + 
           				"						<div class='dnd-upper'>\r\n" + 
           				"							<div class='dnd-input-div'>\r\n" + 
@@ -81,7 +81,9 @@ public class StationTaskList extends HttpServlet {
     	{
     		try
     		{
+            	System.out.println("3 Station Layout legenerálva");
         		abasSession.close();
+            	System.out.println("4 Station Session bezárva");
     		}
     		catch(Exception e)
     		{}

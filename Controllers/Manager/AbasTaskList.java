@@ -41,14 +41,13 @@ public class AbasTaskList extends HttpServlet {
         	String[] Station = station.split("-");
         	AbasDate date = AbasDate.valueOf("20180809");
         	stationNo = Integer.parseInt(Station[1]);
-        	System.out.println("check 1");
         	abasSession = ObjectFactory.startAbasSession(Session_Datas.getUsername(), Session_Datas.getPassword(), true);
+        	System.out.println("1 abas Session nyitás után");
         	li = ObjectFactory.createWorkStation(Station[0], stationNo, abasSession).getUnassignedTasks(date, abasSession);
-
-        	System.out.println("check 2");
+        	System.out.println("2 abas Task lista lekérve");
           	for (Task task: li) {
           		final Task.Details taskDetails = task.getDetails(abasSession);
-          		layout += "			<div class='dnd-container'OnClick='AddToList(this)' value='3'><div class='icon-form dnd-icon pass-item' OnClick='AddToList(this)' value='abas'></div>\r\n" + 
+          		layout += "			<div class='dnd-container'OnClick='TaskSizeSwitch(this)' value='3'><div class='icon-form dnd-icon pass-item' OnClick='AddToList(this)' value='abas'></div>\r\n" + 
             			"					<div class='dnd-input-container'>\r\n" + 
             			"						<div class='dnd-upper'>\r\n" + 
             			"							<div class='dnd-input-div'>\r\n" + 
@@ -88,8 +87,9 @@ public class AbasTaskList extends HttpServlet {
     	{
     		try
     		{
-            	System.out.println("check 3");
+            	System.out.println("3 abas Layout legenerálva");
         		abasSession.close();
+            	System.out.println("4 abas Session bezárva");
     		}
     		catch(Exception e)
     		{}

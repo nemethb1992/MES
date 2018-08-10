@@ -45,42 +45,40 @@ public class DataSheet extends HttpServlet {
     	int stationNo;
     	DbContext abasSession = null;
     	try {
-        	AbasDate date = AbasDate.valueOf("20180809");
         	abasSession = ObjectFactory.startAbasSession(Session_Datas.getUsername(), Session_Datas.getPassword(), true);
         	System.out.println("check 1");
-        	Task nextTask = ObjectFactory.createWorkStation("1620705",2, abasSession).getNextExecutableTask(abasSession);
+        	Task nextTask = ObjectFactory.createWorkStation("234PG",1, abasSession).getNextExecutableTask(abasSession);
         	System.out.println("check 2");
-        	String test1 = nextTask.getDetails(abasSession).getOperationIdNo();
-        	System.out.println(test1);
+        	final Task.Details taskDetails = nextTask.getDetails(abasSession);
         	System.out.println("check 3");
       		
         	// Tab 1
         	layouts.add("<div class='inputContainer cc_element'>\r\n" + 
         						"	<p>Munkaállomás</p><input type='text' value=''/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-//        						"	<p>Munkalapszám</p><input type='text' value='"+taskDetails.getWorkSlipNo()+"'/></div>\r\n" + 
-//        						"<div class='inputContainer cc_element'>\r\n" + 
-//        						"	<p>Cikkszám</p><input type='text' value='"+taskDetails.getProductIdNo()+"'/></div>\r\n" + 
-//        						"<div class='inputContainer cc_element'>\r\n" + 
-//        						"	<p>Keresőszó</p><input type='text' value='"+taskDetails.getOperationSwd()+"'/></div>\r\n" + 
-//        						"<div class='inputContainer cc_element'>\r\n" + 
-//        						"	<p>Megnevezés</p><input type='text' value='"+taskDetails.getProductSwd()+"'/></div>\r\n" + 
+        						"	<p>Munkalapszám</p><input type='text' value='"+taskDetails.getWorkSlipNo()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Felhasználás</p><input type='text' value=''/></div>\r\n" + 
+        						"	<p>Cikkszám</p><input type='text' value='"+taskDetails.getProductIdNo()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Művleti azonosító</p><input type='text' value=''/></div>\r\n" + 
+        						"	<p>Keresőszó</p><input type='text' value='"+taskDetails.getProductSwd()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Keresőszó</p><input type='text' value=''/></div>\r\n" + 
+        						"	<p>Megnevezés</p><input type='text' value='"+taskDetails.getProductDescription()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Megnevezés</p><input type='text' value=''/></div>\r\n" + 
+        						"	<p>Felhasználás</p><input type='text' value='"+taskDetails.getUsage()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Beállítási idő</p><input type='text' value=''/></div>\r\n" + 
+        						"	<p>Művleti azonosító</p><input type='text' value='"+taskDetails.getOperationIdNo()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Darabidő</p><input type='text' value=''/></div>\r\n" + 
+        						"	<p>Keresőszó</p><input type='text' value='"+taskDetails.getOperationSwd()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Nyitott mennyiség</p><input type='text' value=''/></div>\r\n" + 
+        						"	<p>Megnevezés</p><input type='text' value='"+taskDetails.getOperationDescription()+"'/></div>\r\n" + 
+        						"<div class='inputContainer cc_element'>\r\n" + 
+        						"	<p>Beállítási idő</p><input type='text' value='"+taskDetails.getSetupTime()+"'/></div>\r\n" + 
+        						"<div class='inputContainer cc_element'>\r\n" + 
+        						"	<p>Darabidő</p><input type='text' value='"+taskDetails.getUnitTime()+"'/></div>\r\n" + 
+        						"<div class='inputContainer cc_element'>\r\n" + 
+        						"	<p>Nyitott mennyiség</p><input type='text' value='"+taskDetails.getOutstandingQuantity()+"'/></div>\r\n" + 
         						"<div class='inputContainer BigTextInput cc_element'>\r\n" + 
-        						"	<p>Gyártási információ</p><textarea></textarea></div>");
+        						"	<p>Gyártási információ</p><textarea>"+taskDetails.getOperationReservationText()+"</textarea></div>");
 
         	System.out.println("check 4");
         	// Tab 2

@@ -42,16 +42,16 @@ function Station_Select(item)
 	  $( ".dndf1" ).empty();
 	var station = $(item).attr("value");
 	$(".station_label").val(station);
-	$.ajax({
-	    url:  '/MES/StationTaskList',
-	    data: {
-	     station: station,
-	    },
-	    success: function (respond) {
-	    	  $( ".dndf2" ).append(respond);
-	    	
-	    }
-	});
+//	$.ajax({
+//	    url:  '/MES/StationTaskList',
+//	    data: {
+//	     station: station,
+//	    },
+//	    success: function (respond) {
+//	    	  $( ".dndf2" ).append(respond);
+//	    	
+//	    }
+//	});
 	$.ajax({
 	    url:  '/MES/AbasTaskList',
 	    data: {
@@ -100,13 +100,30 @@ function BuildUp()
     url:  '/MES/BuildUp',
     success: function (respond) {
     	  $( ".tmts_stationContainer" ).empty();
-    	  $( ".dndf1" ).empty();
-    	  $( ".dndf2" ).empty();
+//    	  $( ".dndf1" ).empty();
+//    	  $( ".dndf2" ).empty();
     	  $(".station_label").val("");
     	  $( ".tmts_stationContainer" ).append(respond[0]);
     }
 });
 	}
+function TaskSizeSwitch(item)
+{
+		var height = $(item).height();
+		if(height < 100)
+		{
+		$('.dnd-container').animate({height:'50px'}, 120)
+		$(item).find('.dnd-downer').hide();
+		$(item).animate({height:'100px'}, 120)
+		$(item).find('.dnd-downer').show();
+		}
+		else{
+			$(item).animate({height:'50px'}, 120)
+			$(item).find('.dnd-downer').hide();
+		}
+		
+	
+}
 function ButtonScriptElements()
 {
 
@@ -157,28 +174,15 @@ function ButtonScriptElements()
 }
 function dnd_sortlist_scripts()
 {
-	$('.dndf1, .dndf2, #stationVisionHolder').sortable({
-		connectWith: ".dndf1, .dndf2",
-		stop: function(){
-			collect_list_ws();
-		}
-	});
-	$('.dndf1, .dndf2, #stationVisionHolder').disableSelection();
+//	$('.dndf1, .dndf2, #stationVisionHolder').sortable({
+//		connectWith: ".dndf1, .dndf2",
+//		stop: function(){
+//			collect_list_ws();
+//		}
+//	});
+//	$('.dndf1, .dndf2, #stationVisionHolder').disableSelection();
 	
-	$('.dnd-container').click(function(){
-		var height = $(this).height();
-		if(height < 150)
-		{
-		$('.dnd-container').animate({height:'50px'}, 120)
-		$(this).animate({height:'150px'}, 120)
-		$(this).find('.dnd-downer').show();
-		}
-		else{
-			$(this).animate({height:'50px'}, 120)
-			$(this).find('.dnd-downer').hide();
-		}
-			
-	})
+
 }
 
 // Data control scripts #################
