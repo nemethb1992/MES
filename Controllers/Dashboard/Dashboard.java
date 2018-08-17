@@ -23,9 +23,9 @@ import de.abas.erp.db.util.ContextHelper;
 public class Dashboard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ActiveDirectoryLogin ac = new ActiveDirectoryLogin();
-       public void asd() {
-    	   System.out.println(Session_Datas.getUsername());
-       }
+//       public void asd() {
+//    	   System.out.println(Session_Datas.getUsername());
+//       }
        boolean way;
        String username = "";
        String pass = "";
@@ -51,11 +51,13 @@ public class Dashboard extends HttpServlet {
     	getServletContext().getRequestDispatcher("/Views/TaskManage/taskManagePage.jsp").forward(request, response);
     	if(layout == 0)
         getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
+        System.out.print("--end--right");
     	
     }
     else
     {
             getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
+            System.out.print("--end--false");
      }
 
    		
