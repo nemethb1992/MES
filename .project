@@ -30,9 +30,40 @@
 	</natures>
 	<linkedResources>
 		<link>
+<<<<<<< HEAD
 			<name>WebContent/Public/css/scss.scss</name>
 			<type>1</type>
 			<location>E:/GitDataSource/MES/WebContent/Public/css/scss.scss</location>
+=======
+			<name>src_abasfe</name>
+			<type>2</type>
+			<location>//ABASFE.PMHU.LOCAL/dmes/src</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/reload.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/reload.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/remove-task.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/remove-task.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/share-task.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/share-task.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/user-shape-white.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/user-shape-white.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/json/langsource.json</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/json/langsource.json</location>
+>>>>>>> e3378475b0f77c2b8d6390bbbaef62f635660906
 		</link>
 	</linkedResources>
 </projectDescription>
