@@ -1,5 +1,7 @@
-<%@include  file="/Views/Header.jsp"%>                    
+<%@include  file="/Views/Header.jsp"%>    
+       		        <input type="checkbox" id="LayoutSwitch" name="feature" value="scales" checked />                
        		<div id='loginFrame' class='mycontainer'>
+
        			<div id='loginLeftSide' class='FrameSides'>
        				<div id='loginPicture'>
        				</div>
@@ -12,8 +14,8 @@
        				<div id='LR_2'><img src='${pageContext.request.contextPath}/Public/icons/padlock.svg'></div>
        				<div id='LR_3'><p>Bejelentkezés:</p></div>
        				<form id='LR_form' method='POST' action='${pageContext.request.contextPath}/Dashboard'>
-       				<input class='inp_login'  id='inp_username' type='text' Value=''>
-       				<input class='inp_login' id='inp_pass' type='text'>
+       				<input class='inp_login'  id='inp_username' type='text' value='balazs.nemeth'>
+       				<input class='inp_login' id='inp_pass' type='password' value='hxx8ka3HgB8Wy'>
        				<input class='inp_login' id='inp_enterbutton' type='submit' value='Tovább'>
        				
        				<div id='test'></div>
