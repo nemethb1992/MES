@@ -18,7 +18,6 @@ public class test {
 	}
 	
 	ArrayList<proba> lista = new ArrayList<proba>();
-	lista.
 	
 	
 }
