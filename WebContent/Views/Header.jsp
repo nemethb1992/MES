@@ -16,7 +16,6 @@
     <%@ include file="/Views/Login/loginStyle.css"%>
     <%@ include file="/Views/TaskView/taskViewStyle.css"%>
     <%@ include file="/Views/TaskManage/taskManageStyle.css"%>
-    <%@ include file="/Public/css/scss.scss"%>
     </style>
 
     <script>
