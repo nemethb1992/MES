@@ -6,32 +6,135 @@ $(document).ready(function(){
 	collect_list_ws();
 	
 });
+function PC_Select(item)
+{
+	var pc = $(item).attr("value");
+	$.ajax({
+	    url:  '/MES/StationPC',
+	    data: {
+	    pc_name: pc
+	    },
+	    success: function (respond) {
+	    	//TODO Oszlopfrissítések
+	    	  $( ".tmts_stationContainer" ).empty();
+	    	  $( ".tmts_stationContainer" ).append(respond);
 
+	    }
+	});
+}
+function Group_Select(item)
+{
+	var group = $(item).attr("value");
+	$.ajax({
+	    url:  '/MES/StationGroup',
+	    data: {
+	    group_item: group
+	    },
+	    success: function (respond) {
+	    	  $( ".tmts_stationContainer" ).empty();
+	    	  $( ".tmts_stationContainer" ).append(respond);
+	    }
+	});
+}
+function Station_Select(item)
+{
+	  $( ".dndf2" ).empty();
+	  $( ".dndf1" ).empty();
+	var station = $(item).attr("value");
+	$(".station_label").val(station);
+//	$.ajax({
+//	    url:  '/MES/StationTaskList',
+//	    data: {
+//	     station: station,
+//	    },
+//	    success: function (respond) {
+//	    	  $( ".dndf2" ).append(respond);
+//	    	
+//	    }
+//	});
+	$.ajax({
+	    url:  '/MES/AbasTaskList',
+	    data: {
+	     station: station,
+	    },
+	    success: function (respond) {
+	    	  $( ".dndf1" ).append(respond);
+	    	
+	    }
+	});
+}
+function AddToList(item)
+{
+	var value = $(item).attr("value");
+	$.ajax({
+	    url:  '/MES/AddToList',
+	    data: {
+	    value: value
+	    },
+	    success: function (respond) {
+	    	console.log(respond);
+
+	    }
+	});
+}
+function RemoveFromList(item)
+{
+	var value = $(item).attr("value");
+	$.ajax({
+	    url:  '/MES/RemoveFromList',
+	    data: {
+		    value: value
+	    },
+	    success: function (respond) {
+	    	console.log(respond);
+	    }
+	});
+}
 function TM_startUp()
 {
 $('#TM_Select_container_activity').show();
-//	for(i=0;i<5;i++)
-//	{
-//		$('.tmts_stationContainer').append("<div class='tmts_stationBtnDivCont'><input disabled class='si1'value='Station name "+i+"'><input disabled class='si3' value='Feladatok: 12'></div>");
-//	}
+}
+function BuildUp()
+{		
+	$.ajax({
+    url:  '/MES/BuildUp',
+    success: function (respond) {
+    	  $( ".tmts_stationContainer" ).empty();
+//    	  $( ".dndf1" ).empty();
+//    	  $( ".dndf2" ).empty();
+    	  $(".station_label").val("");
+    	  $( ".tmts_stationContainer" ).append(respond[0]);
+    }
+});
+	}
+function TaskSizeSwitch(item)
+{
+		var height = $(item).height();
+		if(height < 100)
+		{
+		$('.dnd-container').animate({height:'50px'}, 120)
+		$(item).find('.dnd-downer').hide();
+		$(item).animate({height:'100px'}, 120)
+		$(item).find('.dnd-downer').show();
+		}
+		else{
+			$(item).animate({height:'50px'}, 120)
+			$(item).find('.dnd-downer').hide();
+		}
 		
-		$.ajax({
-		    url:  '/MES/BuildUp',
-		    success: function (respond) {
-		    	
-		    	  $( ".tmts_stationContainer" ).append(respond[0]);
-		    	  $( ".dndf1" ).append(respond[1]);
-		    	  $( ".dndf2" ).append(respond[2]);
-//		    		  console.log(result);
-		    	
-		    }
-		});
+	
 }
 function ButtonScriptElements()
 {
+
 	$('#btn_select_1').click(function(){
+		BuildUp();
 		$('.TM_content_layer').hide();
 		$('#TM_Select_container1').show();
+	});
+	
+	$('.refresh_btn').click(function(){
+		BuildUp();
 	});
 	$('#btn_select_2').click(function(){
 		$('.TM_content_layer').hide();
@@ -71,28 +174,15 @@ function ButtonScriptElements()
 }
 function dnd_sortlist_scripts()
 {
-	$('.dndf1, .dndf2, #stationVisionHolder').sortable({
-		connectWith: ".dndf1, .dndf2",
-		stop: function(){
-			collect_list_ws();
-		}
-	});
-	$('.dndf1, .dndf2, #stationVisionHolder').disableSelection();
+//	$('.dndf1, .dndf2, #stationVisionHolder').sortable({
+//		connectWith: ".dndf1, .dndf2",
+//		stop: function(){
+//			collect_list_ws();
+//		}
+//	});
+//	$('.dndf1, .dndf2, #stationVisionHolder').disableSelection();
 	
-	$('.dnd-container').click(function(){
-		var height = $(this).height();
-		if(height < 150)
-		{
-		$('.dnd-container').animate({height:'50px'}, 120)
-		$(this).animate({height:'150px'}, 120)
-		$(this).find('.dnd-downer').show();
-		}
-		else{
-			$(this).animate({height:'50px'}, 120)
-			$(this).find('.dnd-downer').hide();
-		}
-			
-	})
+
 }
 
 // Data control scripts #################
@@ -113,18 +203,4 @@ function collect_list_ws()
 			$('.appended-text').remove();
 		}
 	console.log(list);
-}
-function Station_Select(item)
-{
-	var station = $(item).attr("value");
-	$.ajax({
-	    url:  '/MES/Dashboard',
-	    data: {
-	     station: station,
-	     pass: $("#inp_pass").val()
-	    },
-	    success: function () {
-	    	
-	    }
-	});
 }
