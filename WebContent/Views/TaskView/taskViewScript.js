@@ -20,31 +20,7 @@ $(document).keypress(function(e) {
     		});
     }
 });
-function DataSheet_Load()
-{
-	
-//	$.ajax({
-//	    url:  '/MES/DataSheet',
-//	    success: function (respond) {
-//	    	
-//	    	  $( "#tab1_container" ).append(respond[0]);
-//	    	  $( "#tab2_container" ).append(respond[1]);
-//	    	  $( "#tab3_container" ).append(respond[2]);
-//	    	  $( "#tab4_container" ).append(respond[3]);
-//	    		  console.log(respond[4]);
-//	    	
-//	    }
-//	});
-}
-function DataSheet_Clear()
-{
-	
-	    	  $( "#tab1_container" ).empty();
-	    	  $( "#tab2_container" ).empty();
-	    	  $( "#tab3_container" ).empty();
-	    	  $( "#tab4_container" ).empty();
-//	    		  console.log(result);
-}
+
 function TV_startUp()
 {
 	$('#btn_leftNav_1').css({'background-color':'#f5f5f5','background-size':'24%','border-left':'3px solid #ff6666'});
@@ -52,9 +28,6 @@ function TV_startUp()
 }
 function TabControlEventHolder()
 {
-	$('.btn_logout').click(function(){
-		$.ajax({url:  '/MES/Home'});
-	})
 $('.btn_leftNavigation').click(function(){
 	$('.btn_leftNavigation').css({'background-color':'', 'color':'','border':''});
 	$(this).css({'background-color':'#f5f5f5','background-size':'24%','border-left':'3px solid #ff6666'});
@@ -92,7 +65,9 @@ $('#btn_leftNav_4').click(function(){
 	$('#tab4_container').show();
 	headerNavBtnDeafult();
 })
-
+$('.btn_logout').click(function(){
+	$.ajax({url:  '/MES/Home'});
+})
 }
 function headerNavBtnDeafult()
 {
@@ -100,6 +75,37 @@ function headerNavBtnDeafult()
 	$('#btn_lejelentes input').css({'display':'none'});
 	$('#btn_megszakitas input').css({'display':'none'});
 }
-
+function DataSheet_Load()
+{
+	
+	$.ajax({
+	    url:  '/MES/DataSheet',
+	    success: function (respond) {
+	    	
+	    	  $( "#tab1_container" ).append(respond[0]);
+	    	  $( "#tab2_container" ).append(respond[1]);
+	    	  $( "#tab3_container" ).append(respond[2]);
+	    	  $( "#tab4_container" ).append(respond[3]);
+//	    		  console.log(result);
+	    	
+	    }
+	});
+}
+function DataSheet_Clear()
+{
+	
+	$.ajax({
+	    url:  '/MES/DataSheet',
+	    success: function (respond) {
+	    	
+	    	  $( "#tab1_container" ).empty();
+	    	  $( "#tab2_container" ).empty();
+	    	  $( "#tab3_container" ).empty();
+	    	  $( "#tab4_container" ).empty();
+//	    		  console.log(result);
+	    	
+	    }
+	});
+}
 
 

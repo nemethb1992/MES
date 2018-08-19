@@ -1,18 +1,5 @@
 @charset "UTF-8";
-#leftwrapImg
-{
-	height: 9%;
-	width: 100%;
-	display: block;
-    background: url("/MES/Public/icons/pm_logo_mini_white.svg");
-    background-repeat: no-repeat;
-    background-size: 70%;
-    background-position: center;
-}
-#btn_leftNav_1 {background-image: url("/MES/Public/icons/TV_btn_nav1.svg");}
-#btn_leftNav_2 {background-image: url("/MES/Public/icons/TV_btn_nav2.svg");}
-#btn_leftNav_3 {background-image: url("/MES/Public/icons/TV_btn_nav3.svg");}
-#btn_leftNav_4 {background-image: url("/MES/Public/icons/TV_btn_nav4.svg");}
+
 #leftwrap
 {
 	height: 100%;
@@ -24,7 +11,16 @@
     text-align: center;
     color: white;
 }
-
+#leftwrapImg
+{
+	height: 9%;
+	width: 100%;
+	display: block;
+    background: url("/MES/Public/icons/pm_logo_mini_white.svg");
+    background-repeat: no-repeat;
+    background-size: 70%;
+    background-position: center;
+}
 #content
 {
 	height: 100%;
@@ -153,7 +149,10 @@
 {
 	background-color: #e6e6e6;
 }
-
+#btn_leftNav_1 {background-image: url("/MES/Public/icons/TV_btn_nav1.svg");}
+#btn_leftNav_2 {background-image: url("/MES/Public/icons/TV_btn_nav2.svg");}
+#btn_leftNav_3 {background-image: url("/MES/Public/icons/TV_btn_nav3.svg");}
+#btn_leftNav_4 {background-image: url("/MES/Public/icons/TV_btn_nav4.svg");}
 
 .rightCont
 {
@@ -219,7 +218,7 @@
 #tab3_table
 {
 	width: 100%;
-	max-height: 95%;
+	height: 95%;
 }
 #tab3_table tbody
 {

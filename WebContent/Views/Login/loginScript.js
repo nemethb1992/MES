@@ -13,22 +13,12 @@ function buttonEventHolderLogin()
 
 function loginEnter()
 {
-	var layout;
-	if($("#LayoutSwitch").is(':checked'))
-	{
-		layout = 1;
-	}
-	else
-	{
-	layout = 2;
-	}
-	console.log(layout);
+	
 	$.ajax({
 	    url:  '/MES/Dashboard',
 	    data: {
 	     username: $("#inp_username").val(),
-	     pass: $("#inp_pass").val(),
-	     layout: layout
+	     pass: $("#inp_pass").val()
 	    },
 	    success: function () {
 //	    	  $( "#LR_form" ).submit();

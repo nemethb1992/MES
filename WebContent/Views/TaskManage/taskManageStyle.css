@@ -2,46 +2,6 @@
 /* { */
 /* 	background: #dedede; */
 /* } */
-.pass-item
-{
-	float: right;
-	cursor: pointer;
-    background-image: url(/MES/Public/icons/share-task.svg);
-    background-size: 70%;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-.pass-item-remove
-{
-    background-image: url(/MES/Public/icons/remove-task.svg);
-    background-size: 60%;
-}
-.refresh_btn
-{
-    
-    height: 100%;
-    width: 50px;
-    float: right;
-    background-image: url(/MES/Public/icons/reload.svg);
-    background-size: 50%;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-.tmts_stationBtnDivCont
-{
-    width: 98%;
-    height: 44px;
-	background: white;
-	border-left: 5px solid #ff6666;
-    border-bottom: 1px solid #e0e6e8;
-    background-image: url(/MES/Public/icons/computerSignGray.svg);
-    background-size: 13%;
-    background-repeat: no-repeat;
-    background-position-x: 97%;
-    background-position-y: center;
-    cursor: pointer;
-    z-index: 0;
-}
 .TM_btn_select
 {
     width: 24%;
@@ -204,7 +164,21 @@
     width: 77%;
     background: white;
 }
-
+.tmts_stationBtnDivCont
+{
+    width: 98%;
+    height: 44px;
+	background: white;
+	border-left: 5px solid #ff6666;
+    border-bottom: 1px solid #e0e6e8;
+    background-image: url(/MES/Public/icons/computerSignGray.svg);
+    background-size: 13%;
+    background-repeat: no-repeat;
+    background-position-x: 97%;
+    background-position-y: center;
+    cursor: pointer;
+    z-index: 0;
+}
 .tmts_stationBtnDivCont:hover
 {
 /*     border: 1px solid #ff6666; */
@@ -234,7 +208,7 @@
     font-size: 14px;
     color: #888888;
     max-width: 70%;
-    padding: 15px 0 0 10px;
+    padding: 3px 0 0 7px;
 }
 .TV_stationContainer input
 {
@@ -351,16 +325,22 @@
 {
 	background: red;
 }
-
+.pass-item
+{
+	float: right;
+	cursor: pointer;
+    background-image: url(/MES/Public/icons/listRowsGray.svg);
+     background-size: 100%;
+}
 .dnd-frame
 {
+	min-height: 50px;
     margin: 8px 2% 0 2%;
     max-height: 515px;
     overflow-y: scroll;
     -ms-overflow-style: none;
     overflow: -moz-scrollbars-none;
 }
-
 .dnd-frame::-webkit-scrollbar {
 /*     width: 0px;  remove scrollbar space */
 /*     background: transparent;  optional: just make scrollbar invisible */
