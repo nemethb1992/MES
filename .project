@@ -28,4 +28,21 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>WebContent/Public/icons/DE.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/DE.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/EN.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/EN.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/HU.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/HU.svg</location>
+		</link>
+	</linkedResources>
 </projectDescription>

@@ -1,4 +1,18 @@
 <%@include  file="/Views/Header.jsp"%>  
+    <script>
+        <%@ include file="/Views/TaskManage/taskManageScript.js"%>
+    </script>
+                        <div id="lang_div">
+                    <div value="e2" onclick="Language_Setter(this)" class="lang_bub" alt="indexlang" class="lang_bub" id="EN">
+                        <img class="lang_icon" src="${pageContext.request.contextPath}/Public/icons/EN.svg">
+                    </div>
+                    <div value="d2" onclick="Language_Setter(this)" class="lang_bub" alt="indexlang" class="lang_bub" id="DE">
+                        <img class="lang_icon" src="${pageContext.request.contextPath}/Public/icons/DE.svg">
+                    </div>
+                    <div value="h2" onclick="Language_Setter(this)" class="lang_bub" alt="indexlang" class="lang_bub" id="HU">
+                        <img class="lang_icon" src="${pageContext.request.contextPath}/Public/icons/HU.svg">
+                    </div>
+                </div>
 	<div id='container' class='mycontainer'>
 		<div id='leftwrap'>
 			<div id='leftwrapImg'>

@@ -104,3 +104,41 @@ background: #f3f3f3;
 	max-width: 1500px;
 	height: 720px;
 }
+#lang_div
+{
+    z-index: 9999;
+    position: absolute;
+    background: white;
+    float: left;
+    min-width: 35px;
+    height: 35px;
+    top: 20px;
+    left: 20px;
+    /*border: 1px solid gray;*/
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px #979797;
+}
+.lang_icon
+{
+    width: 25px;
+    height: 25px;
+    margin: 5px 0 0 5px;
+}
+.lang_bub
+{
+    float: left;
+    width: 35px;
+    position: absolute;
+    height: 35px;
+    border-radius: 10px;
+    display: inline-block;
+}
+.lang_bub:hover
+{
+    background:#f3f3f3;
+}
+.lang_bub:active
+{
+    background:#E2E1D9;
+    box-shadow: 0px 0px 5px #ff6666 inset;
+}

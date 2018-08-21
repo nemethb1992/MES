@@ -3,9 +3,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-        <script src="${pageContext.request.contextPath}/Public/js/jquery-3.2.1.js"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <script src="${pageContext.request.contextPath}/Public/js/jquery-3.3.1.js"></script>
         <script src="${pageContext.request.contextPath}/Public/js/jquery_cookie.js"></script>
+        <script src="${pageContext.request.contextPath}/Public/js/language.js"></script>
 <%--         <script src="${pageContext.request.contextPath}/Views/TaskView/taskViewScript.js"></script> --%>
 <%--         <script src="${pageContext.request.contextPath}/Views/Login/loginScript.js"></script> --%>
 <%--         <script src="${pageContext.request.contextPath}/Views/TaskManage/taskManageScript.js"></script> --%>
@@ -18,11 +19,11 @@
     <%@ include file="/Views/TaskManage/taskManageStyle.css"%>
     </style>
 
-    <script>
-        <%@ include file="/Views/Login/loginScript.js"%>
-        <%@ include file="/Views/TaskView/taskViewScript.js"%>
-        <%@ include file="/Views/TaskManage/taskManageScript.js"%>
-    </script>
+<!--     <script> -->
+<%--         <%@ include file="/Views/Login/loginScript.js"%> --%>
+<%--         <%@ include file="/Views/TaskView/taskViewScript.js"%> --%>
+<%--         <%@ include file="/Views/TaskManage/taskManageScript.js"%> --%>
+<!--     </script> -->
         
         
 <title>MES</title>

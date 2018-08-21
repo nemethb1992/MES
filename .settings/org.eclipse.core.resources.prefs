@@ -1,3 +1,5 @@
 eclipse.preferences.version=1
+encoding//WebContent/Public/json/langsource.json=UTF-8
 encoding//WebContent/Views/Header.jsp=ISO-8859-1
+encoding//WebContent/Views/Login/loginScript.js=ISO-8859-1
 encoding/<project>=UTF-8

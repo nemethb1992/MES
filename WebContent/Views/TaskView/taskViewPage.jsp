@@ -1,4 +1,8 @@
 <%@include  file="/Views/Header.jsp"%>  
+    <script>
+        <%@ include file="/Views/TaskView/taskViewScript.js"%>
+    </script> 
+
 	<div id='container' class='mycontainer'>
 		<div id='leftwrap'>
 			<div id='leftwrapImg'>
