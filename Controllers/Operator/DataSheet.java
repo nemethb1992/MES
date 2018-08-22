@@ -12,6 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import Database.dbEntities;
 import Session.Session_Datas;
 import de.abas.ceks.jedp.EDPException;
@@ -39,11 +47,38 @@ public class DataSheet extends HttpServlet {
     	// TODO Azonosítani az aktuális gépet.
     private ArrayList<String> DataSheet_Layout()
     {
-
     	ArrayList<String> layouts = new ArrayList<String>();
-           
     	int stationNo;
     	DbContext abasSession = null;
+    	
+        JSONParser parser = new JSONParser();
+        try
+        {
+            Object object = parser.parse(new FileReader("MES\\Public\\json\\langsrc.json"));
+            
+            JSONObject jsonObject = (JSONObject)object;
+            
+            String name = (String) jsonObject.get("en");
+            
+            JSONArray elements = (JSONArray)jsonObject.get("en");
+            
+            System.out.println("Name: " + name);
+            System.out.println("Countries:");
+            for(Object items : elements)
+            {
+                System.out.println("\t"+items.toString());
+            }
+        }
+        catch(FileNotFoundException fe)
+        {
+            fe.printStackTrace();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    	
+    	
     	try {
         	abasSession = ObjectFactory.startAbasSession(Session_Datas.getUsername(), Session_Datas.getPassword(), true);
         	System.out.println("check 1");

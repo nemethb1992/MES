@@ -5,60 +5,97 @@ $(document).ready(function(){
 function Language_Setter(lng)
 {
 	var ln;
+    var cookielng = $.cookie("language");
 	var val = $(lng).attr("value");
     var langSrc = new XMLHttpRequest();
     
-    langSrc.open('GET', '/MES/Public/json/langsource.json');
+    
+    langSrc.open('GET', '/MES/Public/json/langsrc.json');
     langSrc.onload = function () {
     var langData = JSON.parse(langSrc.responseText);
     
 	switch(val[0]) {
     case 'e':
     	ln = "en";
+    	document.cookie = "language=en";
         break;
     case 'd':
     	ln = "de";
+    	document.cookie = "language=de";
         break;
     case 'h':
     	ln = "hu";
+    	document.cookie = "language=hu";
         break;
     default:
     	ln = "en";
+	document.cookie = "language=en";
     break;
 	}
-    console.log(langData[0][ln]);
 	switch(val[1]) {
     case '1':
-        Language_Login(langData);
+        Language_Login(langData,ln);
         break;
     case '2':
-    	Language_Manager(langData);
+    	Language_Manager(langData,ln);
         break;
     case '3':
-    	Language_Operator(langData);
+    	Language_Operator(langData,ln);
         break;
     default:
         break;
     }
     };
     langSrc.send();
-    function Language_Login(data)
-    {
-            $("#inp_username").attr("placeholder", data[0][ln]);
-            $("#inp_pass").attr("placeholder", data[1][ln]);
-            $("#inp_enterbutton").val(data[2][ln]);login_title
-            $("#login_title").html(data[3][ln]);
+}
 
+function Language_Startup(ln,page)
+{
+    var langSrc = new XMLHttpRequest();
+    langSrc.open('GET', '/MES/Public/json/langsrc.json');
+    langSrc.onload = function () {
+    var langData = JSON.parse(langSrc.responseText);
+	switch(page) {
+    case '1':
+        Language_Login(langData,ln);
+        break;
+    case '2':
+    	Language_Manager(langData,ln);
+        break;
+    case '3':
+    	Language_Operator(langData,ln);
+        break;
+    default:
+        break;
     }
-    function Language_Manager(data)
-    {
-            $("#test").html(data[0][ln]);
-        
-    }
-    function Language_Operator(data)
-    {
-        $("#test").html(data[0][ln]);
-    }
+};
+langSrc.send();
+}
+function Language_Login(data,ln)
+{
+        $("#inp_username").attr("placeholder", data[0][ln]);
+        $("#inp_pass").attr("placeholder", data[1][ln]);
+        $("#inp_enterbutton").val(data[2][ln]);
+        $("#login_title").html(data[3][ln]);
+
+}
+function Language_Manager(data,ln)
+{
+	console.log(data.length)
+    $("#activity_tab1").html(data[50][ln]);
+    $("#activity_tab2").html(data[51][ln]);
+    $("#activity_tab3").html(data[43][ln]);
+}
+function Language_Operator(data,ln)
+{
+    
+    $("#p_megszakitas").html(data[53][ln]);
+    $("#p_lejelentes").html(data[13][ln]);
+    
+    $("#btn_leftNav_1").html(data[52][ln]);
+    $("#btn_leftNav_2").html(data[23][ln]);
+    $("#btn_leftNav_3").html(data[24][ln]);
+    $("#btn_leftNav_4").html(data[25][ln]);
 }
 
 function langDivSlide()
@@ -76,7 +113,7 @@ function langDivSlide()
 }
 function langIconFirst()
 {
-    var langType = $.cookie("lng");
+    var langType = $.cookie("language");
     switch (langType) {
         case "hu":
             $(".lang_bub").css('z-index','0');

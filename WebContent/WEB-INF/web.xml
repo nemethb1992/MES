@@ -142,4 +142,14 @@
     <servlet-name>RemoveFromList</servlet-name>
     <url-pattern>/RemoveFromList</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>test</display-name>
+    <servlet-name>test</servlet-name>
+    <servlet-class>Dashboard.test</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>test</servlet-name>
+    <url-pattern>/test</url-pattern>
+  </servlet-mapping>
 </web-app>

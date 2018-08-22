@@ -43,36 +43,34 @@ public class Dashboard extends HttpServlet {
     	   Session_Datas.setUsername(username);
     	   Session_Datas.setPassword(pass);
 
-    if(ac.activeDirectoryConn(username, pass))
-    {
-    	if(layout == 1)
-   		getServletContext().getRequestDispatcher("/Views/TaskView/taskViewPage.jsp").forward(request, response);
-    	if(layout == 2)
-    	getServletContext().getRequestDispatcher("/Views/TaskManage/taskManagePage.jsp").forward(request, response);
-    	if(layout == 0)
-        getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
-        System.out.print("--end--right");
-    	
-    }
-    else
-    {
-            getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
-            System.out.print("--end--false");
-     }
+//    if(ac.activeDirectoryConn(username, pass))
+//    {
+//    	if(layout == 1)
+//   		getServletContext().getRequestDispatcher("/Views/TaskView/taskViewPage.jsp").forward(request, response);
+//    	if(layout == 2)
+//    	getServletContext().getRequestDispatcher("/Views/TaskManage/taskManagePage.jsp").forward(request, response);
+//    	if(layout == 0)
+//        getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
+//    	
+//    }
+//    else
+//    {
+//            getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
+//     }
 
    		
-//    if(username.equals(null) || username.equals(""))
-//    {
-//    	getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
-//    }
-//     if(username.equals("1"))
-//    {
-//    		getServletContext().getRequestDispatcher("/Views/TaskView/taskViewPage.jsp").forward(request, response);
-//    		}
-//    if(username.equals("2"))
-//    {
-//    		getServletContext().getRequestDispatcher("/Views/TaskManage/taskManagePage.jsp").forward(request, response);
-//     }
+    if(username.equals(null) || username.equals(""))
+    {
+    	getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
+    }
+     if(username.equals("1"))
+    {
+    		getServletContext().getRequestDispatcher("/Views/TaskView/taskViewPage.jsp").forward(request, response);
+    		}
+    if(username.equals("2"))
+    {
+    		getServletContext().getRequestDispatcher("/Views/TaskManage/taskManagePage.jsp").forward(request, response);
+     }
 
    	}  
        

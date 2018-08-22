@@ -2,6 +2,8 @@ $(document).ready(function(){
 	TV_startUp();
 	TabControlEventHolder();
 	DataSheet_Load();
+	langIconFirst();
+	Language_Startup($.cookie("language"),'3');
 });
 $(document).keypress(function(e) {
     if(e.which == 13) {
@@ -35,6 +37,13 @@ function DataSheet_Load()
 //	    	
 //	    }
 //	});
+	$.ajax({
+	    url:  '/MES/test',
+	    success: function (respond) {
+	    
+	    	
+	    }
+	});
 }
 function DataSheet_Clear()
 {

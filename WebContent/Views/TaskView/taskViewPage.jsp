@@ -2,7 +2,17 @@
     <script>
         <%@ include file="/Views/TaskView/taskViewScript.js"%>
     </script> 
-
+                        <div id="lang_div">
+                    <div value="e3" onclick="Language_Setter(this)" class="lang_bub" alt="indexlang" class="lang_bub" id="EN">
+                        <img class="lang_icon" src="${pageContext.request.contextPath}/Public/icons/EN.svg">
+                    </div>
+                    <div value="d3" onclick="Language_Setter(this)" class="lang_bub" alt="indexlang" class="lang_bub" id="DE">
+                        <img class="lang_icon" src="${pageContext.request.contextPath}/Public/icons/DE.svg">
+                    </div>
+                    <div value="h3" onclick="Language_Setter(this)" class="lang_bub" alt="indexlang" class="lang_bub" id="HU">
+                        <img class="lang_icon" src="${pageContext.request.contextPath}/Public/icons/HU.svg">
+                    </div>
+                </div>
 	<div id='container' class='mycontainer'>
 		<div id='leftwrap'>
 			<div id='leftwrapImg'>
@@ -21,11 +31,11 @@
 				</div>
 				<div id='navigationContainer' class='cc_element rightSide'>
 					<div id='btn_lejelentes' class='btn_navHeader'>
-					<p class='navBtnInside_element'>Lejentés</p>
+					<p class='navBtnInside_element' id='p_lejelentes'>Lejentés</p>
 					<input class='number_Input navBtnInside_element' id=submit_input type='number'/>
 					</div>
 					<div id='btn_megszakitas' class='btn_navHeader'>
-					<p class='navBtnInside_element'>Megszakítás</p>
+					<p class='navBtnInside_element' id='p_megszakitas'>Megszakítás</p>
 					<input class='number_Input navBtnInside_element' type='number'/>
 					</div>
 				</div>

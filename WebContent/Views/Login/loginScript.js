@@ -2,6 +2,8 @@ var path = location.pathname.split('/')[1];
 
 $(document).ready(function(){
 	buttonEventHolderLogin();
+	langIconFirst();
+	Language_Startup($.cookie("language"),'1');
 })
 
 function buttonEventHolderLogin()
