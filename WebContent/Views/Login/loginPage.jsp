@@ -33,8 +33,8 @@
        				<div id='LR_2'><img src='${pageContext.request.contextPath}/Public/icons/padlock.svg'></div>
        				<div id='LR_3'><p id='login_title'>Bejelentkezés:</p></div>
        				<form id='LR_form' method='POST' action='${pageContext.request.contextPath}/Dashboard'>
-       				<input class='inp_login' placeholder='' id='inp_username' type='text' value='balazs.nemeth'>
-       				<input class='inp_login' placeholder='' id='inp_pass' type='password' value='hxx8ka3HgB8Wy'>
+       				<input class='inp_login' placeholder='' id='inp_username' type='text' value=''>
+       				<input class='inp_login' placeholder='' id='inp_pass' type='password' value=''>
        				<input class='inp_login' id='inp_enterbutton' type='submit' value='Tovább'>
        				
        				<div id='test'></div>

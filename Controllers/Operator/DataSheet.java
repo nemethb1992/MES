@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import Database.dbEntities;
+import Language.langsrc;
 import Session.Session_Datas;
 import de.abas.ceks.jedp.EDPException;
 import de.abas.erp.common.ConnectionProperties;
@@ -38,46 +40,27 @@ import phoenix.mes.abas.Task;
 public class DataSheet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	Session_Datas sess = new Session_Datas();
 	String station;
+	String lng="hu";
+	langsrc l = new langsrc();
+	Session_Datas sess = new Session_Datas();
+
     public DataSheet() {
         super();
     }
-    
+	String Word(int index)
+	{
+		return l.LanguageSelector(lng, index);
+	}
     	// TODO Azonosítani az aktuális gépet.
-    private ArrayList<String> DataSheet_Layout()
+    private ArrayList<String> DataSheet_Layout(String cookieLang)
     {
     	ArrayList<String> layouts = new ArrayList<String>();
     	int stationNo;
     	DbContext abasSession = null;
-    	
-        JSONParser parser = new JSONParser();
-        try
-        {
-            Object object = parser.parse(new FileReader("MES\\Public\\json\\langsrc.json"));
-            
-            JSONObject jsonObject = (JSONObject)object;
-            
-            String name = (String) jsonObject.get("en");
-            
-            JSONArray elements = (JSONArray)jsonObject.get("en");
-            
-            System.out.println("Name: " + name);
-            System.out.println("Countries:");
-            for(Object items : elements)
-            {
-                System.out.println("\t"+items.toString());
-            }
-        }
-        catch(FileNotFoundException fe)
-        {
-            fe.printStackTrace();
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    	
+    	System.out.println(l.LanguageSelector(lng, 10));
+    	System.out.println(Word(10));
+
     	
     	try {
         	abasSession = ObjectFactory.startAbasSession(Session_Datas.getUsername(), Session_Datas.getPassword(), true);
@@ -91,29 +74,29 @@ public class DataSheet extends HttpServlet {
         	layouts.add("<div class='inputContainer cc_element'>\r\n" + 
         						"	<p>Munkaállomás</p><input type='text' value=''/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Munkalapszám</p><input type='text' value='"+taskDetails.getWorkSlipNo()+"'/></div>\r\n" + 
+        						"	<p>"+Word(5)+"</p><input type='text' value='"+taskDetails.getWorkSlipNo()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Cikkszám</p><input type='text' value='"+taskDetails.getProductIdNo()+"'/></div>\r\n" + 
+        						"	<p>"+Word(6)+"</p><input type='text' value='"+taskDetails.getProductIdNo()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Keresőszó</p><input type='text' value='"+taskDetails.getProductSwd()+"'/></div>\r\n" + 
+        						"	<p>"+Word(7)+"</p><input type='text' value='"+taskDetails.getProductSwd()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Megnevezés</p><input type='text' value='"+taskDetails.getProductDescription()+"'/></div>\r\n" + 
+        						"	<p>"+Word(8)+"</p><input type='text' value='"+taskDetails.getProductDescription()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Felhasználás</p><input type='text' value='"+taskDetails.getUsage()+"'/></div>\r\n" + 
+        						"	<p>"+Word(9)+"</p><input type='text' value='"+taskDetails.getUsage()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Művleti azonosító</p><input type='text' value='"+taskDetails.getOperationIdNo()+"'/></div>\r\n" + 
+        						"	<p>"+Word(22)+"</p><input type='text' value='"+taskDetails.getOperationIdNo()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Keresőszó</p><input type='text' value='"+taskDetails.getOperationSwd()+"'/></div>\r\n" + 
+        						"	<p>"+Word(7)+"</p><input type='text' value='"+taskDetails.getOperationSwd()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Megnevezés</p><input type='text' value='"+taskDetails.getOperationDescription()+"'/></div>\r\n" + 
+        						"	<p>"+Word(8)+"</p><input type='text' value='"+taskDetails.getOperationDescription()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Beállítási idő</p><input type='text' value='"+taskDetails.getSetupTime()+"'/></div>\r\n" + 
+        						"	<p>"+Word(26)+"</p><input type='text' value='"+taskDetails.getSetupTime()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Darabidő</p><input type='text' value='"+taskDetails.getUnitTime()+"'/></div>\r\n" + 
+        						"	<p>"+Word(27)+"</p><input type='text' value='"+taskDetails.getUnitTime()+"'/></div>\r\n" + 
         						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>Nyitott mennyiség</p><input type='text' value='"+taskDetails.getOutstandingQuantity()+"'/></div>\r\n" + 
+        						"	<p>"+Word(28)+"</p><input type='text' value='"+taskDetails.getOutstandingQuantity()+"'/></div>\r\n" + 
         						"<div class='inputContainer BigTextInput cc_element'>\r\n" + 
-        						"	<p>Gyártási információ</p><textarea>"+taskDetails.getOperationReservationText()+"</textarea></div>");
+        						"	<p>"+Word(29)+"</p><textarea>"+taskDetails.getOperationReservationText()+"</textarea></div>");
 
         	System.out.println("check 4");
         	// Tab 2
@@ -192,9 +175,11 @@ public class DataSheet extends HttpServlet {
 // for(int i = 0; i < li.size(); i++)
 // {
 // 	System.out.println(li.get(i));
- 
-		
-	    String json = new Gson().toJson(DataSheet_Layout());
+        for (Cookie c : request.getCookies()) {
+            if (c.getName().equals("Language"))
+            	lng = c.getValue();
+            }
+	    String json = new Gson().toJson(DataSheet_Layout(lng));
 	    response.setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");
 	    response.getWriter().write(json);

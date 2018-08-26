@@ -12,6 +12,7 @@ import javax.websocket.Session;
 
 import ActiveDirectory.ActiveDirectoryLogin;
 import Database.dbEntities;
+import Language.langsrc;
 import Session.Session_Datas;
 import de.abas.erp.common.ConnectionProperties;
 import de.abas.erp.common.DefaultCredentialsProvider;
@@ -31,9 +32,10 @@ public class Dashboard extends HttpServlet {
        String pass = "";
        int layout = 0;
        Session_Datas sess = new Session_Datas();
+   	   langsrc lng = new langsrc();
        protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
    		//request.setAttribute("books", bookRepo.listBooks());
-
+    	   lng.setLng(lng.LanguageList());
     	   username = request.getParameter("username");
     	   pass = request.getParameter("pass");
     	   layout = Integer.parseInt(request.getParameter("layout"));

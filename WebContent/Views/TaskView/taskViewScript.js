@@ -25,25 +25,25 @@ $(document).keypress(function(e) {
 function DataSheet_Load()
 {
 	
-//	$.ajax({
-//	    url:  '/MES/DataSheet',
-//	    success: function (respond) {
-//	    	
-//	    	  $( "#tab1_container" ).append(respond[0]);
-//	    	  $( "#tab2_container" ).append(respond[1]);
-//	    	  $( "#tab3_container" ).append(respond[2]);
-//	    	  $( "#tab4_container" ).append(respond[3]);
-//	    		  console.log(respond[4]);
-//	    	
-//	    }
-//	});
 	$.ajax({
-	    url:  '/MES/test',
+	    url:  '/MES/DataSheet',
 	    success: function (respond) {
-	    
+	    	
+	    	  $( "#tab1_container" ).append(respond[0]);
+	    	  $( "#tab2_container" ).append(respond[1]);
+	    	  $( "#tab3_container" ).append(respond[2]);
+	    	  $( "#tab4_container" ).append(respond[3]);
+	    		  console.log(respond[4]);
 	    	
 	    }
 	});
+//	$.ajax({
+//	    url:  '/MES/test',
+//	    success: function (respond) {
+//	    
+//	    	
+//	    }
+//	});
 }
 function DataSheet_Clear()
 {
