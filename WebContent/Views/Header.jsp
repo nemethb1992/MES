@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
         <script src="${pageContext.request.contextPath}/Public/js/jquery-3.3.1.js"></script>
         <script src="${pageContext.request.contextPath}/Public/js/jquery_cookie.js"></script>
+        <script src="${pageContext.request.contextPath}/Public/js/script.js"></script>
         <script src="${pageContext.request.contextPath}/Public/js/language.js"></script>
 <%--         <script src="${pageContext.request.contextPath}/Views/TaskView/taskViewScript.js"></script> --%>
 <%--         <script src="${pageContext.request.contextPath}/Views/Login/loginScript.js"></script> --%>

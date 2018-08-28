@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -13,18 +14,21 @@ import org.eclipse.jdt.internal.compiler.ast.EqualExpression;
 
 import com.mysql.jdbc.ConnectionProperties;
 
+import Language.langsrc;
 import Session.Session_Datas;
 import de.abas.ceks.jedp.EDPException;
 import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.db.DbContext;
-import phoenix.mes.abas.ObjectFactory;
+import phoenix.mes.abas.AbasConnection;
+import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import sun.security.x509.Extension;
 
 
 public class AbasTaskList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    langsrc l = new langsrc();   
+	
 	String station="";
     public AbasTaskList() {
         super();
@@ -36,17 +40,17 @@ public class AbasTaskList extends HttpServlet {
     	String layout ="";
     	List<Task> li = new ArrayList<Task>();
     	int stationNo;
-    	DbContext abasSession = null;
+    	AbasConnection<DbContext> abasConnection = null;
     	try {
         	String[] Station = station.split("-");
         	AbasDate date = AbasDate.valueOf("20180809");
         	stationNo = Integer.parseInt(Station[1]);
-        	abasSession = ObjectFactory.startAbasSession(Session_Datas.getUsername(), Session_Datas.getPassword(), true);
+        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(Session_Datas.getUsername(), Session_Datas.getPassword(), l.getAbasLanguage(), true);
         	System.out.println("1 abas Session nyitás után");
-        	li = ObjectFactory.createWorkStation(Station[0], stationNo, abasSession).getUnassignedTasks(date, abasSession);
+        	li = AbasObjectFactory.INSTANCE.createWorkStation(Station[0], stationNo, abasConnection).getUnassignedTasks(date, abasConnection);
         	System.out.println("2 abas Task lista lekérve");
           	for (Task task: li) {
-          		final Task.Details taskDetails = task.getDetails(abasSession);
+          		final Task.Details taskDetails = task.getDetails(abasConnection);
           		layout += "			<div class='dnd-container'OnClick='TaskSizeSwitch(this)' value='3'><div class='icon-form dnd-icon pass-item' OnClick='AddToList(this)' value='abas'></div>\r\n" + 
             			"					<div class='dnd-input-container'>\r\n" + 
             			"						<div class='dnd-upper'>\r\n" + 
@@ -80,16 +84,14 @@ public class AbasTaskList extends HttpServlet {
             			"					</div>\r\n" + 
             			"				</div>";
           	}
-    	}catch(EDPException e)
+    	}catch(LoginException e)
     	{
     		System.out.println(e);
     	}finally
     	{
     		try
     		{
-            	System.out.println("3 abas Layout legenerálva");
-        		abasSession.close();
-            	System.out.println("4 abas Session bezárva");
+            	abasConnection.close();
     		}
     		catch(Exception e)
     		{}

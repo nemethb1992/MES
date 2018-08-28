@@ -4,16 +4,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Language.langsrc;
 import Session.Session_Datas;
 import de.abas.ceks.jedp.EDPException;
 import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.db.DbContext;
-import phoenix.mes.abas.ObjectFactory;
+import phoenix.mes.abas.AbasConnection;
+import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 
 
@@ -29,18 +32,18 @@ public class StationTaskList extends HttpServlet {
     {
     	List<Task> li = new ArrayList<Task>();
     	int stationNo;
-    	DbContext abasSession = null;
+    	AbasConnection<DbContext> abasConnection = null;
     	try {
         	AbasDate date = AbasDate.valueOf("20180809");
         	String[] Station = station.split("-");
         	stationNo = Integer.parseInt(Station[1]);
-        	
-        	abasSession = ObjectFactory.startAbasSession(Session_Datas.getUsername(), Session_Datas.getPassword(), true);
+
+        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(Session_Datas.getUsername(), Session_Datas.getPassword(), langsrc.getAbasLanguage(), true);
         	System.out.println("1 Station Session nyitás után");
-        	li = ObjectFactory.createWorkStation(Station[0], stationNo, abasSession).getExecutableTasks(abasSession);
+        	li = AbasObjectFactory.INSTANCE.createWorkStation(Station[0], stationNo, abasConnection).getExecutableTasks(abasConnection);
         	System.out.println("2 Station Task lista lekérve");
           	for (Task task: li) {
-          		final Task.Details taskDetails = task.getDetails(abasSession);
+          		final Task.Details taskDetails = task.getDetails(abasConnection);
           		layout += "			<div class='dnd-container' OnClick='TaskSizeSwitch(this)'><div class='icon-form dnd-icon pass-item pass-item-remove' OnClick='RemoveFromList(this)' value='remove'></div>\r\n" + 
           				"					<div class='dnd-input-container'>\r\n" + 
           				"						<div class='dnd-upper'>\r\n" + 
@@ -74,7 +77,7 @@ public class StationTaskList extends HttpServlet {
           				"					</div>\r\n" + 
           				"				</div>";
           	}
-    	}catch(EDPException e)
+    	}catch(LoginException e)
     	{
     		System.out.println(e);
     	}finally
@@ -82,7 +85,7 @@ public class StationTaskList extends HttpServlet {
     		try
     		{
             	System.out.println("3 Station Layout legenerálva");
-        		abasSession.close();
+            	abasConnection.close();
             	System.out.println("4 Station Session bezárva");
     		}
     		catch(Exception e)

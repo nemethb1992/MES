@@ -8,7 +8,6 @@ package phoenix.mes.abas;
 
 import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.common.type.Id;
-import de.abas.erp.db.DbContext;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -128,15 +127,15 @@ public interface Task extends Serializable {
 	Id getWorkSlipId();
 
 	/**
-	 * @param abasSession Az Abas-munkamenet.
+	 * @param abasConnection Az Abas-kapcsolat.
 	 * @return A feladat elkezdésének (tervezett) napja.
 	 */
-	AbasDate getStartDate(DbContext abasSession);
+	AbasDate getStartDate(AbasConnection<?> abasConnection);
 
 	/**
-	 * @param abasSession Az Abas-munkamenet.
+	 * @param abasConnection Az Abas-kapcsolat.
 	 * @return A gyártási feladat részleteit leíró objektum.
 	 */
-	Details getDetails(DbContext abasSession);
+	Details getDetails(AbasConnection<?> abasConnection);
 
 }

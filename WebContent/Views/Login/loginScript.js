@@ -17,6 +17,8 @@ function buttonEventHolderLogin()
 function loginEnter()
 {
 	var layout;
+	var ws_group = WS_Group();
+	var ws_number = WS_No();
 	if($("#LayoutSwitch").is(':checked'))
 	{
 		layout = 1;
@@ -27,8 +29,10 @@ function loginEnter()
 	}
 	console.log(layout);
 	$.ajax({
-	    url:  '/MES/Dashboard',
+	    url:  '/'+path+'/Dashboard',
 	    data: {
+	     ws_group: ws_group,
+	     ws_no: ws_number,
 	     username: $("#inp_username").val(),
 	     pass: $("#inp_pass").val(),
 	     layout: layout

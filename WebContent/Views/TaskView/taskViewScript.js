@@ -1,15 +1,19 @@
+var path = location.pathname.split('/')[1];
+
 $(document).ready(function(){
 	TV_startUp();
 	TabControlEventHolder();
 	DataSheet_Load();
 	langIconFirst();
 	Language_Startup($.cookie("language"),'3');
+
+	console.log(WS_Group() + ' ' + WS_No());
 });
 $(document).keypress(function(e) {
     if(e.which == 13) {
     	if($("#submit_input").is(":focus"))
     		$.ajax({
-    		    url:  '/MES/Submit',
+    		    url:  '/'+path+'/Submit',
     		    data:{
     		    	quantity: $('#submit_input').val()
     		    },
@@ -26,14 +30,17 @@ function DataSheet_Load()
 {
 	
 	$.ajax({
-	    url:  '/MES/DataSheet',
+	    url:  '/'+path+'/DataSheet',
 	    success: function (respond) {
-	    	
+	    	$( "#tab1_container" ).empty();
+	    	  $( "#tab2_container" ).empty();
+	    	  $( "#tab3_container" ).empty();
+	    	  $( "#tab4_container" ).empty();
 	    	  $( "#tab1_container" ).append(respond[0]);
 	    	  $( "#tab2_container" ).append(respond[1]);
 	    	  $( "#tab3_container" ).append(respond[2]);
 	    	  $( "#tab4_container" ).append(respond[3]);
-	    		  console.log(respond[4]);
+//	    		  console.log(respond[4]);
 	    	
 	    }
 	});
@@ -62,7 +69,7 @@ function TV_startUp()
 function TabControlEventHolder()
 {
 	$('.btn_logout').click(function(){
-		$.ajax({url:  '/MES/Home'});
+		$.ajax({url:  '/'+path+'/Home'});
 	})
 $('.btn_leftNavigation').click(function(){
 	$('.btn_leftNavigation').css({'background-color':'', 'color':'','border':''});

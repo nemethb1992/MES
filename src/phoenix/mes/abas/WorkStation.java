@@ -8,7 +8,6 @@ package phoenix.mes.abas;
 
 import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.common.type.Id;
-import de.abas.erp.db.DbContext;
 
 import java.io.Serializable;
 import java.util.List;
@@ -31,29 +30,29 @@ public interface WorkStation extends Serializable {
 
 	/**
 	 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa.
-	 * @param abasSession Az Abas-munkamenet.
+	 * @param abasConnection Az Abas-kapcsolat.
 	 * @return A vizsgált kezdődátum-intervallumba eső, a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt feladatok listája.
 	 */
-	List<Task> getUnassignedTasks(AbasDate startDateUntil, DbContext abasSession);
+	List<Task> getUnassignedTasks(AbasDate startDateUntil, AbasConnection<?> abasConnection);
 
 	/**
-	 * @param abasSession Az Abas-munkamenet.
+	 * @param abasConnection Az Abas-kapcsolat.
 	 * @return A munkaállomáshoz hozzárendelt, de felfüggesztett feladatok listája.
 	 */
-	List<Task> getSuspendedTasks(DbContext abasSession);
+	List<Task> getSuspendedTasks(AbasConnection<?> abasConnection);
 
 	/**
-	 * @param abasSession Az Abas-munkamenet.
+	 * @param abasConnection Az Abas-kapcsolat.
 	 * @return A munkaállomáshoz hozzárendelt és végrehajtható feladatok listája.
 	 */
-	List<Task> getExecutableTasks(DbContext abasSession);
+	List<Task> getExecutableTasks(AbasConnection<?> abasConnection);
 
 	/**
-	 * @param abasSession Az Abas-munkamenet.
+	 * @param abasConnection Az Abas-kapcsolat.
 	 * @return A munkaállomás következő végrehajtható feladata (null, ha a munkaállomás feladatlistája üres).
 	 */
-	Task getNextExecutableTask(DbContext abasSession);
+	Task getNextExecutableTask(AbasConnection<?> abasConnection);
 
-	void setTaskExecutionOrder(Id taskId, Id precedingTaskId, DbContext abasSession);
+	void setTaskExecutionOrder(Id taskId, Id precedingTaskId, AbasConnection<?> abasConnection);
 
 }

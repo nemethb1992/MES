@@ -1,4 +1,5 @@
 
+var path = location.pathname.split('/')[1];
 $(document).ready(function(){
 	TM_startUp();
 	ButtonScriptElements();
@@ -11,7 +12,7 @@ function PC_Select(item)
 {
 	var pc = $(item).attr("value");
 	$.ajax({
-	    url:  '/MES/StationPC',
+	    url:  '/'+path+'/StationPC',
 	    data: {
 	    pc_name: pc
 	    },
@@ -27,7 +28,7 @@ function Group_Select(item)
 {
 	var group = $(item).attr("value");
 	$.ajax({
-	    url:  '/MES/StationGroup',
+	    url: '/'+path+'/StationGroup',
 	    data: {
 	    group_item: group
 	    },
@@ -54,7 +55,7 @@ function Station_Select(item)
 //	    }
 //	});
 	$.ajax({
-	    url:  '/MES/AbasTaskList',
+	    url:  '/'+path+'/AbasTaskList',
 	    data: {
 	     station: station,
 	    },
@@ -68,7 +69,7 @@ function AddToList(item)
 {
 	var value = $(item).attr("value");
 	$.ajax({
-	    url:  '/MES/AddToList',
+	    url:  '/'+path+'/AddToList',
 	    data: {
 	    value: value
 	    },
@@ -82,7 +83,7 @@ function RemoveFromList(item)
 {
 	var value = $(item).attr("value");
 	$.ajax({
-	    url:  '/MES/RemoveFromList',
+	    url:  '/'+path+'/RemoveFromList',
 	    data: {
 		    value: value
 	    },
@@ -98,7 +99,7 @@ $('#TM_Select_container_activity').show();
 function BuildUp()
 {		
 	$.ajax({
-    url:  '/MES/BuildUp',
+    url:  '/'+path+'/BuildUp',
     success: function (respond) {
     	  $( ".tmts_stationContainer" ).empty();
 //    	  $( ".dndf1" ).empty();

@@ -1,35 +1,49 @@
+
+var path = location.pathname.split('/')[1];
+
 $(document).ready(function(){
 	langDivSlide();
+	LanguageSetOnServlet("hu");
 });
 
 function Language_Setter(lng)
 {
-	var ln;
+	var ln = "";
     var cookielng = $.cookie("language");
 	var val = $(lng).attr("value");
     var langSrc = new XMLHttpRequest();
     
     
-    langSrc.open('GET', '/MES/Public/json/langsrc.json');
+    langSrc.open('GET', '/'+path+'/Public/json/langsrc.json');
     langSrc.onload = function () {
     var langData = JSON.parse(langSrc.responseText);
-    
+
 	switch(val[0]) {
     case 'e':
+    {
     	ln = "en";
-    	document.cookie = "language=en";
+    	document.cookie = "language="+ln;
+    	LanguageSetOnServlet(ln);
         break;
+    }
     case 'd':
+    {
     	ln = "de";
-    	document.cookie = "language=de";
+    	document.cookie = "language="+ln;
+    	LanguageSetOnServlet(ln);
         break;
+    }
     case 'h':
+	{
     	ln = "hu";
-    	document.cookie = "language=hu";
+    	document.cookie = "language="+ln;
+    	LanguageSetOnServlet(ln);
         break;
+    }
     default:
     	ln = "en";
-	document.cookie = "language=en";
+	document.cookie = "language="+ln;
+	LanguageSetOnServlet(ln);
     break;
 	}
 	switch(val[1]) {
@@ -48,11 +62,20 @@ function Language_Setter(lng)
     };
     langSrc.send();
 }
-
+function LanguageSetOnServlet(lng)
+{
+	$.ajax({
+	    url:  '/'+path+'/LanguageSetter',
+	    data: { 
+	     language: lng },
+	    success: function () {
+	    }
+	});	
+}
 function Language_Startup(ln,page)
 {
     var langSrc = new XMLHttpRequest();
-    langSrc.open('GET', '/MES/Public/json/langsrc.json');
+    langSrc.open('GET', '/'+path+'/Public/json/langsrc.json');
     langSrc.onload = function () {
     var langData = JSON.parse(langSrc.responseText);
 	switch(page) {
@@ -81,7 +104,6 @@ function Language_Login(data,ln)
 }
 function Language_Manager(data,ln)
 {
-	console.log(data.length)
     $("#activity_tab1").html(data[50][ln]);
     $("#activity_tab2").html(data[51][ln]);
     $("#activity_tab3").html(data[43][ln]);
@@ -96,6 +118,7 @@ function Language_Operator(data,ln)
     $("#btn_leftNav_2").html(data[23][ln]);
     $("#btn_leftNav_3").html(data[24][ln]);
     $("#btn_leftNav_4").html(data[25][ln]);
+	DataSheet_Load();
 }
 
 function langDivSlide()
