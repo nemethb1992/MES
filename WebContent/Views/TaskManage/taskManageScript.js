@@ -1,4 +1,4 @@
-
+var SelectedStation = null;
 var path = location.pathname.split('/')[1];
 $(document).ready(function(){
 	TM_startUp();
@@ -8,6 +8,9 @@ $(document).ready(function(){
 	langIconFirst();
 	Language_Startup($.cookie("language"),'2');
 });
+
+
+
 function PC_Select(item)
 {
 	var pc = $(item).attr("value");
@@ -54,6 +57,7 @@ function Station_Select(item)
 //	    	
 //	    }
 //	});
+	SelectedStation = station;
 	$.ajax({
 	    url:  '/'+path+'/AbasTaskList',
 	    data: {
@@ -128,7 +132,22 @@ function TaskSizeSwitch(item)
 }
 function ButtonScriptElements()
 {
-
+	$(".refresh_abaslist_btn").click(function(){
+		var date =$(".datepicker_own").val();
+		date = date.split('-')[0] + date.split('-')[1] + date.split('-')[2];
+    	$( ".dndf1" ).empty();
+		$.ajax({
+		    url:  '/'+path+'/AbasTaskList',
+		    data: {
+		     station: SelectedStation,
+		     date: date
+		    },
+		    success: function (respond) {
+		    	  $( ".dndf1" ).append(respond);
+		    	
+		    }
+		});
+	})
 	$('#btn_select_1').click(function(){
 		BuildUp();
 		$('.TM_content_layer').hide();
@@ -198,7 +217,7 @@ function collect_list_ws()
 	})
 	if(list.length == 0)
 		{
-			$('.ws-list-holder .dnd-frame').append("<p class='appended-text'>Üres lista</p>");
+//			$('.ws-list-holder .dnd-frame').append("<p class='appended-text'>Üres lista</p>");
 		}
 	else
 		{

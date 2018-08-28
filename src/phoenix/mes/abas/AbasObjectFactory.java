@@ -6,13 +6,13 @@
 
 package phoenix.mes.abas;
 
+import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.Id;
 import de.abas.erp.common.type.enums.EnumLanguageCode;
-import de.abas.erp.db.DbContext;
 
 import javax.security.auth.login.LoginException;
 
-import phoenix.mes.abas.ajo.AjoObjectFactory;
+import phoenix.mes.abas.edp.EdpObjectFactory;
 
 /**
  * Gyár típus az Abas-interfész objektumainak létrehozásához.
@@ -24,7 +24,7 @@ public interface AbasObjectFactory<C> {
 	/**
 	 * Az Abas-interfész alapértelmezett gyár objektuma.
 	 */
-	AbasObjectFactory<DbContext> INSTANCE = new AjoObjectFactory();
+	AbasObjectFactory<EDPSession> INSTANCE = new EdpObjectFactory();
 
 	/**
 	 * Kapcsolódás az Abashoz a megadott bejelentkezési adatokkal, a felhasználónál beállított kezelőnyelvvel.

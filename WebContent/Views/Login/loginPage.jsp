@@ -1,8 +1,11 @@
 <%@include  file="/Views/Header.jsp"%>
+
+
     <script>
-        <%@ include file="/Views/Login/loginScript.js"%>
 //         $(document).ready(function () {
-<%--             var name = "<%=request.getContextPath()%>"; --%>
+	
+        <%@ include file="/Views/Login/loginScript.js"%>
+        <%--  var name = "<%=request.getContextPath()%>"; --%>
 //             $("#loginHeaderDivL p").html(name.split("/")[1].toUpperCase());
 //         });
     </script>     
@@ -17,13 +20,14 @@
                         <img class="lang_icon" src="${pageContext.request.contextPath}/Public/icons/HU.svg">
                     </div>
                 </div>
-    
        		        <input type="checkbox" id="LayoutSwitch" name="feature" value="scales" checked />                
        		<div id='loginFrame' class='mycontainer'>
 
        			<div id='loginLeftSide' class='FrameSides'>
+<!--     <input id="from-datepicker" class="dp-input w-50 h-50" placeholder="Idöpont" readonly/> -->
        				<div id='loginPicture'>
        				</div>
+       				
        				<div id='FooterName'>
        				<p>Phoenix Mecano Kecskemét kft</p>
        				</div>
@@ -33,8 +37,8 @@
        				<div id='LR_2'><img src='${pageContext.request.contextPath}/Public/icons/padlock.svg'></div>
        				<div id='LR_3'><p id='login_title'>Bejelentkezés:</p></div>
        				<form id='LR_form' method='POST' action='${pageContext.request.contextPath}/Dashboard'>
-       				<input class='inp_login' placeholder='' id='inp_username' type='text' value='balazs.nemeth'>
-       				<input class='inp_login' placeholder='' id='inp_pass' type='password' value='3HgB8Wy3HgB8Wy'>
+       				<input class='inp_login' placeholder='' id='inp_username' type='text' value=''>
+       				<input class='inp_login' placeholder='' id='inp_pass' type='password' value=''>
        				<input class='inp_login' id='inp_enterbutton' type='submit' value='Tovább'>
        				
        				<div id='test'></div>

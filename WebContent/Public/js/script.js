@@ -25,3 +25,8 @@ function WS_No(){
 	str = getUrlParameter('ws').split('!');
 	return str[1];
 }
+$(document).ready(function(){
+	$('#from-datepicker').datepicker({
+	    uiLibrary: 'bootstrap.min'
+	});
+});

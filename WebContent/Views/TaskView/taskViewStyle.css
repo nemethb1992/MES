@@ -4,15 +4,15 @@
 	height: 9%;
 	width: 100%;
 	display: block;
-    background: url("/MES/Public/icons/pm_logo_mini_white.svg");
+    background: url("/dmes/Public/icons/pm_logo_mini_white.svg");
     background-repeat: no-repeat;
     background-size: 70%;
     background-position: center;
 }
-#btn_leftNav_1 {background-image: url("/MES/Public/icons/TV_btn_nav1.svg");}
-#btn_leftNav_2 {background-image: url("/MES/Public/icons/TV_btn_nav2.svg");}
-#btn_leftNav_3 {background-image: url("/MES/Public/icons/TV_btn_nav3.svg");}
-#btn_leftNav_4 {background-image: url("/MES/Public/icons/TV_btn_nav4.svg");}
+#btn_leftNav_1 {background-image: url("/dmes/Public/icons/TV_btn_nav1.svg");}
+#btn_leftNav_2 {background-image: url("/dmes/Public/icons/TV_btn_nav2.svg");}
+#btn_leftNav_3 {background-image: url("/dmes/Public/icons/TV_btn_nav3.svg");}
+#btn_leftNav_4 {background-image: url("/dmes/Public/icons/TV_btn_nav4.svg");}
 #leftwrap
 {
 	height: 100%;

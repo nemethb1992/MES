@@ -26,6 +26,7 @@ import org.json.simple.parser.JSONParser;
 import Database.dbEntities;
 import Language.langsrc;
 import Session.Session_Datas;
+import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.IdImpl;
 import de.abas.erp.common.type.enums.EnumLanguageCode;
 import de.abas.erp.db.DbContext;
@@ -59,7 +60,7 @@ public class DataSheet extends HttpServlet {
     
     	ArrayList<String> layouts = new ArrayList<String>();
     	int stationNo;
-    	AbasConnection<DbContext> abasConnection = null;
+    	AbasConnection<EDPSession> abasConnection = null;
 //    	System.out.println(l.LanguageSelector(lng, 10));
 //    	System.out.println(Word(10));
 

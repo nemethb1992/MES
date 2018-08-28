@@ -5,17 +5,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
         <script src="${pageContext.request.contextPath}/Public/js/jquery-3.3.1.js"></script>
+        <script src="${pageContext.request.contextPath}/Public/js/datepicker.js"></script>
         <script src="${pageContext.request.contextPath}/Public/js/jquery_cookie.js"></script>
         <script src="${pageContext.request.contextPath}/Public/js/script.js"></script>
         <script src="${pageContext.request.contextPath}/Public/js/language.js"></script>
+        <script src="${pageContext.request.contextPath}/Public/js/datepicker.js"></script>
 <%--         <script src="${pageContext.request.contextPath}/Views/TaskView/taskViewScript.js"></script> --%>
 <%--         <script src="${pageContext.request.contextPath}/Views/Login/loginScript.js"></script> --%>
 <%--         <script src="${pageContext.request.contextPath}/Views/TaskManage/taskManageScript.js"></script> --%>
     <link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/Public/icons/pm_logo_mini.ico"/>
         <style>
 <%--     <%@ include file="/Public/css/bootstrap.min.css"%> --%>
+<%--     <%@ include file="/Public/css/bootstrap.min.css"%> --%>
+<%--     <%@ include file="/Public/css/bootstrap-grid.min.css"%> --%>
+<%--     <%@ include file="/Public/css/bootstrap-reboot.min.css"%> --%>
+    <%@ include file="/Public/css/gijgo.min.css"%>
     <%@ include file="/Public/css/Style.css"%>
-    <%@ include file="/Views/Login/loginStyle.css"%>
+        <%@ include file="/Views/Login/loginStyle.css"%>
     <%@ include file="/Views/TaskView/taskViewStyle.css"%>
     <%@ include file="/Views/TaskManage/taskManageStyle.css"%>
     </style>

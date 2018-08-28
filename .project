@@ -30,6 +30,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>WebContent/Public/css/gijgo.min.css</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/css/gijgo.min.css</location>
+		</link>
+		<link>
 			<name>WebContent/Public/icons/DE.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/DE.svg</location>

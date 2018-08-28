@@ -1,7 +1,10 @@
 package Manager;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.security.auth.login.LoginException;
@@ -17,6 +20,7 @@ import com.mysql.jdbc.ConnectionProperties;
 import Language.langsrc;
 import Session.Session_Datas;
 import de.abas.ceks.jedp.EDPException;
+import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.db.DbContext;
 import phoenix.mes.abas.AbasConnection;
@@ -30,6 +34,10 @@ public class AbasTaskList extends HttpServlet {
     langsrc l = new langsrc();   
 	
 	String station="";
+	String date="";
+	
+
+	
     public AbasTaskList() {
         super();
     }
@@ -37,18 +45,17 @@ public class AbasTaskList extends HttpServlet {
     private String AbasList()
     {
 
+    	
     	String layout ="";
     	List<Task> li = new ArrayList<Task>();
     	int stationNo;
-    	AbasConnection<DbContext> abasConnection = null;
+    	AbasConnection<EDPSession> abasConnection = null;
     	try {
         	String[] Station = station.split("-");
-        	AbasDate date = AbasDate.valueOf("20180809");
+        	AbasDate _AbasDate = AbasDate.valueOf(this.date);
         	stationNo = Integer.parseInt(Station[1]);
         	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(Session_Datas.getUsername(), Session_Datas.getPassword(), l.getAbasLanguage(), true);
-        	System.out.println("1 abas Session nyitás után");
-        	li = AbasObjectFactory.INSTANCE.createWorkStation(Station[0], stationNo, abasConnection).getUnassignedTasks(date, abasConnection);
-        	System.out.println("2 abas Task lista lekérve");
+        	li = AbasObjectFactory.INSTANCE.createWorkStation(Station[0], stationNo, abasConnection).getUnassignedTasks(_AbasDate, abasConnection);
           	for (Task task: li) {
           		final Task.Details taskDetails = task.getDetails(abasConnection);
           		layout += "			<div class='dnd-container'OnClick='TaskSizeSwitch(this)' value='3'><div class='icon-form dnd-icon pass-item' OnClick='AddToList(this)' value='abas'></div>\r\n" + 
@@ -101,7 +108,17 @@ public class AbasTaskList extends HttpServlet {
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		String dateSeged [];
 		station = request.getParameter("station");
+		date = request.getParameter("date");
+		System.out.println(date + " request utáni");
+		if(date == "" || date == null)
+		{
+	    	DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+	    	Date today = new Date();
+	    	date = dateFormat.format(today);
+		}
+		System.out.println(date + " elvileg ha nullos");
 		
 	    response.setContentType("text/plain"); 
 	    response.setCharacterEncoding("UTF-8"); 

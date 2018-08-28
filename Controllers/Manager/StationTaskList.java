@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import Language.langsrc;
 import Session.Session_Datas;
 import de.abas.ceks.jedp.EDPException;
+import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.db.DbContext;
 import phoenix.mes.abas.AbasConnection;
@@ -32,7 +33,7 @@ public class StationTaskList extends HttpServlet {
     {
     	List<Task> li = new ArrayList<Task>();
     	int stationNo;
-    	AbasConnection<DbContext> abasConnection = null;
+    	AbasConnection<EDPSession> abasConnection = null;
     	try {
         	AbasDate date = AbasDate.valueOf("20180809");
         	String[] Station = station.split("-");

@@ -6,14 +6,14 @@
 {
 	float: right;
 	cursor: pointer;
-    background-image: url(/MES/Public/icons/share-task.svg);
+    background-image: url(/dmes/Public/icons/share-task.svg);
     background-size: 70%;
     background-repeat: no-repeat;
     background-position: center;
 }
 .pass-item-remove
 {
-    background-image: url(/MES/Public/icons/remove-task.svg);
+    background-image: url(/dmes/Public/icons/remove-task.svg);
     background-size: 60%;
 }
 .refresh_btn
@@ -22,10 +22,49 @@
     height: 100%;
     width: 50px;
     float: right;
-    background-image: url(/MES/Public/icons/reload.svg);
+    background-image: url(/dmes/Public/icons/reload.svg);
     background-size: 50%;
     background-repeat: no-repeat;
     background-position: center;
+    cursor: pointer;
+}
+.refresh_abaslist_btn
+{
+    
+    height: 80%;
+    width: 40px;
+    float: right;
+    background: #efefef;
+    background-image: url(/dmes/Public/icons/reload.svg);
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    margin: 6px;
+    margin-right: 14px;
+    border: none;
+    border-radius: 5px;
+}
+.refresh_abaslist_btn:hover
+{
+    background: #d9d9d9;
+    background-image: url(/dmes/Public/icons/reload.svg);
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.datepicker_own
+{
+height: 80%;
+    font-size: 19px;
+    background: #efefef;
+    padding-left: 15px;
+    margin-top: 6px;
+}
+.abasList-datepicker
+{
+	height: 100%;
+	float: right;
 }
 .tmts_stationBtnDivCont
 {
@@ -355,16 +394,14 @@
 .dnd-frame
 {
     margin: 8px 2% 0 2%;
-    max-height: 515px;
+    max-height: 515px;    
     overflow-y: scroll;
-    -ms-overflow-style: none;
-    overflow: -moz-scrollbars-none;
 }
 
 .dnd-frame::-webkit-scrollbar {
 /*     width: 0px;  remove scrollbar space */
 /*     background: transparent;  optional: just make scrollbar invisible */
-    display: none;
+/*     display: none; */
 }
 .dnd-input-container
 {
