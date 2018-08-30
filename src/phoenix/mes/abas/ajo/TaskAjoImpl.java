@@ -34,51 +34,62 @@ import java.util.Set;
 
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbstractTask;
-import phoenix.mes.abas.AbstractTaskDetails;
+import phoenix.mes.abas.TaskDetails;
 
 /**
  * Gyártási feladat osztálya, AJO-ban implementálva.
  * @author szizo
  */
-public class TaskAjoImpl extends AbstractTask {
+public class TaskAjoImpl extends AbstractTask<DbContext> {
 
 	/**
 	 * Gyártási feladat részleteit leíró osztály, AJO-ban implementálva.
 	 * @author szizo
 	 */
-	protected class DetailsAjoImpl extends AbstractTaskDetails {
+	protected class DetailsAjoImpl extends TaskDetails<DbContext> {
 
 		/**
-		 * Az AJO-környezet.
+		 * A termék.
 		 */
-		protected final DbContext ajoContext;
+		protected SelectablePart product = null;
+
+		/**
+		 * A művelet.
+		 */
+		protected Operation operation = null;
+
+		/**
+		 * A műveletfoglalás.
+		 */
+		protected SelectablePurchasing operationReservation = null;
 
 		/**
 		 * Konstruktor.
 		 * @param ajoContext Az AJO-környezet.
 		 */
 		protected DetailsAjoImpl(DbContext ajoContext) {
-			this.ajoContext = ajoContext;
+			super(ajoContext);
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.AbstractTaskDetails#getUnitName(de.abas.erp.db.type.AbasUnit)
+		 * @see phoenix.mes.abas.TaskDetails#getUnitName(de.abas.erp.db.type.AbasUnit)
 		 */
 		@Override
 		protected String getUnitName(AbasUnit unit) {
 			final SelectionBuilder<TableOfUnits.Row> criteria = SelectionBuilder.create(TableOfUnits.Row.class);
 			criteria.setFilingMode(EnumFilingModeExtended.Active);
 			criteria.add(Conditions.eq(TableOfUnits.Row.META.unitCode, unit));
-			return QueryUtil.getFirst(ajoContext, criteria.build()).getUnitOperLang();
+			return QueryUtil.getFirst(abasConnectionObject, criteria.build()).getUnitOperLang();
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.AbstractTaskDetails#loadFields()
+		 * @see phoenix.mes.abas.TaskDetails#loadFields()
 		 */
 		@Override
-		protected void loadFields() {
-			final WorkOrders workSlip = getWorkSlip(ajoContext);
+		protected void loadDataFromWorkSlip() {
+			final WorkOrders workSlip = getWorkSlip(abasConnectionObject);
 			workSlipNo = workSlip.getIdno();
+			startDate = workSlip.getStartDateDay();
 			usage = workSlip.getUsage();
 			final AbasUnit setupTimeAbasUnit = workSlip.getSetupTimeUnit();
 			setupTime = calculateGrossTime(workSlip.getSetupTime(), setupTimeAbasUnit, workSlip.getSetupTimeSec());
@@ -88,19 +99,25 @@ public class TaskAjoImpl extends AbstractTask {
 			unitTimeUnit = unitNamesRepository.getUnitName(unitTimeAbasUnit);
 			numberOfExecutions = workSlip.getElemQty();
 			outstandingQuantity = workSlip.getUnitQty();
-			loadDataFromProduct(workSlip.getProduct());
-			loadDataFromOperation(workSlip.getSeriesOfOperations());
-			loadDataFromOperationReservation(workSlip.getLastReservation());
+			product = workSlip.getProduct();
+			operation = workSlip.getSeriesOfOperations();
+			operationReservation = workSlip.getLastReservation();
 		}
 
-		/**
-		 * A termékhez kapcsolódó tagváltozók kitöltése.
-		 * @param productId A termék azonosítója.
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.TaskDetails#loadDataFromProduct()
 		 */
-		protected void loadDataFromProduct(SelectablePart productId) {
+		@Override
+		protected void loadDataFromProduct() {
+			if (null == product) {
+				loadDataFromWorkSlip();
+				if (null == product) {
+					return;
+				}
+			}
 			final SelectionBuilder<SelectablePart> criteria = SelectionBuilder.create(SelectablePart.class);
-			criteria.add(Conditions.eq(Product.META.id.getName(), productId.toString()));
-			final Query<SelectablePart> query = ajoContext.createQuery(criteria.build());
+			criteria.add(Conditions.eq(Product.META.id.getName(), product.toString()));
+			final Query<SelectablePart> query = abasConnectionObject.createQuery(criteria.build());
 			query.setFields(FieldSet.of(Product.META.idno.getName(),
 					Product.META.swd.getName(),
 					Product.META.descrOperLang.getName(),
@@ -119,14 +136,20 @@ public class TaskAjoImpl extends AbstractTask {
 			stockUnit = unitNamesRepository.getUnitName(product.getUnit(Product.META.SU.getName()));
 		}
 
-		/**
-		 * A művelethez kapcsolódó tagváltozók kitöltése.
-		 * @param operationId A művelet azonosítója.
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.TaskDetails#loadDataFromOperation()
 		 */
-		protected void loadDataFromOperation(Operation operationId) {
+		@Override
+		protected void loadDataFromOperation() {
+			if (null == operation) {
+				loadDataFromWorkSlip();
+				if (null == operation) {
+					return;
+				}
+			}
 			final SelectionBuilder<Operation> criteria = SelectionBuilder.create(Operation.class);
-			criteria.add(Conditions.eq(Operation.META.id, operationId));
-			final Query<Operation> query = ajoContext.createQuery(criteria.build());
+			criteria.add(Conditions.eq(Operation.META.id, operation));
+			final Query<Operation> query = abasConnectionObject.createQuery(criteria.build());
 			final Set<TypedField<? super Operation>> fields = new HashSet<>(4);
 			fields.add(Operation.META.idno);
 			fields.add(Operation.META.swd);
@@ -141,14 +164,20 @@ public class TaskAjoImpl extends AbstractTask {
 			operationDescription = operation.getDescrOperLang();
 		}
 
-		/**
-		 * A műveletfoglaláshoz kapcsolódó tagváltozók kitöltése.
-		 * @param operationReservationId A műveletfoglalás azonosítója.
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.TaskDetails#loadDataFromOperationReservation()
 		 */
-		protected void loadDataFromOperationReservation(SelectablePurchasing operationReservationId) {
+		@Override
+		protected void loadDataFromOperationReservation() {
+			if (null == operationReservation) {
+				loadDataFromWorkSlip();
+				if (null == operationReservation) {
+					return;
+				}
+			}
 			final SelectionBuilder<SelectablePurchasing> criteria = SelectionBuilder.create(SelectablePurchasing.class);
-			criteria.add(Conditions.eq(Reservations.META.id.getName(), operationReservationId.toString()));
-			final Query<SelectablePurchasing> query = ajoContext.createQuery(criteria.build());
+			criteria.add(Conditions.eq(Reservations.META.id.getName(), operationReservation.toString()));
+			final Query<SelectablePurchasing> query = abasConnectionObject.createQuery(criteria.build());
 			query.setFields(FieldSet.of(Reservations.META.itemText.getName()));
 			query.setLazyLoad(false);
 			final DatabaseIterator<SelectablePurchasing> operationReservationIterator = query.iterator();
@@ -193,7 +222,7 @@ public class TaskAjoImpl extends AbstractTask {
 	 * @param ajoContext Az AJO-környezet.
 	 */
 	public TaskAjoImpl(Id workSlipId, DbContext ajoContext) {
-		super(workSlipIdFilter(workSlipId, ajoContext));
+		super(workSlipIdFilter(workSlipId, ajoContext), DbContext.class);
 	}
 
 	/**
@@ -201,7 +230,7 @@ public class TaskAjoImpl extends AbstractTask {
 	 * @param workSlip A feladathoz tartozó munkalap.
 	 */
 	TaskAjoImpl(SelectableWorkorder workSlip) {
-		super(new IdImpl(workSlip.getRawString(WorkOrders.META.id.getName())));
+		super(new IdImpl(workSlip.getRawString(WorkOrders.META.id.getName())), DbContext.class);
 	}
 
 	/**
@@ -221,16 +250,14 @@ public class TaskAjoImpl extends AbstractTask {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task#getDetails(phoenix.mes.abas.AbasConnection)
+	 * @see phoenix.mes.abas.AbstractTask#getDetails(java.lang.Object)
 	 */
 	@Override
-	public Details getDetails(AbasConnection<?> abasConnection) {
-		return (new DetailsAjoImpl(AjoConnection.getAjoContext(abasConnection)));
+	protected DetailsAjoImpl getDetails(DbContext ajoContext) {
+		return (new DetailsAjoImpl(ajoContext));
 	}
 
 /*
-"1".equals(System.getProperty("de.abas.ceks.jedp.impl.nio"))
-
 Feladat indítása
  Bemenet: munkamenet
  Ha van ysts időbélyeg: már fut, hiba

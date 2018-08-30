@@ -36,7 +36,7 @@ public class EdpObjectFactory implements AbasObjectFactory<EDPSession> {
 	 */
 	@Override
 	public WorkStation createWorkStation(String workCenterIdNo, int workStationNumber, AbasConnection<EDPSession> abasConnection) {
-		return (new WorkStationEdpImpl(workCenterIdNo, workStationNumber, EdpConnection.getEdpSession(abasConnection)));
+		return (new WorkStationEdpImpl(workCenterIdNo, workStationNumber, abasConnection.getConnectionObject()));
 	}
 
 	/* (non-Javadoc)
@@ -44,7 +44,7 @@ public class EdpObjectFactory implements AbasObjectFactory<EDPSession> {
 	 */
 	@Override
 	public TaskEdpImpl createTask(Id workSlipId, AbasConnection<EDPSession> abasConnection) {
-		return (new TaskEdpImpl(workSlipId, EdpConnection.getEdpSession(abasConnection)));
+		return (new TaskEdpImpl(workSlipId, abasConnection.getConnectionObject()));
 	}
 
 }

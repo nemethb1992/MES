@@ -358,13 +358,20 @@ public class WorkStationEdpImpl extends AbstractWorkStation {
 		}
 
 		/**
-		 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa.
+		 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa (AbasDate.INFINITY, ha nincs szükség időkorlátra).
 		 * @return A vizsgált kezdődátum-intervallumba eső, a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt feladatok listája.
 		 */
 		public List<Task> getUnassignedTasks(AbasDate startDateUntil) {
 			return createTaskList(0, false, startDateUntil);
 		}
 
+		/**
+		 * A munkalap-szűrés végrehajtása.
+		 * @param workStationNumber A munkaállomás sorszáma.
+		 * @param suspendedTasks A felfüggesztett munkalapokat kell kilistázni?
+		 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa (AbasDate.INFINITY, ha nincs szükség időkorlátra).
+		 * @return A szűrésnek megfelelő feladatok listája.
+		 */
 		protected List<Task> createTaskList(int workStationNumber, boolean suspendedTasks, AbasDate startDateUntil) {
 			final EDPEditor infoSystemQuery = edpSession.createEditor();
 			try {
@@ -385,7 +392,7 @@ public class WorkStationEdpImpl extends AbstractWorkStation {
 					default:
 						final List<Task> taskList = new ArrayList<>(rowCount);
 						for (int i = 1; i <= rowCount; i++) {
-							taskList.add(new TaskEdpImpl(new IdImpl(infoSystemQuery.getFieldVal(1, InfosysOw1MES.Row.META.ytas.getName()))));
+							taskList.add(new TaskEdpImpl(new IdImpl(infoSystemQuery.getFieldVal(i, InfosysOw1MES.Row.META.ytas.getName()))));
 						}
 						return taskList;
 				}

@@ -35,7 +35,7 @@ public class AjoObjectFactory implements AbasObjectFactory<DbContext> {
 	 */
 	@Override
 	public WorkStationAjoImpl createWorkStation(String workCenterIdNo, int workStationNumber, AbasConnection<DbContext> abasConnection) {
-		return (new WorkStationAjoImpl(workCenterIdNo, workStationNumber, AjoConnection.getAjoContext(abasConnection)));
+		return (new WorkStationAjoImpl(workCenterIdNo, workStationNumber, abasConnection.getConnectionObject()));
 	}
 
 	/* (non-Javadoc)
@@ -43,7 +43,7 @@ public class AjoObjectFactory implements AbasObjectFactory<DbContext> {
 	 */
 	@Override
 	public TaskAjoImpl createTask(Id workSlipId, AbasConnection<DbContext> abasConnection) {
-		return (new TaskAjoImpl(workSlipId, AjoConnection.getAjoContext(abasConnection)));
+		return (new TaskAjoImpl(workSlipId, abasConnection.getConnectionObject()));
 	}
 
 }

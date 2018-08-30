@@ -6,6 +6,7 @@
 
 package phoenix.mes.abas;
 
+import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.db.schema.units.UnitTime;
 import de.abas.erp.db.type.AbasUnit;
 
@@ -18,13 +19,15 @@ import java.util.Map;
  * Alaposztály gyártási feladatok részleteit leíró osztályok implementálásához.
  * @author szizo
  */
-public abstract class AbstractTaskDetails implements Task.Details {
+public abstract class TaskDetails<C> implements Task.Details {
 
 	/**
 	 * Segédosztály a mértékegységek neveinek kíírásához.
 	 * @author szizo
 	 */
 	protected class UnitNamesRepository {
+
+// FIXME Nyelvfüggővé kell tenni!
 
 		/**
 		 * Mértékegység -> név összerendelés.
@@ -38,7 +41,7 @@ public abstract class AbstractTaskDetails implements Task.Details {
 		public String getUnitName(AbasUnit unit) {
 			String unitName = unitNames.get(unit);
 			if (null == unitName) {
-				unitName = AbstractTaskDetails.this.getUnitName(unit);
+				unitName = TaskDetails.this.getUnitName(unit);
 				unitNames.put(unit, unitName);
 			}
 			return unitName;
@@ -52,9 +55,19 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	protected final UnitNamesRepository unitNamesRepository = new UnitNamesRepository();
 
 	/**
+	 * Az Abas-kapcsolat objektuma.
+	 */
+	protected C abasConnectionObject;
+
+	/**
 	 * A munkalap száma.
 	 */
 	protected String workSlipNo = null;
+
+	/**
+	 * A feladat elkezdésének (tervezett) napja.
+	 */
+	protected AbasDate startDate = null;
 
 	/**
 	 * A termék cikkszáma.
@@ -147,15 +160,52 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	protected String stockUnit = null;
 
 	/**
+	 * Konstruktor.
+	 * @param abasConnectionObject Az Abas-kapcsolat objektuma.
+	 */
+	protected TaskDetails(C abasConnectionObject) {
+		this.abasConnectionObject = abasConnectionObject;
+	}
+
+	/**
+	 * @return Az Abas-kapcsolat objektuma.
+	 */
+	protected C getAbasConnectionObject() {
+		return abasConnectionObject;
+	}
+
+	/**
+	 * @param abasConnectionObject Az Abas-kapcsolat objektuma.
+	 */
+	protected void setAbasConnectionObject(C abasConnectionObject) {
+		this.abasConnectionObject = abasConnectionObject;
+	}
+
+	/**
 	 * @param unit Az Abas-mértékegység.
 	 * @return Az Abas-mértékegység neve az aktuálisan beállított kezelőnyelven.
 	 */
 	protected abstract String getUnitName(AbasUnit unit);
 
 	/**
-	 * A tagváltozók kitöltése.
+	 * A munkalaphoz kapcsolódó tagváltozók kitöltése.
 	 */
-	protected abstract void loadFields();
+	protected abstract void loadDataFromWorkSlip();
+
+	/**
+	 * A termékhez kapcsolódó tagváltozók kitöltése.
+	 */
+	protected abstract void loadDataFromProduct();
+
+	/**
+	 * A művelethez kapcsolódó tagváltozók kitöltése.
+	 */
+	protected abstract void loadDataFromOperation();
+
+	/**
+	 * A műveletfoglaláshoz kapcsolódó tagváltozók kitöltése.
+	 */
+	protected abstract void loadDataFromOperationReservation();
 
 	/**
 	 * Adott műveleti idő bruttósítása.
@@ -195,9 +245,20 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	@Override
 	public String getWorkSlipNo() {
 		if (null == workSlipNo) {
-			loadFields();
+			loadDataFromWorkSlip();
 		}
 		return workSlipNo;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task.Details#getStartDate()
+	 */
+	@Override
+	public AbasDate getStartDate() {
+		if (null == workSlipNo) {
+			loadDataFromWorkSlip();
+		}
+		return startDate;
 	}
 
 	/* (non-Javadoc)
@@ -205,8 +266,8 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	 */
 	@Override
 	public String getProductIdNo() {
-		if (null == workSlipNo) {
-			loadFields();
+		if (null == productIdNo) {
+			loadDataFromProduct();
 		}
 		return productIdNo;
 	}
@@ -216,8 +277,8 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	 */
 	@Override
 	public String getProductSwd() {
-		if (null == workSlipNo) {
-			loadFields();
+		if (null == productIdNo) {
+			loadDataFromProduct();
 		}
 		return productSwd;
 	}
@@ -227,8 +288,8 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	 */
 	@Override
 	public String getProductDescription() {
-		if (null == workSlipNo) {
-			loadFields();
+		if (null == productIdNo) {
+			loadDataFromProduct();
 		}
 		return productDescription;
 	}
@@ -238,8 +299,8 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	 */
 	@Override
 	public String getProductDescription2() {
-		if (null == workSlipNo) {
-			loadFields();
+		if (null == productIdNo) {
+			loadDataFromProduct();
 		}
 		return productDescription2;
 	}
@@ -250,7 +311,7 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	@Override
 	public String getUsage() {
 		if (null == workSlipNo) {
-			loadFields();
+			loadDataFromWorkSlip();
 		}
 		return usage;
 	}
@@ -278,8 +339,8 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	 */
 	@Override
 	public String getOperationIdNo() {
-		if (null == workSlipNo) {
-			loadFields();
+		if (null == operationIdNo) {
+			loadDataFromOperation();
 		}
 		return operationIdNo;
 	}
@@ -289,8 +350,8 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	 */
 	@Override
 	public String getOperationSwd() {
-		if (null == workSlipNo) {
-			loadFields();
+		if (null == operationIdNo) {
+			loadDataFromOperation();
 		}
 		return operationSwd;
 	}
@@ -300,8 +361,8 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	 */
 	@Override
 	public String getOperationDescription() {
-		if (null == workSlipNo) {
-			loadFields();
+		if (null == operationIdNo) {
+			loadDataFromOperation();
 		}
 		return operationDescription;
 	}
@@ -311,8 +372,8 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	 */
 	@Override
 	public String getOperationReservationText() {
-		if (null == workSlipNo) {
-			loadFields();
+		if (null == operationReservationText) {
+			loadDataFromOperationReservation();
 		}
 		return operationReservationText;
 	}
@@ -323,7 +384,7 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	@Override
 	public BigDecimal getSetupTime() {
 		if (null == workSlipNo) {
-			loadFields();
+			loadDataFromWorkSlip();
 		}
 		return setupTime;
 	}
@@ -334,7 +395,7 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	@Override
 	public String getSetupTimeUnit() {
 		if (null == workSlipNo) {
-			loadFields();
+			loadDataFromWorkSlip();
 		}
 		return setupTimeUnit;
 	}
@@ -345,7 +406,7 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	@Override
 	public BigDecimal getUnitTime() {
 		if (null == workSlipNo) {
-			loadFields();
+			loadDataFromWorkSlip();
 		}
 		return unitTime;
 	}
@@ -356,7 +417,7 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	@Override
 	public String getUnitTimeUnit() {
 		if (null == workSlipNo) {
-			loadFields();
+			loadDataFromWorkSlip();
 		}
 		return unitTimeUnit;
 	}
@@ -367,7 +428,7 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	@Override
 	public BigDecimal getNumberOfExecutions() {
 		if (null == workSlipNo) {
-			loadFields();
+			loadDataFromWorkSlip();
 		}
 		return numberOfExecutions;
 	}
@@ -378,7 +439,7 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	@Override
 	public BigDecimal getOutstandingQuantity() {
 		if (null == workSlipNo) {
-			loadFields();
+			loadDataFromWorkSlip();
 		}
 		return outstandingQuantity;
 	}
@@ -388,8 +449,8 @@ public abstract class AbstractTaskDetails implements Task.Details {
 	 */
 	@Override
 	public String getStockUnit() {
-		if (null == workSlipNo) {
-			loadFields();
+		if (null == productIdNo) {
+			loadDataFromProduct();
 		}
 		return stockUnit;
 	}

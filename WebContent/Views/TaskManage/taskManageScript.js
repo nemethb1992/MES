@@ -113,23 +113,23 @@ function BuildUp()
     }
 });
 	}
-function TaskSizeSwitch(item)
-{
-		var height = $(item).height();
-		if(height < 100)
-		{
-		$('.dnd-container').animate({height:'50px'}, 120)
-		$(item).find('.dnd-downer').hide();
-		$(item).animate({height:'100px'}, 120)
-		$(item).find('.dnd-downer').show();
-		}
-		else{
-			$(item).animate({height:'50px'}, 120)
-			$(item).find('.dnd-downer').hide();
-		}
-		
-	
-}
+//function TaskSizeSwitch(item)
+//{
+//		var height = $(item).height();
+//		if(height < 100)
+//		{
+//		$('.dnd-container').animate({height:'60px'}, 120)
+//		$('.dnd-downer').hide();
+//		$(item).animate({height:'150px'}, 120)
+//		$(item).find('.dnd-downer').show();
+//		}
+//		else{
+//			$(item).animate({height:'50px'}, 120)
+//			$(item).find('.dnd-downer').hide();
+//		}
+//		
+//	
+//}
 function ButtonScriptElements()
 {
 	$(".refresh_abaslist_btn").click(function(){
@@ -172,12 +172,12 @@ function ButtonScriptElements()
 
 	$('.tmts_stationBtnDivCont').click(function(){
 		$('.tmts_stationBtnDivCont').css({'background-image':'','background-color' : '','border-left':''})
-		$(this).css({'background-image':'url(/MES/Public/icons/computerSignRed.svg)','background-color' : '#ebebeb','border-left':'5px solid #ff6666'})
+		$(this).css({'background-image':'url(Public/icons/computerSignRed.svg)','background-color' : '#ebebeb','border-left':'5px solid #ff6666'})
 		var AllomasNev = $(this).children('.si1').val();
 		$('.ts_wsNameInp').val(AllomasNev);
 	});
 	$('.ts_searchInp').focusin(function(){
-		$(this).css({'width':'70%','max-width':'200px'});
+		$(this).css({'width':'55%','max-width':'200px'});
 	});
 	$('.ts_searchInp').focusout(function(){
 		if($(this).val() == "")

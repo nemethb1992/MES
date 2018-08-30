@@ -30,6 +30,11 @@ public interface Task extends Serializable {
 		String getWorkSlipNo();
 
 		/**
+		 * @return A feladat elkezdésének (tervezett) napja.
+		 */
+		AbasDate getStartDate();
+
+		/**
 		 * @return A termék cikkszáma.
 		 */
 		String getProductIdNo();

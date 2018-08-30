@@ -6,14 +6,14 @@
 {
 	float: right;
 	cursor: pointer;
-    background-image: url(/dmes/Public/icons/share-task.svg);
+    background-image: url(Public/icons/share-task.svg);
     background-size: 70%;
     background-repeat: no-repeat;
     background-position: center;
 }
 .pass-item-remove
 {
-    background-image: url(/dmes/Public/icons/remove-task.svg);
+    background-image: url(Public/icons/remove-task.svg);
     background-size: 60%;
 }
 .refresh_btn
@@ -22,7 +22,7 @@
     height: 100%;
     width: 50px;
     float: right;
-    background-image: url(/dmes/Public/icons/reload.svg);
+    background-image: url(Public/icons/reload.svg);
     background-size: 50%;
     background-repeat: no-repeat;
     background-position: center;
@@ -32,39 +32,25 @@
 {
     
     height: 80%;
-    width: 40px;
+    width: 15%;
     float: right;
     background: #efefef;
-    background-image: url(/dmes/Public/icons/reload.svg);
+    background-image: url(Public/icons/reload.svg);
     background-size: 50%;
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
     margin: 6px;
-    margin-right: 14px;
     border: none;
     border-radius: 5px;
 }
 .refresh_abaslist_btn:hover
 {
     background: #d9d9d9;
-    background-image: url(/dmes/Public/icons/reload.svg);
+    background-image: url(Public/icons/reload.svg);
     background-size: 50%;
     background-repeat: no-repeat;
     background-position: center;
-}
-.datepicker_own
-{
-height: 80%;
-    font-size: 19px;
-    background: #efefef;
-    padding-left: 15px;
-    margin-top: 6px;
-}
-.abasList-datepicker
-{
-	height: 100%;
-	float: right;
 }
 .tmts_stationBtnDivCont
 {
@@ -73,14 +59,21 @@ height: 80%;
 	background: white;
 	border-left: 5px solid #ff6666;
     border-bottom: 1px solid #e0e6e8;
-    background-image: url(/dmes/Public/icons/computerSignGray.svg);
+    background-image: url(Public/icons/computerSignGray.svg);
     background-size: 13%;
     background-repeat: no-repeat;
-    background-position-x: 97%;
+    background-position-x: 93%;
     background-position-y: center;
     cursor: pointer;
     z-index: 0;
 }
+.abasList-datepicker
+{
+	height: 100%;
+	width: 50%;
+	float: right;
+}
+
 .TM_btn_select
 {
     width: 24%;
@@ -233,14 +226,14 @@ height: 80%;
 .sortContDivLeft
 {
 	float: left;
-    width: 20%;
+    width: 16%;
     margin-right: 10px;
 }
 .sortContDivRight
 {
 	float: left;
     /* margin: 0 10px; */
-    width: 77%;
+    width: 80%;
     background: white;
 }
 
@@ -297,7 +290,10 @@ height: 80%;
 {
 	float: left;
 	height: 50px;
-/*     width: 100%; */
+}
+.datepicker-50
+{
+    width: 50%;
 }
 .input-icon-holderDiv input
 {
@@ -381,7 +377,7 @@ height: 80%;
 .dnd-container
 {
 /*     margin: 0 1%; */
-	height: 50px;
+	height: 135px;
 	border: 1px solid #e0e6e8;
 	border-top: none;
 	background: white;
@@ -405,23 +401,27 @@ height: 80%;
 }
 .dnd-input-container
 {
-	width: 87%;
 	overflow: hidden;
 /* 	background: red; */
 }
 .dnd-input-div
 {
-    width: 30.5%;
+    width: 45%;
 	display: inline-table;
 	margin: 5px 0 0 5px;
 }
-.dnd-input-div input
+.dnd-input
 {
 	padding:2px 2px 2px 0;
 	color: black;
 	font-size: medium;
 	background: none;
 	width: 100%;
+	word-wrap: break-word;
+}
+.dnd-input-div p, .dnd-input-div input
+{
+	font-size: 12px;
 }
 .dnd-input-cont
 {
@@ -429,5 +429,5 @@ height: 80%;
 }
 .dnd-downer
 {
-	display: none;
+/* 	display: none; */
 }

@@ -13,9 +13,10 @@ import java.io.ObjectStreamException;
 
 /**
  * Alaposztály a gyártási feladat típus implementálásához.
+ * @param <C> Az Abas-kapcsolat típusa.
  * @author szizo
  */
-public abstract class AbstractTask implements Task {
+public abstract class AbstractTask<C> implements Task {
 
 	/**
 	 * Az objektum kiírhatóságához kell.
@@ -28,11 +29,23 @@ public abstract class AbstractTask implements Task {
 	protected final Id workSlipId;
 
 	/**
+	 * Az Abas-kapcsolat osztálya.
+	 */
+	protected final Class<C> abasConnectionType;
+
+	/**
+	 * A gyártási feladat részleteit leíró objektum.
+	 */
+	protected transient TaskDetails<C> details = null;
+
+	/**
 	 * Konstruktor.
 	 * @param workSlipId A feladathoz tartozó munkalap azonosítója.
+	 * @param abasConnectionType Az Abas-kapcsolat osztálya.
 	 */
-	protected AbstractTask(Id workSlipId) {
+	protected AbstractTask(Id workSlipId, Class<C> abasConnectionType) {
 		this.workSlipId = workSlipId;
+		this.abasConnectionType = abasConnectionType;
 	}
 
 	/* (non-Javadoc)
@@ -79,5 +92,27 @@ public abstract class AbstractTask implements Task {
 	public Id getWorkSlipId() {
 		return workSlipId;
 	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task#getDetails(phoenix.mes.abas.AbasConnection)
+	 */
+	@Override
+	public TaskDetails<C> getDetails(AbasConnection<?> abasConnection) {
+		final C abasConnectionObject = AbasConnection.getConnectionObject(abasConnection, abasConnectionType);
+		if (null == details) {
+			details = getDetails(abasConnectionObject);
+		} else {
+			if (!details.getAbasConnectionObject().equals(abasConnectionObject)) {
+				details.setAbasConnectionObject(abasConnectionObject);
+			}
+		}
+		return details;
+	}
+
+	/**
+	 * @param abasConnectionObject Az Abas-kapcsolat objektuma.
+	 * @return A gyártási feladat részleteit leíró objektum.
+	 */
+	protected abstract TaskDetails<C> getDetails(C abasConnectionObject);
 
 }

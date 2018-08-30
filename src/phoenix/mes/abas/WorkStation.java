@@ -29,7 +29,7 @@ public interface WorkStation extends Serializable {
 	int getNumber();
 
 	/**
-	 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa.
+	 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa (AbasDate.INFINITY, ha nincs szükség időkorlátra).
 	 * @param abasConnection Az Abas-kapcsolat.
 	 * @return A vizsgált kezdődátum-intervallumba eső, a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt feladatok listája.
 	 */

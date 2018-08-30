@@ -62,7 +62,7 @@ public class WorkStationAjoImpl extends AbstractWorkStation {
 		}
 
 		/**
-		 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa.
+		 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa (AbasDate.INFINITY, ha nincs szükség időkorlátra).
 		 * @return A vizsgált kezdődátum-intervallumba eső, a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt feladatok listája.
 		 */
 		public List<Task> getUnassignedTasks(AbasDate startDateUntil) {
@@ -369,9 +369,6 @@ public class WorkStationAjoImpl extends AbstractWorkStation {
 		return (new TaskManager(AjoConnection.getAjoContext(abasConnection))).getNextExecutableTask();
 	}
 
-	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.WorkStation#setTaskExecutionOrder(de.abas.erp.common.type.Id, de.abas.erp.common.type.Id, phoenix.mes.abas.AbasConnection)
-	 */
 	@Override
 	public void setTaskExecutionOrder(Id taskId, Id precedingTaskId, AbasConnection<?> abasConnection) {
 		final DbContext ajoContext = AjoConnection.getAjoContext(abasConnection);

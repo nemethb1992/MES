@@ -14,6 +14,24 @@ package phoenix.mes.abas;
 public interface AbasConnection<C> {
 
 	/**
+	 * @param abasConnection Az Abas-kapcsolat.
+	 * @param abasConnectionType Az Abas-kapcsolat (feltételezett) osztálya.
+	 * @return Az Abas-kapcsolat objektuma.
+	 * @throws IllegalArgumentException Ha az Abas-kapcsolat nem a megadott típusú.
+	 */
+	public static <C> C getConnectionObject(AbasConnection<?> abasConnection, Class<C> abasConnectionType) {
+		try {
+			final C connectionObject = abasConnectionType.cast(abasConnection.getConnectionObject());
+			if (null == connectionObject) {
+				throw new NullPointerException("Az Abas-kapcsolat objektuma nem lehet null!");
+			}
+			return connectionObject;
+		} catch (ClassCastException e) {
+			throw new IllegalArgumentException("Nem megfelelő Abas-kapcsolattípus: " + abasConnection.getClass().getName(), e);
+		}
+	}
+
+	/**
 	 * Az Abas-adatbázisszerver neve.
 	 */
 	String SERVER_NAME = "abasdb.pmhu.local";

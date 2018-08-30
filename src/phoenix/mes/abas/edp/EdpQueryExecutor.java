@@ -6,10 +6,16 @@
 
 package phoenix.mes.abas.edp;
 
+import de.abas.ceks.jedp.EDPQuery;
+import de.abas.ceks.jedp.EDPRuntimeException;
+import de.abas.ceks.jedp.EDPSession;
+import de.abas.ceks.jedp.InvalidQueryException;
+import de.abas.erp.common.type.Id;
+
 import java.lang.reflect.Field;
 
 /**
- *
+ * Osztály EDP-n keresztüli lekérdezésekhez.
  * @author szizo
  */
 public class EdpQueryExecutor {
@@ -40,6 +46,42 @@ public class EdpQueryExecutor {
 	 */
 	public String[] getFieldNames() {
 		return fieldNames;
+	}
+
+	/**
+	 * Adatrekord betöltése.
+	 * @param recordId A rekord azonosítója.
+	 * @param edpSession Az EDP-munkamenet.
+	 * @return Az EDP-lekérdezés objektuma (null, ha a megadott azonosítóval nem található adatrekord).
+	 */
+	public EDPQuery readRecord(Id recordId, EDPSession edpSession) {
+		return readRecord(recordId.toString(), edpSession);
+	}
+
+	/**
+	 * Adatrekord betöltése.
+	 * @param recordId A rekord azonosítója.
+	 * @param edpSession Az EDP-munkamenet.
+	 * @return Az EDP-lekérdezés objektuma (null, ha a megadott azonosítóval nem található adatrekord).
+	 */
+	public EDPQuery readRecord(String recordId, EDPSession edpSession) {
+		final EDPQuery edpQuery = createQuery(edpSession);
+		try {
+			return (edpQuery.readRecord(recordId, fieldNames) ? edpQuery : null);
+		} catch (InvalidQueryException e) {
+			throw new EDPRuntimeException(e);
+		}
+	}
+
+	/**
+	 * EDP-lekérdezés megnyitása.
+	 * @param edpSession Az EDP-lekérdezés.
+	 * @return A megnyitott EDP-lekérdezés.
+	 */
+	protected EDPQuery createQuery(EDPSession edpSession) {
+		final EDPQuery edpQuery = edpSession.createQuery();
+		edpQuery.enableQueryMetaData(false);
+		return edpQuery;
 	}
 
 }

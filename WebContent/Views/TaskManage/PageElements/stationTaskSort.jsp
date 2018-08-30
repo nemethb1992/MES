@@ -28,8 +28,8 @@
 	<div class='sortStationListCont'>
 		<div class='sortContDiv_nav'>		
 			<div class='abas-list-head sort-list-head sort-list'>
-						<div class='input-icon-holderDiv'><img class='icon-form search-icon-form AbasSearchImg' src='${pageContext.request.contextPath}/Public/icons/searchSign.svg'><input class='ts_searchInp AbasSearchIn' value=''></div>
-			<div class='abasList-datepicker'>
+						<div class='input-icon-holderDiv datepicker-50'><img class='icon-form search-icon-form AbasSearchImg' src='${pageContext.request.contextPath}/Public/icons/searchSign.svg'><input class='ts_searchInp AbasSearchIn' value=''></div>
+			<div class='abasList-datepicker '>
 					<input class='datepicker_own' type='date'/>
 					<Button class='refresh_abaslist_btn'/>
 		  </div>
@@ -65,8 +65,6 @@
 <!-- 								<p>Input neve</p> -->
 <!-- 								<input disabled class='dnd-input dnd-in3' value='input value'> -->
 <!-- 							</div> -->
-<!-- 						</div> -->
-<!-- 						<div class='dnd-downer'> -->
 <!-- 							<div class='dnd-input-div'> -->
 <!-- 								<p>Input neve</p> -->
 <!-- 								<input disabled class='dnd-input dnd-in4' value='input value'> -->
@@ -80,8 +78,10 @@
 <!-- 								<input disabled class='dnd-input dnd-in6' value='input value'> -->
 <!-- 							</div> -->
 <!-- 						</div> -->
+	
 <!-- 					</div> -->
 <!-- 				</div> -->
+				
 				</div>
 			</div>	
 			<div class='ws-list-holder sort-list-holder sort-list'>

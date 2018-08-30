@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,7 +33,8 @@ import sun.security.x509.Extension;
 public class AbasTaskList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     langsrc l = new langsrc();   
-	
+
+	String lng;
 	String station="";
 	String date="";
 	
@@ -41,7 +43,10 @@ public class AbasTaskList extends HttpServlet {
     public AbasTaskList() {
         super();
     }
-
+	String Word(int index)
+	{
+		return l.LanguageSelector(lng, index);
+	}
     private String AbasList()
     {
 
@@ -59,37 +64,38 @@ public class AbasTaskList extends HttpServlet {
           	for (Task task: li) {
           		final Task.Details taskDetails = task.getDetails(abasConnection);
           		layout += "			<div class='dnd-container'OnClick='TaskSizeSwitch(this)' value='3'><div class='icon-form dnd-icon pass-item' OnClick='AddToList(this)' value='abas'></div>\r\n" + 
-            			"					<div class='dnd-input-container'>\r\n" + 
-            			"						<div class='dnd-upper'>\r\n" + 
-            			"							<div class='dnd-input-div'>\r\n" + 
-          				"								<p>Munkaszám</p>\r\n" + 
-            			"								<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getWorkSlipNo()+"'>\r\n" + 
-            			"							</div>\r\n" + 
-            			"							<div class='dnd-input-div'>\r\n" + 
-            			"								<p>Cikkszám</p>\r\n" + 
-            			"								<input disabled class='dnd-input dnd-in2' value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
-            			"							</div>\r\n" + 
-            			"							<div class='dnd-input-div'>\r\n" + 
-            			"								<p>Keresőszó</p>\r\n" + 
-            			"								<input disabled class='dnd-input dnd-in3' value='"+taskDetails.getProductSwd()+"'>\r\n" + 
-          				"							</div>\r\n" + 
-          				"						</div>\r\n" + 
-          				"						<div class='dnd-downer'>\r\n" + 
-          				"							<div class='dnd-input-div'>\r\n" + 
-          				"								<p>Termék megnevezés</p>\r\n" + 
-          				"								<input disabled class='dnd-input dnd-in4' value='"+taskDetails.getProductDescription()+"'>\r\n" + 
-          				"							</div>\r\n" + 
-          				"							<div class='dnd-input-div'>\r\n" + 
-          				"								<p>Termék megnevezés 2</p>\r\n" + 
-          				"								<input disabled class='dnd-input dnd-in5' value='"+taskDetails.getProductDescription2()+"'>\r\n" + 
-          				"							</div>\r\n" + 
-          				"							<div class='dnd-input-div'>\r\n" + 
-          				"								<p>Felhasználás</p>\r\n" + 
-          				"								<input disabled class='dnd-input dnd-in6' value='"+taskDetails.getUsage()+"'>\r\n" + 
-            			"							</div>\r\n" + 
-            			"						</div>\r\n" + 
-            			"					</div>\r\n" + 
-            			"				</div>";
+    			"					<div class='dnd-input-container'>\r\n" + 
+    			"						<div class='dnd-upper'>\r\n" + 
+    			"							<div class='dnd-input-div'>\r\n" + 
+    				"								<p>Munkaszám</p>\r\n" + 
+    			"								<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getWorkSlipNo()+"'>\r\n" + 
+    			"							</div>\r\n" + 
+    			"							<div class='dnd-input-div'>\r\n" + 
+    			"								<p>Cikkszám</p>\r\n" + 
+    			"								<input disabled class='dnd-input dnd-in2' value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
+    			"							</div>\r\n" + 
+    			"							<div class='dnd-input-div'>\r\n" + 
+    			"								<p>Keresőszó</p>\r\n" + 
+    			"								<input disabled class='dnd-input dnd-in3' value='"+taskDetails.getProductSwd()+"'>\r\n" + 
+    				"							</div>\r\n" + 
+    				"							<div class='dnd-input-div'>\r\n" + 
+    				"								<p>Felhasználás</p>\r\n" + 
+    				"								<input disabled class='dnd-input dnd-in6' value='"+taskDetails.getUsage()+"'>\r\n" + 
+    			"							</div>\r\n" + 
+    				"							<div class='dnd-input-div'>\r\n" + 
+    				"								<p>Termék megnevezés</p>\r\n" + 
+    				"								<input disabled class='dnd-input dnd-in4' value='"+taskDetails.getProductDescription()+"'>\r\n" + 
+    				"							</div>\r\n" + 
+
+    				"							<div class='dnd-input-div'>\r\n" + 
+    				"								<p>Termék megnevezés 2</p>\r\n" + 
+    				"								<input disabled class='dnd-input dnd-in5' value='"+taskDetails.getProductDescription2()+"'>\r\n" + 
+    				"							</div>\r\n" + 
+
+    			"						</div>\r\n" + 
+    			"					</div>\r\n" + 
+    			"				</div>";
+
           	}
     	}catch(LoginException e)
     	{
@@ -111,14 +117,21 @@ public class AbasTaskList extends HttpServlet {
 		String dateSeged [];
 		station = request.getParameter("station");
 		date = request.getParameter("date");
-		System.out.println(date + " request utáni");
 		if(date == "" || date == null)
 		{
 	    	DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 	    	Date today = new Date();
 	    	date = dateFormat.format(today);
 		}
-		System.out.println(date + " elvileg ha nullos");
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+         for (Cookie cookie : cookies) {
+           if (cookie.getName().equals("language")) {
+        	   lng = cookie.getValue();
+            }
+          }
+        }
 		
 	    response.setContentType("text/plain"); 
 	    response.setCharacterEncoding("UTF-8"); 
@@ -131,3 +144,4 @@ public class AbasTaskList extends HttpServlet {
 	}
 
 }
+
