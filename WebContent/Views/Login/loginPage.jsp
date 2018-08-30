@@ -20,30 +20,55 @@
                         <img class="lang_icon" src="${pageContext.request.contextPath}/Public/icons/HU.svg">
                     </div>
                 </div>
-       		        <input type="checkbox" id="LayoutSwitch" name="feature" value="scales" checked />                
-       		<div id='loginFrame' class='mycontainer'>
-
-       			<div id='loginLeftSide' class='FrameSides'>
-<!--     <input id="from-datepicker" class="dp-input w-50 h-50" placeholder="Idöpont" readonly/> -->
-       				<div id='loginPicture'>
+       		        <input type="checkbox" id="LayoutSwitch" name="feature" value="scales" checked /> 
+       		        
+       		        
+       		        
+       		        
+       		         
+        <div class="container">      
+            <div class="login-row row  w-100 mt-5 align-self-center">       
+<!--        		<div id='loginFrame' class='mycontainer'> -->
+       			<div id='loginLeftSide' class='col-md-1 col-lg-5 d-none d-md-block'>
+       			
+       			
+       				<div id='loginPicture' class='m-3 d-md-none d-lg-block'>
        				</div>
        				
        				<div id='FooterName'>
-       				<p>Phoenix Mecano Kecskemét kft</p>
+       				<p class='d-md-none d-lg-block'>Phoenix Mecano Kecskemét kft</p>
        				</div>
-       			</div>
-       			<div id='loginRightSide' class='FrameSides'>
-       				<div id='LR_1'><p id='p_loginName'></p></div>
-       				<div id='LR_2'><img src='${pageContext.request.contextPath}/Public/icons/padlock.svg'></div>
-       				<div id='LR_3'><p id='login_title'>Bejelentkezés:</p></div>
-       				<form id='LR_form' method='POST' action='${pageContext.request.contextPath}/Dashboard'>
-       				<input class='inp_login' placeholder='' id='inp_username' type='text' value=''>
-       				<input class='inp_login' placeholder='' id='inp_pass' type='password' value=''>
-       				<input class='inp_login' id='inp_enterbutton' type='submit' value='Tovább'>
        				
-       				<div id='test'></div>
-       				<div id='test2'></div>
+       				
+       			</div>
+       			<div id='loginRightSide' class='col-md-11 col-lg-7 px-4'>
+       				<div class="form-group my-4 ">
+       				<div id='LR_1'><p id='p_loginName'></p></div>
+					</div>
+       				<div id='LR_2'><img src='${pageContext.request.contextPath}/Public/icons/padlock.svg'></div>
+       				<form id='LR_form' method='POST' action='${pageContext.request.contextPath}/Dashboard'>
+       				
+       				<div class="form-group">
+       				<p id='login_title' class='w-100 w-100 h5 mt-5'>Bejelentkezés:</p>
+					</div>
+       				<div class="form-group mb-0">
+       				<input class='inp_login px-3 w-100' placeholder='' id='inp_username' type='text' value='balazs.nemeth'>
+					</div>
+       				<div class="form-group">
+       				<input class='inp_login px-3 w-100' placeholder='' id='inp_pass' type='password' value='3HgB8Wy3HgB8Wy'>
+					</div>
+       				<div class="form-group">
+       				<input class='inp_login w-100' id='inp_enterbutton' type='submit' value='Tovább'>
+					</div>
+					
        				</form>
        			</div>
        		</div>	
-<%@include  file="/Views/Footer.jsp"%>     
+       		</div>	
+<!--        </div>	 -->
+       	</div>	
+       		
+       		
+       		
+       		
+       		<%@include  file="/Views/Footer.jsp"%>     

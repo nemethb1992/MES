@@ -3,7 +3,6 @@ var path = location.pathname.split('/')[1];
 $(document).ready(function(){
 	TV_startUp();
 	TabControlEventHolder();
-	DataSheet_Load();
 	langIconFirst();
 	Language_Startup($.cookie("language"),'3');
 
@@ -32,16 +31,8 @@ function DataSheet_Load()
 	$.ajax({
 	    url:  '/'+path+'/DataSheet',
 	    success: function (respond) {
-	    	$( "#tab1_container" ).empty();
-	    	  $( "#tab2_container" ).empty();
-	    	  $( "#tab3_container" ).empty();
-	    	  $( "#tab4_container" ).empty();
-	    	  $( "#tab1_container" ).append(respond[0]);
-	    	  $( "#tab2_container" ).append(respond[1]);
-	    	  $( "#tab3_container" ).append(respond[2]);
-	    	  $( "#tab4_container" ).append(respond[3]);
-//	    		  console.log(respond[4]);
-	    	
+	    	Data_Clear();
+	    	Data_Load(respond);
 	    }
 	});
 //	$.ajax({
@@ -52,14 +43,20 @@ function DataSheet_Load()
 //	    }
 //	});
 }
-function DataSheet_Clear()
+function Data_Load(data)
+{
+//	  $( "#tab1_container" ).append(data[0]);
+	  $( "#tab2_container" ).append(data[1]);
+	  $( "#tab3_container" ).append(data[2]);
+	  $( "#tab4_container" ).append(data[3]);
+}
+function Data_Clear()
 {
 	
-	    	  $( "#tab1_container" ).empty();
+//	    	  $( "#tab1_container" ).empty();
 	    	  $( "#tab2_container" ).empty();
 	    	  $( "#tab3_container" ).empty();
 	    	  $( "#tab4_container" ).empty();
-//	    		  console.log(result);
 }
 function TV_startUp()
 {

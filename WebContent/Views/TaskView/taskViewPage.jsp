@@ -13,56 +13,83 @@
                         <img class="lang_icon" src="${pageContext.request.contextPath}/Public/icons/HU.svg">
                     </div>
                 </div>
-	<div id='container' class='mycontainer'>
-		<div id='leftwrap'>
-			<div id='leftwrapImg'>
-			</div>
-			<p>Menu</p>
-			<div class='sideMenuContainer'></div>
-						<form method='POST' action='${pageContext.request.contextPath}/Home'>
-			<input class='btn_logout' type='submit' value=''></input>
-			</form>
-		</div>
-		<div id='contentFrame'>
-			<div id='contentHeader'>
-				<div id='timerContainer' class='cc_element leftSide'>
-					<img src='${pageContext.request.contextPath}/Public/icons/timer.svg'>
-					<p id='timerP'>0:00:00</p>
-				</div>
-				<div id='navigationContainer' class='cc_element rightSide'>
-					<div id='btn_lejelentes' class='btn_navHeader'>
-					<p class='navBtnInside_element' id='p_lejelentes'>Lejentés</p>
-					<input class='number_Input navBtnInside_element' id=submit_input type='number'/>
-					</div>
-					<div id='btn_megszakitas' class='btn_navHeader'>
-					<p class='navBtnInside_element' id='p_megszakitas'>Megszakítás</p>
-					<input class='number_Input navBtnInside_element' type='number'/>
-					</div>
+<div  class=' container-fluid'>
+	<div class='mycontainer container'>
+		<div class='row mt-5'>
+			<div id='leftwrap' class='col-1 px-0'>
+				<div  class=' container'>
+					<img id='leftwrapImg' src="${pageContext.request.contextPath}/Public/icons/pm_logo_mini_white.svg" class='row mt-3 mx-auto d-block img-fluid'/>
+					<p class='row pt-2 mx-auto'>Menu</p>
+<!-- 					<div class='sideMenuContainer'></div> -->
+					<img class='btn_logout w-100 row pt-2 mx-auto px-3' src="${pageContext.request.contextPath}/Public/icons/logout.svg"/>
 				</div>
 			</div>
-			<div id='contentContainer'>
-				<div id='cc_leftNav' class='cc_element leftSide'>
-					<div id='btn_leftNav_1' class='btn_leftNavigation'>Azonosítók</div>
-					<div id='btn_leftNav_2' class='btn_leftNavigation'>Dokumentumok</div>
-					<div id='btn_leftNav_3' class='btn_leftNavigation'>Darabjegyzék</div>
-					<div id='btn_leftNav_4' class='btn_leftNavigation'>Rendelési info</div>
+		<div class=' col-11 px-0'>
+			<div class='container' >
+				<div id='row '>
+					<div id='timerContainer' class='col-3'>
+						<img src='${pageContext.request.contextPath}/Public/icons/timer.svg'>
+						<p id='timerP'>0:00:00</p>
+					</div>
+					<div class='col-9'>
+						<div id='btn_lejelentes' class='btn_navHeader'>
+							<p class='navBtnInside_element' id='p_lejelentes'>Lejentés</p>
+							<input class='number_Input navBtnInside_element' id=submit_input type='number'/>
+						</div>
+						<div id='btn_megszakitas' class='btn_navHeader'>
+							<p class='navBtnInside_element' id='p_megszakitas'>Megszakítás</p>
+							<input class='number_Input navBtnInside_element' type='number'/>
+						</div>
+					</div>
 				</div>
-				<div id='cc_rightContent' class='cc_element rightSide'>
-					<div id='tab1_container' class='rightCont'>
-<%-- 						<%@include  file="/Views/TaskView/PageElements/tab1.jsp"%>  --%>
+				<div id='row'>
+					<div id='' class='cc_element col-3'>
+						<div id='btn_leftNav_1' class='btn_leftNavigation'>Azonosítók</div>
+						<div id='btn_leftNav_2' class='btn_leftNavigation'>Dokumentumok</div>
+						<div id='btn_leftNav_3' class='btn_leftNavigation'>Darabjegyzék</div>
+						<div id='btn_leftNav_4' class='btn_leftNavigation'>Rendelési info</div>
 					</div>
-					<div id='tab2_container' class='rightCont'>
-<%-- 						<%@include  file="/Views/TaskView/PageElements/tab2.jsp"%>  --%>
+					<div id='' class='cc_element col-9'>
+						<div id='tab1_container' class=''>
+							</div>
+							<div id='tab2_container' class='rightCont'>
+							</div>
+							<div id='tab3_container' class='rightCont'>
+							</div>
+							<div id='tab4_container' class='rightCont'>
+							</div>					
+						</div>
 					</div>
-					<div id='tab3_container' class='rightCont'>
-<%-- 						<%@include  file="/Views/TaskView/PageElements/tab3.jsp"%>  --%>
-					</div>
-					<div id='tab4_container' class='rightCont'>
-<%-- 						<%@include  file="/Views/TaskView/PageElements/tab4.jsp"%>  --%>
-					</div>					
 				</div>
-
 			</div>
 		</div>
 	</div>
+</div>
 <%@include  file="/Views/Footer.jsp"%> 
+
+<!-- 					<div class='inputContainer cc_element'> -->
+<!-- 	<p>Munkaállomás</p><input type='text' value='234PG - 1'/></div> -->
+<!-- <div class='inputContainer cc_element'> -->
+<!-- 	<p>Munkalapszám</p><input type='text' value='141436004'/></div> -->
+<!-- <div class='inputContainer cc_element'> -->
+<!-- 	<p>Cikkszám</p><input type='text' value='00450051558O'/></div> -->
+<!-- <div class='inputContainer cc_element'> -->
+<!-- 	<p>Keresöszó</p><input type='text' value='P45.005155_8'/></div> -->
+<!-- <div class='inputContainer cc_element'> -->
+<!-- 	<p>Megnevezés</p><input type='text' value='Sondergeh-2 IFM TS02 Bedruckung'/></div> -->
+<!-- <div class='inputContainer cc_element'> -->
+<!-- 	<p>Felhasználás</p><input type='text' value='KW30'/></div> -->
+<!-- <div class='inputContainer cc_element'> -->
+<!-- 	<p>Müveleti azonosító</p><input type='text' value='11200P'/></div> -->
+<!-- <div class='inputContainer cc_element'> -->
+<!-- 	<p>Keresöszó</p><input type='text' value='P11200'/></div> -->
+<!-- <div class='inputContainer cc_element'> -->
+<!-- 	<p>Megnevezés</p><input type='text' value='Tisztítás'/></div> -->
+<!-- <div class='inputContainer cc_element'> -->
+<!-- 	<p>Beállítási idö</p><input type='text' value='0.000000'/></div> -->
+<!-- <div class='inputContainer cc_element'> -->
+<!-- 	<p>Darabidö</p><input type='text' value='0.180000'/></div> -->
+<!-- <div class='inputContainer cc_element'> -->
+<!-- 	<p>Nyitott mennyiség</p><input type='text' value='1022.000'/></div> -->
+<!-- <div class='inputContainer BigTextInput cc_element'> -->
+<!-- 	<p>Gyártási információ</p><textarea>null</textarea></div> -->

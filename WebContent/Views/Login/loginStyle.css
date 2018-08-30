@@ -20,19 +20,21 @@
 {
 	height: 100%;
 }
+.login-row
+{
+	max-width: 720px !important;
+	margin: 0 auto;
+	height: 620px !important;
+}
 #loginRightSide
 {
-	width: 60%;
 	background: white;
-	float: right;
     color: #878782;
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
 }
 #loginLeftSide
 {
-	width: 40%;
-	float: left;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     background: #ff6666;
@@ -53,7 +55,6 @@
 }
 #LR_1 p
 {
-    padding: 30px 0 0 55px;
     color: #b3b3b3;
     font-size: 32px;
     font-family: mediumFont;
@@ -88,15 +89,13 @@
 }
 .inp_login
 {
-    width: 60%; 
-	margin: 0 auto;
-	height: 50px;        
-	border-style: none;
-	font-size: 19px;
+height: 50px;
+    border-style: none;
+    font-size: 19px;
     display: block;
     color: #878782;
     background: #f2f2f2;
-    padding: 0 5%;
+
 }
 #inp_username
 {
@@ -111,15 +110,12 @@
 }
 #inp_enterbutton
 {
-
-    margin: 10px auto 0 auto;
     height: 65px;
     cursor: pointer;
     transition: background 0.3s, color 0.2s;
-    border-radius: 10px; 
+    border-radius: 10px;
     text-align: center;
     transition: 0.2s;
-    width: 70%; 
 }
 #inp_enterbutton:hover
 {

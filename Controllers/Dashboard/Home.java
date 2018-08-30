@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Session.Session_Datas;
+
 /**
  * Servlet implementation class Home
  */
@@ -19,6 +21,10 @@ public class Home extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Session_Datas.setUsername(null);
+		Session_Datas.setPassword(null);
+		Session_Datas.setWS_Group(null);
+		Session_Datas.setWS_No(0);
 	}
 
 

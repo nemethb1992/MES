@@ -20,13 +20,6 @@ height: 80%;
 }
 .btn_logout
 {
-    width: 100%;
-    height: 70px;
-    background: url(Public/icons/logout.svg);
-    background-repeat: no-repeat;
-    background-size: 33%;
-    background-position: center;
-    border-bottom-left-radius: 5px;
     cursor: pointer;
 }
 textarea
@@ -42,7 +35,7 @@ input
     border: none;
 }
 body{
-
+	background: transparent;
     font-family: lightFont;
     color: #888888;
 }
@@ -90,16 +83,6 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff796d', end
 	box-shadow: 0px 1px 7px #dadada;
 	-moz-box-shadow: 0px 1px 7px #dadada;
 	-webkit-box-shadow: 0px 1px 7px #dadada;
-}
-.sideMenuContainer
-{
-    width: auto;
-    height: 74%;
-}
-
-#leftwrap P
-{
-	padding-top: 32%;
 }
 .btnstyle
 {
