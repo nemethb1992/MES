@@ -114,10 +114,10 @@ function Language_Operator(data,ln)
     $("#p_megszakitas").html(data[53][ln]);
     $("#p_lejelentes").html(data[13][ln]);
     
-    $("#btn_leftNav_1").html(data[52][ln]);
-    $("#btn_leftNav_2").html(data[23][ln]);
-    $("#btn_leftNav_3").html(data[24][ln]);
-    $("#btn_leftNav_4").html(data[25][ln]);
+    $(".nav-btn-1").text(data[52][ln]);
+    $(".nav-btn-2").text(data[23][ln]);
+    $(".nav-btn-3").text(data[24][ln]);
+    $(".nav-btn-4").text(data[25][ln]);
 	DataSheet_Load();
 }
 

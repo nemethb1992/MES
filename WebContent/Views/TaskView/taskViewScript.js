@@ -1,7 +1,6 @@
 var path = location.pathname.split('/')[1];
 
 $(document).ready(function(){
-	TV_startUp();
 	TabControlEventHolder();
 	langIconFirst();
 	Language_Startup($.cookie("language"),'3');
@@ -58,11 +57,11 @@ function Data_Clear()
 	    	  $( "#tab3_container" ).empty();
 	    	  $( "#tab4_container" ).empty();
 }
-function TV_startUp()
-{
-	$('#btn_leftNav_1').css({'background-color':'#f5f5f5','background-size':'24%','border-left':'3px solid #ff6666'});
-	$('#tab1_container').css('display','block');
-}
+//function TV_startUp()
+//{
+////	$('#btn_leftNav_1').css({'background-color':'#f5f5f5','background-size':'24%','border-left':'3px solid #ff6666'});
+////	$('#tab1_container').css('display','block');
+//}
 function TabControlEventHolder()
 {
 	$('.btn_logout').click(function(){
