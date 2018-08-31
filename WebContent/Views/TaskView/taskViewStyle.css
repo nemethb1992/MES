@@ -83,11 +83,7 @@
 }
 .inputContainer
 {
-	width: 29.95%;
-    min-width: 29%;
     height: 75px;
-    margin: 5px 1.45%;
-    display: inline-block;
     color: #989898;
     background: white;
 }
@@ -150,15 +146,15 @@
 }
 #documentContainer p
 {
-	height:4%;
+	height: 30px;
 	border-bottom: 1px solid #dedede;
 }
 .documentBlock
 {
-	height: 75px;
-	padding: 5px;
-	margin: 15px 8px 8px 15px;
-	border: 1px solid #e6e6e6;
+    height: 75px;
+    padding: 5px;
+    margin: 0px 10px 10px 10px;
+    border: 1px solid #e6e6e6;
 }
 .BigTextInput
 {

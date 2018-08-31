@@ -24,13 +24,13 @@
 					<img class='btn_logout w-100 row pt-2 mx-auto px-3' src="${pageContext.request.contextPath}/Public/icons/logout.svg"/>
 				</div>
 			</div>
-		<div class='col-11 px-0'>
-				<div id='row'>
+		<div class='col-11 p-3'>
+				<div class='row'>
 					<div id='timerContainer' class='col-3'>
 						<img src='${pageContext.request.contextPath}/Public/icons/timer.svg'>
 						<p id='timerP'>0:00:00</p>
 					</div>
-					<div class='col-9  offset-3'>
+					<div class='col-9'>
 						<div id='row '>
 							<div id='btn_lejelentes' class='btn_navHeader col-4'>
 								<p class='navBtnInside_element' id='p_lejelentes'>Lejentés</p>
@@ -43,7 +43,7 @@
 						</div>
 					</div>
 				</div>
-				<div id='row'>
+				<div class='row'>
 					<div id='' class='cc_element col-3'>
 						<div id='btn_leftNav_1' class='btn_leftNavigation row'>Azonosítók</div>
 						<div id='btn_leftNav_2' class='btn_leftNavigation row'>Dokumentumok</div>

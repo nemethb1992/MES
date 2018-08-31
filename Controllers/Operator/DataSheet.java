@@ -102,7 +102,7 @@ public class DataSheet extends HttpServlet {
         						"	<p>"+Word(29)+"</p><textarea>"+taskDetails.getOperationReservationText()+"</textarea></div>");
 
         	// Tab 2
-        	layouts.add("<div id='documentContainer' class='inputContainer cc_element'>\r\n" + 
+        	layouts.add("<div id='documentContainer' class='inputContainer w-90 mx-auto mt-1  cc_element'>\r\n" + 
         			"	<p>Dokumentumok:</p>\r\n" + 
         			"	<div id='documentFrame'>\r\n" + 
         			"		<div class='documentBlock cc_element'></div>\r\n" + 
