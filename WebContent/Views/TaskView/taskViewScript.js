@@ -44,17 +44,17 @@ function DataSheet_Load()
 }
 function Data_Load(data)
 {
-//	  $( "#tab1_container" ).append(data[0]);
-	  $( "#tab2_container" ).append(data[1]);
+	  $( "#tab1_container" ).append(data[0]);
+	  $( ".dokumentum-list" ).append(data[1]);
 	  $( "#tab3_container" ).append(data[2]);
 	  $( "#tab4_container" ).append(data[3]);
 }
 function Data_Clear()
 {
 	
-//	    	  $( "#tab1_container" ).empty();
-	    	  $( "#tab2_container" ).empty();
-	    	  $( "#tab3_container" ).empty();
+	    	  $( "#tab1_container" ).empty();
+	    	  $( ".dokumentum-list" ).empty();
+	    	  $( ".darabjegyz-tbody" ).empty();
 	    	  $( "#tab4_container" ).empty();
 }
 //function TV_startUp()

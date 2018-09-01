@@ -6,8 +6,8 @@
 #leftwrap
 {
     background: #ff6666;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
     text-align: center;
     color: white;
 }
@@ -65,10 +65,6 @@
 #timerP
 {
 	color: white;
-	font-size: 32px;
-	text-align: center;
-	width: 100%;
-	margin:0;
 }
 .btn_navHeader
 {
@@ -139,6 +135,10 @@
 	height: 100%;
 	display: none;
 }
+#tab1_container
+{
+	display: block;
+}
 #documentContainer
 {
 	height: 95%;
@@ -164,7 +164,7 @@
 }
 .BigTextInput textarea
 {
-	height: 100px;
+	height: 80px;
 	width: 100%;
     text-align: left;
     word-wrap: break-word;
@@ -174,18 +174,9 @@
     font-size: larger;
     padding: 0 1% 1% 1%;
 }
-.tab4_element
-{
-	width: 96.8%;
-	height: 48%;
-}
 .tab4_element textarea
 {
 	height: 220px;
-}
-#tab3_container
-{
-	padding: 5px 15px;
 }
 #tab3_table
 {
@@ -215,4 +206,14 @@
 .number_Input
 {
     display: none;
+}
+.list-group-item.active {
+    background-color: #ff6666;
+    border-color: #ff6666;
+}.list-group-item:first-child {
+    border-top-left-radius: .0rem;
+    border-top-right-radius: .0rem;
+}
+.dokumentum-list
+{
 }

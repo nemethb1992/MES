@@ -74,135 +74,146 @@ public class DataSheet extends HttpServlet {
         	final Task.Details taskDetails = nextTask.getDetails(abasConnection);
       		
         	// Tab 1
-        	layouts.add("<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>"+Word(4)+"</p><input type='text' value='"+Session_Datas.getWS_Group() +" - "+Session_Datas.getWS_No()+"'/></div>\r\n" + 
-        						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>"+Word(5)+"</p><input type='text' value='"+taskDetails.getWorkSlipNo()+"'/></div>\r\n" + 
-        						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>"+Word(6)+"</p><input type='text' value='"+taskDetails.getProductIdNo()+"'/></div>\r\n" + 
-        						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>"+Word(7)+"</p><input type='text' value='"+taskDetails.getProductSwd()+"'/></div>\r\n" + 
-        						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>"+Word(8)+"</p><input type='text' value='"+taskDetails.getProductDescription()+"'/></div>\r\n" + 
-        						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>"+Word(9)+"</p><input type='text' value='"+taskDetails.getUsage()+"'/></div>\r\n" + 
-        						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>"+Word(22)+"</p><input type='text' value='"+taskDetails.getOperationIdNo()+"'/></div>\r\n" + 
-        						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>"+Word(7)+"</p><input type='text' value='"+taskDetails.getOperationSwd()+"'/></div>\r\n" + 
-        						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>"+Word(8)+"</p><input type='text' value='"+taskDetails.getOperationDescription()+"'/></div>\r\n" + 
-        						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>"+Word(26)+"</p><input type='text' value='"+taskDetails.getSetupTime()+"'/></div>\r\n" + 
-        						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>"+Word(27)+"</p><input type='text' value='"+taskDetails.getUnitTime()+"'/></div>\r\n" + 
-        						"<div class='inputContainer cc_element'>\r\n" + 
-        						"	<p>"+Word(28)+"</p><input type='text' value='"+taskDetails.getOutstandingQuantity()+"'/></div>\r\n" + 
-        						"<div class='inputContainer BigTextInput cc_element'>\r\n" + 
-        						"	<p>"+Word(29)+"</p><textarea>"+taskDetails.getOperationReservationText()+"</textarea></div>");
-        	
-        	
         	layouts.add("						<div class='container'>\r\n" + 
         			"								<div class='row px-0'>\r\n" + 
         			"									<div class='col-12 col-md-12 col-lg-6 col-xl-6 px-0'>\r\n" + 
-        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
-        			"											<p>"+Word(4)+"</p>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(4)+"</p>\r\n" +  //Munkaállomás
         			"											<input class='px-2 w-100' type='text' value='"+Session_Datas.getWS_Group() +" - "+Session_Datas.getWS_No()+"'/>\r\n" + 
         			"										</div>\r\n" + 
-        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
-        			"											<p>"+Word(5)+"</p>\r\n" + 
-        			"											<input class='px-2 w-100' type='text' value='141436004'/>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(5)+"</p>\r\n" +  //Munkalapszám
+        			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getWorkSlipNo()+"'/>\r\n" + 
         			"										</div>\r\n" + 
-        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
-        			"											<p>"+Word(6)+"/p>\r\n" + 
-        			"											<input class='px-2 w-100' type='text' value='00450051558O'/>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(6)+"/p>\r\n" +  //Cikkszám
+        			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getProductIdNo()+"'/>\r\n" + 
         			"										</div>\r\n" + 
-        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
-        			"											<p>"+Word(7)+"</p>\r\n" + 
-        			"											<input class='px-2 w-100' type='text' value='P45.005155_8'/>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(7)+"</p>\r\n" +  //Keresőszó
+        			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getProductSwd()+"'/>\r\n" + 
         			"										</div>\r\n" + 
-        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
-        			"											<p>"+Word(22)+"</p>\r\n" + 
-        			"											<input class='px-2 w-100'  type='text' value='11200P'/>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(22)+"</p>\r\n" +  //Műveleti azonosító
+        			"											<input class='px-2 w-100'  type='text' value='"+taskDetails.getOperationIdNo()+"'/>\r\n" + 
         			"										</div>\r\n" + 
-        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
-        			"											<p>"+Word(26)+"</p>\r\n" + 
-        			"											<input class='px-2 w-100' type='text' value='0.000000'/>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(26)+"</p>\r\n" +  //Beállítási idő
+        			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getSetupTime()+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"									</div>\r\n" + 
         			"									<div class='col-12 col-md-12 col-lg-6 col-xl-6 px-0'>\r\n" + 
-        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
-        			"											<p>"+Word(8)+"</p>\r\n" + 
-        			"											<input class='px-2 w-100' type='text' value='Sondergeh-2 IFM TS02 Bedruckung'/>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(8)+"</p>\r\n" +  //Megnevezés
+        			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOperationDescription()+"'/>\r\n" + 
         			"										</div>\r\n" + 
-        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
-        			"											<p>"+Word(9)+"</p>\r\n" + 
-        			"											<input class='px-2 w-100' type='text' value='KW30'/>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(9)+"</p>\r\n" +  //Felhasználás
+        			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getUsage()+"'/>\r\n" + 
         			"										</div>\r\n" + 
-        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
-        			"											<p>"+Word(7)+"</p>\r\n" + 
-        			"											<input class='px-2 w-100' type='text' value='P11200'/>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(7)+"</p>\r\n" +  //Keresőszó
+        			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOperationSwd()+"'/>\r\n" + 
         			"										</div>\r\n" + 
-        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
-        			"											<p>"+Word(8)+"</p>\r\n" + 
-        			"											<input class='px-2 w-100' type='text' value='Tisztítás'/>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(8)+"</p>\r\n" +  //Megnevezés
+        			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOperationDescription()+"'/>\r\n" + 
         			"										</div>\r\n" + 
-        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
-        			"											<p>"+Word(27)+"</p>\r\n" + 
-        			"											<input class='px-2 w-100' type='text' value='0.180000'/>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(27)+"</p>\r\n" +  //Darabidő
+        			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getUnitTime()+"'/>\r\n" + 
         			"										</div>\r\n" + 
-        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
-        			"											<p>"+Word(14)+"</p>\r\n" + 
-        			"											<input class='px-2 w-100' type='text' value='1022.000'/>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(28)+"</p>\r\n" +  //Nyitott mennyiség
+        			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOutstandingQuantity()+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"									</div>\r\n" + 
         			"									<div class='col-12 px-0'>\r\n" + 
-        			"										<div class='inputContainer BigTextInput cc_element mx-1 mx-lg-3 my-2'>\r\n" + 
-        			"											<p class='mb-0'>"+Word(29)+"</p><textarea></textarea>\r\n" + 
+        			"										<div class='inputContainer BigTextInput cc_element mx-2 mx-lg-3 my-2'>\r\n" + 
+        			"											<p class='mb-0'>"+Word(29)+"</p>" +  //Gyártási információ
+        			"											<textarea>"+taskDetails.getOperationReservationText()+"</textarea>\r\n" + 
         			"										</div>\r\n" + 
         			"									</div>\r\n" + 
         			"								</div>\r\n" + 
-        			"							</div>");
+        			"							</div>");       	
 
         	// Tab 2
-        	layouts.add("<div id='documentContainer' class='inputContainer w-90 mx-auto mt-1  cc_element'>\r\n" + 
-        			"	<p>Dokumentumok:</p>\r\n" + 
-        			"	<div id='documentFrame'>\r\n" + 
-        			"		<div class='documentBlock cc_element'></div>\r\n" + 
-        			"		<div class='documentBlock cc_element'></div>\r\n" + 
-        			"		<div class='documentBlock cc_element'></div>\r\n" + 
-        			"		<div class='documentBlock cc_element'></div>\r\n" + 
-        			"		<div class='documentBlock cc_element'></div>\r\n" + 
-        			"		<div class='documentBlock cc_element'></div>\r\n" + 
-        			"		<div class='documentBlock cc_element'></div>\r\n" + 
-        			"		<div class='documentBlock cc_element'></div>\r\n" + 
-        			"		<div class='documentBlock cc_element'></div>\r\n" + 
-        			"	</div>\r\n" + 
-        			"</div>");
+        	layouts.add(""
+        			+ "<button type='button' class='list-group-item list-group-item-action active disabled'>"+Word(23)+"</button>"
+        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 2</button>"
+        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 3</button>"
+        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 4</button>"
+        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 5</button>"
+        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 6</button>"
+//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 7</button>"
+//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 5</button>"
+//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 6</button>"
+//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 7</button>"
+//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 5</button>"
+//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 6</button>"
+//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 7</button>"
+//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 5</button>"
+//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 6</button>"
+//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 7</button>"
+//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 5</button>"
+//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 6</button>"
+//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 7</button>"
+        			+ "");
         	// Tab 3
-        	layouts.add("<table class=\"table cc_element\" id=\"tab3_table\">\r\n" + 
-        			"		<tr>\r\n" + 
-        			"			<th id=\"th_1\">Cikkszám</th>\r\n" + 
-        			"			<th id=\"th_2\">Kereszőszó</th> \r\n" + 
-        			"			<th id=\"th_3\">Megnevezés 1</th>\r\n" + 
-        			"			<th id=\"th_4\">Megnevezés 2</th>\r\n" + 
-        			"			<th id=\"th_5\">Beépülő menny.</th>\r\n" + 
-        			"		</tr>\r\n" + 
-        			"	<tbody>\r\n" + 
-        			"\r\n" + 
-        			"		<tr>\r\n" + 
-        			"			<td>cell1</td>\r\n" + 
-        			"			<td>cell2</td>\r\n" + 
-        			"			<td>cell3</td>\r\n" + 
-        			"			<td>cell4</td>\r\n" + 
-        			"			<td>cell5</td>\r\n" + 
-        			"		</tr>\r\n" + 
-        			"	</tbody>\r\n" + 
-        			"</table>");
+        	String darabjegyzek = "				<table class=\"table table-striped\">\r\n" + 
+        			"  								<thead>\r\n" + 
+        			"  								  <tr>\r\n" + 
+        			"     								 <th scope=\"col\">Cikkszám</th>\r\n" + 
+        			"     								 <th scope=\"col\">Kereszöszó</th>\r\n" + 
+        			"   									 <th scope=\"col\">Megnevezés 1</th>\r\n" + 
+        			"  									 <th scope=\"col\">Megnevezés 2</th>\r\n" + 
+        			"  									 <th scope=\"col\">Beépülö menny.</th>\r\n" + 
+        			"   								  </tr>\r\n" + 
+        			"  								</thead>\r\n" + 
+        			"  								<tbody class='darabjegyz-tbody'>";
+        	darabjegyzek +=""+
+        			"	<tr>\r\n" + 
+        			"      <th scope=\"row\">Proba_1</th>\r\n" + 
+        			"      <td>Proba_2</td>\r\n" + 
+        			"      <td>Proba_3</td>\r\n" + 
+        			"      <td>Proba_4</td>\r\n" + 
+        			"      <td>Proba_5</td>\r\n" + 
+        			"    </tr>" +
+           			"	<tr>\r\n" + 
+        			"      <th scope=\"row\">Proba_1</th>\r\n" + 
+        			"      <td>Proba_2</td>\r\n" + 
+        			"      <td>Proba_3</td>\r\n" + 
+        			"      <td>Proba_4</td>\r\n" + 
+        			"      <td>Proba_5</td>\r\n" + 
+        			"    </tr>" +
+           			"	<tr>\r\n" + 
+        			"      <th scope=\"row\">Proba_1</th>\r\n" + 
+        			"      <td>Proba_2</td>\r\n" + 
+        			"      <td>Proba_3</td>\r\n" + 
+        			"      <td>Proba_4</td>\r\n" + 
+        			"      <td>Proba_5</td>\r\n" + 
+        			"    </tr>" +
+           			"	<tr>\r\n" + 
+        			"      <th scope=\"row\">Proba_1</th>\r\n" + 
+        			"      <td>Proba_2</td>\r\n" + 
+        			"      <td>Proba_3</td>\r\n" + 
+        			"      <td>Proba_4</td>\r\n" + 
+        			"      <td>Proba_5</td>\r\n" + 
+        			"    </tr>" +
+           			"	<tr>\r\n" + 
+        			"      <th scope=\"row\">Proba_1</th>\r\n" + 
+        			"      <td>Proba_2</td>\r\n" + 
+        			"      <td>Proba_3</td>\r\n" + 
+        			"      <td>Proba_4</td>\r\n" + 
+        			"      <td>Proba_5</td>\r\n" + 
+        			"    </tr>" +
+        			"";
+        	darabjegyzek += "</tbody></table>";
+        	layouts.add(darabjegyzek);
         	// Tab 4
-        	layouts.add("<div class='tab4_element inputContainer BigTextInput cc_element'>\r\n" + 
+        	layouts.add("<div class='tab4_element inputContainer BigTextInput cc_element h-50'>\r\n" + 
         			"	<p>Szöveg 1</p><textarea></textarea></div>\r\n" + 
-        			"<div class='tab4_element inputContainer BigTextInput cc_element'>\r\n" + 
+        			"<div class='tab4_element inputContainer BigTextInput cc_element h-50'>\r\n" + 
         			"	<p>Szöveg 2</p><textarea></textarea></div>\r\n" + 
         			"	");
       		

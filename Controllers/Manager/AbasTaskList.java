@@ -61,6 +61,7 @@ public class AbasTaskList extends HttpServlet {
         	stationNo = Integer.parseInt(Station[1]);
         	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(Session_Datas.getUsername(), Session_Datas.getPassword(), l.getAbasLanguage(), true);
         	li = AbasObjectFactory.INSTANCE.createWorkStation(Station[0], stationNo, abasConnection).getUnassignedTasks(_AbasDate, abasConnection);
+
           	for (Task task: li) {
           		final Task.Details taskDetails = task.getDetails(abasConnection);
           		layout += "			<div class='dnd-container'OnClick='TaskSizeSwitch(this)' value='3'><div class='icon-form dnd-icon pass-item' OnClick='AddToList(this)' value='abas'></div>\r\n" + 
