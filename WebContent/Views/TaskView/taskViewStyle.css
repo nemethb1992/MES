@@ -101,7 +101,7 @@
 .inputContainer input
 {
 	border:none;
-	text-align: center;
+	text-align: left;
 	font-size: larger;
 	font-family: lightFont;
 }
@@ -211,15 +211,6 @@
 #tab3_table td
 {
 	width: auto;
-}
-.navBtnInside_element
-{
-    width: 80%;
-    display: block;
-    margin: 0 auto;
-    font-size: larger;
-    padding: 10px;
-    text-align: center;
 }
 .number_Input
 {

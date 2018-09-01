@@ -100,6 +100,69 @@ public class DataSheet extends HttpServlet {
         						"	<p>"+Word(28)+"</p><input type='text' value='"+taskDetails.getOutstandingQuantity()+"'/></div>\r\n" + 
         						"<div class='inputContainer BigTextInput cc_element'>\r\n" + 
         						"	<p>"+Word(29)+"</p><textarea>"+taskDetails.getOperationReservationText()+"</textarea></div>");
+        	
+        	
+        	layouts.add("						<div class='container'>\r\n" + 
+        			"								<div class='row px-0'>\r\n" + 
+        			"									<div class='col-12 col-md-12 col-lg-6 col-xl-6 px-0'>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(4)+"</p>\r\n" + 
+        			"											<input class='px-2 w-100' type='text' value='"+Session_Datas.getWS_Group() +" - "+Session_Datas.getWS_No()+"'/>\r\n" + 
+        			"										</div>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(5)+"</p>\r\n" + 
+        			"											<input class='px-2 w-100' type='text' value='141436004'/>\r\n" + 
+        			"										</div>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(6)+"/p>\r\n" + 
+        			"											<input class='px-2 w-100' type='text' value='00450051558O'/>\r\n" + 
+        			"										</div>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(7)+"</p>\r\n" + 
+        			"											<input class='px-2 w-100' type='text' value='P45.005155_8'/>\r\n" + 
+        			"										</div>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(22)+"</p>\r\n" + 
+        			"											<input class='px-2 w-100'  type='text' value='11200P'/>\r\n" + 
+        			"										</div>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(26)+"</p>\r\n" + 
+        			"											<input class='px-2 w-100' type='text' value='0.000000'/>\r\n" + 
+        			"										</div>\r\n" + 
+        			"									</div>\r\n" + 
+        			"									<div class='col-12 col-md-12 col-lg-6 col-xl-6 px-0'>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(8)+"</p>\r\n" + 
+        			"											<input class='px-2 w-100' type='text' value='Sondergeh-2 IFM TS02 Bedruckung'/>\r\n" + 
+        			"										</div>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(9)+"</p>\r\n" + 
+        			"											<input class='px-2 w-100' type='text' value='KW30'/>\r\n" + 
+        			"										</div>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(7)+"</p>\r\n" + 
+        			"											<input class='px-2 w-100' type='text' value='P11200'/>\r\n" + 
+        			"										</div>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(8)+"</p>\r\n" + 
+        			"											<input class='px-2 w-100' type='text' value='Tisztítás'/>\r\n" + 
+        			"										</div>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(27)+"</p>\r\n" + 
+        			"											<input class='px-2 w-100' type='text' value='0.180000'/>\r\n" + 
+        			"										</div>\r\n" + 
+        			"										<div class='inputContainer cc_element mt-2 mx-1 mx-lg-3'>\r\n" + 
+        			"											<p>"+Word(14)+"</p>\r\n" + 
+        			"											<input class='px-2 w-100' type='text' value='1022.000'/>\r\n" + 
+        			"										</div>\r\n" + 
+        			"									</div>\r\n" + 
+        			"									<div class='col-12 px-0'>\r\n" + 
+        			"										<div class='inputContainer BigTextInput cc_element mx-1 mx-lg-3 my-2'>\r\n" + 
+        			"											<p class='mb-0'>"+Word(29)+"</p><textarea></textarea>\r\n" + 
+        			"										</div>\r\n" + 
+        			"									</div>\r\n" + 
+        			"								</div>\r\n" + 
+        			"							</div>");
 
         	// Tab 2
         	layouts.add("<div id='documentContainer' class='inputContainer w-90 mx-auto mt-1  cc_element'>\r\n" + 
