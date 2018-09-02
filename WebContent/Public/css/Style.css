@@ -21,6 +21,27 @@ height: 80%;
 .btn_logout
 {
     cursor: pointer;
+    background: transparent;
+    background-image: url(Public/icons/logout.svg);
+    background-size: 35px;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 0 0 0 10px;
+}
+.btn_logout:hover
+{
+    background: #ff9797;
+    background-image: url(Public/icons/logout.svg);
+    background-size: 35px;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+}
+.logout-form
+{
+	height:75px;
+	position: absolute;
+	bottom: 0px;
 }
 textarea
 {

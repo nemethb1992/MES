@@ -86,7 +86,7 @@ public class DataSheet extends HttpServlet {
         			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getWorkSlipNo()+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-        			"											<p>"+Word(6)+"/p>\r\n" +  //Cikkszám
+        			"											<p>"+Word(6)+"</p>\r\n" +  //Cikkszám
         			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getProductIdNo()+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 

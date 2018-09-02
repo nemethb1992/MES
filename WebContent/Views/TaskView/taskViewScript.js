@@ -65,6 +65,7 @@ function Data_Clear()
 function TabControlEventHolder()
 {
 	$('.btn_logout').click(function(){
+		
 		$.ajax({url:  '/'+path+'/Home'});
 	})
 $('.btn_leftNavigation').click(function(){

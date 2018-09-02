@@ -56,9 +56,9 @@ public class Dashboard extends HttpServlet {
     if(ac.activeDirectoryConn(username, pass))
     {
     	System.out.println(layout + " layout");
-    	if(layout == 1)
-   		getServletContext().getRequestDispatcher("/Views/TaskView/taskViewPage.jsp").forward(request, response);
     	if(layout == 2)
+   		getServletContext().getRequestDispatcher("/Views/TaskView/taskViewPage.jsp").forward(request, response);
+    	if(layout == 1)
     	getServletContext().getRequestDispatcher("/Views/TaskManage/taskManagePage.jsp").forward(request, response);
     	if(layout == 0)
         getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);

@@ -150,7 +150,7 @@ function ButtonScriptElements()
 	})
 	$('#btn_select_1').click(function(){
 		BuildUp();
-		$('.TM_content_layer').hide();
+		$('.select-panel').hide();
 		$('#TM_Select_container1').show();
 	});
 	
@@ -158,15 +158,15 @@ function ButtonScriptElements()
 		BuildUp();
 	});
 	$('#btn_select_2').click(function(){
-		$('.TM_content_layer').hide();
+		$('.select-panel').hide();
 		$('#TM_Select_container2').show();
 	});
 	$('#btn_select_3').click(function(){
-		$('.TM_content_layer').hide();
+		$('.select-panel').hide();
 		$('#TM_Select_container3').show();
 	});
 	$('.TM_backBtn').click(function(){
-		$('.TM_content_layer').hide();
+		$('.select-panel').hide();
 		$('#TM_Select_container_activity').show();
 	});
 

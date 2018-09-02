@@ -73,16 +73,9 @@
 	width: 50%;
 	float: right;
 }
-
 .TM_btn_select
 {
-    width: 24%;
-    height: 645px;
-    background-color: white;
-    margin: 35px 0 0 5.2%;
-    display: inline-block;
-    cursor: pointer;
-    border-radius: 3px;
+	padding-top: 50%;
 }
 .TM_btn_select p
 {
@@ -94,13 +87,15 @@
 .TM_btn_select img
 {
     width: 50%;
-    display: block;
-    margin: 150px auto;
 }
 .TM_content_layer
 {
 	height: inherit;
 	display: none;
+}
+#TM_Select_container_activity
+{
+	height: 100%;
 }
 .TM_backBtn
 {
@@ -204,13 +199,6 @@
 {
 	margin-bottom: 10px;
 	background:none;
-}
-#stationSortHolder
-{
-	margin: 15px;
-    float: right;
-    width: 90%;
-    height: 95.5%;
 }
 .sortContDivCont
 {

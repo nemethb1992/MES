@@ -27,7 +27,7 @@
        		        
        		         
         <div class="container">      
-            <div class="login-row row  w-100 mt-5 align-self-center">       
+            <div class="login-row row  w-100 align-self-center">       
 <!--        		<div id='loginFrame' class='mycontainer'> -->
        			<div id='loginLeftSide' class='col-md-1 col-lg-5 d-none d-md-block'>
        			

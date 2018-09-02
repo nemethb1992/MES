@@ -24,6 +24,7 @@
 {
 	max-width: 720px !important;
 	margin: 0 auto;
+	margin-top: calc(10% - 1px) !important;
 	height: 620px !important;
 }
 #loginRightSide
