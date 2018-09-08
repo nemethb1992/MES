@@ -143,4 +143,20 @@ public interface Task extends Serializable {
 	 */
 	Details getDetails(AbasConnection<?> abasConnection);
 
+/*
+Feladat indítása
+ Bemenet: munkamenet
+ Ha van ysts időbélyeg: már fut, hiba
+ ysts = G|sekundenz, yszeich = G|bzeichen
+
+Lejelentés
+ Bemenet: mennyiség, dolgozó (null is lehet), munkamenet
+ Ha nincs ysts időbélyeg: nincs elindítva, hiba
+ Anyagkivét?
+ ysts = ""
+
+Feladat megszakítása
+ Bemenet: munkamenet
+ ysts = "", yszeich = G|bzeichen
+*/
 }

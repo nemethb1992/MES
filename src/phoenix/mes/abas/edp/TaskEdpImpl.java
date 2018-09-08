@@ -50,26 +50,59 @@ public class TaskEdpImpl extends AbstractTask<EDPSession> {
 		 */
 		public static final class Field {
 
+			/**
+			 * A munkalap száma.
+			 */
 			public static final String ID_NO = WorkOrders.META.idno.getName();
 
+			/**
+			 * A feladat elkezdésének (tervezett) napja.
+			 */
 			public static final String START_DATE = WorkOrders.META.startDateDay.getName();
 
+			/**
+			 * A termék Felhasználás-hivatkozása.
+			 */
 			public static final String USAGE = WorkOrders.META.usage.getName();
 
+			/**
+			 * A beállítási idő mértékegysége.
+			 */
 			public static final String SETUP_TIME_UNIT = WorkOrders.META.setupTimeUnit.getName();
 
+			/**
+			 * A beállítási idő.
+			 */
 			public static final String SETUP_TIME = WorkOrders.META.setupTime.getName();
 
+			/**
+			 * Egységnyi beállítási idő bruttósítva hány másodpercből áll?
+			 */
 			public static final String SETUP_TIME_SEC = WorkOrders.META.setupTimeSec.getName();
 
+			/**
+			 * A darabidő mértékegysége.
+			 */
 			public static final String UNIT_TIME_UNIT = WorkOrders.META.timeUnit.getName();
 
+			/**
+			 * A darabidő.
+			 */
 			public static final String UNIT_TIME = WorkOrders.META.timeLimUnit.getName();
 
+			/**
+			 * Egységnyi darabidő bruttósítva hány másodpercből áll?
+			 */
 			public static final String UNIT_TIME_SEC = WorkOrders.META.unitTimeSec.getName();
 
+			/**
+			 * Hányszor kell végrehajtani a műveletet?
+			 */
 			public static final String NUMBER_OF_EXECUTIONS = WorkOrders.META.elemQty.getName();
 
+			/**
+			 * A nyitott mennyiség.
+			 */
 			public static final String OUTSTANDING_QUANTITY = WorkOrders.META.unitQty.getName();
 
 			/**
@@ -106,24 +139,47 @@ public class TaskEdpImpl extends AbstractTask<EDPSession> {
 		 */
 		public static final class Field {
 
+			/**
+			 * A termék cikkszáma.
+			 */
 			public static final String ID_NO = WorkOrders.META.product.join(castToSelectablePart(Product.META.idno)).getName();
 
+			/**
+			 * A termék keresőszava.
+			 */
 			public static final String SWD = WorkOrders.META.product.join(castToSelectablePart(Product.META.swd)).getName();
 
+			/**
+			 * A termék megnevezése az aktuálisan beállított kezelőnyelven.
+			 */
 			public static final String DESCRIPTION = WorkOrders.META.product.join(castToSelectablePart(Product.META.descrOperLang)).getName();
 
+			/**
+			 * A termék második megnevezése.
+			 */
 			public static final String DESCRIPTION2 = WorkOrders.META.product.join(castToSelectablePart(Product.META.yname2)).getName();
 
+			/**
+			 * A mennyiségi egység (raktáregység).
+			 */
 			public static final String STOCK_UNIT = WorkOrders.META.product.join(castToSelectablePart(Product.META.SU)).getName();
 
+			/**
+			 * @param field A szöveges mező.
+			 * @return A szöveges mező, a SelectablePart osztály tagjaként láttatva.
+			 */
 			@SuppressWarnings("unchecked")
-			private static StringField<? super SelectablePart> castToSelectablePart(StringField<? extends SelectablePart> field) {
-				return (StringField<? super SelectablePart>)field;
+			private static StringField<SelectablePart> castToSelectablePart(StringField<? extends SelectablePart> field) {
+				return (StringField<SelectablePart>)field;
 			}
 
+			/**
+			 * @param field A mértékegység-mező.
+			 * @return A mértékegység-mező, a SelectablePart osztály tagjaként láttatva.
+			 */
 			@SuppressWarnings("unchecked")
-			private static <U extends AbasUnit> UnitField<? super SelectablePart, U> castToSelectablePart(UnitField<? extends SelectablePart, U> field) {
-				return (UnitField<? super SelectablePart, U>)field;
+			private static <U extends AbasUnit> UnitField<SelectablePart, U> castToSelectablePart(UnitField<? extends SelectablePart, U> field) {
+				return (UnitField<SelectablePart, U>)field;
 			}
 
 			/**
@@ -160,10 +216,19 @@ public class TaskEdpImpl extends AbstractTask<EDPSession> {
 		 */
 		public static final class Field {
 
+			/**
+			 * A művelet hivatkozási száma.
+			 */
 			public static final String ID_NO = WorkOrders.META.seriesOfOperations.join(Operation.META.idno).getName();
 
+			/**
+			 * A művelet keresőszava.
+			 */
 			public static final String SWD = WorkOrders.META.seriesOfOperations.join(Operation.META.swd).getName();
 
+			/**
+			 * A művelet megnevezése az aktuálisan beállított kezelőnyelven.
+			 */
 			public static final String DESCRIPTION = WorkOrders.META.seriesOfOperations.join(Operation.META.descrOperLang).getName();
 
 			/**
@@ -200,8 +265,15 @@ public class TaskEdpImpl extends AbstractTask<EDPSession> {
 		 */
 		public static final class Field {
 
+			/**
+			 * A műveletfoglalás tételszövege.
+			 */
 			public static final String ITEM_TEXT = WorkOrders.META.lastReservation.join(castToSelectablePurchasing(Reservations.META.itemText)).getName();
 
+			/**
+			 * @param field A szöveges mező.
+			 * @return A szöveges mező, a SelectablePurchasing osztály tagjaként láttatva.
+			 */
 			@SuppressWarnings("unchecked")
 			private static StringField<? super SelectablePurchasing> castToSelectablePurchasing(StringField<? extends SelectablePurchasing> field) {
 				return (StringField<? super SelectablePurchasing>)field;

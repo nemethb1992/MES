@@ -369,7 +369,7 @@ public class WorkStationEdpImpl extends AbstractWorkStation {
 		 * A munkalap-szűrés végrehajtása.
 		 * @param workStationNumber A munkaállomás sorszáma.
 		 * @param suspendedTasks A felfüggesztett munkalapokat kell kilistázni?
-		 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa (AbasDate.INFINITY, ha nincs szükség időkorlátra).
+		 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa (null, ha nincs szükség időkorlátra).
 		 * @return A szűrésnek megfelelő feladatok listája.
 		 */
 		protected List<Task> createTaskList(int workStationNumber, boolean suspendedTasks, AbasDate startDateUntil) {

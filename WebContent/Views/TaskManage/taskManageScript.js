@@ -105,11 +105,11 @@ function BuildUp()
 	$.ajax({
     url:  '/'+path+'/BuildUp',
     success: function (respond) {
-    	  $( ".tmts_stationContainer" ).empty();
+//    	  $( ".tmts_stationContainer" ).empty();
 //    	  $( ".dndf1" ).empty();
 //    	  $( ".dndf2" ).empty();
     	  $(".station_label").val("");
-    	  $( ".tmts_stationContainer" ).append(respond[0]);
+//    	  $( ".tmts_stationContainer" ).append(respond[0]);
     }
 });
 	}
@@ -151,7 +151,7 @@ function ButtonScriptElements()
 	$('#btn_select_1').click(function(){
 		BuildUp();
 		$('.select-panel').hide();
-		$('#TM_Select_container1').show();
+		$('#TM_Select_container1').css("display", "flex");
 	});
 	
 	$('.refresh_btn').click(function(){
