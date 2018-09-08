@@ -55,7 +55,7 @@
 									<input disabled class='dnd-input dnd-in1' value='input value'>
 									<p>Input neve</p>
 									<input disabled class='dnd-input dnd-in1' value='input value'>
-									<p>Input neve</p>
+									<p>Input neve2</p>
 									<input disabled class='dnd-input dnd-in1' value='input value'>
 								</div>
 								<div class='col-5 dnd-input-div'>
