@@ -362,8 +362,7 @@
 }
 .dnd-container
 {
-/*     margin: 0 1%; */
-	border: 1px solid #e0e6e8;
+	border: 1px solid #bbbbbb;
 	border-top: none;
 	background: white;
 }
@@ -398,10 +397,16 @@
 	width: 100%;
 	word-wrap: break-word;
 }
-.dnd-input-div p, .dnd-input-div input
+.dnd-input-div input
+{
+	font-size: 15px;
+	height: 20px;
+}
+.dnd-input-div p
 {
 	font-size: 12px;
-	margin-bottom: 5px;
+    margin-bottom: 0px;
+    color: #a7a7a7;
 }
 .task-panel-button
 {
@@ -417,12 +422,45 @@
 {
 	background: white;
 	background-image: url(Public/icons/right-arrow.svg);
-    background-size: 50%;
+    background-size: 55%;
     background-repeat: no-repeat;
     background-position: center;
-    	box-shadow: 0px 0px 15px #9e9a9a;
-	-moz-box-shadow: 0px 0px 15px #9e9a9a;
-    -webkit-box-shadow: 0px 0px 15px #9e9a9a;
+    	box-shadow: 0px 0px 10px #9e9a9a;
+	-moz-box-shadow: 0px 0px 10px #9e9a9a;
+    -webkit-box-shadow: 0px 0px 10px #9e9a9a;
+}
+
+.up-task-button
+{
+    background-image: url(Public/icons/up-arrow.svg);
+}
+.up-task-button:hover
+{
+    background-image: url(Public/icons/up-arrow.svg);
+}
+.remove-task-button
+{
+    background-image: url(Public/icons/letter-x.svg);
+}
+.remove-task-button:hover
+{
+    background-image: url(Public/icons/letter-x.svg);
+}
+.down-task-button
+{
+    background-image: url(Public/icons/down-arrow.svg);
+}
+.down-task-button:hover
+{
+    background-image: url(Public/icons/down-arrow.svg);
+}
+.mini-button
+{
+	background-size: 25%;
+}
+.mini-button:hover
+{
+	background-size: 30%;
 }
 .dnd-input-cont
 {

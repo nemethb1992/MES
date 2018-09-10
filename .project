@@ -50,9 +50,29 @@
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/HU.svg</location>
 		</link>
 		<link>
+			<name>WebContent/Public/icons/down-arrow.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/down-arrow.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/letter-x.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/letter-x.svg</location>
+		</link>
+		<link>
 			<name>WebContent/Public/icons/right-arrow.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/right-arrow.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/up-arrow.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/up-arrow.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/js/bootstrap.js</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/js/bootstrap.js</location>
 		</link>
 		<link>
 			<name>WebContent/Public/json/langsrc.json</name>

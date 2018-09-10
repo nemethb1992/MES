@@ -28,7 +28,7 @@ public class StationPC extends HttpServlet {
    	    ArrayList<String> li = dbE.SQLQueryRead(query, "csoport");
     	int itemCount_li = li.size();
     	for (int i = 0; i < itemCount_li; i++) {
-    		group += "<div class='tmts_stationBtnDivCont' value='"+li.get(i)+"' OnClick='Group_Select(this)'><input disabled class='si1'value='"+li.get(i)+"'></div>";
+    		group += "<div class='tmts_stationBtnDivCont col px-0' value='"+li.get(i)+"' OnClick='Group_Select(this)'><input disabled class='si1'value='"+li.get(i)+"'></div>";
     	}
     	return group;
     }

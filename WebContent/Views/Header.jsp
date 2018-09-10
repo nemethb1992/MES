@@ -5,8 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
         <script src="${pageContext.request.contextPath}/Public/js/jquery-3.3.1.js"></script>
-        <script src="${pageContext.request.contextPath}/Public/js/datepicker.js"></script>
         <script src="${pageContext.request.contextPath}/Public/js/jquery_cookie.js"></script>
+        
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script> -->
+        <script src="${pageContext.request.contextPath}/Public/js/bootstrap.js"></script>
+        <script src="${pageContext.request.contextPath}/Public/js/datepicker.js"></script>
         <script src="${pageContext.request.contextPath}/Public/js/script.js"></script>
         <script src="${pageContext.request.contextPath}/Public/js/language.js"></script>
         <script src="${pageContext.request.contextPath}/Public/js/datepicker.js"></script>
@@ -25,12 +28,6 @@
     <%@ include file="/Views/TaskView/taskViewStyle.css"%>
     <%@ include file="/Views/TaskManage/taskManageStyle.css"%>
     </style>
-
-<!--     <script> -->
-<%--         <%@ include file="/Views/Login/loginScript.js"%> --%>
-<%--         <%@ include file="/Views/TaskView/taskViewScript.js"%> --%>
-<%--         <%@ include file="/Views/TaskManage/taskManageScript.js"%> --%>
-<!--     </script> -->
         
         
 <title>MES</title>

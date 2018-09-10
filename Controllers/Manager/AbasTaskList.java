@@ -64,40 +64,34 @@ public class AbasTaskList extends HttpServlet {
 
           	for (Task task: li) {
           		final Task.Details taskDetails = task.getDetails(abasConnection);
-          		layout += "			<div class='dnd-container'OnClick='TaskSizeSwitch(this)' value='3'><div class='icon-form dnd-icon pass-item' OnClick='AddToList(this)' value='abas'></div>\r\n" + 
-    			"					<div class='dnd-input-container'>\r\n" + 
-    			"						<div class='dnd-upper'>\r\n" + 
-    			"							<div class='dnd-input-div'>\r\n" + 
-    				"								<p>Munkaszám</p>\r\n" + 
-    			"								<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getWorkSlipNo()+"'>\r\n" + 
-    			"							</div>\r\n" + 
-    			"							<div class='dnd-input-div'>\r\n" + 
-    			"								<p>Cikkszám</p>\r\n" + 
-    			"								<input disabled class='dnd-input dnd-in2' value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
-    			"							</div>\r\n" + 
-    			"							<div class='dnd-input-div'>\r\n" + 
-    			"								<p>Keresőszó</p>\r\n" + 
-    			"								<input disabled class='dnd-input dnd-in3' value='"+taskDetails.getProductSwd()+"'>\r\n" + 
-    				"							</div>\r\n" + 
-    				"							<div class='dnd-input-div'>\r\n" + 
-    				"								<p>Felhasználás</p>\r\n" + 
-    				"								<input disabled class='dnd-input dnd-in6' value='"+taskDetails.getUsage()+"'>\r\n" + 
-    			"							</div>\r\n" + 
-    				"							<div class='dnd-input-div'>\r\n" + 
-    				"								<p>Termék megnevezés</p>\r\n" + 
-    				"								<input disabled class='dnd-input dnd-in4' value='"+taskDetails.getProductDescription()+"'>\r\n" + 
-    				"							</div>\r\n" + 
-
-    				"							<div class='dnd-input-div'>\r\n" + 
-    				"								<p>Termék megnevezés 2</p>\r\n" + 
-    				"								<input disabled class='dnd-input dnd-in5' value='"+taskDetails.getProductDescription2()+"'>\r\n" + 
-    				"							</div>\r\n" + 
-
-    			"						</div>\r\n" + 
-    			"					</div>\r\n" + 
-    			"				</div>";
+          		layout += "					<div class='dnd-container col-12 px-0' value='3'>\r\n" + 
+          				"						<div class='container px-0'>\r\n" + 
+          				"							<div class='row w-100 mx-auto'>\r\n" + 
+          				"								<div class='col-5 py-2 dnd-input-div'>" + 
+          				"									<p>Munkaszám</p>\r\n" + 
+          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getWorkSlipNo()+"'>\r\n" + 
+          				"									<p>Cikkszám</p>\r\n" + 
+          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
+          				"									<p>Keresőszó</p>\r\n" + 
+          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductSwd()+"'>\r\n" + 
+          				"								</div>\r\n" + 
+          				"								<div class='col-5 py-2 dnd-input-div'>\r\n" + 
+          				"									<p>Felhasználás</p>\r\n" + 
+          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getUsage()+"'>\r\n" + 
+          				"									<p>Termék megnevezés</p>\r\n" + 
+          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductDescription()+"'>\r\n" + 
+          				"									<p>Termék megnevezés 2</p>\r\n" + 
+          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductDescription2()+"'>\r\n" + 
+          				"								</div>\r\n" + 
+          				"								<div class='col-2 dnd-input-div px-0'>\r\n" + 
+          				"									<input class='h-100 w-100 task-panel-button' value='1' type='button'>\r\n" + 
+          				"								</div>\r\n" + 
+          				"							</div>\r\n" + 
+          				"						</div>\r\n" + 
+          				"					</div>";
 
           	}
+          	
     	}catch(LoginException e)
     	{
     		System.out.println(e);
