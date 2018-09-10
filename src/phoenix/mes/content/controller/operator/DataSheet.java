@@ -1,4 +1,4 @@
-package Operator;
+package phoenix.mes.content.controller.operator;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,9 +23,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import Database.dbEntities;
-import Language.langsrc;
-import Session.Session_Datas;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.IdImpl;
 import de.abas.erp.common.type.enums.EnumLanguageCode;
@@ -35,15 +32,18 @@ import de.abas.erp.db.util.ContextHelper;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.content.SessionData;
+import phoenix.mes.content.DatabaseEntities;
+import phoenix.mes.content.LanguageSource;
 
 
 public class DataSheet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    Session_Datas sess = new Session_Datas();
+	SessionData sess = new SessionData();
 	String station;
 	String lng;
 	String ws;
-	langsrc l = new langsrc();
+	LanguageSource l = new LanguageSource();
 	EnumLanguageCode language;
 
     public DataSheet() {
@@ -66,7 +66,7 @@ public class DataSheet extends HttpServlet {
 
     	
     	try {
-        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(Session_Datas.getUsername(), Session_Datas.getPassword(), langsrc.getAbasLanguage(), true);
+        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(SessionData.getUsername(), SessionData.getPassword(), LanguageSource.getAbasLanguage(), true);
         	System.out.println(sess.getWS_Group() + sess.getWS_No());
  //       	Task nextTask = AbasObjectFactory.INSTANCE.createWorkStation("234PG",1, abasConnection).getNextExecutableTask(abasConnection);
  //       	Task nextTask = AbasObjectFactory.INSTANCE.createWorkStation(sess.getWS_Group(),sess.getWS_No(), abasConnection).getNextExecutableTask(abasConnection);
@@ -79,7 +79,7 @@ public class DataSheet extends HttpServlet {
         			"									<div class='col-12 col-md-12 col-lg-6 col-xl-6 px-0'>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
         			"											<p>"+Word(4)+"</p>\r\n" +  //Munkaállomás
-        			"											<input class='px-2 w-100' type='text' value='"+Session_Datas.getWS_Group() +" - "+Session_Datas.getWS_No()+"'/>\r\n" + 
+        			"											<input class='px-2 w-100' type='text' value='"+SessionData.getWS_Group() +" - "+SessionData.getWS_No()+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
         			"											<p>"+Word(5)+"</p>\r\n" +  //Munkalapszám

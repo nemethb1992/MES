@@ -1,4 +1,4 @@
-package Language;
+package phoenix.mes.content;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -13,7 +13,7 @@ import de.abas.erp.common.type.enums.EnumLanguageCode;
  */
 public class LanguageSetter extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       langsrc l = new langsrc();
+       LanguageSource l = new LanguageSource();
        String lang;
     public LanguageSetter() {
         super();

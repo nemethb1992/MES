@@ -29,7 +29,7 @@
         <div class="container">      
             <div class="login-row row  w-100 align-self-center">       
 <!--        		<div id='loginFrame' class='mycontainer'> -->
-       			<div id='loginLeftSide' class='col-md-1 col-lg-5 d-none d-md-block'>
+       			<div id='loginLeftSide' class='col-md-1 col-lg-5 d-none d-md-block h-100'>
        			
        			
        				<div id='loginPicture' class='m-3 d-md-none d-lg-block'>
@@ -41,7 +41,7 @@
        				
        				
        			</div>
-       			<div id='loginRightSide' class='col-md-11 col-lg-7 px-4'>
+       			<div id='loginRightSide' class='col-md-11 col-lg-7 px-4 h-100'>
        				<div class="form-group my-4 ">
        				<div id='LR_1'><p id='p_loginName'></p></div>
 					</div>
@@ -52,10 +52,10 @@
        				<p id='login_title' class='w-100 w-100 h5 mt-5'>Bejelentkezés:</p>
 					</div>
        				<div class="form-group mb-0">
-       				<input class='inp_login px-3 w-100' placeholder='' id='inp_username' type='text' value='balazs.nemeth'>
+       				<input class='inp_login px-3 w-100' placeholder='' id='inp_username' type='text' value=''>
 					</div>
        				<div class="form-group">
-       				<input class='inp_login px-3 w-100' placeholder='' id='inp_pass' type='password' value='3HgB8Wy3HgB8Wy'>
+       				<input class='inp_login px-3 w-100' placeholder='' id='inp_pass' type='password' value=''>
 					</div>
        				<div class="form-group">
        				<input class='inp_login w-100' id='inp_enterbutton' type='submit' value='Tovább'>

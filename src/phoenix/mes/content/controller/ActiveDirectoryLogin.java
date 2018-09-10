@@ -1,4 +1,4 @@
-package ActiveDirectory;
+package phoenix.mes.content.controller;
 
 import java.util.Hashtable;
 import javax.naming.Context;

@@ -1,4 +1,4 @@
-package Manager;
+package phoenix.mes.content.controller.manager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Language.langsrc;
-import Session.Session_Datas;
 import de.abas.ceks.jedp.EDPException;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.AbasDate;
@@ -19,6 +17,8 @@ import de.abas.erp.db.DbContext;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.content.SessionData;
+import phoenix.mes.content.LanguageSource;
 
 
 public class StationTaskList extends HttpServlet {
@@ -39,7 +39,7 @@ public class StationTaskList extends HttpServlet {
         	String[] Station = station.split("-");
         	stationNo = Integer.parseInt(Station[1]);
 
-        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(Session_Datas.getUsername(), Session_Datas.getPassword(), langsrc.getAbasLanguage(), true);
+        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(SessionData.getUsername(), SessionData.getPassword(), LanguageSource.getAbasLanguage(), true);
         	System.out.println("1 Station Session nyitás után");
         	li = AbasObjectFactory.INSTANCE.createWorkStation(Station[0], stationNo, abasConnection).getExecutableTasks(abasConnection);
         	System.out.println("2 Station Task lista lekérve");

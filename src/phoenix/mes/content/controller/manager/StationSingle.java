@@ -1,4 +1,4 @@
-package Manager;
+package phoenix.mes.content.controller.manager;
 
 import java.io.IOException;
 import java.util.ArrayList;

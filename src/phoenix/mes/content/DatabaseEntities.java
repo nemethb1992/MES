@@ -1,4 +1,4 @@
-package Database;
+package phoenix.mes.content;
 
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class dbEntities {
+public class DatabaseEntities {
 
 	private Connection conn;
 	private Statement stmt;
@@ -31,7 +31,7 @@ public class dbEntities {
     String USER = "mes";
     String PASS = "jGbLv!nh+?zc346J";
     
-    public dbEntities()
+    public DatabaseEntities()
     {
     }
 
@@ -48,7 +48,7 @@ public class dbEntities {
         	}
         	catch (ClassNotFoundException ex2) {
         		valid = false;
-        		Logger.getLogger(dbEntities.class.getName()).log(Level.SEVERE, null, ex2);
+        		Logger.getLogger(DatabaseEntities.class.getName()).log(Level.SEVERE, null, ex2);
       } catch (SQLException e) {
           valid = false;
     	e.printStackTrace();
@@ -79,26 +79,29 @@ public class dbEntities {
 				e.printStackTrace();
 			}
         }
+        dbClose();
     }
     public ArrayList<String> SQLQueryRead(String query, String mezo)
-    {     
-    	
-    ArrayList<String> li = new ArrayList<String>();
-    if (this.dbOpen() == true)
-    {
-		try {
-	    stmt = conn.createStatement();
-	    ResultSet rs = stmt.executeQuery(query);
-    	while (rs.next())
+    {  
+    	ArrayList<String> li = new ArrayList<String>();
+    	if (this.dbOpen() == true)
     	{
-    	    li.add(rs.getString(mezo));
-    	}
-    	rs.close();
-    	stmt.close();		
-    	} catch (SQLException e) {
+    		try {
+    			stmt = conn.createStatement();
+    			ResultSet rs = stmt.executeQuery(query);
+    			while (rs.next())
+    			{
+    				li.add(rs.getString(mezo));
+    			}
+    			rs.close();
+    			stmt.close();		
+    			} 
+    		catch (SQLException e) 
+    		{
 			e.printStackTrace();
-		}
-    }
+    		}
+    	}
+    	dbClose();
 		return li;
     }
     

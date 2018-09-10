@@ -1,4 +1,4 @@
-package Manager;
+package phoenix.mes.content.controller.manager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import Database.dbEntities;
+import phoenix.mes.content.DatabaseEntities;
 
 
 public class StationPC extends HttpServlet {
@@ -23,8 +23,8 @@ public class StationPC extends HttpServlet {
     private String Group_layout()
     {
     	String group = "";
-   	    dbEntities dbE = new dbEntities();
-   	    String query ="select * from stations left join profitcenter on stations.pc = profitcenter.id where long='"+pc+"'";
+   	    DatabaseEntities dbE = new DatabaseEntities();
+   	    String query ="select stations.csoport from stations left join profitcenter on stations.pc = profitcenter.id where long='"+pc+"' group by stations.csoport";
    	    ArrayList<String> li = dbE.SQLQueryRead(query, "csoport");
     	int itemCount_li = li.size();
     	for (int i = 0; i < itemCount_li; i++) {

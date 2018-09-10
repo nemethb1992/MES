@@ -2,8 +2,6 @@
     <wb-module deploy-name="MES">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/Controllers"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/Models"/>
         <property name="context-root" value="MES"/>
         <property name="java-output-path" value="/MES/build/classes"/>
     </wb-module>

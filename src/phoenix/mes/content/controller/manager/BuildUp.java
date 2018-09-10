@@ -1,4 +1,4 @@
-package Manager;
+package phoenix.mes.content.controller.manager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import Database.dbEntities;
+import phoenix.mes.content.DatabaseEntities;
 
 /**
  * Servlet implementation class BuildUp
@@ -29,17 +29,12 @@ public class BuildUp extends HttpServlet {
     private ArrayList<String> DataSheet_Layout()
     {
     	String station ="";
-
-
-
     	ArrayList<String> layouts = new ArrayList<String>();
-    	
-
-   	   dbEntities dbE = new dbEntities();
-   	   ArrayList<String> li1 = dbE.SQLQueryRead("SELECT * FROM profitcenter","long");
-   	int itemCount_li1 = li1.size();
+    	DatabaseEntities dbE = new DatabaseEntities();
+    	ArrayList<String> li1 = dbE.SQLQueryRead("SELECT * FROM profitcenter","long");
+    	int itemCount_li1 = li1.size();
     	for (int i = 0; i < itemCount_li1; i++) {
-    		station += "<div class='tmts_stationBtnDivCont' value='"+li1.get(i)+"' OnClick='PC_Select(this)'><input disabled class='si1'value='"+li1.get(i)+"'></div>";
+    		station += "<div class='tmts_stationBtnDivCont col px-0' value='"+li1.get(i)+"' OnClick='PC_Select(this)'><input disabled class='si1'value='"+li1.get(i)+"'></div>";
     	}
 
     	layouts.add(station);

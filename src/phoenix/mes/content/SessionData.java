@@ -1,6 +1,6 @@
-package Session;
+package phoenix.mes.content;
 
-public class Session_Datas {
+public class SessionData {
 
 	private static String username;
 	public static void setUsername(String value)

@@ -1,4 +1,4 @@
-package Manager;
+package phoenix.mes.content.controller.manager;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -18,8 +18,6 @@ import org.eclipse.jdt.internal.compiler.ast.EqualExpression;
 
 import com.mysql.jdbc.ConnectionProperties;
 
-import Language.langsrc;
-import Session.Session_Datas;
 import de.abas.ceks.jedp.EDPException;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.AbasDate;
@@ -27,12 +25,14 @@ import de.abas.erp.db.DbContext;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.content.SessionData;
+import phoenix.mes.content.LanguageSource;
 import sun.security.x509.Extension;
 
 
 public class AbasTaskList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    langsrc l = new langsrc();   
+    LanguageSource l = new LanguageSource();   
 
 	String lng;
 	String station="";
@@ -59,7 +59,7 @@ public class AbasTaskList extends HttpServlet {
         	String[] Station = station.split("-");
         	AbasDate _AbasDate = AbasDate.valueOf(this.date);
         	stationNo = Integer.parseInt(Station[1]);
-        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(Session_Datas.getUsername(), Session_Datas.getPassword(), l.getAbasLanguage(), true);
+        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(SessionData.getUsername(), SessionData.getPassword(), l.getAbasLanguage(), true);
         	li = AbasObjectFactory.INSTANCE.createWorkStation(Station[0], stationNo, abasConnection).getUnassignedTasks(_AbasDate, abasConnection);
 
           	for (Task task: li) {
@@ -68,15 +68,15 @@ public class AbasTaskList extends HttpServlet {
           				"						<div class='container px-0'>\r\n" + 
           				"							<div class='row w-100 mx-auto'>\r\n" + 
           				"								<div class='col-5 py-2 dnd-input-div'>" + 
-          				"									<p>Munkaszám</p>\r\n" + 
+          				"									<p>"+Word(5)+"</p>\r\n" +  //Munkalapszám
           				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getWorkSlipNo()+"'>\r\n" + 
-          				"									<p>Cikkszám</p>\r\n" + 
+          				"									<p>"+Word(6)+"</p>\r\n" +   //Cikkszám
           				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
-          				"									<p>Keresőszó</p>\r\n" + 
+          				"									<p>"+Word(7)+"</p>\r\n" +   //Keresőszó
           				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductSwd()+"'>\r\n" + 
           				"								</div>\r\n" + 
           				"								<div class='col-5 py-2 dnd-input-div'>\r\n" + 
-          				"									<p>Felhasználás</p>\r\n" + 
+          				"									<p>Felhasználás</p>\r\n" +  //Felhasználás
           				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getUsage()+"'>\r\n" + 
           				"									<p>Termék megnevezés</p>\r\n" + 
           				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductDescription()+"'>\r\n" + 
@@ -84,7 +84,7 @@ public class AbasTaskList extends HttpServlet {
           				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductDescription2()+"'>\r\n" + 
           				"								</div>\r\n" + 
           				"								<div class='col-2 dnd-input-div px-0'>\r\n" + 
-          				"									<input class='h-100 w-100 task-panel-button' value='1' type='button'>\r\n" + 
+          				"									<input class='h-100 w-100 task-panel-button' value='' type='button'>\r\n" + 
           				"								</div>\r\n" + 
           				"							</div>\r\n" + 
           				"						</div>\r\n" + 

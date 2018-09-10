@@ -105,11 +105,11 @@ function BuildUp()
 	$.ajax({
     url:  '/'+path+'/BuildUp',
     success: function (respond) {
-//    	  $( ".tmts_stationContainer" ).empty();
+    	  $( ".tmts_stationContainer" ).empty();
 //    	  $( ".dndf1" ).empty();
 //    	  $( ".dndf2" ).empty();
     	  $(".station_label").val("");
-//    	  $( ".tmts_stationContainer" ).append(respond[0]);
+    	  $( ".tmts_stationContainer" ).append(respond[0]);
     }
 });
 	}

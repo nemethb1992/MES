@@ -1,4 +1,4 @@
-package Language;
+package phoenix.mes.content;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,10 +6,11 @@ import java.util.Collections;
 import java.util.List;
 
 import de.abas.erp.common.type.enums.EnumLanguageCode;
+import phoenix.mes.content.model.LanguageCollection;
 
 
 
-public class langsrc {
+public class LanguageSource {
 	
 	private static EnumLanguageCode AbasLanguage;
 	public static void setAbasLanguage(EnumLanguageCode value)

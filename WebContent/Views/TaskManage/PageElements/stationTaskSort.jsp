@@ -6,9 +6,7 @@
 		<div class='input-icon-holderDiv'><img class='icon-form search-icon-form WSSearchImg' src='${pageContext.request.contextPath}/Public/icons/searchSignWhite.svg'><input class='ts_searchInp WSSearchIn' value=''><div class='refresh_btn'></div></div>
 	</div>
 	<div class='tmts_stationContainer row px-3'>
-		<div class='tmts_stationBtnDivCont col px-0' value='Rose/Bopla' OnClick='PC_Select(this)'>
-			<input disabled class='si1'value='Rose/Bopla'>
-		</div>
+		<div class='tmts_stationBtnDivCont col px-0' value='Rose/Bopla' OnClick='PC_Select(this)'><input disabled class='si1'value='Rose/Bopla'></div>
 		<div class='tmts_stationBtnDivCont col px-0' value='Rose/Bopla' OnClick='PC_Select(this)'>
 			<input disabled class='si1'value='Rose/Bopla'>
 		</div>
@@ -65,31 +63,31 @@
 
 
 
-										<div class='dnd-container col-12 px-0' value='3'>
-											<div class='container px-0'>
-												<div class='row w-100 mx-auto'>
-													<div class='col-5 py-2 dnd-input-div'>
-														<p>Munkaszám</p>
-														<input disabled class='dnd-input dnd-in1' value='A22322123'>
-														<p>Cikkszám</p>
-														<input disabled class='dnd-input dnd-in1' value='006334417'>
-														<p>Keresöszó</p>
-														<input disabled class='dnd-input dnd-in1' value='test-kereso'>
-													</div>
-													<div class='col-5 py-2 dnd-input-div'>
-														<p>Felhasználás</p>
-														<input disabled class='dnd-input dnd-in1' value='beépülö'>
-														<p>Termék megnevezés</p>
-														<input disabled class='dnd-input dnd-in1' value='Terméknév'>
-														<p>Termék megnevezés 2</p>
-														<input disabled class='dnd-input dnd-in1' value='Terméknév második'>
-													</div>
-													<div class='col-2 dnd-input-div px-0'>
-														<input class='h-100 w-100 task-panel-button' type='button'>
-													</div>
-												</div>
-											</div>
-										</div>
+<!-- 										<div class='dnd-container col-12 px-0' value='3'> -->
+<!-- 											<div class='container px-0'> -->
+<!-- 												<div class='row w-100 mx-auto'> -->
+<!-- 													<div class='col-5 py-2 dnd-input-div'> -->
+<!-- 														<p>Munkaszám</p> -->
+<!-- 														<input disabled class='dnd-input dnd-in1' value='A22322123'> -->
+<!-- 														<p>Cikkszám</p> -->
+<!-- 														<input disabled class='dnd-input dnd-in1' value='006334417'> -->
+<!-- 														<p>Keresöszó</p> -->
+<!-- 														<input disabled class='dnd-input dnd-in1' value='test-kereso'> -->
+<!-- 													</div> -->
+<!-- 													<div class='col-5 py-2 dnd-input-div'> -->
+<!-- 														<p>Felhasználás</p> -->
+<!-- 														<input disabled class='dnd-input dnd-in1' value='beépülö'> -->
+<!-- 														<p>Termék megnevezés</p> -->
+<!-- 														<input disabled class='dnd-input dnd-in1' value='Terméknév'> -->
+<!-- 														<p>Termék megnevezés 2</p> -->
+<!-- 														<input disabled class='dnd-input dnd-in1' value='Terméknév második'> -->
+<!-- 													</div> -->
+<!-- 													<div class='col-2 dnd-input-div px-0'> -->
+<!-- 														<input class='h-100 w-100 task-panel-button' type='button'> -->
+<!-- 													</div> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
 
 
 
@@ -103,41 +101,41 @@
 
 
 
-					<div class='dnd-container col-12 px-0' value='3'>
-						<div class='container px-0'>
-							<div class='row w-100 mx-auto'>
-								<div class='col-5 py-2 dnd-input-div'>
-									<p>Munkaszám</p>
-									<input disabled class='dnd-input dnd-in1' value='input value'>
-									<p>Cikkszám</p>
-									<input disabled class='dnd-input dnd-in1' value='input value'>
-									<p>Keresöszó</p>
-									<input disabled class='dnd-input dnd-in1' value='input value'>
-								</div>
-								<div class='col-5 py-2 dnd-input-div'>
-									<p>Felhasználás</p>
-									<input disabled class='dnd-input dnd-in1' value='input value'>
-									<p>Termék megnevezés</p>
-									<input disabled class='dnd-input dnd-in1' value='input value'>
-									<p>Termék megnevezés 2</p>
-									<input disabled class='dnd-input dnd-in1' value='input value'>
-								</div>
-								<div class='col-2 dnd-input-div px-0'>
-									<div class='row w-100 mx-auto h-100 d-flex'>
-										<div class='col-12 px-0'>
-											<input class='h-100 w-100 task-panel-button mini-button up-task-button' type='button'>
-										</div>
-										<div class='col-12 my-1 px-0'>
-											<input class='h-100 w-100 task-panel-button mini-button remove-task-button' type='button'>
-										</div>
-										<div class='col-12 px-0'>
-											<input class='h-100 w-100 task-panel-button mini-button down-task-button' type='button'>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+<!-- 					<div class='dnd-container col-12 px-0' value='3'> -->
+<!-- 						<div class='container px-0'> -->
+<!-- 							<div class='row w-100 mx-auto'> -->
+<!-- 								<div class='col-5 py-2 dnd-input-div'> -->
+<!-- 									<p>Munkaszám</p> -->
+<!-- 									<input disabled class='dnd-input dnd-in1' value='input value'> -->
+<!-- 									<p>Cikkszám</p> -->
+<!-- 									<input disabled class='dnd-input dnd-in1' value='input value'> -->
+<!-- 									<p>Keresöszó</p> -->
+<!-- 									<input disabled class='dnd-input dnd-in1' value='input value'> -->
+<!-- 								</div> -->
+<!-- 								<div class='col-5 py-2 dnd-input-div'> -->
+<!-- 									<p>Felhasználás</p> -->
+<!-- 									<input disabled class='dnd-input dnd-in1' value='input value'> -->
+<!-- 									<p>Termék megnevezés</p> -->
+<!-- 									<input disabled class='dnd-input dnd-in1' value='input value'> -->
+<!-- 									<p>Termék megnevezés 2</p> -->
+<!-- 									<input disabled class='dnd-input dnd-in1' value='input value'> -->
+<!-- 								</div> -->
+<!-- 								<div class='col-2 dnd-input-div px-0'> -->
+<!-- 									<div class='row w-100 mx-auto h-100 d-flex'> -->
+<!-- 										<div class='col-12 px-0'> -->
+<!-- 											<input class='h-100 w-100 task-panel-button mini-button up-task-button' type='button'> -->
+<!-- 										</div> -->
+<!-- 										<div class='col-12 my-1 px-0'> -->
+<!-- 											<input class='h-100 w-100 task-panel-button mini-button remove-task-button' type='button'> -->
+<!-- 										</div> -->
+<!-- 										<div class='col-12 px-0'> -->
+<!-- 											<input class='h-100 w-100 task-panel-button mini-button down-task-button' type='button'> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 
 
 

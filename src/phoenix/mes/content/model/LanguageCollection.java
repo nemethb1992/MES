@@ -1,4 +1,4 @@
-package Language;
+package phoenix.mes.content.model;
 
 public class LanguageCollection {
     public int  id;
