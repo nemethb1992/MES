@@ -43,11 +43,11 @@ public class DataSheet extends HttpServlet {
     	ArrayList<String> layouts = new ArrayList<String>();
     	AbasConnection<EDPSession> abasConnection = null;
     	try {
-        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, abasLanguage, true);
-        	Task nextTask = AbasObjectFactory.INSTANCE.createWorkStation(ws_group,ws_no, abasConnection).getNextExecutableTask(abasConnection);
-//        	Task nextTask = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7984316,9,0)"), abasConnection);
-        	final Task.Details taskDetails = nextTask.getDetails(abasConnection);
-        	
+//        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, abasLanguage, true);
+//        	Task nextTask = AbasObjectFactory.INSTANCE.createWorkStation(ws_group,ws_no, abasConnection).getNextExecutableTask(abasConnection);
+////        	Task nextTask = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7984316,9,0)"), abasConnection);
+//        	final Task.Details taskDetails = nextTask.getDetails(abasConnection);
+        	layouts.add("");
         	// Tab 1
 //        	layouts.add("						<div class='container'>\r\n" + 
 //        			"								<div class='row px-0'>\r\n" + 
@@ -192,12 +192,12 @@ public class DataSheet extends HttpServlet {
         			"	<p>Szöveg 2</p><textarea></textarea></div>\r\n" + 
         			"	");
       		
-    	}catch(LoginException e)
+    	}catch(Exception e)
     	{
     		System.out.println(e);
     	}finally
     	{
-        		abasConnection.close();
+//        		abasConnection.close();
     	}
 
     	return layouts;

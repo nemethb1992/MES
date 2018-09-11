@@ -46,7 +46,7 @@ function Data_Clear()
 	
 	    	  $( "#tab1_container" ).empty();
 	    	  $( ".dokumentum-list" ).empty();
-	    	  $( ".darabjegyz-tbody" ).empty();
+	    	  $( "#tab3_container" ).empty();
 	    	  $( "#tab4_container" ).empty();
 }
 function TabControlEventHolder()
