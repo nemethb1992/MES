@@ -24,7 +24,6 @@ public class DatabaseEntities {
     public DatabaseEntities()
     {
     }
-
     //Initialize values
 
     public boolean dbOpen()

@@ -34,13 +34,6 @@ function DataSheet_Load()
 	    	Data_Load(respond);
 	    }
 	});
-//	$.ajax({
-//	    url:  '/MES/test',
-//	    success: function (respond) {
-//	    
-//	    	
-//	    }
-//	});
 }
 function Data_Load(data)
 {
@@ -57,11 +50,6 @@ function Data_Clear()
 	    	  $( ".darabjegyz-tbody" ).empty();
 	    	  $( "#tab4_container" ).empty();
 }
-//function TV_startUp()
-//{
-////	$('#btn_leftNav_1').css({'background-color':'#f5f5f5','background-size':'24%','border-left':'3px solid #ff6666'});
-////	$('#tab1_container').css('display','block');
-//}
 function TabControlEventHolder()
 {
 	$('.btn_logout').click(function(){
