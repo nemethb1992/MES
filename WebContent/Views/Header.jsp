@@ -17,14 +17,14 @@
 <%--         <script src="${pageContext.request.contextPath}/Views/Login/loginScript.js"></script> --%>
 <%--         <script src="${pageContext.request.contextPath}/Views/TaskManage/taskManageScript.js"></script> --%>
     <link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/Public/icons/pm_logo_mini.ico"/>
-        <style>
+    <style>
     <%@ include file="/Public/css/bootstrap.min.css"%>
 <%--     <%@ include file="/Public/css/bootstrap.min.css"%> --%>
     <%@ include file="/Public/css/bootstrap-grid.min.css"%>
 <%--     <%@ include file="/Public/css/bootstrap-reboot.min.css"%> --%>
     <%@ include file="/Public/css/gijgo.min.css"%>
     <%@ include file="/Public/css/Style.css"%>
-        <%@ include file="/Views/Login/loginStyle.css"%>
+    <%@ include file="/Views/Login/loginStyle.css"%>
     <%@ include file="/Views/TaskView/taskViewStyle.css"%>
     <%@ include file="/Views/TaskManage/taskManageStyle.css"%>
     </style>

@@ -23,7 +23,7 @@ public class Home extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
  	    HttpSession session = request.getSession();
- 	    session.removeAttribute("layout");
+// 	    session.removeAttribute("layout");
  	    session.removeAttribute("username");
  	    session.removeAttribute("pass");
  	    session.removeAttribute("selectedStation");

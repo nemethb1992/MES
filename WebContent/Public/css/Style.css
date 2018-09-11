@@ -1,166 +1,179 @@
 @charset "UTF-8";
-* {margin: 0px; padding: 0px; outline: 0px;}
+
+* {
+	margin: 0px;
+	padding: 0px;
+	outline: 0px;
+}
+
 @font-face {
-    font-family: mediumFont;
-    src: url("Public/fonts/Montserrat-Medium.ttf");
+	font-family: mediumFont;
+	src: url("Public/fonts/Montserrat-Medium.ttf");
 }
+
 @font-face {
-    font-family: lightFont;
-    src: url("Public/fonts/Montserrat-Light.ttf");
+	font-family: lightFont;
+	src: url("Public/fonts/Montserrat-Light.ttf");
 }
-.datepicker_own
-{
-height: 80%;
-    font-size: 14px;
-    background: #efefef;
-    padding-left: 15px;
-    margin-top: 6px;
-    float: right;
-    width: 65%;
+
+.datepicker_own {
+	height: 80%;
+	font-size: 14px;
+	background: #efefef;
+	padding-left: 15px;
+	margin-top: 6px;
+	float: right;
+	width: 75%;
+	border-radius: 5px;
 }
-.btn_logout
-{
-    cursor: pointer;
-    background: transparent;
-    background-image: url(Public/icons/logout.svg);
-    background-size: 35px;
-    background-repeat: no-repeat;
-    background-position: center;
-    border-radius: 0 0 0 10px;
+
+.btn_logout {
+	cursor: pointer;
+	background: transparent;
+	background-image: url(Public/icons/logout.svg);
+	background-size: 35px;
+	background-repeat: no-repeat;
+	background-position: center;
+	border-radius: 0 0 0 10px;
 }
-.btn_logout:hover
-{
-    background: #ff9797;
-    background-image: url(Public/icons/logout.svg);
-    background-size: 35px;
-    background-repeat: no-repeat;
-    background-position: center;
-    
+
+.btn_logout:hover {
+	background: #ff9797;
+	background-image: url(Public/icons/logout.svg);
+	background-size: 35px;
+	background-repeat: no-repeat;
+	background-position: center;
 }
-.logout-form
-{
-	height:75px;
+
+.logout-form {
+	height: 75px;
 	position: absolute;
 	bottom: 0px;
 }
-textarea
-{
+
+textarea {
 	font-family: lightFont;
-    color: #888888;
-    border: none;
+	color: #888888;
+	border: none;
 }
-input
-{
+
+input {
 	font-family: lightFont;
-    color: #888888;
-    border: none;
+	color: #888888;
+	border: none;
 }
-body{
+
+body {
 	background: transparent;
-    font-family: lightFont;
-    color: #888888;
+	font-family: lightFont;
+	color: #888888;
 }
+
 @font-face {
-    font-family: Mon;
-    src: url(public/fonts/Montserrat-Regular.ttf);
+	font-family: Mon;
+	src: url(public/fonts/Montserrat-Regular.ttf);
 }
 
-html{    
-/* 	background: -moz-linear-gradient(top, #ffffff 0%, #f0f0f0 100%); */
-/*     background: -webkit-linear-gradient(top, #ffffff 0%,#f0f0f0 100%); */
-/*     background: linear-gradient(to bottom, #ffffff 0%,#f0f0f0 100%); */
-
-	background: -moz-linear-gradient(top, #ffffff 0%, #f0f0f0 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top, #ffffff 0%,#f0f0f0 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom, #ffffff 0%,#f0f0f0 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f0f0f0',GradientType=0 ); /* IE6-9 */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff796d', endColorstr='#ef4747',GradientType=0 );
-    height: 100%;
+html {
+	/* 	background: -moz-linear-gradient(top, #ffffff 0%, #f0f0f0 100%); */
+	/*     background: -webkit-linear-gradient(top, #ffffff 0%,#f0f0f0 100%); */
+	/*     background: linear-gradient(to bottom, #ffffff 0%,#f0f0f0 100%); */
+	background: -moz-linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+	/* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #ffffff 0%, #f0f0f0 100%);
+	/* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 100%);
+	/* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff',
+		endColorstr='#f0f0f0', GradientType=0); /* IE6-9 */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff796d',
+		endColorstr='#ef4747', GradientType=0);
+	height: 100%;
 }
-.mycontainer
-{
+
+.mycontainer {
 	min-height: 700px;
-    border-radius: 10px;	
-    box-shadow: 0 22px 100px #999999;
-    background: #f5f5f5;
+	border-radius: 10px;
+	box-shadow: 0 22px 100px #999999;
+	background: #f5f5f5;
 }
-.titleStyle
-{
+
+.titleStyle {
 	font-size: larger;
 	font-family: mediumFont;
 }
-.cc_element
-{
+
+.cc_element {
 	box-shadow: 0px 1px 4px #484848;
 	-moz-box-shadow: 0px 1px 4px #484848;
 	-webkit-box-shadow: 0px 1px 4px #484848;
 }
-.light-shadow
-{
+
+.light-shadow {
 	box-shadow: 0px 1px 5px #bbbbbb;
 	-moz-box-shadow: 0px 1px 5px #bbbbbb;
-	-webkit-box-shadow: 0px 1px 5px #bbbbbb;	
+	-webkit-box-shadow: 0px 1px 5px #bbbbbb;
 }
-.very-light-shadow
-{
+
+.very-light-shadow {
 	box-shadow: 0px 1px 7px #dadada;
 	-moz-box-shadow: 0px 1px 7px #dadada;
 	-webkit-box-shadow: 0px 1px 7px #dadada;
 }
-.btnstyle
-{
-	cursor:pointer;
+
+.btnstyle {
+	cursor: pointer;
 	color: #989898;
 	display: block;
 	border-radius: 3px;
 }
-.btnstyle:hover
-{
-background: #f3f3f3;
+
+.btnstyle:hover {
+	background: #f3f3f3;
 }
-#container
-{
+
+#container {
 	margin: 6% auto 0 auto;
 	width: 90%;
 	min-width: 1000px;
 	max-width: 1500px;
 	height: 720px;
 }
-#lang_div
-{
-    z-index: 9999;
-    position: absolute;
-    background: white;
-    float: left;
-    min-width: 35px;
-    height: 35px;
-    top: 20px;
-    left: 20px;
-    /*border: 1px solid gray;*/
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px #979797;
+
+#lang_div {
+	z-index: 9999;
+	position: absolute;
+	background: white;
+	float: left;
+	min-width: 35px;
+	height: 35px;
+	top: 20px;
+	left: 20px;
+	/*border: 1px solid gray;*/
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px #979797;
 }
-.lang_icon
-{
-    width: 25px;
-    height: 25px;
-    margin: 5px 0 0 5px;
+
+.lang_icon {
+	width: 25px;
+	height: 25px;
+	margin: 5px 0 0 5px;
 }
-.lang_bub
-{
-    float: left;
-    width: 35px;
-    position: absolute;
-    height: 35px;
-    border-radius: 10px;
-    display: inline-block;
+
+.lang_bub {
+	float: left;
+	width: 35px;
+	position: absolute;
+	height: 35px;
+	border-radius: 10px;
+	display: inline-block;
 }
-.lang_bub:hover
-{
-    background:#f3f3f3;
+
+.lang_bub:hover {
+	background: #f3f3f3;
 }
-.lang_bub:active
-{
-    background:#E2E1D9;
-    box-shadow: 0px 0px 5px #ff6666 inset;
+
+.lang_bub:active {
+	background: #E2E1D9;
+	box-shadow: 0px 0px 5px #ff6666 inset;
 }

@@ -25,7 +25,6 @@ public class LanguageSetter extends HttpServlet {
  	    HttpSession session = request.getSession();
  	    session.removeAttribute("language");
  	    session.setAttribute("language", lang);
- 	    System.out.println(session.getAttribute("language"));
 		
         switch (lang) {
         case "hu":  session.setAttribute("abasLanguageType", EnumLanguageCode.Hungarian);
