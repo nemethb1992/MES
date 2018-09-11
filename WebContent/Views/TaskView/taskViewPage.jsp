@@ -42,7 +42,7 @@
 							class='cc_element col-3 col-md-3 col-lg-2 col-xl-2 px-0'>
 							<img class='d-block mx-auto mt-2'
 								src='${pageContext.request.contextPath}/Public/icons/timer.svg'>
-							<p id='timerP' class='h3 text-center'>0:00:00</p>
+							<p class='timerPanel h3 text-center pt-2'>0:0:0</p>
 						</div>
 						<div class='col-9 col-md-9 col-lg-10 col-xl-10 px-0 cc_element'>
 							<div id='row'>

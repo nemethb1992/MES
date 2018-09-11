@@ -4,8 +4,6 @@ $(document).ready(function(){
 	TabControlEventHolder();
 	langIconFirst();
 	Language_Startup($.cookie("language"),'3');
-
-	console.log(WS_Group() + ' ' + WS_No());
 });
 $(document).keypress(function(e) {
     if(e.which == 13) {
@@ -26,13 +24,14 @@ $(document).keypress(function(e) {
 });
 function DataSheet_Load()
 {
-	$.ajax({
-	    url:  '/'+path+'/DataSheet',
-	    success: function (respond) {
-	    	Data_Clear();
-	    	Data_Load(respond);
-	    }
-	});
+//	$.ajax({
+//	    url:  '/'+path+'/DataSheet',
+//	    success: function (respond) {
+//	    	Data_Clear();
+//	    	Data_Load(respond);
+//			//TaskTimer();
+//	    }
+//	});
 }
 function Data_Load(data)
 {
@@ -101,5 +100,40 @@ function headerNavBtnDeafult()
 	$('#btn_megszakitas input').css({'display':'none'});
 }
 
+function TaskTimer(time)
+{
+	var preNow = new Date().getTime();
+	var targetTime = preNow + time;
 
+	var x = setInterval(function() {
+		var now = new Date().getTime();
+		var distance = targetTime - now;
+		var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+		if(distance > 0)
+		{
+			$('.timerPanel').html(hours + ":" + minutes + ":" + seconds);
+		}
+		if (distance < 0) {
+			clearInterval(x);
+			$('#timerContainer').css({background:'#dc3545'});
+			var downNow = new Date().getTime();
+			var y = setInterval(function() {
+				var now = new Date().getTime();
+				var distance = now - downNow;
+				var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+				var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+				var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+				$('.timerPanel').html(hours + ":" + minutes + ":" + seconds);
+				console.log(hours + ":" + minutes + ":" + seconds);
+//				if (distance < 0) {
+//				clearInterval(y);  
+//				}
+			}, 1000)
+
+		}
+	}, 1000)
+
+}
 

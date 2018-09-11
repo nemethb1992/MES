@@ -38,7 +38,7 @@
 {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
-    background: #ff6666;
+    background: #dc3545;
 
 }
 
@@ -120,7 +120,7 @@ height: 50px;
 }
 #inp_enterbutton:hover
 {
-    background: #ff6666;
+    background: #dc3545;
     color: white;
 }
 

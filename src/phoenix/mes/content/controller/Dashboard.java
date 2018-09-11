@@ -29,7 +29,6 @@ public class Dashboard extends HttpServlet {
 		ws_group = request.getParameter("ws_group");
 		ws_no = Integer.parseInt(request.getParameter("ws_no"));
 		layout = Integer.parseInt(request.getParameter("layout"));
-		System.out.println(layout);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

@@ -5,7 +5,7 @@
 /* #btn_leftNav_4 {background-image: url("Public/icons/TV_btn_nav4.svg");} */
 #leftwrap
 {
-    background: #ff6666;
+    background: #dc3545;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     text-align: center;
@@ -51,6 +51,7 @@
 #timerContainer
 {
 	background: #00e68a;
+	transition: 1s;
 }
 .operator-switch-grid
 {
@@ -62,7 +63,7 @@
     margin: 0px auto;
     padding: 6px;
 }
-#timerP
+.timerPanel
 {
 	color: white;
 }
@@ -113,7 +114,7 @@
 .btn_leftNavigation:hover
 {
 	background-color: #e6e6e6;
-	border-left: 3px solid #ff6666;
+	border-left: 3px solid #dc3545;
 	transition: 0.2s
 }
 .btn_leftNavigation img
@@ -208,8 +209,8 @@
     display: none;
 }
 .list-group-item.active {
-    background-color: #ff6666;
-    border-color: #ff6666;
+    background-color: #dc3545;
+    border-color: #dc3545;
 }.list-group-item:first-child {
     border-top-left-radius: .0rem;
     border-top-right-radius: .0rem;
