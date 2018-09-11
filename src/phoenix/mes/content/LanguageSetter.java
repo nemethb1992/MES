@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import de.abas.erp.common.type.enums.EnumLanguageCode;
 
@@ -19,18 +20,21 @@ public class LanguageSetter extends HttpServlet {
         super();
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		lang = request.getParameter("language");
-		l.setLng_type(lang);
+ 	    HttpSession session = request.getSession();
+ 	    session.removeAttribute("language");
+ 	    session.setAttribute("language", lang);
+ 	    System.out.println(session.getAttribute("language"));
 		
         switch (lang) {
-        case "hu":  l.setAbasLanguage(EnumLanguageCode.Hungarian);
+        case "hu":  session.setAttribute("abasLanguageType", EnumLanguageCode.Hungarian);
                  break;
-        case "de": l.setAbasLanguage(EnumLanguageCode.German);
+        case "de":  session.setAttribute("abasLanguageType", EnumLanguageCode.German);
                  break;
-        case "en":  l.setAbasLanguage(EnumLanguageCode.English);
+        case "en":   session.setAttribute("abasLanguageType", EnumLanguageCode.English);
                  break;
-
-        default:  l.setAbasLanguage(EnumLanguageCode.Hungarian);
+        default:   session.setAttribute("abasLanguageType", EnumLanguageCode.Hungarian);
                  break;
     }
 		

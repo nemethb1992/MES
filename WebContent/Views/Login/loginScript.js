@@ -4,6 +4,7 @@ $(document).ready(function(){
 	buttonEventHolderLogin();
 	document.cookie = "language=hu";
 	langIconFirst();
+	LanguageSetOnServlet("hu");
 	Language_Startup($.cookie("language"),'1');
 })
 

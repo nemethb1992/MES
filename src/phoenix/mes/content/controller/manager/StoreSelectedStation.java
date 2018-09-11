@@ -1,4 +1,4 @@
-package phoenix.mes.content.controller;
+package phoenix.mes.content.controller.manager;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,34 +7,35 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 /**
- * Servlet implementation class Home
+ * Servlet implementation class StoreSelectedStation
  */
-public class Home extends HttpServlet {
+public class StoreSelectedStation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
-    public Home() {
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public StoreSelectedStation() {
         super();
     }
 
-
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
  	    HttpSession session = request.getSession();
- 	    session.removeAttribute("layout");
- 	    session.removeAttribute("username");
- 	    session.removeAttribute("pass");
+ 	    String station = request.getParameter("station");
  	    session.removeAttribute("selectedStation");
- 	    session.removeAttribute("ws_group");
- 	    session.removeAttribute("ws_no");
- 	    session.removeAttribute("language");
+ 	    session.setAttribute("selectedStation", station);
 	}
 
-
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-  		getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
+
+		doGet(request, response);
 	}
 
 }

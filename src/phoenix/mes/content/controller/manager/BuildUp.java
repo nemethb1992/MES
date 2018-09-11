@@ -36,7 +36,6 @@ public class BuildUp extends HttpServlet {
     	for (int i = 0; i < itemCount_li1; i++) {
     		station += "<div class='tmts_stationBtnDivCont col px-0' value='"+li1.get(i)+"' OnClick='PC_Select(this)'><input disabled class='si1'value='"+li1.get(i)+"'></div>";
     	}
-
     	layouts.add(station);
 
     	return layouts;

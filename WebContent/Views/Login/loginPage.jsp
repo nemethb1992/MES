@@ -52,10 +52,10 @@
        				<p id='login_title' class='w-100 w-100 h5 mt-5'>Bejelentkezés:</p>
 					</div>
        				<div class="form-group mb-0">
-       				<input class='inp_login px-3 w-100' placeholder='' id='inp_username' type='text' value=''>
+       				<input class='inp_login px-3 w-100' placeholder='' id='inp_username' type='text' value='balazs.nemeth'>
 					</div>
        				<div class="form-group">
-       				<input class='inp_login px-3 w-100' placeholder='' id='inp_pass' type='password' value=''>
+       				<input class='inp_login px-3 w-100' placeholder='' id='inp_pass' type='password' value='3HgB8Wy3HgB8Wy'>
 					</div>
        				<div class="form-group">
        				<input class='inp_login w-100' id='inp_enterbutton' type='submit' value='Tovább'>

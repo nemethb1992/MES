@@ -1,36 +1,12 @@
 package phoenix.mes.content;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import de.abas.erp.common.type.enums.EnumLanguageCode;
 import phoenix.mes.content.model.LanguageCollection;
 
 
 
 public class LanguageSource {
 	
-	private static EnumLanguageCode AbasLanguage;
-	public static void setAbasLanguage(EnumLanguageCode value)
-	{
-		AbasLanguage = value;
-	}
-	public static EnumLanguageCode getAbasLanguage()
-	{
-	    return AbasLanguage;
-	}
-	
-	private static String Lng_type;
-	public static void setLng_type(String value)
-	{
-		Lng_type = value;
-	}
-	public static String getLng_type()
-	{
-	    return Lng_type;
-	}
 	private static ArrayList<LanguageCollection> Lng;
 	public static void setLng(ArrayList<LanguageCollection> value)
 	{
@@ -40,7 +16,7 @@ public class LanguageSource {
 	{
 	    return Lng;
 	}	
-	public String LanguageSelector(String lng,int index)
+	public String getWord(String lng,int index)
 	{
     	switch(lng) {
     	case "hu":

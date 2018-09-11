@@ -1,76 +1,51 @@
 package phoenix.mes.content.controller.operator;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.Session;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
-
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-
 import de.abas.ceks.jedp.EDPSession;
-import de.abas.erp.common.type.IdImpl;
 import de.abas.erp.common.type.enums.EnumLanguageCode;
-import de.abas.erp.db.DbContext;
-import de.abas.erp.db.schema.part.Product;
-import de.abas.erp.db.util.ContextHelper;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
-import phoenix.mes.content.SessionData;
-import phoenix.mes.content.DatabaseEntities;
 import phoenix.mes.content.LanguageSource;
 
 
 public class DataSheet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	SessionData sess = new SessionData();
 	String station;
-	String lng;
-	String ws;
+	String language;
+	EnumLanguageCode abasLanguage;
+	String username;
+	String pass;
+	String ws_group;
+	int ws_no;
+	
 	LanguageSource l = new LanguageSource();
-	EnumLanguageCode language;
 
     public DataSheet() {
         super();
     }
 	String Word(int index)
 	{
-		return l.LanguageSelector(lng, index);
+		return l.getWord(language, index);
 	}
-    	// TODO Azonosítani az aktuális gépet.
-    private ArrayList<String> DataSheet_Layout(String cookieLang, String ws)
+    private ArrayList<String> DataSheet_Layout()
     {
-    	System.out.println(ws);
-    
     	ArrayList<String> layouts = new ArrayList<String>();
-    	int stationNo;
     	AbasConnection<EDPSession> abasConnection = null;
-//    	System.out.println(l.LanguageSelector(lng, 10));
-//    	System.out.println(Word(10));
-
-    	
     	try {
-        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(SessionData.getUsername(), SessionData.getPassword(), LanguageSource.getAbasLanguage(), true);
-        	System.out.println(sess.getWS_Group() + sess.getWS_No());
- //       	Task nextTask = AbasObjectFactory.INSTANCE.createWorkStation("234PG",1, abasConnection).getNextExecutableTask(abasConnection);
- //       	Task nextTask = AbasObjectFactory.INSTANCE.createWorkStation(sess.getWS_Group(),sess.getWS_No(), abasConnection).getNextExecutableTask(abasConnection);
-       	Task nextTask = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7984316,9,0)"), abasConnection);
+        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, abasLanguage, true);
+        	Task nextTask = AbasObjectFactory.INSTANCE.createWorkStation(ws_group,ws_no, abasConnection).getNextExecutableTask(abasConnection);
+//        	Task nextTask = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7984316,9,0)"), abasConnection);
         	final Task.Details taskDetails = nextTask.getDetails(abasConnection);
       		
         	// Tab 1
@@ -79,7 +54,7 @@ public class DataSheet extends HttpServlet {
         			"									<div class='col-12 col-md-12 col-lg-6 col-xl-6 px-0'>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
         			"											<p>"+Word(4)+"</p>\r\n" +  //Munkaállomás
-        			"											<input class='px-2 w-100' type='text' value='"+SessionData.getWS_Group() +" - "+SessionData.getWS_No()+"'/>\r\n" + 
+        			"											<input class='px-2 w-100' type='text' value='"+ws_group+" - "+ws_no+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
         			"											<p>"+Word(5)+"</p>\r\n" +  //Munkalapszám
@@ -228,38 +203,16 @@ public class DataSheet extends HttpServlet {
     	return layouts;
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		String data = "nem";
-//   		final ConnectionProperties connectionProperties = new ConnectionProperties("abasdb.pmhu.local", ConnectionProperties.DEFAULT_EDP_PORT, "/mes".equals("/dmes") ? "pmk" : "dpmk", "MES");
-//   		DbContext abasSession;
-//		try {
-//			abasSession = ObjectFactory.startAbasSession(Session_Datas.getUsername(), Session_Datas.getPassword(), EnumLanguageCode.Hungarian, true);
-//	        final String testText = abasSession.load(Product.class, IdImpl.valueOf("(1620705,2,0)")).getDescr();
-//	        data = testText;
-//		} catch (EDPException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//dbEntities dbE = new dbEntities();
-// ArrayList li = dbE.SQLQueryRead();
-// for(int i = 0; i < li.size(); i++)
-// {
-// 	System.out.println(li.get(i));
-		
-//        for (Cookie c : request.getCookies()) {
-//            if (c.getName().equals("Language"))
-//            	lng = c.getValue();
-//            }
-        Cookie[] cookies = request.getCookies();
 
-        if (cookies != null) {
-         for (Cookie cookie : cookies) {
-           if (cookie.getName().equals("language")) {
-        	   lng = cookie.getValue();
-            }
-          }
-        }
-//        System.out.print(lng + " - ");
-	    String json = new Gson().toJson(DataSheet_Layout(lng, ws));
+ 	    HttpSession session = request.getSession();
+ 	    username=(String)session.getAttribute("username");
+ 	    pass=(String)session.getAttribute("pass");
+ 	    ws_group=(String)session.getAttribute("ws_group");
+ 	    ws_no=(int)session.getAttribute("ws_no");
+		language = (String)session.getAttribute("language");
+		abasLanguage = (EnumLanguageCode)session.getAttribute("abasLanguageType");
+		
+	    String json = new Gson().toJson(DataSheet_Layout());
 	    response.setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");
 	    response.getWriter().write(json);

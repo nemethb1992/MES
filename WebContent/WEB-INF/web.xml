@@ -142,4 +142,14 @@
     <servlet-name>LanguageSetter</servlet-name>
     <url-pattern>/LanguageSetter</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>StoreSelectedStation</display-name>
+    <servlet-name>StoreSelectedStation</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.manager.StoreSelectedStation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StoreSelectedStation</servlet-name>
+    <url-pattern>/StoreSelectedStation</url-pattern>
+  </servlet-mapping>
 </web-app>

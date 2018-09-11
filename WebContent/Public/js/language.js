@@ -3,7 +3,6 @@ var path = location.pathname.split('/')[1];
 
 $(document).ready(function(){
 	langDivSlide();
-	LanguageSetOnServlet("hu");
 });
 
 function Language_Setter(lng)

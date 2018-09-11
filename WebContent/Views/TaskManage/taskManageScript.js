@@ -43,29 +43,45 @@ function Group_Select(item)
 }
 function Station_Select(item)
 {
-	  $( ".dndf2" ).empty();
-	  $( ".dndf1" ).empty();
 	var station = $(item).attr("value");
 	$(".station_label").val(station);
-//	$.ajax({
-//	    url:  '/MES/StationTaskList',
-//	    data: {
-//	     station: station,
-//	    },
-//	    success: function (respond) {
-//	    	  $( ".dndf2" ).append(respond);
-//	    	
-//	    }
-//	});
 	SelectedStation = station;
+	SessionStoreStation(station);
+	AbasListLoader();
+}
+function AbasListLoader()
+{
+	var date = $(".datepicker_own").val();
+	if(date != null && date != "" && date != "undefinied")
+	{
+		date = date.split('-')[0] + date.split('-')[1] + date.split('-')[2];
+	}
+	else
+	{
+		date = null;
+	}
+
+	$( ".dndf1" ).empty();
 	$.ajax({
 	    url:  '/'+path+'/AbasTaskList',
 	    data: {
-	     station: station,
+	     date: date
 	    },
 	    success: function (respond) {
 	    	  $( ".dndf1" ).append(respond);
 	    	
+	    }
+	});
+}
+function SessionStoreStation(station)
+{
+	// Tárolja a kiválasztott állomás nevét egy session változóban.
+	$.ajax({
+	    url:  '/'+path+'/StoreSelectedStation',
+	    data: {
+	     station: station,
+	    },
+	    success: function (respond) {
 	    }
 	});
 }
@@ -133,20 +149,7 @@ function BuildUp()
 function ButtonScriptElements()
 {
 	$(".refresh_abaslist_btn").click(function(){
-		var date =$(".datepicker_own").val();
-		date = date.split('-')[0] + date.split('-')[1] + date.split('-')[2];
-    	$( ".dndf1" ).empty();
-		$.ajax({
-		    url:  '/'+path+'/AbasTaskList',
-		    data: {
-		     station: SelectedStation,
-		     date: date
-		    },
-		    success: function (respond) {
-		    	  $( ".dndf1" ).append(respond);
-		    	
-		    }
-		});
+		AbasListLoader();
 	})
 	$('#btn_select_1').click(function(){
 		BuildUp();

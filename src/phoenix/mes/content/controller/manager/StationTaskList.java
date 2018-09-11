@@ -9,23 +9,25 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import de.abas.ceks.jedp.EDPException;
 import de.abas.ceks.jedp.EDPSession;
-import de.abas.erp.common.type.AbasDate;
-import de.abas.erp.db.DbContext;
+import de.abas.erp.common.type.enums.EnumLanguageCode;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
-import phoenix.mes.content.SessionData;
-import phoenix.mes.content.LanguageSource;
 
 
 public class StationTaskList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	String language;
+	EnumLanguageCode abasLanguage;
 	String layout ="";
 	String station= "";
+	String username;
+	String pass;
+	
     public StationTaskList() {
         super();
     }
@@ -35,14 +37,10 @@ public class StationTaskList extends HttpServlet {
     	int stationNo;
     	AbasConnection<EDPSession> abasConnection = null;
     	try {
-        	AbasDate date = AbasDate.valueOf("20180809");
         	String[] Station = station.split("-");
         	stationNo = Integer.parseInt(Station[1]);
-
-        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(SessionData.getUsername(), SessionData.getPassword(), LanguageSource.getAbasLanguage(), true);
-        	System.out.println("1 Station Session nyitás után");
+        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, abasLanguage, true);
         	li = AbasObjectFactory.INSTANCE.createWorkStation(Station[0], stationNo, abasConnection).getExecutableTasks(abasConnection);
-        	System.out.println("2 Station Task lista lekérve");
 
           	for (Task task: li) {
           		final Task.Details taskDetails = task.getDetails(abasConnection);
@@ -89,9 +87,7 @@ public class StationTaskList extends HttpServlet {
     	{
     		try
     		{
-            	System.out.println("3 Station Layout legenerálva");
             	abasConnection.close();
-            	System.out.println("4 Station Session bezárva");
     		}
     		catch(Exception e)
     		{}
@@ -101,8 +97,14 @@ public class StationTaskList extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		station = request.getParameter("station");
-		
+
+ 	    HttpSession session = request.getSession();
+ 	    username=(String)session.getAttribute("username");
+ 	    pass=(String)session.getAttribute("pass");
+		language = (String)session.getAttribute("language");
+		station = (String)session.getAttribute("selectedStation");
+		abasLanguage = (EnumLanguageCode)session.getAttribute("abasLanguageType");
+ 	    
 	    response.setContentType("text/plain"); 
 	    response.setCharacterEncoding("UTF-8"); 
 	    response.getWriter().write(StationList());
