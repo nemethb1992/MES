@@ -187,9 +187,9 @@ public class DataSheet extends HttpServlet {
         	layouts.add(darabjegyzek);
         	// Tab 4
         	layouts.add("<div class='tab4_element inputContainer BigTextInput cc_element h-50'>\r\n" + 
-        			"	<p>Szöveg 1</p><textarea></textarea></div>\r\n" + 
+        			"	<p>"+Word(42)+" 1</p><textarea></textarea></div>\r\n" + 
         			"<div class='tab4_element inputContainer BigTextInput cc_element h-50'>\r\n" + 
-        			"	<p>Szöveg 2</p><textarea></textarea></div>\r\n" + 
+        			"	<p>"+Word(42)+" 2</p><textarea></textarea></div>\r\n" + 
         			"	");
       		
     	}catch(Exception e)
