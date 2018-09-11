@@ -138,11 +138,11 @@ public class DataSheet extends HttpServlet {
         	String darabjegyzek = "				<table class=\"table table-striped\">\r\n" + 
         			"  								<thead>\r\n" + 
         			"  								  <tr>\r\n" + 
-        			"     								 <th scope=\"col\">Cikkszám</th>\r\n" + 
-        			"     								 <th scope=\"col\">Kereszöszó</th>\r\n" + 
-        			"   									 <th scope=\"col\">Megnevezés 1</th>\r\n" + 
-        			"  									 <th scope=\"col\">Megnevezés 2</th>\r\n" + 
-        			"  									 <th scope=\"col\">Beépülö menny.</th>\r\n" + 
+        			"     								 <th scope=\"col\">"+Word(6)+"</th>\r\n" + //Cikkszám
+        			"     								 <th scope=\"col\">"+Word(7)+"</th>\r\n" +  //Kereszöszó
+        			"   									 <th scope=\"col\">"+Word(8)+" 1</th>\r\n" +  //Megnevezés 1
+        			"  									 <th scope=\"col\">"+Word(8)+" 2</th>\r\n" +   //Megnevezés 2
+        			"  									 <th scope=\"col\">"+Word(31)+"</th>\r\n" +  //Beépülö menny.
         			"   								  </tr>\r\n" + 
         			"  								</thead>\r\n" + 
         			"  								<tbody class='darabjegyz-tbody'>";
