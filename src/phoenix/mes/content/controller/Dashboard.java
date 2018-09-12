@@ -14,7 +14,7 @@ import phoenix.mes.content.LanguageSource;
 public class Dashboard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ActiveDirectoryLogin ac = new ActiveDirectoryLogin();
-	LanguageSource l = new LanguageSource();
+	LanguageSource lng = new LanguageSource();
 	boolean way;
 	String username = "";
 	String pass = "";
@@ -23,7 +23,6 @@ public class Dashboard extends HttpServlet {
 	int layout;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		LanguageSource.setLng(l.LanguageList());
 		username = request.getParameter("username");
 		pass = request.getParameter("pass");
 		ws_group = request.getParameter("ws_group");

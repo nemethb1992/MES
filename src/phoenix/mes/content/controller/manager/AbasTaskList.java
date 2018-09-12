@@ -24,23 +24,22 @@ import phoenix.mes.content.LanguageSource;
 
 public class AbasTaskList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    LanguageSource l = new LanguageSource();   
 
-	String language;
+	protected static String language;
 	EnumLanguageCode abasLanguage;
-	String station="";
-	String date="";
+	String station;
+	String date;
 	String username;
 	String pass;
-
+	static String Word(int index)
+	{
+		return LanguageSource.getWord(language, index);
+	}
 	
     public AbasTaskList() {
         super();
     }
-	String Word(int index)
-	{
-		return l.getWord(language, index);
-	}
+
     private String AbasList()
     {
     	String layout ="";

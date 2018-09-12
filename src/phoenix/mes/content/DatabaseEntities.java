@@ -7,76 +7,67 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DatabaseEntities {
 
-	private Connection conn;
-	private Statement stmt;
-    static final String JDBC_DRIVER = "org.postgresql.Driver";
-    String dbName = "jdbc:postgresql://localhost/struts_new";
-    String dbDriver = "org.postgresql.Driver";
-    String URL = "jdbc:postgresql://192.168.145.217/dmes"; 
-    String USER = "mes";
-    String PASS = "jGbLv!nh+?zc346J";
-    
-    public DatabaseEntities()
+	protected static Connection conn;
+	DatabaseEntities()
     {
+		
     }
     //Initialize values
 
-    public boolean dbOpen()
+    protected static void dbOpen()
     {
-    	boolean valid = false;
-        try
-        {
+    	try {
         	Class.forName("org.postgresql.Driver");
-            conn = DriverManager.getConnection(URL, USER, PASS);
-            valid = true;
-        	}
-        	catch (ClassNotFoundException ex2) {
-        		valid = false;
-        		Logger.getLogger(DatabaseEntities.class.getName()).log(Level.SEVERE, null, ex2);
-      } catch (SQLException e) {
-          valid = false;
-    	e.printStackTrace();
+    	}catch(ClassNotFoundException c) {
+    		
+    	}
+    	try {
+			conn = DriverManager.getConnection("jdbc:postgresql://192.168.145.217/dmes", "mes", "jGbLv!nh+?zc346J");
+		} catch (SQLException e) {
+		}
     }
-        return valid;
-    }
-    private boolean dbClose()
+    public static void dbClose()
     {
-        try
-        {
+        try{
             conn.close();
-            return true;
         }
-        catch (SQLException e)
-        {
-            return false;
+        catch (SQLException e){
         }
     }
-    public void SQLQueryExecute(String query)
+    public void sqlUpdate(String query)
     {
-        if (this.dbOpen() == true)
-        {
-        	try {
-            PreparedStatement preparedStmt = conn.prepareStatement(query);
-            preparedStmt.executeUpdate();
-            preparedStmt.close();
-        	} catch (SQLException e) {
-				e.printStackTrace();
-			}
-        }
-        dbClose();
+		dbOpen();
+    	if (conn != null)
+    	{
+
+    		PreparedStatement preparedStmt = null;
+
+    		try {
+    			preparedStmt = conn.prepareStatement(query);
+    			preparedStmt.executeUpdate();
+    		} catch (SQLException e) {
+    		} finally {
+    			try {
+    				preparedStmt.close();
+    			}catch(SQLException e){	
+    			}
+
+    		}
+
+    	}
     }
-    public ArrayList<String> SQLQueryRead(String query, String mezo)
+    public static ArrayList<String> sqlQuery(String query, String mezo)
     {  
     	ArrayList<String> li = new ArrayList<String>();
-    	if (this.dbOpen() == true)
+
+    	dbOpen();
+    	if (conn != null)
     	{
     		try {
-    			stmt = conn.createStatement();
+    			Statement stmt = conn.createStatement();
     			ResultSet rs = stmt.executeQuery(query);
     			while (rs.next())
     			{
@@ -90,7 +81,6 @@ public class DatabaseEntities {
 			e.printStackTrace();
     		}
     	}
-    	dbClose();
 		return li;
     }
     

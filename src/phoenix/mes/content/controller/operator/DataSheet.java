@@ -21,22 +21,21 @@ import phoenix.mes.content.LanguageSource;
 
 public class DataSheet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	static String language;
 	String station;
-	String language;
 	EnumLanguageCode abasLanguage;
 	String username;
 	String pass;
 	String ws_group;
 	int ws_no;
 	
-	LanguageSource l = new LanguageSource();
 
     public DataSheet() {
         super();
     }
-	String Word(int index)
+	static String Word(int index)
 	{
-		return l.getWord(language, index);
+		return LanguageSource.getWord(language, index);
 	}
     private ArrayList<String> DataSheet_Layout()
     {

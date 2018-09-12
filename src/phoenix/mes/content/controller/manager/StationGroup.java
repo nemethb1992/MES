@@ -1,6 +1,7 @@
 package phoenix.mes.content.controller.manager;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -22,9 +23,9 @@ public class StationGroup extends HttpServlet {
     private String Station_layout()
     {
     	String station = "";
-   	    DatabaseEntities dbE = new DatabaseEntities();
    	    String query ="select * from stations where csoport='"+group+"' ORDER BY sorszam ASC";
-   	    ArrayList<String> li = dbE.SQLQueryRead(query, "sorszam");
+   	    ArrayList<String> li = DatabaseEntities.sqlQuery(query, "sorszam");
+		DatabaseEntities.dbClose();
     	int itemCount_li = li.size();
     	for (int i = 0; i < itemCount_li; i++) {
     		station += "<div class='tmts_stationBtnDivCont col px-0' value='"+group+"-"+li.get(i)+"' OnClick='Station_Select(this)'><input disabled class='si1'value='"+group+"-"+li.get(i)+"'></div>";
