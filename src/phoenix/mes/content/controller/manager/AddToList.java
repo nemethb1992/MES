@@ -11,19 +11,12 @@ public class AddToList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     String value;  
 
-    public AddToList() {
-        super();
-    }
-
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		value = request.getParameter("value");
 	    response.setContentType("text/plain"); 
 	    response.setCharacterEncoding("UTF-8"); 
 	    response.getWriter().write(value);
 	}
-
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 	}

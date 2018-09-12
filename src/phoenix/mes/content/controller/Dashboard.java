@@ -13,14 +13,9 @@ import phoenix.mes.content.LanguageSource;
 
 public class Dashboard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	ActiveDirectoryLogin ac = new ActiveDirectoryLogin();
 	LanguageSource lng = new LanguageSource();
-	boolean way;
-	String username = "";
-	String pass = "";
-	String ws_group;
-	int ws_no;
-	int layout;
+	String username,pass,ws_group;
+	int ws_no,layout;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		username = request.getParameter("username");
@@ -32,13 +27,12 @@ public class Dashboard extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		//    	   session.setAttribute("layout", layout);
 		session.setAttribute("username",username);
 		session.setAttribute("pass",pass);
 		session.setAttribute("ws_group",ws_group);
 		session.setAttribute("ws_no",ws_no);
 
-		if(ac.activeDirectoryConn(username, pass))
+		if(ActiveDirectoryLogin.activeDirectoryConn(username, pass))
 		{
 			if(layout == 1)
 				getServletContext().getRequestDispatcher("/Views/TaskView/taskViewPage.jsp").forward(request, response);

@@ -8,29 +8,13 @@
 <div class=' col-2 pr-1'>
 	<div class='cont_header'>
 		<div class='input-icon-holderDiv'>
-			<img class='icon-form search-icon-form WSSearchImg'
-				src='${pageContext.request.contextPath}/Public/icons/searchSignWhite.svg'><input
-				class='ts_searchInp WSSearchIn' value=''>
+<!-- 			<img class='icon-form search-icon-form WSSearchImg' -->
+<%-- 				src='${pageContext.request.contextPath}/Public/icons/searchSignWhite.svg'><input --%>
+<!-- 				class='ts_searchInp WSSearchIn' value=''> -->
 			<div class='refresh_btn'></div>
 		</div>
 	</div>
 	<div class='tmts_stationContainer row px-3'>
-		<div class='tmts_stationBtnDivCont col px-0' value='Rose/Bopla'
-			OnClick='PC_Select(this)'>
-			<input disabled class='si1' value='Rose/Bopla'>
-		</div>
-		<div class='tmts_stationBtnDivCont col px-0' value='Rose/Bopla'
-			OnClick='PC_Select(this)'>
-			<input disabled class='si1' value='Rose/Bopla'>
-		</div>
-		<div class='tmts_stationBtnDivCont col px-0' value='Rose/Bopla'
-			OnClick='PC_Select(this)'>
-			<input disabled class='si1' value='Rose/Bopla'>
-		</div>
-		<div class='tmts_stationBtnDivCont col px-0' value='Rose/Bopla'
-			OnClick='PC_Select(this)'>
-			<input disabled class='si1' value='Rose/Bopla'>
-		</div>
 	</div>
 </div>
 
@@ -44,21 +28,34 @@
 				disabled value=''>
 		</div>
 	</div>
-	<div class='sortStationListCont'>
-		<div class='sortContDiv_nav'>
-			<div class='abas-list-head sort-list-head sort-list'>
-				<div class='input-icon-holderDiv datepicker-50'>
-					<img class='icon-form search-icon-form AbasSearchImg'
-						src='${pageContext.request.contextPath}/Public/icons/searchSign.svg'><input
-						class='ts_searchInp AbasSearchIn' value=''>
-				</div>
-				<div class='abasList-datepicker '>
-					<input class='datepicker_own' type='date' />
-					<button class='refresh_abaslist_btn'></button>
+	<div class='sortStationListCont container'>
+		<div class='sortContDiv_nav row px-0'>
+			<div class='abas-list-head sort-list-head sort-list col-6'>
+				<div class='row'>
+					<div class=' px-0  col-12'>
+						<div class='container'>
+							<div class='row'>
+								<div class='col-8'>
+									<input class='datepicker_own w-100 h-100' type='date' />
+								</div>
+								<div class='col-2 px-0'>
+									<button class='date-button date-refresh h-100 w-100'></button>
+								</div>
+								<div class='col-2 px-0'>
+									<button class='date-button date-null h-100 w-100'></button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class='input-icon-holderDiv  col px-0'>
+<!-- 						<img class='icon-form search-icon-form AbasSearchImg' -->
+<%-- 							src='${pageContext.request.contextPath}/Public/icons/searchSign.svg'><input --%>
+<!-- 							class='ts_searchInp AbasSearchIn' value=''> -->
+					</div>
 				</div>
 			</div>
 
-			<div class='ws-list-head sort-list-head sort-list'>
+			<div class='ws-list-head sort-list-head sort-list col-6'>
 				<div class='input-icon-holderDiv stationName-holderDiv'>
 					<img class='icon-form'
 						src='${pageContext.request.contextPath}/Public/icons/computerSignGray.svg'><input
@@ -72,10 +69,9 @@
 			</div>
 		</div>
 
-		<div class='sortContDiv_ListHolder'>
-			<div class='abas-list-holder sort-list-holder sort-list'>
-				<div class='dnd-frame very-light-shadow dndf1 row'>
-
+		<div class='sortContDiv_ListHolder row'>
+			<div class='abas-list-holder sort-list-holder  col-6 px-0'>
+				<div class='dnd-frame dndf1 abas-list h-100 row'>
 
 
 					<!-- 										<div class='dnd-container col-12 px-0' value='3'> -->
@@ -106,9 +102,11 @@
 
 				</div>
 			</div>
-			<div class='ws-list-holder sort-list-holder sort-list'>
-				<div class='dnd-frame very-light-shadow dndf2'>
+			<div class='ws-list-holder sort-list-holder col-6 px-0'>
+				<div class='dnd-frame h-100 dndf2'>
 
+
+					<!-- 					<div class="loaderCycle mx-auto mt-5  task-cycle"></div> -->
 					<!-- 					<div class='dnd-container col-12 px-0' value='3'> -->
 					<!-- 						<div class='container px-0'> -->
 					<!-- 							<div class='row w-100 mx-auto'> -->

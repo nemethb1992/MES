@@ -7,6 +7,7 @@ $(document).ready(function(){
 	collect_list_ws();
 	langIconFirst();
 	Language_Startup($.cookie("language"),'2');
+	setToday(".datepicker_own");
 });
 
 
@@ -27,6 +28,7 @@ function PC_Select(item)
 	    }
 	});
 }
+
 function Group_Select(item)
 {
 	var group = $(item).attr("value");
@@ -62,17 +64,24 @@ function AbasListLoader()
 	}
 
 	$( ".dndf1" ).empty();
+	$('.abas-list').append("<div class='loaderCycle mx-auto mt-5  abas-cycle'></div>");
 	$.ajax({
 	    url:  '/'+path+'/AbasTaskList',
 	    data: {
 	     date: date
 	    },
 	    success: function (respond) {
+
+	    	$( ".dndf1" ).empty();
 	    	  $( ".dndf1" ).append(respond);
 	    	
-	    }
+	    },
+        error: function() {
+	    	$( ".dndf1" ).empty();
+        }  
 	});
 }
+
 function SessionStoreStation(station)
 {
 	// Tárolja a kiválasztott állomás nevét egy session változóban.
@@ -122,8 +131,8 @@ function BuildUp()
     url:  '/'+path+'/BuildUp',
     success: function (respond) {
     	  $( ".tmts_stationContainer" ).empty();
-//    	  $( ".dndf1" ).empty();
-//    	  $( ".dndf2" ).empty();
+    	  $( ".dndf1" ).empty();
+    	  $( ".dndf2" ).empty();
     	  $(".station_label").val("");
     	  $( ".tmts_stationContainer" ).append(respond[0]);
     }
@@ -146,11 +155,32 @@ function BuildUp()
 //		
 //	
 //}
+function setToday(datepicker)
+{
+	
+	var d = new Date();
+	function month(){
+		if((d.getMonth()+1)<10){
+			return ("0"+(d.getMonth()+1));
+			}
+		else{
+			return (d.getMonth()+1);
+		}
+		
+	}
+	var strDate = d.getFullYear() + "-" + month() + "-" + d.getDate();
+	$(datepicker).val(strDate);
+}
 function ButtonScriptElements()
 {
-	$(".refresh_abaslist_btn").click(function(){
+
+	$(".date-refresh").click(function(){
 		AbasListLoader();
-	})
+	});
+		$(".date-null").click(function(){
+		setToday(".datepicker_own");
+		AbasListLoader();
+	});
 	$('#btn_select_1').click(function(){
 		BuildUp();
 		$('.select-panel').hide();
@@ -158,6 +188,10 @@ function ButtonScriptElements()
 	});
 	
 	$('.refresh_btn').click(function(){
+  	  $( ".dndf1" ).empty();
+  	  $( ".dndf2" ).empty();
+		setToday(".datepicker_own");
+		SessionStoreStation();
 		BuildUp();
 	});
 	$('#btn_select_2').click(function(){

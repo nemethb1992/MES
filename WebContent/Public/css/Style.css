@@ -17,14 +17,12 @@
 }
 
 .datepicker_own {
-	height: 80%;
-	font-size: 14px;
-	background: #efefef;
-	padding-left: 15px;
-	margin-top: 6px;
-	float: right;
-	width: 75%;
-	border-radius: 5px;
+font-size: 14px;
+    background: #efefef;
+    padding-left: 15px;
+    margin: 6px 0 6px 0px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
 }
 
 .btn_logout {

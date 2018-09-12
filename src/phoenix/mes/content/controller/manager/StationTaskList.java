@@ -19,30 +19,22 @@ import phoenix.mes.abas.Task;
 
 
 public class StationTaskList extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-
-	String language;
-	EnumLanguageCode abasLanguage;
-	String layout ="";
-	String station= "";
-	String username;
-	String pass;
+	protected static final long serialVersionUID = 1L;
+	EnumLanguageCode language;
+	String layout,station,username,pass;
 	
-    public StationTaskList() {
-        super();
-    }
-    private String StationList()
+    protected String StationList()
     {
-    	List<Task> li = new ArrayList<Task>();
+    	List<Task> list = new ArrayList<Task>();
     	int stationNo;
     	AbasConnection<EDPSession> abasConnection = null;
     	try {
-        	String[] Station = station.split("-");
-        	stationNo = Integer.parseInt(Station[1]);
-        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, abasLanguage, true);
-        	li = AbasObjectFactory.INSTANCE.createWorkStation(Station[0], stationNo, abasConnection).getExecutableTasks(abasConnection);
+        	String[] stationSplit = station.split("-");
+        	stationNo = Integer.parseInt(stationSplit[1]);
+        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, language, true);
+        	list = AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0], stationNo, abasConnection).getExecutableTasks(abasConnection);
 
-          	for (Task task: li) {
+          	for (Task task: list) {
           		final Task.Details taskDetails = task.getDetails(abasConnection);
           		layout += "					<div class='dnd-container col-12 px-0' value='3'>\r\n" + 
           				"						<div class='container px-0'>\r\n" + 
@@ -101,9 +93,8 @@ public class StationTaskList extends HttpServlet {
  	    HttpSession session = request.getSession();
  	    username=(String)session.getAttribute("username");
  	    pass=(String)session.getAttribute("pass");
-		language = (String)session.getAttribute("language");
 		station = (String)session.getAttribute("selectedStation");
-		abasLanguage = (EnumLanguageCode)session.getAttribute("abasLanguageType");
+		language  = (EnumLanguageCode)session.getAttribute("abasLanguageType");
  	    
 	    response.setContentType("text/plain"); 
 	    response.setCharacterEncoding("UTF-8"); 

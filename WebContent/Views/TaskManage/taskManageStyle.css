@@ -2,6 +2,24 @@
 /* { */
 /* 	background: #dedede; */
 /* } */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.loaderCycle {
+    border: 5px solid #ffffff;
+    border-radius: 50%;
+    border-top: 5px solid #dc3545;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;    
+}
 .pass-item {
 	float: right;
 	cursor: pointer;
@@ -27,29 +45,46 @@
 	cursor: pointer;
 }
 
-.refresh_abaslist_btn {
-	height: 80%;
-	width: 15%;
-	float: right;
-	background: #efefef;
-	background-image: url(Public/icons/reload.svg);
-	background-size: 50%;
-	background-repeat: no-repeat;
-	background-position: center;
-	cursor: pointer;
-	margin: 6px;
-	border: none;
-	border-radius: 5px;
+.date-button {
+    float: right;
+    background: #efefef;
+    background-image: url(Public/icons/letter-x.svg);
+    background-size: 39%;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    margin: 6px;
+    border: none;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
 }
-
-.refresh_abaslist_btn:hover {
+.date-button:hover {
 	background: #d9d9d9;
-	background-image: url(Public/icons/reload.svg);
-	background-size: 50%;
 	background-repeat: no-repeat;
 	background-position: center;
 }
-
+.date-null
+{
+    background-size: 27%;
+	background-image: url(Public/icons/delete-sign.svg);
+}
+.date-null:hover
+{
+    background-size: 27%;
+	background-image: url(Public/icons/delete-sign.svg);
+}
+.date-refresh
+{
+	margin-right: 10px; 
+	border-radius: 0px;
+    background-size: 25%;
+	background-image: url(Public/icons/searchSign.svg);
+}
+.date-refresh:hover
+{
+    background-size: 25%;
+	background-image: url(Public/icons/searchSign.svg);
+}
 .tmts_stationBtnDivCont {
 	height: 44px;
 	background: white;
@@ -64,11 +99,6 @@
 	z-index: 0;
 }
 
-.abasList-datepicker {
-	height: 100%;
-	width: 50%;
-	float: right;
-}
 
 .TM_btn_select {
 	padding-top: 50%;
@@ -271,9 +301,6 @@
 	height: 50px;
 }
 
-.datepicker-50 {
-	width: 50%;
-}
 
 .input-icon-holderDiv input {
 	float: left;
@@ -310,7 +337,6 @@
 
 .sortContDiv_nav {
 	height: 50px;
-	width: 100%;
 	border-bottom: 1px solid #e0e6e8;
 }
 
@@ -324,11 +350,6 @@
 	height: 50px;
 }
 
-.sort-list {
-	float: left;
-	/* 	width: 49.9%; */
-	width: 50%;
-}
 
 .sort-list-holder {
 	height: 530px;
@@ -366,9 +387,9 @@
 }
 
 .dnd-frame {
-	margin: 8px 2% 0 2%;
-	max-height: 515px;
-	overflow-y: scroll;
+    margin: 5px 0px 0px 0px;
+    max-height: 515px;
+    overflow-y: scroll;
 }
 
 .dnd-frame::-webkit-scrollbar {

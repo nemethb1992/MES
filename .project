@@ -50,6 +50,11 @@
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/HU.svg</location>
 		</link>
 		<link>
+			<name>WebContent/Public/icons/delete-sign.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/delete-sign.svg</location>
+		</link>
+		<link>
 			<name>WebContent/Public/icons/down-arrow.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/down-arrow.svg</location>

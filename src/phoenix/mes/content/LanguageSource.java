@@ -1,6 +1,8 @@
 package phoenix.mes.content;
 
 import java.util.ArrayList;
+
+import de.abas.erp.common.type.enums.EnumLanguageCode;
 import phoenix.mes.content.model.LanguageCollection;
 
 
@@ -9,21 +11,18 @@ public class LanguageSource {
 	
 	protected static final ArrayList<LanguageCollection> LANGUAGE_SOURCE = new ArrayList<LanguageCollection>();
 
-	public static String getWord(String lng,int index)
+	public static String getWord(EnumLanguageCode lng,int index)
 	{
-    	switch(lng) {
-    	case "hu":
-    	{
-    		return LANGUAGE_SOURCE.get(index).hu;
-    	}    	
-    	case "de":
+    	switch(lng) { 	
+    	case German:
     	{
     		return LANGUAGE_SOURCE.get(index).de;
     	}
-    	case "en":
+    	case English:
     	{
     		return LANGUAGE_SOURCE.get(index).en;
     	}
+    	case Hungarian:  
     	default:
     	{
     		return LANGUAGE_SOURCE.get(index).hu;

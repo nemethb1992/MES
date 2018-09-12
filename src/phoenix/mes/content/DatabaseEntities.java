@@ -19,15 +19,18 @@ public class DatabaseEntities {
 
     protected static void dbOpen()
     {
-    	try {
-        	Class.forName("org.postgresql.Driver");
-    	}catch(ClassNotFoundException c) {
-    		
-    	}
-    	try {
-			conn = DriverManager.getConnection("jdbc:postgresql://192.168.145.217/dmes", "mes", "jGbLv!nh+?zc346J");
-		} catch (SQLException e) {
-		}
+
+			try {
+		    	Class.forName("org.postgresql.Driver");
+			}catch(ClassNotFoundException c) {
+				
+			}
+			try {
+				
+				conn = DriverManager.getConnection("jdbc:postgresql://192.168.145.217/dmes", "mes", "jGbLv!nh+?zc346J");
+			} catch (SQLException e) {
+			}
+
     }
     public static void dbClose()
     {
@@ -39,22 +42,16 @@ public class DatabaseEntities {
     }
     public void sqlUpdate(String query)
     {
-		dbOpen();
-    	if (conn != null)
-    	{
-
-    		PreparedStatement preparedStmt = null;
-
+    	PreparedStatement preparedStmt = null;
+    	dbOpen();
+    	try {
+    		preparedStmt = conn.prepareStatement(query);
+    		preparedStmt.executeUpdate();
+    	} catch (SQLException e) {
+    	} finally {
     		try {
-    			preparedStmt = conn.prepareStatement(query);
-    			preparedStmt.executeUpdate();
-    		} catch (SQLException e) {
-    		} finally {
-    			try {
-    				preparedStmt.close();
-    			}catch(SQLException e){	
-    			}
-
+    			preparedStmt.close();
+    		}catch(SQLException e){	
     		}
 
     	}
@@ -63,9 +60,7 @@ public class DatabaseEntities {
     {  
     	ArrayList<String> li = new ArrayList<String>();
 
-    	dbOpen();
-    	if (conn != null)
-    	{
+    		dbOpen();
     		try {
     			Statement stmt = conn.createStatement();
     			ResultSet rs = stmt.executeQuery(query);
@@ -80,7 +75,6 @@ public class DatabaseEntities {
     		{
 			e.printStackTrace();
     		}
-    	}
 		return li;
     }
     

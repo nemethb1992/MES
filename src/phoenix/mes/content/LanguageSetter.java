@@ -14,26 +14,29 @@ import de.abas.erp.common.type.enums.EnumLanguageCode;
  */
 public class LanguageSetter extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       String lang;
+	String lang;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		lang = request.getParameter("language");
- 	    HttpSession session = request.getSession();
- 	    session.removeAttribute("language");
- 	    session.setAttribute("language", lang);
-		
-        switch (lang) {
-        case "hu":  session.setAttribute("abasLanguageType", EnumLanguageCode.Hungarian);
-                 break;
-        case "de":  session.setAttribute("abasLanguageType", EnumLanguageCode.German);
-                 break;
-        case "en":   session.setAttribute("abasLanguageType", EnumLanguageCode.English);
-                 break;
-        default:   session.setAttribute("abasLanguageType", EnumLanguageCode.Hungarian);
-                 break;
-    }
-		
+		HttpSession session = request.getSession();
+		session.removeAttribute("abasLanguageType");
+
+		switch (lang) {
+		case "de": {
+			session.setAttribute("abasLanguageType", EnumLanguageCode.German);
+			break;
+		}
+		case "en":  {
+			session.setAttribute("abasLanguageType", EnumLanguageCode.English);
+			break;
+		}
+		case "hu": 
+		default:{
+			session.setAttribute("abasLanguageType", EnumLanguageCode.Hungarian);
+			break;
+		}
+		}
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);

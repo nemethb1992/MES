@@ -23,116 +23,93 @@ import phoenix.mes.content.LanguageSource;
 
 
 public class AbasTaskList extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 
-	protected static String language;
-	EnumLanguageCode abasLanguage;
-	String station;
-	String date;
-	String username;
-	String pass;
-	static String Word(int index)
+	private static final long serialVersionUID = 1L;
+	protected static EnumLanguageCode language;
+	DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+	Date today = new Date();
+	String station, date,username,pass;
+	protected static String word(int index)
 	{
 		return LanguageSource.getWord(language, index);
 	}
-	
-    public AbasTaskList() {
-        super();
-    }
-
-    private String AbasList()
-    {
-    	String layout ="";
-    	List<Task> li = new ArrayList<Task>();
-    	int stationNo;
-    	AbasConnection<EDPSession> abasConnection = null;
-    	try {
-        	String[] Station = station.split("-");
-        	AbasDate _AbasDate = AbasDate.valueOf(this.date);
-        	stationNo = Integer.parseInt(Station[1]);
-        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, abasLanguage, true);
-        	li = AbasObjectFactory.INSTANCE.createWorkStation(Station[0], stationNo, abasConnection).getUnassignedTasks(_AbasDate, abasConnection);
-          	for (Task task: li) {
-          		final Task.Details taskDetails = task.getDetails(abasConnection);
-          		layout += "					<div class='dnd-container col-12 px-0' value='3'>\r\n" + 
-          				"						<div class='container px-0'>\r\n" + 
-          				"							<div class='row w-100 mx-auto'>\r\n" + 
-          				"								<div class='col-5 py-2 dnd-input-div'>" + 
-          				"									<p>"+Word(5)+"</p>\r\n" +  //Munkalapszám
-          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getWorkSlipNo()+"'>\r\n" + 
-          				"									<p>"+Word(6)+"</p>\r\n" +   //Cikkszám
-          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
-          				"									<p>"+Word(7)+"</p>\r\n" +   //Keresőszó
-          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductSwd()+"'>\r\n" + 
-          				"								</div>\r\n" + 
-          				"								<div class='col-5 py-2 dnd-input-div'>\r\n" + 
-          				"									<p>"+Word(9)+"</p>\r\n" +  //Felhasználás
-          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getUsage()+"'>\r\n" + 
-          				"									<p>"+Word(8)+"</p>\r\n" +  //Termék megnevezés
-          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductDescription()+"'>\r\n" + 
-          				"									<p>"+Word(8)+" 2</p>\r\n" +  //Termék megnevezés 2
-          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductDescription2()+"'>\r\n" + 
-          				"								</div>\r\n" + 
-          				"								<div class='col-2 dnd-input-div px-0'>\r\n" + 
-          				"									<input class='h-100 w-100 task-panel-button' value='' type='button'>\r\n" + 
-          				"								</div>\r\n" + 
-          				"							</div>\r\n" + 
-          				"						</div>\r\n" + 
-          				"					</div>";
-
-          	}
-          	
-    	}catch(LoginException e)
-    	{
-    		System.out.println(e);
-    	}finally
-    	{
-    		try
-    		{
-            	abasConnection.close();
-    		}
-    		catch(Exception e)
-    		{}
-    	}
-
-    	return layout;
-    }
+	protected String AbasList()
+	{
+		AbasConnection<EDPSession> abasConnection = null;
+		List<Task> li = new ArrayList<Task>();
+		String[] Station = station.split("-");
+		AbasDate abasDate;
+		String layout = "";
+		int stationNo;
+		try {
+			stationNo = Integer.parseInt(Station[1]);
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, language, true);
+			System.out.println(date);
+			System.out.println(dateFormat.format(today));
+			if(date == dateFormat.format(today)) {
+				abasDate = AbasDate.INFINITY;
+			}
+			else {
+				abasDate = AbasDate.valueOf(date);
+			}
+			li = AbasObjectFactory.INSTANCE.createWorkStation(Station[0], stationNo, abasConnection).getUnassignedTasks(abasDate, abasConnection);
+			for (Task task: li) {
+				final Task.Details taskDetails = task.getDetails(abasConnection);
+				layout += "					<div class='dnd-container col-12 px-0' value='3'>\r\n" + 
+						"						<div class='container px-0'>\r\n" + 
+						"							<div class='row w-100 mx-auto'>\r\n" + 
+						"								<div class='col-5 py-2 dnd-input-div'>" + 
+						"									<p>"+word(5)+"</p>\r\n" +  //Munkalapszám
+						"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getWorkSlipNo()+"'>\r\n" + 
+						"									<p>"+word(6)+"</p>\r\n" +   //Cikkszám
+						"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
+						"									<p>"+word(7)+"</p>\r\n" +   //Keresőszó
+						"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductSwd()+"'>\r\n" + 
+						"								</div>\r\n" + 
+						"								<div class='col-5 py-2 dnd-input-div'>\r\n" + 
+						"									<p>"+word(9)+"</p>\r\n" +  //Felhasználás
+						"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getUsage()+"'>\r\n" + 
+						"									<p>"+word(8)+"</p>\r\n" +  //Termék megnevezés
+						"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductDescription()+"'>\r\n" + 
+						"									<p>"+word(8)+" 2</p>\r\n" +  //Termék megnevezés 2
+						"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductDescription2()+"'>\r\n" + 
+						"								</div>\r\n" + 
+						"								<div class='col-2 dnd-input-div px-0'>\r\n" + 
+						"									<input class='h-100 w-100 task-panel-button' value='' type='button'>\r\n" + 
+						"								</div>\r\n" + 
+						"							</div>\r\n" + 
+						"						</div>\r\n" + 
+						"					</div>";
+			}
+		}catch(LoginException e)
+		{
+		}finally
+		{
+			try
+			{
+				abasConnection.close();
+			}
+			catch(Exception e)
+			{}
+		}
+		return layout;
+	}
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
- 	    HttpSession session = request.getSession();
- 	    username=(String)session.getAttribute("username");
- 	    pass=(String)session.getAttribute("pass");
+		HttpSession session = request.getSession();
+		username=(String)session.getAttribute("username");
+		pass=(String)session.getAttribute("pass");
 		date = request.getParameter("date");
-		if(date == "" || date == null)
-		{
-	    	DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-	    	Date today = new Date();
-	    	date = dateFormat.format(today);
-		}
-
-		System.out.println(date);
-//        Cookie[] cookies = request.getCookies();
-//
-//        if (cookies != null) {
-//         for (Cookie cookie : cookies) {
-//           if (cookie.getName().equals("language")) {
-//        	   lng = cookie.getValue();
-//            }
-//          }
-//        }
-		language = (String)session.getAttribute("language");
+		language  = (EnumLanguageCode)session.getAttribute("abasLanguageType");
 		station = (String)session.getAttribute("selectedStation");
-		abasLanguage = (EnumLanguageCode)session.getAttribute("abasLanguageType");
-		
-	    response.setContentType("text/plain"); 
-	    response.setCharacterEncoding("UTF-8"); 
-	    response.getWriter().write(AbasList());
+		if(station != null)
+		{
+			response.setContentType("text/plain"); 
+			response.setCharacterEncoding("UTF-8"); 
+			response.getWriter().write(AbasList());
+		}
 	}
-
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 	}
-
 }
 
