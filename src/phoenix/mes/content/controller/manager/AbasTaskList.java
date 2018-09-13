@@ -44,8 +44,6 @@ public class AbasTaskList extends HttpServlet {
 		try {
 			stationNo = Integer.parseInt(Station[1]);
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, language, true);
-			System.out.println(date);
-			System.out.println(dateFormat.format(today));
 			if(date == dateFormat.format(today)) {
 				abasDate = AbasDate.INFINITY;
 			}
