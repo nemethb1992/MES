@@ -16,12 +16,14 @@ import de.abas.erp.common.type.enums.EnumLanguageCode;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.content.Dictionary;
+import phoenix.mes.content.Dictionary.Entry;
 
 
 public class StationTaskList extends HttpServlet {
 	protected static final long serialVersionUID = 1L;
-	EnumLanguageCode language;
-	String layout,station,username,pass;
+	protected Dictionary dict;
+	protected String layout,station,username,pass;
 	
     protected String StationList()
     {
@@ -31,7 +33,7 @@ public class StationTaskList extends HttpServlet {
     	try {
         	String[] stationSplit = station.split("-");
         	stationNo = Integer.parseInt(stationSplit[1]);
-        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, language, true);
+        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLanguage(), true);
         	list = AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0], stationNo, abasConnection).getExecutableTasks(abasConnection);
 
           	for (Task task: list) {
@@ -39,22 +41,22 @@ public class StationTaskList extends HttpServlet {
           		layout += "					<div class='dnd-container col-12 px-0' value='3'>\r\n" + 
           				"						<div class='container px-0'>\r\n" + 
           				"							<div class='row w-100 mx-auto'>\r\n" + 
-          				"								<div class='col-5 py-2 dnd-input-div'>\r\n" + 
-          				"									<p>Munkaszám</p>\r\n" + 
-          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getWorkSlipNo()+"'>\r\n" + 
-          				"									<p>Cikkszám</p>\r\n" + 
-          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
-          				"									<p>Keresöszó</p>\r\n" + 
-          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductSwd()+"'>\r\n" + 
-          				"								</div>\r\n" + 
-          				"								<div class='col-5 py-2 dnd-input-div'>\r\n" + 
-          				"									<p>Felhasználás</p>\r\n" + 
-          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getUsage()+"'>\r\n" + 
-          				"									<p>Termék megnevezés</p>\r\n" + 
-          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductDescription()+"'>\r\n" + 
-          				"									<p>Termék megnevezés 2</p>\r\n" + 
-          				"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductDescription2()+"'>\r\n" + 
-          				"								</div>\r\n" + 
+						"								<div class='col-5 py-2 dnd-input-div'>" + 
+						"									<p>"+dict.getWord(Entry.WORKSHEET_NO)+"</p>\r\n" +  //Munkalapszám
+						"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getWorkSlipNo()+"'>\r\n" + 
+						"									<p>"+dict.getWord(Entry.ARTICLE)+"</p>\r\n" +   //Cikkszám
+						"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
+						"									<p>"+dict.getWord(Entry.SEARCH_WORD)+"</p>\r\n" +   //Keresőszó
+						"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductSwd()+"'>\r\n" + 
+						"								</div>\r\n" + 
+						"								<div class='col-5 py-2 dnd-input-div'>\r\n" + 
+						"									<p>"+dict.getWord(Entry.PLACE_OF_USE)+"</p>\r\n" +  //Felhasználás
+						"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getUsage()+"'>\r\n" + 
+						"									<p>"+dict.getWord(Entry.NAME)+"</p>\r\n" +  //Termék megnevezés
+						"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductDescription()+"'>\r\n" + 
+						"									<p>"+dict.getWord(Entry.NAME)+" 2</p>\r\n" +  //Termék megnevezés 2
+						"									<input disabled class='dnd-input dnd-in1' value='"+taskDetails.getProductDescription2()+"'>\r\n" + 
+						"								</div>\r\n" + 
           				"								<div class='col-2 dnd-input-div px-0'>\r\n" + 
           				"									<div class='row w-100 mx-auto h-100 d-flex'>\r\n" + 
           				"										<div class='col-12 px-0'>\r\n" + 
@@ -94,7 +96,7 @@ public class StationTaskList extends HttpServlet {
  	    username=(String)session.getAttribute("username");
  	    pass=(String)session.getAttribute("pass");
 		station = (String)session.getAttribute("selectedStation");
-		language  = (EnumLanguageCode)session.getAttribute("abasLanguageType");
+		dict  = (Dictionary)session.getAttribute("Dictionary");
  	    
 	    response.setContentType("text/plain"); 
 	    response.setCharacterEncoding("UTF-8"); 

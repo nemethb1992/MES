@@ -1,4 +1,4 @@
-package phoenix.mes.content;
+package phoenix.mes.content.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,32 +8,33 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import de.abas.erp.common.type.enums.EnumLanguageCode;
+import phoenix.mes.content.Dictionary;
 
 /**
  * Servlet implementation class LanguageSetter
  */
 public class LanguageSetter extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	String lang;
+	String language;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		lang = request.getParameter("language");
+		language = request.getParameter("language");
 		HttpSession session = request.getSession();
-		session.removeAttribute("abasLanguageType");
+		session.removeAttribute("Dictionary");
 
-		switch (lang) {
+		switch (language) {
 		case "de": {
-			session.setAttribute("abasLanguageType", EnumLanguageCode.German);
+			session.setAttribute("Dictionary", new Dictionary(EnumLanguageCode.German));
 			break;
 		}
 		case "en":  {
-			session.setAttribute("abasLanguageType", EnumLanguageCode.English);
+			session.setAttribute("Dictionary", new Dictionary(EnumLanguageCode.English));
 			break;
 		}
 		case "hu": 
 		default:{
-			session.setAttribute("abasLanguageType", EnumLanguageCode.Hungarian);
+			session.setAttribute("Dictionary", new Dictionary(EnumLanguageCode.Hungarian));
 			break;
 		}
 		}

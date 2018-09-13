@@ -2,6 +2,7 @@
 
 <div class='TM_backBtn btnstyle selectBackBtn col-12 px-0'>
 	<img
+	class='h-100'
 		src='${pageContext.request.contextPath}/Public/icons/backArrow.svg' />
 	<p>Menu</p>
 </div>

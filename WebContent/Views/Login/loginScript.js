@@ -2,10 +2,7 @@ var path = location.pathname.split('/')[1];
 
 $(document).ready(function(){
 	buttonEventHolderLogin();
-	document.cookie = "language=hu";
-	langIconFirst();
-	LanguageSetOnServlet("hu");
-	Language_Startup($.cookie("language"),'1');
+	languageStartUp('1');
 })
 
 function buttonEventHolderLogin()

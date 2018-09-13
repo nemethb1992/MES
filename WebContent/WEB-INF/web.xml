@@ -136,7 +136,7 @@
     <description></description>
     <display-name>LanguageSetter</display-name>
     <servlet-name>LanguageSetter</servlet-name>
-    <servlet-class>phoenix.mes.content.LanguageSetter</servlet-class>
+    <servlet-class>phoenix.mes.content.controller.LanguageSetter</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>LanguageSetter</servlet-name>

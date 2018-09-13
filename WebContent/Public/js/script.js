@@ -1,4 +1,8 @@
 //Projekt név
+
+$(document).ready(function(){
+	
+});
 var path = location.pathname.split('/')[1];
 
 var getUrlParameter = function getUrlParameter(sParam) {
@@ -15,8 +19,3 @@ var getUrlParameter = function getUrlParameter(sParam) {
 		}
 	}
 };
-$(document).ready(function(){
-	$('#from-datepicker').datepicker({
-		uiLibrary: 'bootstrap.min'
-	});
-});

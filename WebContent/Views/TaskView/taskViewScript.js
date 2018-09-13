@@ -2,8 +2,7 @@ var path = location.pathname.split('/')[1];
 
 $(document).ready(function(){
 	TabControlEventHolder();
-	langIconFirst();
-	Language_Startup($.cookie("language"),'3');
+	languageStartUp('3');
 });
 $(document).keypress(function(e) {
     if(e.which == 13) {

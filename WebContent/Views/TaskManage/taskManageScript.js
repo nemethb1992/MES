@@ -5,8 +5,7 @@ $(document).ready(function(){
 	ButtonScriptElements();
 	dnd_sortlist_scripts();
 	collect_list_ws();
-	langIconFirst();
-	Language_Startup($.cookie("language"),'2');
+	languageStartUp('2');
 	setToday(".datepicker_own");
 });
 

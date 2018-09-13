@@ -12,29 +12,25 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import de.abas.ceks.jedp.EDPSession;
-import de.abas.erp.common.type.enums.EnumLanguageCode;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
-import phoenix.mes.content.LanguageSource;
+import phoenix.mes.content.Dictionary;
+import phoenix.mes.content.Dictionary.Entry;
 
 
 public class DataSheet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	protected static EnumLanguageCode language;
+	Dictionary dict;
 	String layout,station,username,pass,ws_group;
 	int ws_no;
 	
-	static String word(int index)
-	{
-		return LanguageSource.getWord(language, index);
-	}
     private ArrayList<String> DataSheet_Layout()
     {
     	ArrayList<String> layouts = new ArrayList<String>();
     	AbasConnection<EDPSession> abasConnection = null;
     	try {
-        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, language, true);
+        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLanguage(), true);
         	Task nextTask = AbasObjectFactory.INSTANCE.createWorkStation(ws_group,ws_no, abasConnection).getNextExecutableTask(abasConnection);
 //        	Task nextTask = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7984316,9,0)"), abasConnection);
         	final Task.Details taskDetails = nextTask.getDetails(abasConnection);
@@ -44,59 +40,59 @@ public class DataSheet extends HttpServlet {
         			"								<div class='row px-0'>\r\n" + 
         			"									<div class='col-12 col-md-12 col-lg-6 col-xl-6 px-0'>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-        			"											<p>"+word(4)+"</p>\r\n" +  //Munkaállomás
+        			"											<p>"+dict.getWord(Entry.WORKSTATION)+"</p>\r\n" +  //Munkaállomás
         			"											<input class='px-2 w-100' type='text' value='"+ws_group+" - "+ws_no+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-        			"											<p>"+word(5)+"</p>\r\n" +  //Munkalapszám
+        			"											<p>"+dict.getWord(Entry.WORKSHEET_NO)+"</p>\r\n" +  //Munkalapszám
         			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getWorkSlipNo()+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-        			"											<p>"+word(6)+"</p>\r\n" +  //Cikkszám
+        			"											<p>"+dict.getWord(Entry.ARTICLE)+"</p>\r\n" +  //Cikkszám
         			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getProductIdNo()+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-        			"											<p>"+word(7)+"</p>\r\n" +  //Keresőszó
+        			"											<p>"+dict.getWord(Entry.SEARCH_WORD)+"</p>\r\n" +  //Keresőszó
         			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getProductSwd()+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-        			"											<p>"+word(22)+"</p>\r\n" +  //Műveleti azonosító
+        			"											<p>"+dict.getWord(Entry.OPERATION_NUMEBER)+"</p>\r\n" +  //Műveleti azonosító
         			"											<input class='px-2 w-100'  type='text' value='"+taskDetails.getOperationIdNo()+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-        			"											<p>"+word(26)+"</p>\r\n" +  //Beállítási idő
+        			"											<p>"+dict.getWord(Entry.SETTING_TIME)+"</p>\r\n" +  //Beállítási idő
         			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getSetupTime()+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"									</div>\r\n" + 
         			"									<div class='col-12 col-md-12 col-lg-6 col-xl-6 px-0'>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-        			"											<p>"+word(8)+"</p>\r\n" +  //Megnevezés
+        			"											<p>"+dict.getWord(Entry.NAME)+"</p>\r\n" +  //Megnevezés
         			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOperationDescription()+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-        			"											<p>"+word(9)+"</p>\r\n" +  //Felhasználás
+        			"											<p>"+dict.getWord(Entry.PLACE_OF_USE)+"</p>\r\n" +  //Felhasználás
         			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getUsage()+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-        			"											<p>"+word(7)+"</p>\r\n" +  //Keresőszó
+        			"											<p>"+dict.getWord(Entry.SEARCH_WORD)+"</p>\r\n" +  //Keresőszó
         			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOperationSwd()+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-        			"											<p>"+word(8)+"</p>\r\n" +  //Megnevezés
-        			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOperationDescription()+"'/>\r\n" + 
+        			"											<p>"+dict.getWord(Entry.NAME)+"</p>\r\n" +  //Megnevezés
+        			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getProductDescription()+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-        			"											<p>"+word(27)+"</p>\r\n" +  //Darabidő
+        			"											<p>"+dict.getWord(Entry.TIME_FOR_PCS)+"</p>\r\n" +  //Darabidő
         			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getUnitTime()+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-        			"											<p>"+word(28)+"</p>\r\n" +  //Nyitott mennyiség
+        			"											<p>"+dict.getWord(Entry.OPEN_QUANTITY)+"</p>\r\n" +  //Nyitott mennyiség
         			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOutstandingQuantity()+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"									</div>\r\n" + 
         			"									<div class='col-12 px-0'>\r\n" + 
         			"										<div class='inputContainer BigTextInput cc_element mx-2 mx-lg-3 my-2'>\r\n" + 
-        			"											<p class='mb-0'>"+word(29)+"</p>" +  //Gyártási információ
+        			"											<p class='mb-0'>"+dict.getWord(Entry.PRODUCTION_INFO)+"</p>" +  //Gyártási információ
         			"											<textarea>"+taskDetails.getOperationReservationText()+"</textarea>\r\n" + 
         			"										</div>\r\n" + 
         			"									</div>\r\n" + 
@@ -105,35 +101,22 @@ public class DataSheet extends HttpServlet {
 
         	// Tab 2
         	layouts.add(""
-        			+ "<button type='button' class='list-group-item list-group-item-action active disabled'>"+word(23)+"</button>"
+        			+ "<button type='button' class='list-group-item list-group-item-action active disabled'>"+dict.getWord(Entry.DOCUMENTS)+"</button>"
         			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 2</button>"
         			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 3</button>"
         			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 4</button>"
         			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 5</button>"
         			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 6</button>"
-//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 7</button>"
-//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 5</button>"
-//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 6</button>"
-//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 7</button>"
-//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 5</button>"
-//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 6</button>"
-//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 7</button>"
-//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 5</button>"
-//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 6</button>"
-//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 7</button>"
-//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 5</button>"
-//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 6</button>"
-//        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 7</button>"
         			+ "");
         	// Tab 3
         	String darabjegyzek = "				<table class=\"table table-striped\">\r\n" + 
         			"  								<thead>\r\n" + 
         			"  								  <tr>\r\n" + 
-        			"     								 <th scope=\"col\">"+word(6)+"</th>\r\n" + //Cikkszám
-        			"     								 <th scope=\"col\">"+word(7)+"</th>\r\n" +  //Kereszöszó
-        			"   									 <th scope=\"col\">"+word(8)+" 1</th>\r\n" +  //Megnevezés 1
-        			"  									 <th scope=\"col\">"+word(8)+" 2</th>\r\n" +   //Megnevezés 2
-        			"  									 <th scope=\"col\">"+word(31)+"</th>\r\n" +  //Beépülö menny.
+        			"     								 <th scope=\"col\">"+dict.getWord(Entry.ARTICLE)+"</th>\r\n" + //Cikkszám
+        			"     								 <th scope=\"col\">"+dict.getWord(Entry.SEARCH_WORD)+"</th>\r\n" +  //Kereszöszó
+        			"   									 <th scope=\"col\">"+dict.getWord(Entry.NAME)+" 1</th>\r\n" +  //Megnevezés 1
+        			"  									 <th scope=\"col\">"+dict.getWord(Entry.NAME)+" 2</th>\r\n" +   //Megnevezés 2
+        			"  									 <th scope=\"col\">"+dict.getWord(Entry.PLUG_IN_QUANTITY)+"</th>\r\n" +  //Beépülö menny.
         			"   								  </tr>\r\n" + 
         			"  								</thead>\r\n" + 
         			"  								<tbody class='darabjegyz-tbody'>";
@@ -178,14 +161,14 @@ public class DataSheet extends HttpServlet {
         	layouts.add(darabjegyzek);
         	// Tab 4
         	layouts.add("<div class='tab4_element inputContainer BigTextInput cc_element h-50'>\r\n" + 
-        			"	<p>"+word(42)+" 1</p><textarea></textarea></div>\r\n" + 
+        			"	<p>"+dict.getWord(Entry.INFO_ARTICLE)+" 1</p><textarea></textarea></div>\r\n" + 
         			"<div class='tab4_element inputContainer BigTextInput cc_element h-50'>\r\n" + 
-        			"	<p>"+word(42)+" 2</p><textarea></textarea></div>\r\n" + 
+        			"	<p>"+dict.getWord(Entry.INFO_ARTICLE)+" 2</p><textarea></textarea></div>\r\n" + 
         			"	");
       		
     	}catch(LoginException e)
     	{
-    		System.out.println(e);
+			//TODO Jelezni a felhasználó felé.
     	}finally
     	{
         		abasConnection.close();
@@ -200,7 +183,7 @@ public class DataSheet extends HttpServlet {
  	    pass=(String)session.getAttribute("pass");
  	    ws_group=(String)session.getAttribute("ws_group");
  	    ws_no=(int)session.getAttribute("ws_no");
-		language = (EnumLanguageCode)session.getAttribute("abasLanguageType");
+		dict  = (Dictionary)session.getAttribute("Dictionary");
 		
 	    String json = new Gson().toJson(DataSheet_Layout());
 	    response.setContentType("application/json");
