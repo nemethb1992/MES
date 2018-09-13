@@ -109,65 +109,6 @@ public class Dictionary {
 	    }
 	}
 
-//	protected static final List<LanguageCollection> LANGUAGE_SOURCE = new ArrayList<LanguageCollection>(60);
-//
-//	static {
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Felhasználónév","Benutzername","Username"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Jelszó","Kennwort","Password"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Tovább","Weiter","Next"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Bejelentkezés","Login","Login"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Munkaállomás","Arbeitsplatz","Workstation"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Munkalapszám","Arbeitsschein-Nr.","Worksheet No."));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Cikkszám","Artikel-Nr.","Article"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Keresőszó","Suchwort","Search word"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Megnevezés","Bezeichung","Name"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Felhasználás","Verwendung","Place of use"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Hátralévő idő","Restlaufzeit","Remaining time"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Feladat indítása","Arbeit starten","Task start"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Megszakítás","Abbrechen","Interrupt"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Lejelentés","Rückmeldung","Submit"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Nyitott mennyiség","offene Menge","Open quantity"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Kész mennyiség","Fertigmenge","Finished quantity"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Küldés","Senden","Send"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Megszakítás indoka","Abbruchursache","Cause of interruption"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Új feladat kérése","Aufgabe anfordern","New task"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Minőségügyi probléma","QS-Problem","Quality problem"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Quality problem","Materialproblem","Material problem"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Géphiba","Maschinenausfall","Machine problem"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Műveleti azonosító","Arbeitsgang-Nr.","Operation number"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Dokumentumok","Dokumenten","Documents"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Darabjegyzék","Stückliste","Bill of Material"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Rendelési info","Auftragsinfo","Order info"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Beállítási idő","Rüstzeit","Setting time"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Darabidő","Einzelzeit","Time for pcs"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Nyitott mennyiség","offene Menge","Open quantity"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Gyártási információ","Produktionsinfo","Production info"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Megnyitás","Öffnen","Open"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Beépülő menny.","Menge","Plug-in quantity"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Bejelentkezve:","Angemeldet:","Logged in:"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Kijelentkezés","Abmelden","Logout"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Válasszon területet!","Wählen Sie einen Bereich!","Select an area!"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Frissítés","Aktualisieren","Refresh"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("-tól","vom","-tól"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("-ig","bis","-ig"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Hozzárendelt feladatok","zugeordnete Arbeitsgänge","Assigned tasks"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Feladatok indítása","Arbeitsgänge starten","Task start"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Munkaszám","Betriebsauftrag","Task number"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Megbízásiszám","Auftrags-Nr.","Order number"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Szöveg","Beschreibung","Article"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Beállítások","Optionen","Options"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Új nyitott mennyiség","neu offene Menge","New open quantity"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Alapértelmezettek","Default","Default"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Megszakítottak","Unterbrochen","Interrupted"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Mennyiség","Menge","Quantity"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Mentés","Speichern","Save"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Állomás:","Arbeitsplatz:","Station:"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Feladatok","Aufgaben","Tasks"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Állomások","Arbeitsplätze","Stations"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Azonosítók","IDs","IDs"));
-//		LANGUAGE_SOURCE.add(new LanguageCollection("Megszakítás","Unterbrechen","Interrupt"));
-//	}
-
 	protected final EnumLanguageCode language;
 
 	public Dictionary(EnumLanguageCode language) {
