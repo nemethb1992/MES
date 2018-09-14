@@ -36,6 +36,7 @@ function loginEnter()
 		layout = 2
 	}	
 
+	
 	$.ajax({
 		url:  '/'+path+'/Dashboard',
 		data: {

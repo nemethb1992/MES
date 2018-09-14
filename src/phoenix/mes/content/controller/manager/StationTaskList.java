@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import de.abas.ceks.jedp.EDPSession;
-import de.abas.erp.common.type.enums.EnumLanguageCode;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
@@ -21,6 +20,7 @@ import phoenix.mes.content.Dictionary.Entry;
 
 
 public class StationTaskList extends HttpServlet {
+	
 	protected static final long serialVersionUID = 1L;
 	protected Dictionary dict;
 	protected String layout,station,username,pass;
@@ -105,7 +105,7 @@ public class StationTaskList extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		doGet(request, response);
 	}
 
 }

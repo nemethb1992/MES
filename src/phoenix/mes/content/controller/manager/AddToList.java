@@ -8,8 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public class AddToList extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-    String value;  
+    protected String value;  
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		value = request.getParameter("value");
@@ -17,8 +18,9 @@ public class AddToList extends HttpServlet {
 	    response.setCharacterEncoding("UTF-8"); 
 	    response.getWriter().write(value);
 	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		doGet(request, response);
 	}
 
 }

@@ -7,6 +7,7 @@ import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
 
 public class ActiveDirectoryLogin {
+	
     public static boolean activeDirectoryConn(String user, String pwd) {
     	
         Hashtable<String, String> env = new Hashtable<>(11);

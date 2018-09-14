@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import phoenix.mes.content.PostgreSqlOperationsMES;
 
 public class BuildUp extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 
 	protected ArrayList<String> managerLayout()
@@ -36,9 +37,10 @@ public class BuildUp extends HttpServlet {
 			postgreSql.dbClose();
 		}
 		return layout;
-
 	}
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String json = new Gson().toJson(managerLayout());
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

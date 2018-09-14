@@ -20,10 +20,11 @@ import phoenix.mes.content.Dictionary.Entry;
 
 
 public class DataSheet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-	Dictionary dict;
-	String layout,station,username,pass,ws_group;
-	int ws_no;
+	protected Dictionary dict;
+	protected String layout,station,username,pass,ws_group;
+	protected int ws_no;
 	
     private ArrayList<String> DataSheet_Layout()
     {
@@ -176,6 +177,7 @@ public class DataSheet extends HttpServlet {
 
     	return layouts;
     }
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
  	    HttpSession session = request.getSession();

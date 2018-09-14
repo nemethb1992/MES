@@ -9,23 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public class StationSingle extends HttpServlet {
-	private static final long serialVersionUID = 1L;
 	
-	String station;
-
+	private static final long serialVersionUID = 1L;
+	protected String station;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		station = request.getParameter("station");
-
-    	
-
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+				
 //	    String json = new Gson().toJson(station);
 //	    response.setContentType("application/json");
 //	    response.setCharacterEncoding("UTF-8");

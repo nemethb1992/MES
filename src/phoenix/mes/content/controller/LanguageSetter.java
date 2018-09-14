@@ -10,10 +10,8 @@ import javax.servlet.http.HttpSession;
 import de.abas.erp.common.type.enums.EnumLanguageCode;
 import phoenix.mes.content.Dictionary;
 
-/**
- * Servlet implementation class LanguageSetter
- */
 public class LanguageSetter extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 	String language;
 

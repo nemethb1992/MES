@@ -14,8 +14,9 @@ import phoenix.mes.content.PostgreSqlOperationsMES;
 
 
 public class StationPC extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
-	String pc;
+	protected String pc;
 	
     protected String groupLayout()
     {
