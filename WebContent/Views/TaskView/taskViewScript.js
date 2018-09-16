@@ -2,6 +2,7 @@ var path = location.pathname.split('/')[1];
 
 $(document).ready(function(){
 	TabControlEventHolder();
+	DataSheet_Load();
 	languageStartUp('3');
 });
 $(document).keypress(function(e) {
@@ -23,14 +24,14 @@ $(document).keypress(function(e) {
 });
 function DataSheet_Load()
 {
-//	$.ajax({
-//	    url:  '/'+path+'/DataSheet',
-//	    success: function (respond) {
-//	    	Data_Clear();
-//	    	Data_Load(respond);
-//			//TaskTimer();
-//	    }
-//	});
+	$.ajax({
+	    url:  '/'+path+'/DataSheet',
+	    success: function (respond) {
+	    	Data_Clear();
+	    	Data_Load(respond);
+			//TaskTimer();
+	    }
+	});
 }
 function Data_Load(data)
 {

@@ -1,7 +1,6 @@
+<%-- <%@page import="phoenix.mes.content.Dictionary"%> --%>
 <%@include file="/Views/Header.jsp"%>
 <script><%@ include file="/Views/Login/loginScript.js"%></script>
-
-
 <div id="lang_div">
 	<div value="e1" onclick="Language_Setter(this)" class="lang_bub"
 		alt="indexlang" class="lang_bub" id="EN">
@@ -19,8 +18,6 @@
 			src="${pageContext.request.contextPath}/Public/icons/HU.svg">
 	</div>
 </div>
-<input type="checkbox" id="LayoutSwitch" name="feature" value="scales"
-	checked />
 <div class="container">
 	<div class="login-row row  w-100 align-self-center">
 		<!--        		<div id='loginFrame' class='mycontainer'> -->
@@ -31,7 +28,7 @@
 			<div id='loginPicture' class='m-3 d-md-none d-lg-block'></div>
 
 			<div id='FooterName'>
-				<p class='d-md-none d-lg-block'>Phoenix Mecano Kecskemét kft</p>
+				<p class='d-md-none d-lg-block'>Phoenix Mecano Kecskemét Kft.</p>
 			</div>
 		</div>
 		<div id='loginRightSide' class='col-md-11 col-lg-7 px-4 h-100'>
@@ -46,17 +43,19 @@
 			</div>
 			<form id='LR_form' method='POST'
 				action='${pageContext.request.contextPath}/Dashboard'>
+				
+				<input type='hidden' name='workstation' class='workstation' value='<%= request.getParameter("ws") %>'/>
 
 				<div class="form-group">
 					<p id='login_title' class='w-100 w-100 h5 mt-5'>Bejelentkezés:</p>
 				</div>
 				<div class="form-group mb-0">
-					<input class='inp_login px-3 w-100' placeholder=''
-						id='inp_username' type='text' value='balazs.nemeth'>
+					<input name='username' class='inp_login px-3 w-100' placeholder=''
+						id='inp_username' type='text' value=''>
 				</div>
 				<div class="form-group">
-					<input class='inp_login px-3 w-100' placeholder='' id='inp_pass'
-						type='password' value='3HgB8Wy3HgB8Wy'>
+					<input class='inp_login px-3 w-100' placeholder='' name='password' id='inp_pass'
+						type='password' value=''>
 				</div>
 				<div class="form-group">
 					<input class='inp_login w-100' id='inp_enterbutton' type='submit'

@@ -39,7 +39,7 @@ function Language_Setter(lng)
     	}
     	$.cookie('language', ln, { expires: 365 });
     	LanguageSetOnServlet(ln);
-
+    	location.reload();
     	switch(val[1]) {
     	case '1':
     		Language_Login();
@@ -77,19 +77,19 @@ function languageStartUp(page)
     langSrc.open('GET', '/'+path+'/Public/json/langsrc.json');
     langSrc.onload = function () {
     langData = JSON.parse(langSrc.responseText);
-//	switch(page) {
-//    case '1':
-//        Language_Login();
-//        break;
-//    case '2':
-//    	Language_Manager();
-//        break;
-//    case '3':
-//    	Language_Operator();
-//        break;
-//    default:
-//        break;
-//    }
+	switch(page) {
+    case '1':
+        Language_Login();
+        break;
+    case '2':
+    	Language_Manager();
+        break;
+    case '3':
+    	Language_Operator();
+        break;
+    default:
+        break;
+    }
 	languageSwitchButton();
 	LanguageSetOnServlet(ln)
 };

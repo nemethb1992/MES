@@ -10,7 +10,7 @@ public class ActiveDirectoryLogin {
 	
     public static boolean activeDirectoryConn(String user, String pwd) {
     	
-        Hashtable<String, String> env = new Hashtable<>(11);
+        Hashtable<String, String> env = new Hashtable<>(8);
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
         env.put(Context.PROVIDER_URL, "ldap://192.168.144.21:389");
         env.put(Context.SECURITY_AUTHENTICATION, "simple");
@@ -24,7 +24,6 @@ public class ActiveDirectoryLogin {
                 return true;
             }
         } catch (NamingException e) {
-            return false;
         }
         
         return false;

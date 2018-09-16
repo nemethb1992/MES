@@ -5,7 +5,10 @@
 	padding: 0px;
 	outline: 0px;
 }
-
+.element-shadow
+{
+	box-shadow: 0 22px 100px #999999;
+}
 @font-face {
 	font-family: mediumFont;
 	src: url("Public/fonts/Montserrat-Medium.ttf");

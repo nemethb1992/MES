@@ -152,4 +152,24 @@
     <servlet-name>StoreSelectedStation</servlet-name>
     <url-pattern>/StoreSelectedStation</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Manager</display-name>
+    <servlet-name>Manager</servlet-name>
+    <servlet-class>phoenix.mes.content.navigation.Manager</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Manager</servlet-name>
+    <url-pattern>/Manager</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Operator</display-name>
+    <servlet-name>Operator</servlet-name>
+    <servlet-class>phoenix.mes.content.navigation.Operator</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Operator</servlet-name>
+    <url-pattern>/Operator</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -13,13 +13,11 @@ import phoenix.mes.content.Dictionary;
 public class LanguageSetter extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	String language;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		language = request.getParameter("language");
+		String language = request.getParameter("language");
 		HttpSession session = request.getSession();
-		session.removeAttribute("Dictionary");
 
 		switch (language) {
 		case "de": {

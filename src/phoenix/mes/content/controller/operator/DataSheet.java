@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 import de.abas.ceks.jedp.EDPSession;
+import de.abas.erp.common.type.IdImpl;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
@@ -22,18 +23,19 @@ import phoenix.mes.content.Dictionary.Entry;
 public class DataSheet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+
 	protected Dictionary dict;
-	protected String layout,station,username,pass,ws_group;
-	protected int ws_no;
 	
-    private ArrayList<String> DataSheet_Layout()
+    private ArrayList<String> DataSheet_Layout(String username, String pass, String workstation)
     {
+		String[] stationSplit = workstation.split("!");
     	ArrayList<String> layouts = new ArrayList<String>();
     	AbasConnection<EDPSession> abasConnection = null;
     	try {
+			int stationNo = Integer.parseInt(stationSplit[1]);
         	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLanguage(), true);
-        	Task nextTask = AbasObjectFactory.INSTANCE.createWorkStation(ws_group,ws_no, abasConnection).getNextExecutableTask(abasConnection);
-//        	Task nextTask = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7984316,9,0)"), abasConnection);
+//        	Task nextTask = AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0],stationNo, abasConnection).getNextExecutableTask(abasConnection);
+        	Task nextTask = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7984316,9,0)"), abasConnection);
         	final Task.Details taskDetails = nextTask.getDetails(abasConnection);
         	
         	// Tab 1
@@ -42,7 +44,7 @@ public class DataSheet extends HttpServlet {
         			"									<div class='col-12 col-md-12 col-lg-6 col-xl-6 px-0'>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
         			"											<p>"+dict.getWord(Entry.WORKSTATION)+"</p>\r\n" +  //Munkaállomás
-        			"											<input class='px-2 w-100' type='text' value='"+ws_group+" - "+ws_no+"'/>\r\n" + 
+        			"											<input class='px-2 w-100' type='text' value='"+stationSplit[0]+" - "+stationSplit[1]+"'/>\r\n" + 
         			"										</div>\r\n" + 
         			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
         			"											<p>"+dict.getWord(Entry.WORKSHEET_NO)+"</p>\r\n" +  //Munkalapszám
@@ -172,7 +174,7 @@ public class DataSheet extends HttpServlet {
 			//TODO Jelezni a felhasználó felé.
     	}finally
     	{
-        		abasConnection.close();
+//        		abasConnection.close();
     	}
 
     	return layouts;
@@ -181,13 +183,13 @@ public class DataSheet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
  	    HttpSession session = request.getSession();
- 	    username=(String)session.getAttribute("username");
- 	    pass=(String)session.getAttribute("pass");
- 	    ws_group=(String)session.getAttribute("ws_group");
- 	    ws_no=(int)session.getAttribute("ws_no");
+ 	    String username=(String)session.getAttribute("username");
+ 	    String pass=(String)session.getAttribute("pass");
+// 	    String workstation=(String)session.getAttribute("workstation");
+ 	    String workstation="234PG!1";
 		dict  = (Dictionary)session.getAttribute("Dictionary");
 		
-	    String json = new Gson().toJson(DataSheet_Layout());
+	    String json = new Gson().toJson(DataSheet_Layout(username, pass, workstation));
 	    response.setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8");
 	    response.getWriter().write(json);

@@ -1,7 +1,5 @@
 package phoenix.mes.content;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import de.abas.erp.common.type.enums.EnumLanguageCode;
 
@@ -96,17 +94,6 @@ public class Dictionary {
 			return englishText;
 		}
 
-	}
-
-	protected static class LanguageCollection {
-	    public final String hu;
-	    public final String de;
-	    public final String en;
-	    protected LanguageCollection(String h, String d, String e) {
-	    	hu = h;
-	    	de = d;
-	    	en = e;
-	    }
 	}
 
 	protected final EnumLanguageCode language;

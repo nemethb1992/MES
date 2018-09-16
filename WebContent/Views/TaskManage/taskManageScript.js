@@ -45,12 +45,12 @@ function Group_Select(item)
 function Station_Select(item)
 {
 	var station = $(item).attr("value");
-	$(".station_label").val(station);
+	$(".station_label").val(station.replace("!"," - "));
 	SelectedStation = station;
 	SessionStoreStation(station);
-	AbasListLoader();
+	abasListLoader();
 }
-function AbasListLoader()
+function abasListLoader()
 {
 	var date = $(".datepicker_own").val();
 	if(date != null && date != "" && date != "undefinied")
@@ -61,7 +61,7 @@ function AbasListLoader()
 	{
 		date = null;
 	}
-
+	console.log(date);
 	$( ".dndf1" ).empty();
 	$('.abas-list').append("<div class='loaderCycle mx-auto mt-5  abas-cycle'></div>");
 	$.ajax({
@@ -174,11 +174,11 @@ function ButtonScriptElements()
 {
 
 	$(".date-refresh").click(function(){
-		AbasListLoader();
+		abasListLoader();
 	});
 		$(".date-null").click(function(){
 		setToday(".datepicker_own");
-		AbasListLoader();
+		abasListLoader();
 	});
 	$('#btn_select_1').click(function(){
 		BuildUp();

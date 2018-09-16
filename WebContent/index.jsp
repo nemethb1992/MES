@@ -1,4 +1,3 @@
-
 <% 
-getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
+getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
 %>
