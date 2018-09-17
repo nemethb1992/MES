@@ -35,7 +35,7 @@ public class DataSheet extends HttpServlet {
 			int stationNo = Integer.parseInt(stationSplit[1]);
         	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLanguage(), true);
 //        	Task nextTask = AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0],stationNo, abasConnection).getNextExecutableTask(abasConnection);
-        	Task nextTask = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7984316,9,0)"), abasConnection);
+        	Task nextTask = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7999422,9,0)"), abasConnection);
         	final Task.Details taskDetails = nextTask.getDetails(abasConnection);
         	
         	// Tab 1
@@ -125,35 +125,35 @@ public class DataSheet extends HttpServlet {
         			"  								<tbody class='darabjegyz-tbody'>";
         	darabjegyzek +=""+
         			"	<tr>\r\n" + 
-        			"      <th scope=\"row\">Proba_1</th>\r\n" + 
+        			"      <th scope=\"row\">Example-1</th>\r\n" + 
         			"      <td>Proba_2</td>\r\n" + 
         			"      <td>Proba_3</td>\r\n" + 
         			"      <td>Proba_4</td>\r\n" + 
         			"      <td>Proba_5</td>\r\n" + 
         			"    </tr>" +
            			"	<tr>\r\n" + 
-        			"      <th scope=\"row\">Proba_1</th>\r\n" + 
+        			"      <th scope=\"row\">Example-2</th>\r\n" + 
         			"      <td>Proba_2</td>\r\n" + 
         			"      <td>Proba_3</td>\r\n" + 
         			"      <td>Proba_4</td>\r\n" + 
         			"      <td>Proba_5</td>\r\n" + 
         			"    </tr>" +
            			"	<tr>\r\n" + 
-        			"      <th scope=\"row\">Proba_1</th>\r\n" + 
+        			"      <th scope=\"row\">Example-3</th>\r\n" + 
         			"      <td>Proba_2</td>\r\n" + 
         			"      <td>Proba_3</td>\r\n" + 
         			"      <td>Proba_4</td>\r\n" + 
         			"      <td>Proba_5</td>\r\n" + 
         			"    </tr>" +
            			"	<tr>\r\n" + 
-        			"      <th scope=\"row\">Proba_1</th>\r\n" + 
+        			"      <th scope=\"row\">Example-4</th>\r\n" + 
         			"      <td>Proba_2</td>\r\n" + 
         			"      <td>Proba_3</td>\r\n" + 
         			"      <td>Proba_4</td>\r\n" + 
         			"      <td>Proba_5</td>\r\n" + 
         			"    </tr>" +
            			"	<tr>\r\n" + 
-        			"      <th scope=\"row\">Proba_1</th>\r\n" + 
+        			"      <th scope=\"row\">Example-5</th>\r\n" + 
         			"      <td>Proba_2</td>\r\n" + 
         			"      <td>Proba_3</td>\r\n" + 
         			"      <td>Proba_4</td>\r\n" + 
@@ -171,10 +171,11 @@ public class DataSheet extends HttpServlet {
       		
     	}catch(LoginException e)
     	{
+//    		System.out.println(e);
 			//TODO Jelezni a felhasználó felé.
     	}finally
     	{
-//        		abasConnection.close();
+    		abasConnection.close();
     	}
 
     	return layouts;
