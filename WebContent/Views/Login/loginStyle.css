@@ -56,9 +56,13 @@
 }
 #LR_1 p
 {
-    color: #b3b3b3;
-    font-size: 32px;
+    color: #4f4f4f;
+    font-size: 27px;
     font-family: mediumFont;
+}
+#login_title
+{
+    color: #4f4f4f;
 }
 #LR_2
 {
@@ -90,19 +94,19 @@
 }
 .inp_login
 {
-height: 50px;
+    height: 50px;
     border-style: none;
     font-size: 19px;
     display: block;
-    color: #878782;
-    background: #f2f2f2;
+    color: #4f4f4f;
+    background: #eaeaea;
 
 }
 #inp_username
 {
     border-top-left-radius: 10px; 
     border-top-right-radius: 10px; 
-    border-bottom: 2px solid #e0e0e0;
+    border-bottom: 2px solid #b3b3b3;
 }
 #inp_pass
 {

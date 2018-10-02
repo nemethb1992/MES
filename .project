@@ -75,6 +75,11 @@
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/list.svg</location>
 		</link>
 		<link>
+			<name>WebContent/Public/icons/padlock.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/padlock.svg</location>
+		</link>
+		<link>
 			<name>WebContent/Public/icons/right-arrow.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/right-arrow.svg</location>
