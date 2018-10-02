@@ -1,11 +1,10 @@
-
 <div class='col-4'>
 	<div id='btn_select_1'
 		class='TM_btn_select light-shadow btnstyle mx-auto h-100'>
 		<img
 			src='${pageContext.request.contextPath}/Public/icons/btn_wscontrol.svg'
 			class='mx-auto d-block'>
-		<p id='activity_tab1'>Feladatok</p>
+		<p id='activity_tab1'></p>
 	</div>
 </div>
 <div class='col-4'>

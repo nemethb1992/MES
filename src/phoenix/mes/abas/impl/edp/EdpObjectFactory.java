@@ -4,15 +4,15 @@
  * Created on Aug 22, 2018
  */
 
-package phoenix.mes.abas.edp;
+package phoenix.mes.abas.impl.edp;
 
 import de.abas.ceks.jedp.DefaultEDPCredentialsProvider;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.Id;
-import de.abas.erp.common.type.enums.EnumLanguageCode;
 
 import javax.security.auth.login.LoginException;
 
+import phoenix.mes.OperatingLanguage;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.WorkStation;
@@ -24,10 +24,10 @@ import phoenix.mes.abas.WorkStation;
 public class EdpObjectFactory implements AbasObjectFactory<EDPSession> {
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.AbasObjectFactory#openAbasConnection(java.lang.String, java.lang.String, de.abas.erp.common.type.enums.EnumLanguageCode, boolean)
+	 * @see phoenix.mes.abas.AbasObjectFactory#openAbasConnection(java.lang.String, java.lang.String, phoenix.mes.OperatingLanguage, boolean)
 	 */
 	@Override
-	public EdpConnection openAbasConnection(String userName, String password, EnumLanguageCode operatingLanguage, boolean testSystem) throws LoginException {
+	public EdpConnection openAbasConnection(String userName, String password, OperatingLanguage operatingLanguage, boolean testSystem) throws LoginException {
 		return (new EdpConnection(new DefaultEDPCredentialsProvider(userName, password), operatingLanguage, testSystem));
 	}
 

@@ -4,7 +4,7 @@
  * Created on Aug 21, 2018
  */
 
-package phoenix.mes.abas.ajo;
+package phoenix.mes.abas.impl.ajo;
 
 import de.abas.ceks.jedp.EDPCredentialsProvider;
 import de.abas.ceks.jedp.EDPFTextMode;
@@ -12,14 +12,14 @@ import de.abas.ceks.jedp.EDPLockBehavior;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.ceks.jedp.EDPSessionOptions;
 import de.abas.ceks.jedp.EDPVariableLanguage;
-import de.abas.erp.common.type.enums.EnumLanguageCode;
 import de.abas.erp.db.DbContext;
 import de.abas.erp.db.internal.ClientContext;
 
 import javax.security.auth.login.LoginException;
 
+import phoenix.mes.OperatingLanguage;
 import phoenix.mes.abas.AbasConnection;
-import phoenix.mes.abas.EdpBasedAbasConnection;
+import phoenix.mes.abas.impl.EdpBasedAbasConnection;
 
 /**
  * Abas-kapcsolatot reprezentáló osztály, AJO-ban implementálva.
@@ -45,29 +45,6 @@ public class AjoConnection extends EdpBasedAbasConnection<DbContext> {
 	}
 
 	/**
-	 * AJO-környezet megnyitása a megadott bejelentkezési adatokkal.
-	 * @param edpCredentialsProvider A bejelentkezési adatok.
-	 * @param operatingLanguage A kezelőnyelv (null esetén a felhasználónál beállított kezelőnyelv).
-	 * @param testSystem A bejelentkezés a tesztrendszerbe történik?
-	 * @return Az AJO-környezet.
-	 * @throws LoginException Ha hiba történt a bejelentkezés során.
-	 */
-	protected static DbContext createAjoContext(EDPCredentialsProvider edpCredentialsProvider, EnumLanguageCode operatingLanguage, boolean testSystem) throws LoginException {
-		final EDPSession edpSession = startEdpSession(edpCredentialsProvider, operatingLanguage, testSystem, getEdpSessionOptions());
-		try {
-			final ClientContext ajoContext = new ClientContext(edpSession);
-			// @see de.abas.erp.db.internal.AbstractContext#initSession()
-			edpSession.setErrorMessageListener(ajoContext);
-			edpSession.setStatusMessageListener(ajoContext);
-			edpSession.setTextMessageListener(ajoContext);
-			return ajoContext;
-		} catch (RuntimeException e) {
-			endEdpSessionQuietly(edpSession);
-			throw e;
-		}
-	}
-
-	/**
 	 * @return Az EDP-munkamenet beállításai.
 	 * @see de.abas.erp.db.internal.impl.jedp.MyJOISession#setPropertiesAndFlags(EDPSession)
 	 */
@@ -90,16 +67,27 @@ public class AjoConnection extends EdpBasedAbasConnection<DbContext> {
 	 * @param testSystem A bejelentkezés a tesztrendszerbe történik?
 	 * @throws LoginException Ha hiba történt a bejelentkezés során.
 	 */
-	public AjoConnection(EDPCredentialsProvider edpCredentialsProvider, EnumLanguageCode operatingLanguage, boolean testSystem) throws LoginException {
-		this(createAjoContext(edpCredentialsProvider, operatingLanguage, testSystem));
+	public AjoConnection(EDPCredentialsProvider edpCredentialsProvider, OperatingLanguage operatingLanguage, boolean testSystem) throws LoginException {
+		this(startEdpSession(edpCredentialsProvider, operatingLanguage, testSystem, getEdpSessionOptions()));
 	}
 
 	/**
 	 * Konstruktor.
-	 * @param ajoContext Az AJO-környezet.
+	 * @param edpSession Az EDP-munkamenet.
 	 */
-	protected AjoConnection(DbContext ajoContext) {
-		this.ajoContext = ajoContext;
+	protected AjoConnection(EDPSession edpSession) {
+		super(edpSession);
+		try {
+			final ClientContext ajoContext = new ClientContext(edpSession);
+			// @see de.abas.erp.db.internal.AbstractContext#initSession()
+			edpSession.setErrorMessageListener(ajoContext);
+			edpSession.setStatusMessageListener(ajoContext);
+			edpSession.setTextMessageListener(ajoContext);
+			this.ajoContext = ajoContext;
+		} catch (RuntimeException e) {
+			endEdpSessionQuietly(edpSession);
+			throw e;
+		}
 	}
 
 	/* (non-Javadoc)

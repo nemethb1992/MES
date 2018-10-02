@@ -4,7 +4,7 @@
  * Created on Aug 22, 2018
  */
 
-package phoenix.mes.abas.edp;
+package phoenix.mes.abas.impl.edp;
 
 import de.abas.ceks.jedp.CantChangeSettingException;
 import de.abas.ceks.jedp.EDPCredentialsProvider;
@@ -13,12 +13,12 @@ import de.abas.ceks.jedp.EDPLockBehavior;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.ceks.jedp.EDPSessionOptions;
 import de.abas.ceks.jedp.EDPVariableLanguage;
-import de.abas.erp.common.type.enums.EnumLanguageCode;
 
 import javax.security.auth.login.LoginException;
 
+import phoenix.mes.OperatingLanguage;
 import phoenix.mes.abas.AbasConnection;
-import phoenix.mes.abas.EdpBasedAbasConnection;
+import phoenix.mes.abas.impl.EdpBasedAbasConnection;
 
 /**
  * Abas-kapcsolatot reprezentáló osztály, EDP-ben implementálva.
@@ -51,7 +51,7 @@ public class EdpConnection extends EdpBasedAbasConnection<EDPSession> {
 	 * @return Az EDP-munkamenet.
 	 * @throws LoginException Ha hiba történt a bejelentkezés során.
 	 */
-	protected static EDPSession startEdpSession(EDPCredentialsProvider edpCredentialsProvider, EnumLanguageCode operatingLanguage, boolean testSystem) throws LoginException {
+	protected static EDPSession startEdpSession(EDPCredentialsProvider edpCredentialsProvider, OperatingLanguage operatingLanguage, boolean testSystem) throws LoginException {
 		return startEdpSession(edpCredentialsProvider, operatingLanguage, testSystem, getEdpSessionOptions());
 	}
 
@@ -95,7 +95,7 @@ public class EdpConnection extends EdpBasedAbasConnection<EDPSession> {
 	 * @param testSystem A bejelentkezés a tesztrendszerbe történik?
 	 * @throws LoginException Ha hiba történt a bejelentkezés során.
 	 */
-	public EdpConnection(EDPCredentialsProvider edpCredentialsProvider, EnumLanguageCode operatingLanguage, boolean testSystem) throws LoginException {
+	public EdpConnection(EDPCredentialsProvider edpCredentialsProvider, OperatingLanguage operatingLanguage, boolean testSystem) throws LoginException {
 		this(startEdpSession(edpCredentialsProvider, operatingLanguage, testSystem));
 	}
 
@@ -104,6 +104,7 @@ public class EdpConnection extends EdpBasedAbasConnection<EDPSession> {
 	 * @param edpSession Az EDP-munkamenet.
 	 */
 	protected EdpConnection(EDPSession edpSession) {
+		super(edpSession);
 		this.edpSession = edpSession;
 	}
 

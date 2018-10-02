@@ -1,23 +1,7 @@
-<%-- <%@page import="phoenix.mes.content.Dictionary"%> --%>
+
 <%@include file="/Views/Header.jsp"%>
 <script><%@ include file="/Views/Login/loginScript.js"%></script>
-<div id="lang_div">
-	<div value="e1" onclick="Language_Setter(this)" class="lang_bub"
-		alt="indexlang" class="lang_bub" id="EN">
-		<img class="lang_icon"
-			src="${pageContext.request.contextPath}/Public/icons/EN.svg">
-	</div>
-	<div value="d1" onclick="Language_Setter(this)" class="lang_bub"
-		alt="indexlang" class="lang_bub" id="DE">
-		<img class="lang_icon"
-			src="${pageContext.request.contextPath}/Public/icons/DE.svg">
-	</div>
-	<div value="h1" onclick="Language_Setter(this)" class="lang_bub"
-		alt="indexlang" class="lang_bub" id="HU">
-		<img class="lang_icon"
-			src="${pageContext.request.contextPath}/Public/icons/HU.svg">
-	</div>
-</div>
+<script src="${pageContext.request.contextPath}/Public/js/script.js"></script>
 <div class="container">
 	<div class="login-row row  w-100 align-self-center">
 		<!--        		<div id='loginFrame' class='mycontainer'> -->
@@ -47,19 +31,35 @@
 				<input type='hidden' name='workstation' class='workstation' value='<%= request.getParameter("ws") %>'/>
 
 				<div class="form-group">
-					<p id='login_title' class='w-100 w-100 h5 mt-5'>Bejelentkezés:</p>
+				
+<%-- 					<p id='login_title' class='w-100 w-100 h5 mt-5'><%=dict.getWord(Entry.LOGIN)%></p> --%>
+<!-- 				</div> -->
+<!-- 				<div class="form-group mb-0"> -->
+<%-- 					<input name='username' class='inp_login px-3 w-100' placeholder='<%=dict.getWord(Entry.USER_NAME)%>' --%>
+<!-- 						id='inp_username' type='text' value=''> -->
+<!-- 				</div> -->
+<!-- 				<div class="form-group"> -->
+<%-- 					<input class='inp_login px-3 w-100' placeholder='<%=dict.getWord(Entry.PASSWORD)%>' name='password' id='inp_pass' --%>
+<!-- 						type='password' value=''> -->
+<!-- 				</div> -->
+<!-- 				<div class="form-group"> -->
+<!-- 					<input class='inp_login w-100' id='inp_enterbutton' type='submit' -->
+<%-- 						value=''> --%>
+<!-- 				</div> -->
+				
+				<p id='login_title' class='w-100 w-100 h5 mt-5'><%=dict.getWord(Entry.LOGIN)%></p>
 				</div>
 				<div class="form-group mb-0">
-					<input name='username' class='inp_login px-3 w-100' placeholder=''
+					<input name='username' class='inp_login px-3 w-100' placeholder='<%=dict.getWord(Entry.USER_NAME)%>'
 						id='inp_username' type='text' value=''>
 				</div>
 				<div class="form-group">
-					<input class='inp_login px-3 w-100' placeholder='' name='password' id='inp_pass'
+					<input class='inp_login px-3 w-100' placeholder='<%=dict.getWord(Entry.PASSWORD)%>' name='password' id='inp_pass'
 						type='password' value=''>
 				</div>
 				<div class="form-group">
 					<input class='inp_login w-100' id='inp_enterbutton' type='submit'
-						value='Tovább'>
+						value='<%=dict.getWord(Entry.NEXT)%>'>
 				</div>
 
 			</form>

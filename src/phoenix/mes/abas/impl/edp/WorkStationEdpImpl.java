@@ -4,7 +4,7 @@
  * Created on Aug 27, 2018
  */
 
-package phoenix.mes.abas.edp;
+package phoenix.mes.abas.impl.edp;
 
 import de.abas.ceks.jedp.EDPConstants;
 import de.abas.ceks.jedp.EDPEditor;
@@ -21,7 +21,7 @@ import de.abas.erp.common.type.enums.EnumMaterialProvidedTransition;
 import de.abas.erp.common.type.enums.EnumProductionListElementType;
 import de.abas.erp.common.type.enums.EnumTypeCommands;
 import de.abas.erp.common.type.enums.EnumWorkOrderType;
-import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MES;
+import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESWSLIPS;
 import de.abas.erp.db.schema.capacity.WorkCenter;
 import de.abas.erp.db.schema.materialsallocation.MaterialsAllocation;
 import de.abas.erp.db.schema.purchasing.Reservations;
@@ -38,14 +38,14 @@ import java.util.List;
 import java.util.Map;
 
 import phoenix.mes.abas.AbasConnection;
-import phoenix.mes.abas.AbstractWorkStation;
 import phoenix.mes.abas.Task;
+import phoenix.mes.abas.impl.WorkStationImpl;
 
 /**
  * Gyártási munkaállomás osztálya, EDP-ben implementálva.
  * @author szizo
  */
-public class WorkStationEdpImpl extends AbstractWorkStation {
+public class WorkStationEdpImpl extends WorkStationImpl {
 
 	/**
 	 * Segédosztály a gyártási feladat részleteinek lekérdezéséhez.
@@ -375,24 +375,24 @@ public class WorkStationEdpImpl extends AbstractWorkStation {
 		protected List<Task> createTaskList(int workStationNumber, boolean suspendedTasks, AbasDate startDateUntil) {
 			final EDPEditor infoSystemQuery = edpSession.createEditor();
 			try {
-				infoSystemQuery.beginEditCmd(Integer.toString(EnumTypeCommands.Infosystem.getCode()), "MES");
-				infoSystemQuery.setFieldVal(InfosysOw1MES.META.ymgr.getName(), workCenterId);
-				infoSystemQuery.setFieldVal(InfosysOw1MES.META.ymnum.getName(), Integer.toString(workStationNumber));
-				infoSystemQuery.setFieldVal(InfosysOw1MES.META.ystop.getName(), Boolean.toString(suspendedTasks));
+				infoSystemQuery.beginEditCmd(Integer.toString(EnumTypeCommands.Infosystem.getCode()), "MESWSLIPS");
+				infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ymgr.getName(), workCenterId);
+				infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ymnum.getName(), Integer.toString(workStationNumber));
+				infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ystop.getName(), Boolean.toString(suspendedTasks));
 				if (null != startDateUntil) {
-					infoSystemQuery.setFieldVal(InfosysOw1MES.META.ysterm.getName(), startDateUntil.toString());
+					infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ysterm.getName(), startDateUntil.toString());
 				}
-				infoSystemQuery.setFieldVal(InfosysOw1MES.META.start.getName(), "");
+				infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.start.getName(), "");
 				final int rowCount = infoSystemQuery.getRowCount();
 				switch (rowCount) {
 					case 0:
 						return Collections.emptyList();
 					case 1:
-						return Collections.singletonList(new TaskEdpImpl(new IdImpl(infoSystemQuery.getFieldVal(1, InfosysOw1MES.Row.META.ytas.getName()))));
+						return Collections.singletonList(new TaskEdpImpl(new IdImpl(infoSystemQuery.getFieldVal(1, InfosysOw1MESWSLIPS.Row.META.ytas.getName()))));
 					default:
 						final List<Task> taskList = new ArrayList<>(rowCount);
 						for (int i = 1; i <= rowCount; i++) {
-							taskList.add(new TaskEdpImpl(new IdImpl(infoSystemQuery.getFieldVal(i, InfosysOw1MES.Row.META.ytas.getName()))));
+							taskList.add(new TaskEdpImpl(new IdImpl(infoSystemQuery.getFieldVal(i, InfosysOw1MESWSLIPS.Row.META.ytas.getName()))));
 						}
 						return taskList;
 				}
@@ -532,9 +532,13 @@ public class WorkStationEdpImpl extends AbstractWorkStation {
 		return (new TaskManager(EdpConnection.getEdpSession(abasConnection))).getNextExecutableTask();
 	}
 
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.WorkStation#setTaskExecutionOrder(de.abas.erp.common.type.Id, de.abas.erp.common.type.Id, phoenix.mes.abas.AbasConnection)
+	 */
 	@Override
 	public void setTaskExecutionOrder(Id taskId, Id precedingTaskId, AbasConnection<?> abasConnection) {
-		// TODO Auto-generated method stub
+		// TODO
+		throw new RuntimeException("Not yet implemented!");
 	}
 
 }

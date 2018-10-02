@@ -4,7 +4,7 @@
  * Created on Aug 22, 2018
  */
 
-package phoenix.mes.abas;
+package phoenix.mes.abas.impl;
 
 import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.db.schema.units.UnitTime;
@@ -13,7 +13,13 @@ import de.abas.erp.db.type.AbasUnit;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import phoenix.mes.OperatingLanguage;
+import phoenix.mes.abas.AbasConnection;
+import phoenix.mes.abas.Task;
+import phoenix.mes.abas.Task.BomElement;
 
 /**
  * Alaposztály gyártási feladatok részleteit leíró osztályok implementálásához.
@@ -27,7 +33,10 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	protected class UnitNamesRepository {
 
-// FIXME Nyelvfüggővé kell tenni!
+		/**
+		 * A gyűjtemény nyelve.
+		 */
+		protected final OperatingLanguage language;
 
 		/**
 		 * Mértékegység -> név összerendelés.
@@ -35,8 +44,16 @@ public abstract class TaskDetails<C> implements Task.Details {
 		protected final Map<AbasUnit, String> unitNames = new HashMap<>(5);
 
 		/**
+		 * Konstruktor.
+		 * @param language A gyűjtemény nyelve.
+		 */
+		protected UnitNamesRepository(OperatingLanguage language) {
+			this.language = language;
+		}
+
+		/**
 		 * @param unit Az Abas-mértékegység.
-		 * @return Az Abas-mértékegység neve az aktuálisan beállított kezelőnyelven.
+		 * @return Az Abas-mértékegység neve.
 		 */
 		public String getUnitName(AbasUnit unit) {
 			String unitName = unitNames.get(unit);
@@ -47,12 +64,19 @@ public abstract class TaskDetails<C> implements Task.Details {
 			return unitName;
 		}
 
+		/**
+		 * @return A gyűjtemény nyelve.
+		 */
+		public OperatingLanguage getLanguage() {
+			return language;
+		}
+
 	}
 
 	/**
 	 * Segédobjektum a mértékegységek neveinek kíírásához.
 	 */
-	protected final UnitNamesRepository unitNamesRepository = new UnitNamesRepository();
+	protected UnitNamesRepository unitNamesRepository;
 
 	/**
 	 * Az Abas-kapcsolat objektuma.
@@ -160,10 +184,32 @@ public abstract class TaskDetails<C> implements Task.Details {
 	protected String stockUnit = null;
 
 	/**
-	 * Konstruktor.
-	 * @param abasConnectionObject Az Abas-kapcsolat objektuma.
+	 * A munkalaphoz kapcsolódó darabjegyzék.
 	 */
-	protected TaskDetails(C abasConnectionObject) {
+	protected List<BomElement> bom = null;
+
+	/**
+	 * Konstruktor.
+	 * @param abasConnection Az Abas-kapcsolat.
+	 * @param abasConnectionType Az Abas-kapcsolat osztálya.
+	 */
+	protected TaskDetails(AbasConnection<C> abasConnection, Class<C> abasConnectionType) {
+		setAbasConnectionObject(abasConnection, abasConnectionType);
+	}
+
+	/**
+	 * @param abasConnection Az Abas-kapcsolat.
+	 * @param abasConnectionType Az Abas-kapcsolat osztálya.
+	 */
+	protected void setAbasConnectionObject(AbasConnection<C> abasConnection, Class<C> abasConnectionType) {
+		final C abasConnectionObject = AbasConnection.getConnectionObject(abasConnection, abasConnectionType);
+		if (abasConnectionObject.equals(this.abasConnectionObject)) {
+			return;
+		}
+		final OperatingLanguage operatingLanguage = abasConnection.getOperatingLanguage();
+		if (null == unitNamesRepository || operatingLanguage != unitNamesRepository.getLanguage()) {
+			unitNamesRepository = new UnitNamesRepository(operatingLanguage);
+		}
 		this.abasConnectionObject = abasConnectionObject;
 	}
 
@@ -172,13 +218,6 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	protected C getAbasConnectionObject() {
 		return abasConnectionObject;
-	}
-
-	/**
-	 * @param abasConnectionObject Az Abas-kapcsolat objektuma.
-	 */
-	protected void setAbasConnectionObject(C abasConnectionObject) {
-		this.abasConnectionObject = abasConnectionObject;
 	}
 
 	/**
@@ -206,6 +245,11 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 * A műveletfoglaláshoz kapcsolódó tagváltozók kitöltése.
 	 */
 	protected abstract void loadDataFromOperationReservation();
+
+	/**
+	 * @return A munkalaphoz kapcsolódó darabjegyzék.
+	 */
+	protected abstract List<BomElement> getBillOfMaterials();
 
 	/**
 	 * Adott műveleti idő bruttósítása.
@@ -321,7 +365,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getSalesOrderItemText() {
-		// TODO Auto-generated method stub
+		// TODO
 		return null;
 	}
 
@@ -330,7 +374,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getSalesOrderItemText2() {
-		// TODO Auto-generated method stub
+		// TODO
 		return null;
 	}
 
@@ -453,6 +497,17 @@ public abstract class TaskDetails<C> implements Task.Details {
 			loadDataFromProduct();
 		}
 		return stockUnit;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task.Details#getBom()
+	 */
+	@Override
+	public List<BomElement> getBom() {
+		if (null == bom) {
+			bom = getBillOfMaterials();
+		}
+		return bom;
 	}
 
 }

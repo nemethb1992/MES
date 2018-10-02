@@ -4,7 +4,7 @@
  * Created on Oct 9, 2017
  */
 
-package phoenix.mes.abas.ajo;
+package phoenix.mes.abas.impl.ajo;
 
 import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.common.type.Id;
@@ -33,14 +33,14 @@ import java.util.List;
 import java.util.Set;
 
 import phoenix.mes.abas.AbasConnection;
-import phoenix.mes.abas.AbstractWorkStation;
 import phoenix.mes.abas.Task;
+import phoenix.mes.abas.impl.WorkStationImpl;
 
 /**
  * Gyártási munkaállomás osztálya, AJO-ban implementálva.
  * @author szizo
  */
-public class WorkStationAjoImpl extends AbstractWorkStation {
+public class WorkStationAjoImpl extends WorkStationImpl {
 
 	/**
 	 * Segédosztály a munkaállomáshoz kapcsolódó feladatok lekérdezéséhez.
@@ -369,11 +369,13 @@ public class WorkStationAjoImpl extends AbstractWorkStation {
 		return (new TaskManager(AjoConnection.getAjoContext(abasConnection))).getNextExecutableTask();
 	}
 
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.WorkStation#setTaskExecutionOrder(de.abas.erp.common.type.Id, de.abas.erp.common.type.Id, phoenix.mes.abas.AbasConnection)
+	 */
 	@Override
 	public void setTaskExecutionOrder(Id taskId, Id precedingTaskId, AbasConnection<?> abasConnection) {
-		final DbContext ajoContext = AjoConnection.getAjoContext(abasConnection);
-		final TaskAjoImpl task = new TaskAjoImpl(taskId, ajoContext);
-		final WorkOrders workSlip = task.getWorkSlip(ajoContext);
+		// TODO
+		throw new RuntimeException("Not yet implemented!");
 	}
 
 }

@@ -11,6 +11,7 @@ import de.abas.erp.common.type.Id;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Gyártási feladat típusa.
@@ -118,6 +119,49 @@ public interface Task extends Serializable {
 		 * @return A nyitott mennyiség.
 		 */
 		BigDecimal getOutstandingQuantity();
+
+		/**
+		 * @return A mennyiségi egység (raktáregység).
+		 */
+		String getStockUnit();
+
+		/**
+		 * @return A munkalaphoz kapcsolódó darabjegyzék.
+		 */
+		List<BomElement> getBom();
+
+	}
+
+	/**
+	 * Munkalaphoz kapcsolódó darabjegyzék elemeit leíró típus.
+	 * @author szizo
+	 */
+	interface BomElement {
+
+		/**
+		 * @return A beépülő cikk hivatkozási száma.
+		 */
+		String getIdNo();
+
+		/**
+		 * @return A beépülő cikk keresőszava.
+		 */
+		String getSwd();
+
+		/**
+		 * @return A beépülő cikk megnevezése az aktuálisan beállított kezelőnyelven.
+		 */
+		String getDescription();
+
+		/**
+		 * @return A beépülő cikk második megnevezése.
+		 */
+		String getDescription2();
+
+		/**
+		 * @return A beépülési mennyiség (egy késztermékre vonatkozóan).
+		 */
+		BigDecimal getQuantityPerProduct();
 
 		/**
 		 * @return A mennyiségi egység (raktáregység).

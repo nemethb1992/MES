@@ -4,10 +4,11 @@
  * Created on Aug 22, 2018
  */
 
-package phoenix.mes.abas;
+package phoenix.mes.abas.impl;
 
 import de.abas.ceks.jedp.CantBeginSessionException;
 import de.abas.ceks.jedp.CantChangeSettingException;
+import de.abas.ceks.jedp.CantReadSettingException;
 import de.abas.ceks.jedp.EDPConnectionProperties;
 import de.abas.ceks.jedp.EDPCredentialsProvider;
 import de.abas.ceks.jedp.EDPException;
@@ -15,9 +16,11 @@ import de.abas.ceks.jedp.EDPFactory;
 import de.abas.ceks.jedp.EDPRuntimeException;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.ceks.jedp.EDPSessionOptions;
-import de.abas.erp.common.type.enums.EnumLanguageCode;
 
 import javax.security.auth.login.LoginException;
+
+import phoenix.mes.OperatingLanguage;
+import phoenix.mes.abas.AbasConnection;
 
 /**
  * Alaposztály EDP-alapú Abas-kapcsolatokat reprezentáló osztályok készítéséhez.
@@ -35,14 +38,14 @@ public abstract class EdpBasedAbasConnection<C> implements AbasConnection<C> {
 	 * @return Az EDP-munkamenet.
 	 * @throws LoginException Ha hiba történt a bejelentkezés során.
 	 */
-	protected static EDPSession startEdpSession(EDPCredentialsProvider edpCredentialsProvider, EnumLanguageCode operatingLanguage, boolean testSystem, EDPSessionOptions edpSessionOptions) throws LoginException {
+	protected static EDPSession startEdpSession(EDPCredentialsProvider edpCredentialsProvider, OperatingLanguage operatingLanguage, boolean testSystem, EDPSessionOptions edpSessionOptions) throws LoginException {
 		final EDPSession edpSession = EDPFactory.createEDPSession();
 		try {
 			// @see de.abas.erp.db.internal.impl.jedp.MyJOISession#beginSession(EDPSession, ConnectionProperties, CredentialsProvider)
 			edpSession.beginSession(new EDPConnectionProperties(SERVER_NAME, EDPConnectionProperties.DEFAULT_EDP_PORT, testSystem ? TEST_CLIENT_PATH : PRODUCTION_CLIENT_PATH, "JOI"),
 					edpCredentialsProvider);
 			if (null != operatingLanguage) {
-				edpSession.setEKSLanguage(operatingLanguage.getDisplayString());
+				edpSession.setEKSLanguage(operatingLanguage.name());
 			}
 			configureEdpSession(edpSession, edpSessionOptions);
 			return edpSession;
@@ -80,6 +83,31 @@ public abstract class EdpBasedAbasConnection<C> implements AbasConnection<C> {
 			edpSession.endSession();
 		} catch (Exception e) {
 		}
+	}
+
+	/**
+	 * A kezelőnyelv.
+	 */
+	protected final OperatingLanguage operatingLanguage;
+
+	/**
+	 * Konstruktor.
+	 * @param edpSession Az EDP-munkamenet.
+	 */
+	protected EdpBasedAbasConnection(EDPSession edpSession) {
+		try {
+			this.operatingLanguage = OperatingLanguage.valueOf(edpSession.getLanguageISO());
+		} catch (CantReadSettingException e) {
+			throw new EDPRuntimeException(e);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.AbasConnection#getOperatingLanguage()
+	 */
+	@Override
+	public OperatingLanguage getOperatingLanguage() {
+		return operatingLanguage;
 	}
 
 }

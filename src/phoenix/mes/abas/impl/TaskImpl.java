@@ -4,19 +4,22 @@
  * Created on Aug 22, 2018
  */
 
-package phoenix.mes.abas;
+package phoenix.mes.abas.impl;
 
 import de.abas.erp.common.type.Id;
 
 import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
 
+import phoenix.mes.abas.AbasConnection;
+import phoenix.mes.abas.Task;
+
 /**
  * Alaposztály a gyártási feladat típus implementálásához.
  * @param <C> Az Abas-kapcsolat típusa.
  * @author szizo
  */
-public abstract class AbstractTask<C> implements Task {
+public abstract class TaskImpl<C> implements Task {
 
 	/**
 	 * Az objektum kiírhatóságához kell.
@@ -43,7 +46,7 @@ public abstract class AbstractTask<C> implements Task {
 	 * @param workSlipId A feladathoz tartozó munkalap azonosítója.
 	 * @param abasConnectionType Az Abas-kapcsolat osztálya.
 	 */
-	protected AbstractTask(Id workSlipId, Class<C> abasConnectionType) {
+	protected TaskImpl(Id workSlipId, Class<C> abasConnectionType) {
 		this.workSlipId = workSlipId;
 		this.abasConnectionType = abasConnectionType;
 	}
@@ -98,21 +101,20 @@ public abstract class AbstractTask<C> implements Task {
 	 */
 	@Override
 	public TaskDetails<C> getDetails(AbasConnection<?> abasConnection) {
-		final C abasConnectionObject = AbasConnection.getConnectionObject(abasConnection, abasConnectionType);
+		@SuppressWarnings("unchecked")
+		final AbasConnection<C> abasConnectionC = (AbasConnection<C>)abasConnection;
 		if (null == details) {
-			details = getDetails(abasConnectionObject);
+			details = newDetails(abasConnectionC);
 		} else {
-			if (!details.getAbasConnectionObject().equals(abasConnectionObject)) {
-				details.setAbasConnectionObject(abasConnectionObject);
-			}
+			details.setAbasConnectionObject(abasConnectionC, abasConnectionType);
 		}
 		return details;
 	}
 
 	/**
-	 * @param abasConnectionObject Az Abas-kapcsolat objektuma.
-	 * @return A gyártási feladat részleteit leíró objektum.
+	 * @param abasConnection Az Abas-kapcsolat.
+	 * @return A gyártási feladat részleteit leíró, újonnan létrehozott objektum.
 	 */
-	protected abstract TaskDetails<C> getDetails(C abasConnectionObject);
+	protected abstract TaskDetails<C> newDetails(AbasConnection<C> abasConnection);
 
 }

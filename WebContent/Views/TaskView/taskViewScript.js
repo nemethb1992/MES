@@ -3,7 +3,6 @@ var path = location.pathname.split('/')[1];
 $(document).ready(function(){
 	TabControlEventHolder();
 	DataSheet_Load();
-	languageStartUp('3');
 });
 $(document).keypress(function(e) {
     if(e.which == 13) {

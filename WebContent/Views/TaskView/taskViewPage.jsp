@@ -4,23 +4,6 @@
 <%@ include file="/Views/TaskView/taskViewScript.js"%>
 	
 </script>
-<div id="lang_div">
-	<div value="e3" onclick="Language_Setter(this)" class="lang_bub"
-		alt="indexlang" class="lang_bub" id="EN">
-		<img class="lang_icon"
-			src="${pageContext.request.contextPath}/Public/icons/EN.svg">
-	</div>
-	<div value="d3" onclick="Language_Setter(this)" class="lang_bub"
-		alt="indexlang" class="lang_bub" id="DE">
-		<img class="lang_icon"
-			src="${pageContext.request.contextPath}/Public/icons/DE.svg">
-	</div>
-	<div value="h3" onclick="Language_Setter(this)" class="lang_bub"
-		alt="indexlang" class="lang_bub" id="HU">
-		<img class="lang_icon"
-			src="${pageContext.request.contextPath}/Public/icons/HU.svg">
-	</div>
-</div>
 <div class='container-fluid'>
 	<div class='row  mt-5'>
 		<div class='mycontainer container'>
@@ -47,13 +30,13 @@
 						<div class='col-9 col-md-9 col-lg-10 col-xl-10 px-0 cc_element'>
 							<div id='row'>
 								<div id='btn_lejelentes' class='btn_navHeader col-4'>
-									<p class='h6 text-center pt-3' id='p_lejelentes'>Lejentés</p>
+									<p class='h6 text-center pt-3' id='p_lejelentes'><%=dict.getWord(Entry.SUBMIT)%></p>
 									<input
 										class='number_Input navBtnInside_element mx-auto w-80 h-25 mt-4'
 										id=submit_input type='number' />
 								</div>
 								<div id='btn_megszakitas' class='btn_navHeader col-4'>
-									<p class='h6 text-center pt-3' id='p_megszakitas'>Megszakítás</p>
+									<p class='h6 text-center pt-3' id='p_megszakitas'><%=dict.getWord(Entry.INTERRUPT)%></p>
 									<input
 										class='number_Input navBtnInside_element mx-auto w-80 h-25 mt-4'
 										type='number' />
@@ -67,28 +50,28 @@
 								<div class='col-12' id='btn_leftNav_1'>
 									<img class='d-block mx-auto mt-4 h-50'
 										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav1.svg'>
-									<p class='mt-2 nav-btn-1'>Azonosítók</p>
+									<p class='mt-2 nav-btn-1'><%=dict.getWord(Entry.IDS)%></p>
 								</div>
 							</div>
 							<div class='btn_leftNavigation row'>
 								<div class='col-12' id='btn_leftNav_2'>
 									<img class='d-block mx-auto mt-4 h-50'
 										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav2.svg'>
-									<p class='mt-2 nav-btn-2'>Dokumentumok</p>
+									<p class='mt-2 nav-btn-2'><%=dict.getWord(Entry.DOCUMENTS)%></p>
 								</div>
 							</div>
 							<div class='btn_leftNavigation row'>
 								<div class='col-12' id='btn_leftNav_3'>
 									<img class='d-block mx-auto mt-4 h-50'
 										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav3.svg'>
-									<p class='mt-2 nav-btn-3'>Darabjegyzék</p>
+									<p class='mt-2 nav-btn-3'><%=dict.getWord(Entry.BILL_OF_MATERIAL)%></p>
 								</div>
 							</div>
 							<div class='btn_leftNavigation row h-25'>
 								<div class='col-12' id='btn_leftNav_4'>
 									<img class='d-block mx-auto mt-4 h-50'
 										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav4.svg'>
-									<p class='mt-2 nav-btn-4'>Rendelési info</p>
+									<p class='mt-2 nav-btn-4'><%=dict.getWord(Entry.ORDER_INFO)%></p>
 								</div>
 							</div>
 						</div>

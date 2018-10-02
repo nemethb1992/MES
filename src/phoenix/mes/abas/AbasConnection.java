@@ -6,6 +6,8 @@
 
 package phoenix.mes.abas;
 
+import phoenix.mes.OperatingLanguage;
+
 /**
  * Abas-kapcsolatot reprezentáló típus.
  * @param <C> Az Abas-kapcsolat típusa.
@@ -15,7 +17,7 @@ public interface AbasConnection<C> {
 
 	/**
 	 * @param abasConnection Az Abas-kapcsolat.
-	 * @param abasConnectionType Az Abas-kapcsolat (feltételezett) osztálya.
+	 * @param abasConnectionType Az Abas-kapcsolat (elvárt) osztálya.
 	 * @return Az Abas-kapcsolat objektuma.
 	 * @throws IllegalArgumentException Ha az Abas-kapcsolat nem a megadott típusú.
 	 */
@@ -50,6 +52,11 @@ public interface AbasConnection<C> {
 	 * @return Az Abas-kapcsolat objektuma.
 	 */
 	C getConnectionObject();
+
+	/**
+	 * @return Az Abas-kapcsolat aktuális kezelőnyelve.
+	 */
+	OperatingLanguage getOperatingLanguage();
 
 	/**
 	 * Az Abas-kapcsolat lezárása.

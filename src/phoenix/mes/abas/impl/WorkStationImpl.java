@@ -4,7 +4,7 @@
  * Created on Aug 27, 2018
  */
 
-package phoenix.mes.abas;
+package phoenix.mes.abas.impl;
 
 import de.abas.erp.common.type.Id;
 import de.abas.erp.common.type.IdImpl;
@@ -12,11 +12,13 @@ import de.abas.erp.common.type.IdImpl;
 import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
 
+import phoenix.mes.abas.WorkStation;
+
 /**
  * Alaposztály a gyártási munkaállomás típus implementálásához.
  * @author szizo
  */
-public abstract class AbstractWorkStation implements WorkStation {
+public abstract class WorkStationImpl implements WorkStation {
 
 	/**
 	 * Az objektum kiírhatóságához kell.
@@ -38,7 +40,7 @@ public abstract class AbstractWorkStation implements WorkStation {
 	 * @param workCenterId Az Abas-beli gépcsoport azonosítója.
 	 * @param workStationNumber A munkaállomás (egyedi) sorszáma a gépcsoporton belül.
 	 */
-	protected AbstractWorkStation(String workCenterId, int workStationNumber) {
+	protected WorkStationImpl(String workCenterId, int workStationNumber) {
 		this.workCenterId = workCenterId;
 		this.number = workStationNumber;
 	}

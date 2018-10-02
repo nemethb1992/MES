@@ -4,7 +4,7 @@
  * Created on Aug 24, 2018
  */
 
-package phoenix.mes.abas.edp;
+package phoenix.mes.abas.impl.edp;
 
 import de.abas.ceks.jedp.EDPQuery;
 import de.abas.ceks.jedp.EDPRuntimeException;

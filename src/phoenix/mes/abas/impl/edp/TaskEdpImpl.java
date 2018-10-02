@@ -4,9 +4,11 @@
  * Created on Aug 22, 2018
  */
 
-package phoenix.mes.abas.edp;
+package phoenix.mes.abas.impl.edp;
 
+import de.abas.ceks.jedp.CantReadFieldPropertyException;
 import de.abas.ceks.jedp.EDPConstants;
+import de.abas.ceks.jedp.EDPEditor;
 import de.abas.ceks.jedp.EDPQuery;
 import de.abas.ceks.jedp.EDPRuntimeException;
 import de.abas.ceks.jedp.EDPSession;
@@ -14,9 +16,11 @@ import de.abas.ceks.jedp.StandardEDPSelection;
 import de.abas.ceks.jedp.StandardEDPSelectionCriteria;
 import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.common.type.Id;
+import de.abas.erp.common.type.enums.EnumTypeCommands;
 import de.abas.erp.common.type.enums.EnumWorkOrderType;
 import de.abas.erp.db.field.StringField;
 import de.abas.erp.db.field.UnitField;
+import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESBOM;
 import de.abas.erp.db.schema.company.TableOfUnits;
 import de.abas.erp.db.schema.operation.Operation;
 import de.abas.erp.db.schema.part.Product;
@@ -27,16 +31,20 @@ import de.abas.erp.db.schema.workorder.WorkOrders;
 import de.abas.erp.db.type.AbasUnit;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import phoenix.mes.abas.AbasConnection;
-import phoenix.mes.abas.AbstractTask;
-import phoenix.mes.abas.TaskDetails;
+import phoenix.mes.abas.impl.TaskImpl;
+import phoenix.mes.abas.impl.BomElementImpl;
+import phoenix.mes.abas.impl.TaskDetails;
 
 /**
  * Gyártási feladat osztálya, EDP-ben implementálva.
  * @author szizo
  */
-public class TaskEdpImpl extends AbstractTask<EDPSession> {
+public class TaskEdpImpl extends TaskImpl<EDPSession> {
 
 	/**
 	 * Segédosztály a munkalap adatainak lekérdezéséhez.
@@ -309,14 +317,14 @@ public class TaskEdpImpl extends AbstractTask<EDPSession> {
 
 		/**
 		 * Konstruktor.
-		 * @param edpSession Az EDP-munkamenet.
+		 * @param abasConnection Az Abas-kapcsolat.
 		 */
-		protected DetailsEdpImpl(EDPSession edpSession) {
-			super(edpSession);
+		protected DetailsEdpImpl(AbasConnection<EDPSession> abasConnection) {
+			super(abasConnection, abasConnectionType);
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.TaskDetails#getUnitName(de.abas.erp.db.type.AbasUnit)
+		 * @see phoenix.mes.abas.impl.TaskDetails#getUnitName(de.abas.erp.db.type.AbasUnit)
 		 */
 		@Override
 		protected String getUnitName(AbasUnit unit) {
@@ -337,7 +345,7 @@ public class TaskEdpImpl extends AbstractTask<EDPSession> {
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.TaskDetails#loadDataFromWorkSlip()
+		 * @see phoenix.mes.abas.impl.TaskDetails#loadDataFromWorkSlip()
 		 */
 		@Override
 		protected void loadDataFromWorkSlip() {
@@ -359,7 +367,7 @@ public class TaskEdpImpl extends AbstractTask<EDPSession> {
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.TaskDetails#loadDataFromProduct()
+		 * @see phoenix.mes.abas.impl.TaskDetails#loadDataFromProduct()
 		 */
 		@Override
 		protected void loadDataFromProduct() {
@@ -375,7 +383,7 @@ public class TaskEdpImpl extends AbstractTask<EDPSession> {
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.TaskDetails#loadDataFromOperation()
+		 * @see phoenix.mes.abas.impl.TaskDetails#loadDataFromOperation()
 		 */
 		@Override
 		protected void loadDataFromOperation() {
@@ -389,7 +397,7 @@ public class TaskEdpImpl extends AbstractTask<EDPSession> {
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.TaskDetails#loadDataFromOperationReservation()
+		 * @see phoenix.mes.abas.impl.TaskDetails#loadDataFromOperationReservation()
 		 */
 		@Override
 		protected void loadDataFromOperationReservation() {
@@ -398,6 +406,54 @@ public class TaskEdpImpl extends AbstractTask<EDPSession> {
 				return;
 			}
 			operationReservationText = edpQuery.getField(OperationReservationQuery.Field.ITEM_TEXT);
+		}
+
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.TaskDetails#getBillOfMaterials()
+		 */
+		@Override
+		protected List<BomElement> getBillOfMaterials() {
+			final EDPEditor infoSystemQuery = abasConnectionObject.createEditor();
+			try {
+				infoSystemQuery.beginEditCmd(Integer.toString(EnumTypeCommands.Infosystem.getCode()), "MESBOM");
+				infoSystemQuery.setFieldVal(InfosysOw1MESBOM.META.yas.getName(), workSlipId.toString());
+				infoSystemQuery.setFieldVal(InfosysOw1MESBOM.META.start.getName(), "");
+				final int rowCount = infoSystemQuery.getRowCount();
+				switch (rowCount) {
+					case 0:
+						return Collections.emptyList();
+					case 1:
+						return Collections.singletonList(newBomElement(infoSystemQuery, 1));
+					default:
+						final List<BomElement> bom = new ArrayList<>(rowCount);
+						for (int i = 1; i <= rowCount; i++) {
+							bom.add(newBomElement(infoSystemQuery, i));
+						}
+						return Collections.unmodifiableList(bom);
+				}
+			} catch (Exception e) {
+				throw new EDPRuntimeException(e);
+			} finally {
+				if (infoSystemQuery.isActive()) {
+					infoSystemQuery.endEditCancel();
+				}
+			}
+		}
+
+		/**
+		 * A megadott darabjegyzéksor adatait tartalmazó objektum létrehozása.
+		 * @param infoSystemQuery A lefuttatott infosystem-lekérdezés.
+		 * @param rowNo Az eredménysor száma.
+		 * @return A darabjegyzéksor adatait tartalmazó objektum.
+		 * @throws CantReadFieldPropertyException Ha hiba történt valamelyik mező értékének beolvasása során.
+		 */
+		protected BomElement newBomElement(EDPEditor infoSystemQuery, int rowNo) throws CantReadFieldPropertyException {
+			return new BomElementImpl(infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESBOM.Row.META.ytelemnum.join(Product.META.idno).getName()),
+					infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESBOM.Row.META.ytelemnum.join(Product.META.swd).getName()),
+					infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESBOM.Row.META.ytnamebspr.getName()),
+					infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESBOM.Row.META.ytyname2.getName()),
+					new BigDecimal(infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESBOM.Row.META.ytmenge.getName())),
+					unitNamesRepository.getUnitName(AbasUnit.UNITS.valueOf(infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESBOM.Row.META.ytle.getName()))));
 		}
 
 	}
@@ -462,11 +518,11 @@ public class TaskEdpImpl extends AbstractTask<EDPSession> {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.AbstractTask#getDetails(java.lang.Object)
+	 * @see phoenix.mes.abas.impl.TaskImpl#newDetails(phoenix.mes.abas.AbasConnection)
 	 */
 	@Override
-	protected DetailsEdpImpl getDetails(EDPSession edpSession) {
-		return (new DetailsEdpImpl(edpSession));
+	protected DetailsEdpImpl newDetails(AbasConnection<EDPSession> abasConnection) {
+		return (new DetailsEdpImpl(abasConnection));
 	}
 
 }

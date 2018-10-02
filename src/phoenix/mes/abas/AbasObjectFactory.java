@@ -8,11 +8,11 @@ package phoenix.mes.abas;
 
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.Id;
-import de.abas.erp.common.type.enums.EnumLanguageCode;
 
 import javax.security.auth.login.LoginException;
 
-import phoenix.mes.abas.edp.EdpObjectFactory;
+import phoenix.mes.OperatingLanguage;
+import phoenix.mes.abas.impl.edp.EdpObjectFactory;
 
 /**
  * Gyár típus az Abas-interfész objektumainak létrehozásához.
@@ -47,7 +47,7 @@ public interface AbasObjectFactory<C> {
 	 * @return A megnyitott Abas-kapcsolat.
 	 * @throws LoginException Ha hiba történt a bejelentkezés során.
 	 */
-	AbasConnection<C> openAbasConnection(String userName, String password, EnumLanguageCode operatingLanguage, boolean testSystem) throws LoginException;
+	AbasConnection<C> openAbasConnection(String userName, String password, OperatingLanguage operatingLanguage, boolean testSystem) throws LoginException;
 
 	/**
 	 * A megadott azonosítókkal rendelkező munkaállomást reprezentáló objektum létrehozása.

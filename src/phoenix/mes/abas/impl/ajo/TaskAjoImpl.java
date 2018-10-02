@@ -4,7 +4,7 @@
  * Created on Oct 6, 2017
  */
 
-package phoenix.mes.abas.ajo;
+package phoenix.mes.abas.impl.ajo;
 
 import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.common.type.Id;
@@ -30,17 +30,18 @@ import de.abas.erp.db.type.AbasUnit;
 import de.abas.erp.db.util.QueryUtil;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import phoenix.mes.abas.AbasConnection;
-import phoenix.mes.abas.AbstractTask;
-import phoenix.mes.abas.TaskDetails;
+import phoenix.mes.abas.impl.TaskImpl;
+import phoenix.mes.abas.impl.TaskDetails;
 
 /**
  * Gyártási feladat osztálya, AJO-ban implementálva.
  * @author szizo
  */
-public class TaskAjoImpl extends AbstractTask<DbContext> {
+public class TaskAjoImpl extends TaskImpl<DbContext> {
 
 	/**
 	 * Gyártási feladat részleteit leíró osztály, AJO-ban implementálva.
@@ -65,14 +66,14 @@ public class TaskAjoImpl extends AbstractTask<DbContext> {
 
 		/**
 		 * Konstruktor.
-		 * @param ajoContext Az AJO-környezet.
+		 * @param abasConnection Az Abas-kapcsolat.
 		 */
-		protected DetailsAjoImpl(DbContext ajoContext) {
-			super(ajoContext);
+		protected DetailsAjoImpl(AbasConnection<DbContext> abasConnection) {
+			super(abasConnection, abasConnectionType);
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.TaskDetails#getUnitName(de.abas.erp.db.type.AbasUnit)
+		 * @see phoenix.mes.abas.impl.TaskDetails#getUnitName(de.abas.erp.db.type.AbasUnit)
 		 */
 		@Override
 		protected String getUnitName(AbasUnit unit) {
@@ -83,7 +84,7 @@ public class TaskAjoImpl extends AbstractTask<DbContext> {
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.TaskDetails#loadFields()
+		 * @see phoenix.mes.abas.impl.TaskDetails#loadDataFromWorkSlip()
 		 */
 		@Override
 		protected void loadDataFromWorkSlip() {
@@ -105,7 +106,7 @@ public class TaskAjoImpl extends AbstractTask<DbContext> {
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.TaskDetails#loadDataFromProduct()
+		 * @see phoenix.mes.abas.impl.TaskDetails#loadDataFromProduct()
 		 */
 		@Override
 		protected void loadDataFromProduct() {
@@ -137,7 +138,7 @@ public class TaskAjoImpl extends AbstractTask<DbContext> {
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.TaskDetails#loadDataFromOperation()
+		 * @see phoenix.mes.abas.impl.TaskDetails#loadDataFromOperation()
 		 */
 		@Override
 		protected void loadDataFromOperation() {
@@ -165,7 +166,7 @@ public class TaskAjoImpl extends AbstractTask<DbContext> {
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.TaskDetails#loadDataFromOperationReservation()
+		 * @see phoenix.mes.abas.impl.TaskDetails#loadDataFromOperationReservation()
 		 */
 		@Override
 		protected void loadDataFromOperationReservation() {
@@ -184,6 +185,15 @@ public class TaskAjoImpl extends AbstractTask<DbContext> {
 			final Reservations operationReservation = (Reservations)operationReservationIterator.next();
 			operationReservationIterator.close();
 			operationReservationText = operationReservation.getItemText();
+		}
+
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.TaskDetails#getBillOfMaterials()
+		 */
+		@Override
+		protected List<BomElement> getBillOfMaterials() {
+			// TODO
+			throw new RuntimeException("Not yet implemented!");
 		}
 
 	}
@@ -250,11 +260,11 @@ public class TaskAjoImpl extends AbstractTask<DbContext> {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.AbstractTask#getDetails(java.lang.Object)
+	 * @see phoenix.mes.abas.impl.TaskImpl#newDetails(phoenix.mes.abas.AbasConnection)
 	 */
 	@Override
-	protected DetailsAjoImpl getDetails(DbContext ajoContext) {
-		return (new DetailsAjoImpl(ajoContext));
+	protected DetailsAjoImpl newDetails(AbasConnection<DbContext> abasConnection) {
+		return (new DetailsAjoImpl(abasConnection));
 	}
 
 }
