@@ -1,6 +1,5 @@
 
 $(document).ready(function(){
-	langDivSlide();
 });
 var path = location.pathname.split('/')[1];
 

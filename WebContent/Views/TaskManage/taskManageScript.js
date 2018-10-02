@@ -5,7 +5,6 @@ $(document).ready(function(){
 	ButtonScriptElements();
 	dnd_sortlist_scripts();
 	collect_list_ws();
-//	languageStartUp('2');
 	setToday(".datepicker_own");
 });
 
@@ -20,7 +19,6 @@ function PC_Select(item)
 	    pc_name: pc
 	    },
 	    success: function (respond) {
-	    	//TODO Oszlopfrissítések
 	    	  $( ".tmts_stationContainer" ).empty();
 	    	  $( ".tmts_stationContainer" ).append(respond);
 
@@ -61,7 +59,6 @@ function abasListLoader()
 	{
 		date = null;
 	}
-	console.log(date);
 	$( ".dndf1" ).empty();
 	$('.abas-list').append("<div class='loaderCycle mx-auto mt-5  abas-cycle'></div>");
 	$.ajax({
@@ -170,9 +167,9 @@ function setToday(datepicker)
 	var strDate = d.getFullYear() + "-" + month() + "-" + d.getDate();
 	$(datepicker).val(strDate);
 }
+
 function ButtonScriptElements()
 {
-
 	$(".date-refresh").click(function(){
 		abasListLoader();
 	});
@@ -227,8 +224,8 @@ function ButtonScriptElements()
     $('.WSSearchImg').click(function(){
     	$('.WSSearchIn').focus();
     });
-
 }
+
 function dnd_sortlist_scripts()
 {
 //	$('.dndf1, .dndf2, #stationVisionHolder').sortable({
@@ -238,8 +235,6 @@ function dnd_sortlist_scripts()
 //		}
 //	});
 //	$('.dndf1, .dndf2, #stationVisionHolder').disableSelection();
-	
-
 }
 
 // Data control scripts #################
@@ -259,5 +254,4 @@ function collect_list_ws()
 		{
 			$('.appended-text').remove();
 		}
-	console.log(list);
 }

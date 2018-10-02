@@ -99,10 +99,5 @@
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/js/bootstrap.js</location>
 		</link>
-		<link>
-			<name>WebContent/Public/json/langsrc.json</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/json/langsrc.json</location>
-		</link>
 	</linkedResources>
 </projectDescription>

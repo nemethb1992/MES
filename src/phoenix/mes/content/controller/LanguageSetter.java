@@ -48,8 +48,12 @@ public class LanguageSetter extends HttpServlet {
 			}
 			else
 			{
-				Locale  browserLocale = request.getLocale();
-				Language = OperatingLanguage.valueOf(browserLocale.toString().split("_")[0]);
+				Locale browserLocale = request.getLocale();
+				String language = browserLocale.toString().split("_")[0];
+				if(language == "hu" || language == "en" || language =="de")
+				{
+					Language = OperatingLanguage.valueOf(language);
+				}
 			}
 			session.setAttribute("Dictionary", new Dictionary(Language));
 		}
