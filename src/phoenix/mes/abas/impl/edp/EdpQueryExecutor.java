@@ -26,19 +26,31 @@ public class EdpQueryExecutor {
 	protected final String[] fieldNames;
 
 	/**
-	 * Konstruktor.
-	 * @param fieldNamesClass A lekérdezendő mezők neveit tartalmazó osztály.
+	 * @param fieldNamesClass A lekérdezendő mezők neveit konstansokként tartalmazó osztály.
+	 * @return A lekérdezendő mezők nevei, tömb formájában.
 	 */
-	public EdpQueryExecutor(Class<?> fieldNamesClass) {
+	public static String[] getFieldNames(Class<?> fieldNamesClass) {
+		if (null == fieldNamesClass) {
+			return null;
+		}
 		final Field[] declaredFields = fieldNamesClass.getDeclaredFields();
-		fieldNames = new String[declaredFields.length];
+		final String[] fieldNames = new String[declaredFields.length];
 		for (int i = 0; i < declaredFields.length; i++) {
 			try {
-				fieldNames[i] = (String)declaredFields[i].get(null);
+				fieldNames[i] = (String)(declaredFields[i].get(null));
 			} catch (IllegalAccessException e) {
 				throw new RuntimeException(e);
 			}
 		}
+		return fieldNames;
+	}
+
+	/**
+	 * Konstruktor.
+	 * @param fieldNamesClass A lekérdezendő mezők neveit konstansokként tartalmazó osztály.
+	 */
+	public EdpQueryExecutor(Class<?> fieldNamesClass) {
+		fieldNames = getFieldNames(fieldNamesClass);
 	}
 
 	/**

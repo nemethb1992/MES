@@ -2,6 +2,7 @@ package phoenix.mes.content.controller.operator;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import de.abas.erp.common.type.IdImpl;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.abas.Task.BomElement;
 import phoenix.mes.content.Dictionary;
 import phoenix.mes.content.Dictionary.Entry;
 
@@ -32,11 +34,17 @@ public class DataSheet extends HttpServlet {
     	ArrayList<String> layouts = new ArrayList<String>();
     	AbasConnection<EDPSession> abasConnection = null;
     	try {
-			int stationNo = Integer.parseInt(stationSplit[1]);
+//			int stationNo = Integer.parseInt(stationSplit[1]);
         	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLanguage(), true);
 //        	Task nextTask = AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0],stationNo, abasConnection).getNextExecutableTask(abasConnection);
-        	Task nextTask = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7999422,9,0)"), abasConnection);
+        	
+        	//TODO session-be tárolni ... gombonként dobja be a felületeket.
+        	//
+        	
+        	
+        	Task nextTask = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7776380,9,0)"), abasConnection);
         	final Task.Details taskDetails = nextTask.getDetails(abasConnection);
+        	List<BomElement> li = taskDetails.getBom();
         	
         	// Tab 1
         	layouts.add("						<div class='container'>\r\n" + 
@@ -104,18 +112,16 @@ public class DataSheet extends HttpServlet {
 
         	// Tab 2
         	//Ciklusban (név, url, formátum?)
-        	
-        	layouts.add(""
-        			+ "<button type='button' class='list-group-item list-group-item-action active disabled'>"+dict.getWord(Entry.DOCUMENTS)+"</button>"
-        			+ "<button type='button' onclick='openAsset(this)' class='document-button list-group-item list-group-item-action' value='C:\\Users\\fzbal\\Desktop\\proba.pdf'>Dokumentum 1</button>"
-        			+ "<button type='button' onclick='openAsset(this)' class='document-button list-group-item list-group-item-action'>Dokumentum 2</button>"
-        			+ "<button type='button' onclick='openAsset(this)' class='document-button list-group-item list-group-item-action'>Dokumentum 3</button>"
-        			+ "<button type='button' onclick='openAsset(this)' class='document-button list-group-item list-group-item-action'>Dokumentum 4</button>"
-        			+ "<button type='button' onclick='openAsset(this)' class='document-button list-group-item list-group-item-action'>Dokumentum 5</button>"
-        			+ "");
-        	
+        	String documents = "<button type='button' class='list-group-item list-group-item-action active disabled'>"+dict.getWord(Entry.DOCUMENTS)+"</button>";
+        	for (int i = 0; i < 8; i++) {
+            	documents +="<button type='button' onclick='openAsset(this)' class='document-button list-group-item list-group-item-action'>Dokumentum "+i+"</button>";
+			}
+
+        	layouts.add(documents);
+
+//			+ "<button type='button' onclick='openAsset(this)' class='document-button list-group-item list-group-item-action' value='C:\\Users\\fzbal\\Desktop\\proba.pdf'>Dokumentum 1</button>"
         	// Tab 3
-        	String darabjegyzek = "				<table class=\"table table-striped\">\r\n" + 
+        	String darabjegyzek = "				<table class=\"table table-striped mytable\">\r\n" + 
         			"  								<thead>\r\n" + 
         			"  								  <tr>\r\n" + 
         			"     								 <th scope=\"col\">"+dict.getWord(Entry.ARTICLE)+"</th>\r\n" + //Cikkszám
@@ -126,43 +132,15 @@ public class DataSheet extends HttpServlet {
         			"   								  </tr>\r\n" + 
         			"  								</thead>\r\n" + 
         			"  								<tbody class='darabjegyz-tbody'>";
-        	darabjegyzek +=""+
-        			"	<tr>\r\n" + 
-        			"      <th scope=\"row\">Example-1</th>\r\n" + 
-        			"      <td>Proba_2</td>\r\n" + 
-        			"      <td>Proba_3</td>\r\n" + 
-        			"      <td>Proba_4</td>\r\n" + 
-        			"      <td>Proba_5</td>\r\n" + 
-        			"    </tr>" +
-           			"	<tr>\r\n" + 
-        			"      <th scope=\"row\">Example-2</th>\r\n" + 
-        			"      <td>Proba_2</td>\r\n" + 
-        			"      <td>Proba_3</td>\r\n" + 
-        			"      <td>Proba_4</td>\r\n" + 
-        			"      <td>Proba_5</td>\r\n" + 
-        			"    </tr>" +
-           			"	<tr>\r\n" + 
-        			"      <th scope=\"row\">Example-3</th>\r\n" + 
-        			"      <td>Proba_2</td>\r\n" + 
-        			"      <td>Proba_3</td>\r\n" + 
-        			"      <td>Proba_4</td>\r\n" + 
-        			"      <td>Proba_5</td>\r\n" + 
-        			"    </tr>" +
-           			"	<tr>\r\n" + 
-        			"      <th scope=\"row\">Example-4</th>\r\n" + 
-        			"      <td>Proba_2</td>\r\n" + 
-        			"      <td>Proba_3</td>\r\n" + 
-        			"      <td>Proba_4</td>\r\n" + 
-        			"      <td>Proba_5</td>\r\n" + 
-        			"    </tr>" +
-           			"	<tr>\r\n" + 
-        			"      <th scope=\"row\">Example-5</th>\r\n" + 
-        			"      <td>Proba_2</td>\r\n" + 
-        			"      <td>Proba_3</td>\r\n" + 
-        			"      <td>Proba_4</td>\r\n" + 
-        			"      <td>Proba_5</td>\r\n" + 
-        			"    </tr>" +
-        			"";
+        	for (BomElement bomItem: li) {
+        		darabjegyzek += "<tr>"+ 
+        				"<th scope='row'>"+bomItem.getIdNo()+"</th>" +
+        				"<td>"+bomItem.getSwd()+"</td>" + 
+        				"<td>"+bomItem.getDescription()+"</td>" + 
+        				"<td>"+bomItem.getDescription2()+"</td>" + 
+        				"<td>"+bomItem.getQuantityPerProduct()+" "+bomItem.getStockUnit()+"</td>" + 
+        				"</tr>";
+			}		
         	darabjegyzek += "</tbody></table>";
         	layouts.add(darabjegyzek);
         	// Tab 4

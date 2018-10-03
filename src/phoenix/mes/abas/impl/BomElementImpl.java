@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import phoenix.mes.abas.Task.BomElement;
 
 /**
- * Munkalaphoz kapcsolódó darabjegyzék elemeit leíró osztály.
+ * Gyártási feladathoz kapcsolódó darabjegyzék elemeit leíró osztály.
  * @author szizo
  */
 public class BomElementImpl implements BomElement {

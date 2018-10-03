@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import phoenix.mes.content.Dictionary;
+import phoenix.mes.content.Dictionary.Entry;
+
 public class Dashboard extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -40,7 +43,10 @@ public class Dashboard extends HttpServlet {
 		}
 		else
 		{
+			Dictionary dict  = (Dictionary)session.getAttribute("Dictionary");
+			request.setAttribute("infoTitle", dict.getWord(Entry.LOGIN_FAILED));
 			getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
+			
 		}
 	}       
 }

@@ -61,7 +61,7 @@ function abasListLoader()
 		date = null;
 	}
 	$( ".dndf1" ).empty();
-	$('.abas-list').append("<div class='loaderCycle mx-auto mt-5  abas-cycle'></div>");
+	loadingAnimation('.abas-list');
 	$.ajax({
 	    url:  '/'+path+'/AbasTaskList',
 	    data: {
@@ -78,7 +78,6 @@ function abasListLoader()
         }  
 	});
 }
-
 function SessionStoreStation(station)
 {
 	// Tárolja a kiválasztott állomás nevét egy session változóban.

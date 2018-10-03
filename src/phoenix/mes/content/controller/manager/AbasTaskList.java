@@ -38,7 +38,6 @@ public class AbasTaskList extends HttpServlet {
 			List<Task> li = AbasObjectFactory.INSTANCE.createWorkStation(Station[0], stationNo, abasConnection).getUnassignedTasks(abasDate, abasConnection);
 			for (Task task: li) {
 				final Task.Details taskDetails = task.getDetails(abasConnection);
-				System.out.println("Ide ért 4");
 				layout += "					<div class='dnd-container col-12 px-0' value='3'>\r\n" + 
 						"						<div class='container px-0'>\r\n" + 
 						"							<div class='row w-100 mx-auto'>\r\n" + 
@@ -82,7 +81,6 @@ public class AbasTaskList extends HttpServlet {
 			String username=(String)session.getAttribute("username");
 			String pass=(String)session.getAttribute("pass");
 			String date = request.getParameter("date");
-			System.out.println(date);
 			dict  = (Dictionary)session.getAttribute("Dictionary");
 			response.setContentType("text/plain"); 
 			response.setCharacterEncoding("UTF-8"); 

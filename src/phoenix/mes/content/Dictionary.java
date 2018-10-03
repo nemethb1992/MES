@@ -58,6 +58,7 @@ public class Dictionary {
 		TASKS("Feladatok","Aufgaben","Tasks"),
 		TASK("Feladat","Aufgabe","Task"),
 		STATIONS("Állomások","Arbeitsplätze","Stations"),
+		LOGIN_FAILED("Sikertelen bejelentkezés","Anmeldung fehlgeschlagen","Login failed"),
 		IDS("Azonosítók","IDs","IDs");
 
 		private final String hungarianText;

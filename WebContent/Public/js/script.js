@@ -48,6 +48,10 @@ var getUrlParameter = function getUrlParameter(sParam) {
 	}
 };
 
+function loadingAnimation(element)
+{
+	$(element).append("<div class='loaderCycle mx-auto mt-5  abas-cycle'></div>");	
+}
 
 
 //

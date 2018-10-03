@@ -184,7 +184,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	protected String stockUnit = null;
 
 	/**
-	 * A munkalaphoz kapcsolódó darabjegyzék.
+	 * A gyártási feladathoz kapcsolódó darabjegyzék.
 	 */
 	protected List<BomElement> bom = null;
 
@@ -227,27 +227,22 @@ public abstract class TaskDetails<C> implements Task.Details {
 	protected abstract String getUnitName(AbasUnit unit);
 
 	/**
-	 * A munkalaphoz kapcsolódó tagváltozók kitöltése.
+	 * A gyártási feladat alapadatait jelentő tagváltozók kitöltése.
 	 */
-	protected abstract void loadDataFromWorkSlip();
-
-	/**
-	 * A termékhez kapcsolódó tagváltozók kitöltése.
-	 */
-	protected abstract void loadDataFromProduct();
+	protected abstract void loadBasicData();
 
 	/**
 	 * A művelethez kapcsolódó tagváltozók kitöltése.
 	 */
-	protected abstract void loadDataFromOperation();
+	protected abstract void loadOperationData();
 
 	/**
-	 * A műveletfoglaláshoz kapcsolódó tagváltozók kitöltése.
+	 * Tagváltozók kitöltése a kapcsolódó vevői megbízás alapján.
 	 */
-	protected abstract void loadDataFromOperationReservation();
+	protected abstract void loadSalesOrderData();
 
 	/**
-	 * @return A munkalaphoz kapcsolódó darabjegyzék.
+	 * @return A gyártási feladathoz kapcsolódó darabjegyzék.
 	 */
 	protected abstract List<BomElement> getBillOfMaterials();
 
@@ -289,7 +284,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	@Override
 	public String getWorkSlipNo() {
 		if (null == workSlipNo) {
-			loadDataFromWorkSlip();
+			loadBasicData();
 		}
 		return workSlipNo;
 	}
@@ -300,7 +295,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	@Override
 	public AbasDate getStartDate() {
 		if (null == workSlipNo) {
-			loadDataFromWorkSlip();
+			loadBasicData();
 		}
 		return startDate;
 	}
@@ -310,8 +305,8 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getProductIdNo() {
-		if (null == productIdNo) {
-			loadDataFromProduct();
+		if (null == workSlipNo) {
+			loadBasicData();
 		}
 		return productIdNo;
 	}
@@ -321,8 +316,8 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getProductSwd() {
-		if (null == productIdNo) {
-			loadDataFromProduct();
+		if (null == workSlipNo) {
+			loadBasicData();
 		}
 		return productSwd;
 	}
@@ -332,8 +327,8 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getProductDescription() {
-		if (null == productIdNo) {
-			loadDataFromProduct();
+		if (null == workSlipNo) {
+			loadBasicData();
 		}
 		return productDescription;
 	}
@@ -343,8 +338,8 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getProductDescription2() {
-		if (null == productIdNo) {
-			loadDataFromProduct();
+		if (null == workSlipNo) {
+			loadBasicData();
 		}
 		return productDescription2;
 	}
@@ -355,7 +350,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	@Override
 	public String getUsage() {
 		if (null == workSlipNo) {
-			loadDataFromWorkSlip();
+			loadBasicData();
 		}
 		return usage;
 	}
@@ -365,8 +360,10 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getSalesOrderItemText() {
-		// TODO
-		return null;
+		if (null == salesOrderItemText) {
+			loadSalesOrderData();
+		}
+		return salesOrderItemText;
 	}
 
 	/* (non-Javadoc)
@@ -374,8 +371,10 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getSalesOrderItemText2() {
-		// TODO
-		return null;
+		if (null == salesOrderItemText) {
+			loadSalesOrderData();
+		}
+		return salesOrderItemText2;
 	}
 
 	/* (non-Javadoc)
@@ -384,7 +383,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	@Override
 	public String getOperationIdNo() {
 		if (null == operationIdNo) {
-			loadDataFromOperation();
+			loadOperationData();
 		}
 		return operationIdNo;
 	}
@@ -395,7 +394,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	@Override
 	public String getOperationSwd() {
 		if (null == operationIdNo) {
-			loadDataFromOperation();
+			loadOperationData();
 		}
 		return operationSwd;
 	}
@@ -406,7 +405,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	@Override
 	public String getOperationDescription() {
 		if (null == operationIdNo) {
-			loadDataFromOperation();
+			loadOperationData();
 		}
 		return operationDescription;
 	}
@@ -416,8 +415,8 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getOperationReservationText() {
-		if (null == operationReservationText) {
-			loadDataFromOperationReservation();
+		if (null == operationIdNo) {
+			loadOperationData();
 		}
 		return operationReservationText;
 	}
@@ -428,7 +427,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	@Override
 	public BigDecimal getSetupTime() {
 		if (null == workSlipNo) {
-			loadDataFromWorkSlip();
+			loadBasicData();
 		}
 		return setupTime;
 	}
@@ -439,7 +438,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	@Override
 	public String getSetupTimeUnit() {
 		if (null == workSlipNo) {
-			loadDataFromWorkSlip();
+			loadBasicData();
 		}
 		return setupTimeUnit;
 	}
@@ -450,7 +449,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	@Override
 	public BigDecimal getUnitTime() {
 		if (null == workSlipNo) {
-			loadDataFromWorkSlip();
+			loadBasicData();
 		}
 		return unitTime;
 	}
@@ -461,7 +460,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	@Override
 	public String getUnitTimeUnit() {
 		if (null == workSlipNo) {
-			loadDataFromWorkSlip();
+			loadBasicData();
 		}
 		return unitTimeUnit;
 	}
@@ -472,7 +471,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	@Override
 	public BigDecimal getNumberOfExecutions() {
 		if (null == workSlipNo) {
-			loadDataFromWorkSlip();
+			loadBasicData();
 		}
 		return numberOfExecutions;
 	}
@@ -483,7 +482,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	@Override
 	public BigDecimal getOutstandingQuantity() {
 		if (null == workSlipNo) {
-			loadDataFromWorkSlip();
+			loadBasicData();
 		}
 		return outstandingQuantity;
 	}
@@ -493,8 +492,8 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getStockUnit() {
-		if (null == productIdNo) {
-			loadDataFromProduct();
+		if (null == workSlipNo) {
+			loadBasicData();
 		}
 		return stockUnit;
 	}

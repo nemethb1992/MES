@@ -169,11 +169,14 @@
 						class='select-panel TM_content_layer row'>
 						<%-- 						<%@include --%>
 						<%-- 							file="/Views/TaskManage/PageElements/stationSettings.jsp"%> --%>
+						
 						<div class='TM_backBtn btnstyle'>
 							<img
 								src='${pageContext.request.contextPath}/Public/icons/backArrow.svg' />
 							<p>Menü</p>
+							
 						</div>
+						<iframe id="fred" style="border:1px solid #333333" title="PDF in an i-Frame" src="Public/pdf/proba.pdf#page=0" frameborder="1" scrolling="auto" height="1100" width="850" ></iframe>
 					</div>
 				</div>
 			</div>

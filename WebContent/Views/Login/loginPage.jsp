@@ -1,4 +1,10 @@
-
+<%
+String info = (String)request.getAttribute("infoTitle");
+if(info == null)
+{
+	info = "";
+}
+%>
 <%@include file="/Views/Header.jsp"%>
 <script><%@ include file="/Views/Login/loginScript.js"%></script>
 <script src="${pageContext.request.contextPath}/Public/js/script.js"></script>
@@ -29,8 +35,9 @@
 				action='${pageContext.request.contextPath}/Dashboard'>
 				
 				<input type='hidden' name='workstation' class='workstation' value='<%= request.getParameter("ws") %>'/>
+				<input name='infoTitle' class='w-100 mt-5' value='<%=info%>'/>
 				<div class="form-group">
-				<p id='login_title' class='w-100 w-100 h5 mt-5'><%=dict.getWord(Entry.LOGIN)%></p>
+				<p id='login_title' class='w-100 w-100 h5 mt-3'><%=dict.getWord(Entry.LOGIN)%></p>
 				</div>
 				<div class="form-group mb-0">
 					<input name='username' class='inp_login px-3 w-100' placeholder='<%=dict.getWord(Entry.USER_NAME)%>'

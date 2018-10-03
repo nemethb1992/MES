@@ -380,7 +380,7 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 				infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ymnum.getName(), Integer.toString(workStationNumber));
 				infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ystop.getName(), Boolean.toString(suspendedTasks));
 				if (null != startDateUntil) {
-					infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ysterm.getName(), startDateUntil.toString());
+					infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ystermig.getName(), startDateUntil.toString());
 				}
 				infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.start.getName(), "");
 				final int rowCount = infoSystemQuery.getRowCount();

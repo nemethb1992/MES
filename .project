@@ -119,5 +119,10 @@
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/js/bootstrap.js</location>
 		</link>
+		<link>
+			<name>WebContent/Public/pdf/proba.pdf</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/pdf/proba.pdf</location>
+		</link>
 	</linkedResources>
 </projectDescription>

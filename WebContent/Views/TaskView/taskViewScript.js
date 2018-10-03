@@ -24,6 +24,7 @@ $(document).keypress(function(e) {
 });
 function DataSheet_Load()
 {
+	loadingAnimation("#tab1_container");
 	$.ajax({
 	    url:  '/'+path+'/DataSheet',
 	    success: function (respond) {

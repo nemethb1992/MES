@@ -126,14 +126,14 @@ public interface Task extends Serializable {
 		String getStockUnit();
 
 		/**
-		 * @return A munkalaphoz kapcsolódó darabjegyzék.
+		 * @return A gyártási feladathoz kapcsolódó darabjegyzék.
 		 */
 		List<BomElement> getBom();
 
 	}
 
 	/**
-	 * Munkalaphoz kapcsolódó darabjegyzék elemeit leíró típus.
+	 * Gyártási feladathoz kapcsolódó darabjegyzék elemeit leíró típus.
 	 * @author szizo
 	 */
 	interface BomElement {
