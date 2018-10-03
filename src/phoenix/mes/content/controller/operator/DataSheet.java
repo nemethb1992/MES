@@ -103,14 +103,17 @@ public class DataSheet extends HttpServlet {
         			"							</div>");       	
 
         	// Tab 2
+        	//Ciklusban (név, url, formátum?)
+        	
         	layouts.add(""
         			+ "<button type='button' class='list-group-item list-group-item-action active disabled'>"+dict.getWord(Entry.DOCUMENTS)+"</button>"
-        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 2</button>"
-        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 3</button>"
-        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 4</button>"
-        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 5</button>"
-        			+ "<button type='button' class='list-group-item list-group-item-action'>Dokumentum 6</button>"
+        			+ "<button type='button' onclick='openAsset(this)' class='document-button list-group-item list-group-item-action' value='C:\\Users\\fzbal\\Desktop\\proba.pdf'>Dokumentum 1</button>"
+        			+ "<button type='button' onclick='openAsset(this)' class='document-button list-group-item list-group-item-action'>Dokumentum 2</button>"
+        			+ "<button type='button' onclick='openAsset(this)' class='document-button list-group-item list-group-item-action'>Dokumentum 3</button>"
+        			+ "<button type='button' onclick='openAsset(this)' class='document-button list-group-item list-group-item-action'>Dokumentum 4</button>"
+        			+ "<button type='button' onclick='openAsset(this)' class='document-button list-group-item list-group-item-action'>Dokumentum 5</button>"
         			+ "");
+        	
         	// Tab 3
         	String darabjegyzek = "				<table class=\"table table-striped\">\r\n" + 
         			"  								<thead>\r\n" + 

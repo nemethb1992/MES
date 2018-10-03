@@ -48,3 +48,7 @@ $(document).ready(function () {
 		<img class="lang_icon" src="${pageContext.request.contextPath}/Public/icons/HU.svg">
 	</div>
 </div>
+<div class='countDownSpan'>
+<p class='w-50 float-left'>Time:</p>
+<span class='w-50 float-right' id="counterSpan"></span>
+</div>

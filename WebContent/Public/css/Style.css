@@ -178,3 +178,10 @@ html {
 	background: #E2E1D9;
 	box-shadow: 0px 0px 5px #ff6666 inset;
 }
+.countDownSpan
+{
+	position: absolute;
+		bottom:0px;
+		left: 10px;
+		width: 110px;
+}

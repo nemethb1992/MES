@@ -50,6 +50,21 @@
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/HU.svg</location>
 		</link>
 		<link>
+			<name>WebContent/Public/icons/btn_settings.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/btn_settings.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/btn_vision.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/btn_vision.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/btn_wscontrol.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/btn_wscontrol.svg</location>
+		</link>
+		<link>
 			<name>WebContent/Public/icons/calendar.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/calendar.svg</location>

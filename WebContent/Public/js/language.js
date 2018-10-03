@@ -1,33 +1,32 @@
-
 var path = location.pathname.split('/')[1];
 
 $(document).ready(function(){
-	LaguageSetup();
 	languageSwitchButton();
 });
 
-function LaguageSetup()
-{
-	var language = $.cookie("language");
-	if(language == null || language == "")
-		{
-		var userLang = navigator.language;
-		language = userLang.split('-')[0];
-			if(language != "hu" && language != "en" && language != "de")
-				{
-					language = "hu";
-				}
-		}
-	LanguageSetOnServlet(language);
-}
+//function LaguageSetup()
+//{
+//	var language = $.cookie("language");
+//	if(language == null || language == "")
+//		{
+//		var userLang = navigator.language;
+//		language = userLang.split('-')[0];
+//			if(language != "hu" && language != "en" && language != "de")
+//				{
+//					language = "hu";
+//				}
+//		}
+//	LanguageSetOnServlet(language);
+//}
 
-function selectLanguage(lng)
+function selectLanguage(button)
 {
-	var language = $(lng).attr("id");
+	var language = $(button).attr("id");
 	$.cookie('language', language, { expires: 365 });
 	LanguageSetOnServlet(language);
 	location.reload();
 }
+
 function LanguageSetOnServlet(lng)
 {
 	$.ajax({
@@ -38,6 +37,7 @@ function LanguageSetOnServlet(lng)
 	    }
 	});	
 }
+
 function languageSwitchButton()
 {
     switch ($.cookie("language")) {

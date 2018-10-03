@@ -6,6 +6,7 @@ $(document).ready(function(){
 	dnd_sortlist_scripts();
 	collect_list_ws();
 	setToday(".datepicker_own");
+	ApplicationCountDown();
 });
 
 

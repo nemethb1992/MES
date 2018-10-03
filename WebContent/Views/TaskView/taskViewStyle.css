@@ -51,7 +51,7 @@
 #timerContainer
 {
 	background: #00e68a;
-	transition: 1s;
+	transition: background 1s;
 }
 .operator-switch-grid
 {

@@ -3,6 +3,7 @@ var path = location.pathname.split('/')[1];
 $(document).ready(function(){
 	TabControlEventHolder();
 	DataSheet_Load();
+	ApplicationCountDown();
 });
 $(document).keypress(function(e) {
     if(e.which == 13) {
@@ -29,6 +30,19 @@ function DataSheet_Load()
 	    	Data_Clear();
 	    	Data_Load(respond);
 			//TaskTimer();
+	    }
+	});
+}
+function openAsset(item)
+{
+	var value = $(item).attr('value');
+	$.ajax({
+	    url:  '/'+path+'/FileHandler',
+	    data:{
+	    	file: value
+	    },
+	    success: function (respond) {
+	    	
 	    }
 	});
 }

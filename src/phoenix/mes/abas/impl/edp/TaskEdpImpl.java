@@ -20,7 +20,7 @@ import de.abas.erp.common.type.enums.EnumTypeCommands;
 import de.abas.erp.common.type.enums.EnumWorkOrderType;
 import de.abas.erp.db.field.StringField;
 import de.abas.erp.db.field.UnitField;
-import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESBOM;
+import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESTASK;
 import de.abas.erp.db.schema.company.TableOfUnits;
 import de.abas.erp.db.schema.operation.Operation;
 import de.abas.erp.db.schema.part.Product;
@@ -313,13 +313,13 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 * Gyártási feladat részleteit leíró osztály, EDP-ben implementálva.
 	 * @author szizo
 	 */
-	protected class DetailsEdpImpl extends TaskDetails<EDPSession> {
+	protected class DetailsEdpImpl0 extends TaskDetails<EDPSession> {
 
 		/**
 		 * Konstruktor.
 		 * @param abasConnection Az Abas-kapcsolat.
 		 */
-		protected DetailsEdpImpl(AbasConnection<EDPSession> abasConnection) {
+		protected DetailsEdpImpl0(AbasConnection<EDPSession> abasConnection) {
 			super(abasConnection, abasConnectionType);
 		}
 
@@ -401,7 +401,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 */
 		@Override
 		protected void loadDataFromOperationReservation() {
-			final EDPQuery edpQuery = OperationQuery.EXECUTOR.readRecord(workSlipId, abasConnectionObject);
+			final EDPQuery edpQuery = OperationReservationQuery.EXECUTOR.readRecord(workSlipId, abasConnectionObject);
 			if (null == edpQuery) {
 				return;
 			}
@@ -415,9 +415,9 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		protected List<BomElement> getBillOfMaterials() {
 			final EDPEditor infoSystemQuery = abasConnectionObject.createEditor();
 			try {
-				infoSystemQuery.beginEditCmd(Integer.toString(EnumTypeCommands.Infosystem.getCode()), "MESBOM");
-				infoSystemQuery.setFieldVal(InfosysOw1MESBOM.META.yas.getName(), workSlipId.toString());
-				infoSystemQuery.setFieldVal(InfosysOw1MESBOM.META.start.getName(), "");
+				infoSystemQuery.beginEditCmd(Integer.toString(EnumTypeCommands.Infosystem.getCode()), "MESTASK");
+				infoSystemQuery.setFieldVal(InfosysOw1MESTASK.META.yas.getName(), workSlipId.toString());
+				infoSystemQuery.setFieldVal(InfosysOw1MESTASK.META.start.getName(), "");
 				final int rowCount = infoSystemQuery.getRowCount();
 				switch (rowCount) {
 					case 0:
@@ -448,12 +448,12 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 * @throws CantReadFieldPropertyException Ha hiba történt valamelyik mező értékének beolvasása során.
 		 */
 		protected BomElement newBomElement(EDPEditor infoSystemQuery, int rowNo) throws CantReadFieldPropertyException {
-			return new BomElementImpl(infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESBOM.Row.META.ytelemnum.join(Product.META.idno).getName()),
-					infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESBOM.Row.META.ytelemnum.join(Product.META.swd).getName()),
-					infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESBOM.Row.META.ytnamebspr.getName()),
-					infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESBOM.Row.META.ytyname2.getName()),
-					new BigDecimal(infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESBOM.Row.META.ytmenge.getName())),
-					unitNamesRepository.getUnitName(AbasUnit.UNITS.valueOf(infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESBOM.Row.META.ytle.getName()))));
+			return new BomElementImpl(infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytelemnum.getName()),
+					infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytelemsuch.getName()),
+					infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytnamebspr.getName()),
+					infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytyname2.getName()),
+					new BigDecimal(infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytmenge.getName())),
+					unitNamesRepository.getUnitName(AbasUnit.UNITS.valueOf(infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytle.getName()))));
 		}
 
 	}
@@ -521,8 +521,8 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 * @see phoenix.mes.abas.impl.TaskImpl#newDetails(phoenix.mes.abas.AbasConnection)
 	 */
 	@Override
-	protected DetailsEdpImpl newDetails(AbasConnection<EDPSession> abasConnection) {
-		return (new DetailsEdpImpl(abasConnection));
+	protected DetailsEdpImpl0 newDetails(AbasConnection<EDPSession> abasConnection) {
+		return (new DetailsEdpImpl0(abasConnection));
 	}
 
 }

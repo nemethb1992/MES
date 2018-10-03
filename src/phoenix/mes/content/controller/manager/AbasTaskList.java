@@ -82,6 +82,7 @@ public class AbasTaskList extends HttpServlet {
 			String username=(String)session.getAttribute("username");
 			String pass=(String)session.getAttribute("pass");
 			String date = request.getParameter("date");
+			System.out.println(date);
 			dict  = (Dictionary)session.getAttribute("Dictionary");
 			response.setContentType("text/plain"); 
 			response.setCharacterEncoding("UTF-8"); 
