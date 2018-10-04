@@ -3,14 +3,7 @@
 /* #btn_leftNav_2 {background-image: url("Public/icons/TV_btn_nav2.svg");} */
 /* #btn_leftNav_3 {background-image: url("Public/icons/TV_btn_nav3.svg");} */
 /* #btn_leftNav_4 {background-image: url("Public/icons/TV_btn_nav4.svg");} */
-#leftwrap
-{
-    background: #dc3545;
-    border-top-left-radius: 10px;
-    border-bottom-left-radius: 10px;
-    text-align: center;
-    color: white;
-}
+
 
 #content
 {

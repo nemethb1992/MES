@@ -2,31 +2,26 @@
 <script>
         <%@ include file="/Views/TaskManage/taskManageScript.js"%>
     </script>
-<div class='container-fluid'>
-	<div class='row  mt-5'>
-		<div class='mycontainer container'>
-			<div class='row h-100'>
-				<div id='leftwrap' class='col-1 px-0'>
-					<div class=' container px-0'>
-						<img id='leftwrapImg'
+		<div class='container-fluid h-100'>
+			<div class='row'>
+				<div class='col-12 px-0 topNav'>
+						<img
 							src="${pageContext.request.contextPath}/Public/icons/pm_logo_mini_white.svg"
-							class='row mt-3 mx-auto d-block img-fluid px-3' />
-						<form method='POST' class='logout-form w-100'
+							class='row d-block m-3 img-fluid LogoMiniPM float-left' />
+						<form method='POST' class='h-100 float-right'
 							action='${pageContext.request.contextPath}/Home'>
-							<input class='btn_logout  h-100 w-100' type='submit' value='' />
+							<input class='btn_logout' type='submit' value='' />
 						</form>
-					</div>
 				</div>
-				<div class='col-11'>
+				<div class='col-12'>
 
 					<!-- 					Elöválasztó felület -->
 
-					<div id='TM_Select_container_activity'
-						class='select-panel row h-100 p-4'>
+					<div id='TM_Select_container_activity' class='select-panel row'>
 						<%-- 						<jsp:include page="/Views/TaskManage/PageElements/activitySelect.jsp" /> --%>
 						<div class='col-4'>
 							<div id='btn_select_1'
-								class='TM_btn_select light-shadow btnstyle mx-auto h-100'>
+								class='TM_btn_select light-shadow btnstyle mx-auto '>
 								<img
 									src='${pageContext.request.contextPath}/Public/icons/btn_wscontrol.svg'
 									class='mx-auto d-block'>
@@ -35,7 +30,7 @@
 						</div>
 						<div class='col-4'>
 							<div id='btn_select_2'
-								class='TM_btn_select light-shadow btnstyle mx-auto h-100'>
+								class='TM_btn_select light-shadow btnstyle mx-auto '>
 								<img
 									src='${pageContext.request.contextPath}/Public/icons/btn_vision.svg'
 									class='mx-auto d-block'>
@@ -44,7 +39,7 @@
 						</div>
 						<div class='col-4'>
 							<div id='btn_select_3'
-								class='TM_btn_select light-shadow btnstyle mx-auto h-100'>
+								class='TM_btn_select light-shadow btnstyle mx-auto '>
 								<img
 									src='${pageContext.request.contextPath}/Public/icons/btn_settings.svg'
 									class='mx-auto d-block'>
@@ -181,6 +176,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
+
 <%@include file="/Views/Footer.jsp"%>
