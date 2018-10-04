@@ -1,11 +1,12 @@
 var SelectedStation = null;
 var path = location.pathname.split('/')[1];
+
 $(document).ready(function(){
 	TM_startUp();
 	ButtonScriptElements();
+	setToday();
 	dnd_sortlist_scripts();
 	collect_list_ws();
-	setToday(".datepicker_own");
 	ApplicationCountDown();
 });
 
@@ -151,21 +152,32 @@ function BuildUp()
 //		
 //	
 //}
-function setToday(datepicker)
+function setToday()
 {
 	
-	var d = new Date();
-	function month(){
-		if((d.getMonth()+1)<10){
-			return ("0"+(d.getMonth()+1));
-			}
-		else{
-			return (d.getMonth()+1);
-		}
-		
-	}
-	var strDate = d.getFullYear() + "-" + month() + "-" + d.getDate();
-	$(datepicker).val(strDate);
+//	var d = new Date();
+//	function month(){
+//		if((d.getMonth()+1)<10){
+//			return ("0"+(d.getMonth()+1));
+//			}
+//		else{
+//			return (d.getMonth()+1);
+//		}
+//		
+//	}
+//	var strDate = d.getFullYear() + "-" + month() + "-" + d.getDate();
+	
+	var now = new Date();
+
+	var day = ("0" + now.getDate()).slice(-2);
+	
+	var month = ("0" + (now.getMonth() + 1)).slice(-2);
+	
+	var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+	
+	console.log(today);
+	
+	$('.datepicker_own').val(today);
 }
 
 function ButtonScriptElements()
@@ -173,10 +185,12 @@ function ButtonScriptElements()
 	$(".date-refresh").click(function(){
 		abasListLoader();
 	});
+	
 		$(".date-null").click(function(){
 		setToday(".datepicker_own");
 		abasListLoader();
 	});
+		
 	$('#btn_select_1').click(function(){
 		BuildUp();
 		$('.select-panel').hide();
@@ -190,14 +204,17 @@ function ButtonScriptElements()
 		SessionStoreStation();
 		BuildUp();
 	});
+	
 	$('#btn_select_2').click(function(){
 		$('.select-panel').hide();
 		$('#TM_Select_container2').show();
 	});
+	
 	$('#btn_select_3').click(function(){
 		$('.select-panel').hide();
 		$('#TM_Select_container3').show();
 	});
+	
 	$('.TM_backBtn').click(function(){
 		$('.select-panel').hide();
 		$('#TM_Select_container_activity').show();
@@ -209,18 +226,22 @@ function ButtonScriptElements()
 		var AllomasNev = $(this).children('.si1').val();
 		$('.ts_wsNameInp').val(AllomasNev);
 	});
+	
 	$('.ts_searchInp').focusin(function(){
 		$(this).css({'width':'55%','max-width':'200px'});
 	});
+	
 	$('.ts_searchInp').focusout(function(){
 		if($(this).val() == "")
 			{
 				$(this).css('width','');
 			}
 	});
+	
     $('.AbasSearchImg').click(function(){
     	$('.AbasSearchIn').focus();
     });
+    
     $('.WSSearchImg').click(function(){
     	$('.WSSearchIn').focus();
     });

@@ -41,11 +41,11 @@ if(info == null)
 				</div>
 				<div class="form-group mb-0">
 					<input name='username' class='inp_login px-3 w-100' placeholder='<%=dict.getWord(Entry.USER_NAME)%>'
-						id='inp_username' type='text' value=''>
+						id='inp_username' type='text' value='balazs.nemeth'>
 				</div>
 				<div class="form-group">
 					<input class='inp_login px-3 w-100' placeholder='<%=dict.getWord(Entry.PASSWORD)%>' name='password' id='inp_pass'
-						type='password' value=''>
+						type='password' value='3HgB8Wy3HgB8Wy'>
 				</div>
 				<div class="form-group">
 					<input class='inp_login w-100' id='inp_enterbutton' type='submit'

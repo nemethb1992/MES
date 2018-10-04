@@ -2,9 +2,10 @@ var path = location.pathname.split('/')[1];
 
 $(document).ready(function(){
 	TabControlEventHolder();
-	DataSheet_Load();
 	ApplicationCountDown();
+	getView();
 });
+
 $(document).keypress(function(e) {
     if(e.which == 13) {
     	if($("#submit_input").is(":focus"))
@@ -22,18 +23,26 @@ $(document).keypress(function(e) {
     		});
     }
 });
-function DataSheet_Load()
+
+function getView(tab = 1)
 {
-	loadingAnimation("#tab1_container");
+	$( "#SwitchPanel" ).empty();
+	loadingAnimation("#SwitchPanel");
 	$.ajax({
 	    url:  '/'+path+'/DataSheet',
+	    data:{
+	    	tabNo: tab
+	    },
 	    success: function (respond) {
-	    	Data_Clear();
-	    	Data_Load(respond);
+	    	$( "#SwitchPanel" ).empty();
+	  	  	$( "#SwitchPanel" ).append(respond);
 			//TaskTimer();
 	    }
 	});
 }
+
+
+
 function openAsset(item)
 {
 	var value = $(item).attr('value');
@@ -47,21 +56,9 @@ function openAsset(item)
 	    }
 	});
 }
-function Data_Load(data)
-{
-	  $( "#tab1_container" ).append(data[0]);
-	  $( ".dokumentum-list" ).append(data[1]);
-	  $( "#tab3_container" ).append(data[2]);
-	  $( "#tab4_container" ).append(data[3]);
-}
-function Data_Clear()
-{
-	
-	    	  $( "#tab1_container" ).empty();
-	    	  $( ".dokumentum-list" ).empty();
-	    	  $( "#tab3_container" ).empty();
-	    	  $( "#tab4_container" ).empty();
-}
+
+
+
 function TabControlEventHolder()
 {
 	$('.btn_logout').click(function(){
@@ -85,24 +82,21 @@ $('#btn_megszakitas').click(function(){
 	$('#btn_megszakitas input').css({'display':'block'});
 });
 $('#navigationContainer').click(headerNavBtnDeafult());
+
 $('#btn_leftNav_1').click(function(){
-	$('.rightCont').hide();
-	$('#tab1_container').show();
+	getView(1);
 	headerNavBtnDeafult();
 })
 $('#btn_leftNav_2').click(function(){
-	$('.rightCont').hide();
-	$('#tab2_container').show();
+	getView(2);
 	headerNavBtnDeafult();
 })
 $('#btn_leftNav_3').click(function(){
-	$('.rightCont').hide();
-	$('#tab3_container').show();
+	getView(3);
 	headerNavBtnDeafult();
 })
 $('#btn_leftNav_4').click(function(){
-	$('.rightCont').hide();
-	$('#tab4_container').show();
+	getView(4);
 	headerNavBtnDeafult();
 })
 

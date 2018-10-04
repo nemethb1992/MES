@@ -77,12 +77,7 @@
 						</div>
 						<div
 							class='cc_element operator-switch-grid col-9 col-md-9 col-lg-10 col-xl-10 px-0'>
-							<div id='tab1_container' class='rightCont'></div>
-							<div id='tab2_container' class='rightCont'>
-								<div class="list-group dokumentum-list"></div>
-							</div>
-							<div id='tab3_container' class='rightCont'></div>
-							<div id='tab4_container' class='rightCont'></div>
+							<div id='SwitchPanel' class='rightCont'></div>
 						</div>
 					</div>
 				</div>
