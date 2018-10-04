@@ -175,8 +175,6 @@ function setToday()
 	
 	var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
 	
-	console.log(today);
-	
 	$('.datepicker_own').val(today);
 }
 

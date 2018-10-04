@@ -50,6 +50,11 @@
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/HU.svg</location>
 		</link>
 		<link>
+			<name>WebContent/Public/icons/back-arrow-white.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/back-arrow-white.svg</location>
+		</link>
+		<link>
 			<name>WebContent/Public/icons/btn_settings.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/btn_settings.svg</location>
@@ -88,6 +93,11 @@
 			<name>WebContent/Public/icons/list.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/list.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/logoutSimple.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/logoutSimple.svg</location>
 		</link>
 		<link>
 			<name>WebContent/Public/icons/padlock.svg</name>

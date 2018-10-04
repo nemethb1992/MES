@@ -29,7 +29,7 @@ public class StationGroup extends HttpServlet {
 		try {
 			list = postgreSql.sqlQuery(command, "sorszam");    	
 			for (String item : list) {
-	    		station += "<div class='tmts_stationBtnDivCont col px-0' value='"+group+"!"+item+"' OnClick='Station_Select(this)'><input disabled class='si1'value='"+group+" - "+item+"'></div>";
+	    		station += "<div class='tmts_stationBtnDivCont col-12 px-0' value='"+group+"!"+item+"' OnClick='Station_Select(this)'><input disabled class='si1'value='"+group+" - "+item+"'></div>";
 	    	}
 		} catch (SQLException e) {
 			//TODO Jelezni a felhasználó felé.

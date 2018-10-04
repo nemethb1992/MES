@@ -25,27 +25,26 @@
 font-size: 14px;
     background: #efefef;
     padding-left: 15px;
-    margin: 6px 0 6px 0px;
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
 }
 
 .btn_logout {
-	height: 50px;
-	width: 50px;
+	height: 100%;
+	width: 100%;
 	cursor: pointer;
 	background: transparent;
-	background-image: url(Public/icons/logout.svg);
+	background-image: url(Public/icons/logoutSimple.svg);
 	background-size: 35px;
 	background-repeat: no-repeat;
 	background-position: center;
-	border-radius: 0 0 0 10px;
+	transition: 0.2s;
 }
 
 .btn_logout:hover {
 	background: #ff9797;
-	background-image: url(Public/icons/logout.svg);
-	background-size: 35px;
+	background-image: url(Public/icons/logoutSimple.svg);
+	background-size: 30px;
 	background-repeat: no-repeat;
 	background-position: center;
 }
@@ -118,8 +117,9 @@ html {
 	height: 70px !important;
     background: #dc3545;
     text-align: center;
-	box-shadow: 0 3px 5px #999999;
+	box-shadow: 0 3px 5px #404040;
     color: white;
+    z-index: 10;
 }
 
 .LogoMiniPM
@@ -139,9 +139,9 @@ html {
 }
 
 .light-shadow {
-	box-shadow: 0px 1px 5px #bbbbbb;
-	-moz-box-shadow: 0px 1px 5px #bbbbbb;
-	-webkit-box-shadow: 0px 1px 5px #bbbbbb;
+	box-shadow: 0px 2px 15px #bbbbbb;
+	-moz-box-shadow: 0px 2px 15px #bbbbbb;
+	-webkit-box-shadow: 0px 2px 15px #bbbbbb;
 }
 
 .very-light-shadow {
@@ -213,4 +213,8 @@ html {
 		bottom:0px;
 		right: 10px;
 		width: 110px;
+}
+.navigation-row
+{
+	height: 70px;
 }
