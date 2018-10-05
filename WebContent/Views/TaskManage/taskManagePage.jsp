@@ -15,13 +15,13 @@
 							class='d-block m-3 img-fluid LogoMiniPM' />
 					</div>
 
-					<div class='col-1 h-100 offset-9 px-0'>
+					<div class='col  top-nav-button-back h-100 offset-9 px-0'>
 						<div class='TM_backBtn h-100 w-100 btnstyle selectBackBtn'>
 							<img class='h-100 w-100 p-3'
 								src='${pageContext.request.contextPath}/Public/icons/back-arrow-white.svg' />
 						</div>
 					</div>
-					<div class='col-1  px-0'>
+					<div class='col  top-nav-button  px-0'>
 						<form method='POST' class='h-100'
 							action='${pageContext.request.contextPath}/Home'>
 							<input class='btn_logout' type='submit' value='' />

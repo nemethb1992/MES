@@ -225,3 +225,14 @@ html {
     font-size: 21px;
     text-align: left;
 }
+.top-nav-button
+{
+	-ms-flex: 0 0 70px;
+    flex: 0 0 70px;
+}
+
+.top-nav-button-back
+{
+	-ms-flex: 0 0 140px;
+    flex: 0 0 140px;
+}

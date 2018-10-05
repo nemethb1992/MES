@@ -17,7 +17,7 @@
 							class='d-block m-3 img-fluid LogoMiniPM' />
 					</div>
 
-					<div class='col-1 offset-10  px-0'>
+					<div class='col top-nav-button offset-10  px-0'>
 						<form method='POST' class='h-100'
 							action='${pageContext.request.contextPath}/Home'>
 							<input class='btn_logout' type='submit' value='' />
