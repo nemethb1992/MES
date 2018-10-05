@@ -9,7 +9,6 @@ package phoenix.mes.abas.impl.edp;
 import de.abas.ceks.jedp.CantChangeFieldValException;
 import de.abas.ceks.jedp.EDPConstants;
 import de.abas.ceks.jedp.EDPEditFieldList;
-import de.abas.ceks.jedp.EDPEditor;
 import de.abas.ceks.jedp.EDPQuery;
 import de.abas.ceks.jedp.EDPRuntimeException;
 import de.abas.ceks.jedp.EDPSession;
@@ -18,12 +17,9 @@ import de.abas.ceks.jedp.StandardEDPSelectionCriteria;
 import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.common.type.Id;
 import de.abas.erp.common.type.IdImpl;
-import de.abas.erp.common.type.enums.EnumTypeCommands;
 import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESWSLIPS;
 import de.abas.erp.db.schema.capacity.WorkCenter;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import phoenix.mes.abas.AbasConnection;
@@ -142,97 +138,6 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 	}
 
 	/**
-	 * Segédosztály a munkaállomáshoz kapcsolódó feladatok lekérdezéséhez.
-	 * @author szizo
-	 */
-	protected class TaskManager {
-
-		/**
-		 * Az EDP-munkamenet.
-		 */
-		protected final EDPSession edpSession;
-
-		/**
-		 * Konstruktor.
-		 * @param edpSession Az EDP-munkamenet.
-		 */
-		protected TaskManager(EDPSession edpSession) {
-			this.edpSession = edpSession;
-		}
-
-		/**
-		 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa (AbasDate.INFINITY, ha nincs szükség időkorlátra).
-		 * @return A vizsgált kezdődátum-intervallumba eső, a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt feladatok listája.
-		 */
-		public List<Task> getUnassignedTasks(AbasDate startDateUntil) {
-			return createTaskList(0, false, startDateUntil);
-		}
-
-		/**
-		 * A munkalap-szűrés végrehajtása.
-		 * @param workStationNumber A munkaállomás sorszáma.
-		 * @param suspendedTasks A felfüggesztett munkalapokat kell kilistázni?
-		 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa (null, ha nincs szükség időkorlátra).
-		 * @return A szűrésnek megfelelő feladatok listája.
-		 */
-		protected List<Task> createTaskList(int workStationNumber, boolean suspendedTasks, AbasDate startDateUntil) {
-			final EDPEditor infoSystemQuery = edpSession.createEditor();
-			try {
-				infoSystemQuery.beginEditCmd(Integer.toString(EnumTypeCommands.Infosystem.getCode()), "MESWSLIPS");
-				infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ymgr.getName(), workCenterId);
-				infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ymnum.getName(), Integer.toString(workStationNumber));
-				infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ymegszak.getName(), Boolean.toString(suspendedTasks));
-				if (null != startDateUntil) {
-					infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ystermig.getName(), startDateUntil.toString());
-				}
-				infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.start.getName(), "");
-				final int rowCount = infoSystemQuery.getRowCount();
-				switch (rowCount) {
-					case 0:
-						return Collections.emptyList();
-					case 1:
-						return Collections.singletonList(new TaskEdpImpl(new IdImpl(infoSystemQuery.getFieldVal(1, InfosysOw1MESWSLIPS.Row.META.ytas.getName()))));
-					default:
-						final List<Task> taskList = new ArrayList<>(rowCount);
-						for (int i = 1; i <= rowCount; i++) {
-							taskList.add(new TaskEdpImpl(new IdImpl(infoSystemQuery.getFieldVal(i, InfosysOw1MESWSLIPS.Row.META.ytas.getName()))));
-						}
-						return taskList;
-				}
-			} catch (Exception e) {
-				throw new EDPRuntimeException(e);
-			} finally {
-				if (infoSystemQuery.isActive()) {
-					infoSystemQuery.endEditCancel();
-				}
-			}
-		}
-
-		/**
-		 * @return A munkaállomáshoz hozzárendelt, de felfüggesztett feladatok listája.
-		 */
-		public List<Task> getSuspendedTasks() {
-			return createTaskList(number, true, null);
-		}
-
-		/**
-		 * @return A munkaállomáshoz hozzárendelt és végrehajtható feladatok listája.
-		 */
-		public List<Task> getExecutableTasks() {
-			return createTaskList(number, false, null);
-		}
-
-		/**
-		 * @return A munkaállomás következő végrehajtható feladata (null, ha a munkaállomás feladatlistája üres).
-		 */
-		public Task getNextExecutableTask() {
-			final List<Task> taskList = getExecutableTasks();
-			return (taskList.isEmpty() ? null : taskList.get(0));
-		}
-
-	}
-
-	/**
 	 * Az objektum kiírhatóságához kell.
 	 */
 	private static final long serialVersionUID = 5481097916115784173L;
@@ -309,7 +214,6 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 	@Override
 	public List<Task> getUnassignedTasks(AbasDate startDateUntil, AbasConnection<?> abasConnection) {
 		return WorkSlipQuery.EXECUTOR.getUnassignedTasks(workCenterId, startDateUntil, EdpConnection.getEdpSession(abasConnection));
-		//return (new TaskManager(EdpConnection.getEdpSession(abasConnection))).getUnassignedTasks(startDateUntil);
 	}
 
 	/* (non-Javadoc)
@@ -318,7 +222,6 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 	@Override
 	public List<Task> getSuspendedTasks(AbasConnection<?> abasConnection) {
 		return WorkSlipQuery.EXECUTOR.getSuspendedTasks(workCenterId, number, EdpConnection.getEdpSession(abasConnection));
-		//return (new TaskManager(EdpConnection.getEdpSession(abasConnection))).getSuspendedTasks();
 	}
 
 	/* (non-Javadoc)
@@ -327,7 +230,6 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 	@Override
 	public List<Task> getExecutableTasks(AbasConnection<?> abasConnection) {
 		return WorkSlipQuery.EXECUTOR.getExecutableTasks(workCenterId, number, EdpConnection.getEdpSession(abasConnection));
-		//return (new TaskManager(EdpConnection.getEdpSession(abasConnection))).getExecutableTasks();
 	}
 
 	/* (non-Javadoc)
@@ -336,7 +238,6 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 	@Override
 	public Task getNextExecutableTask(AbasConnection<?> abasConnection) {
 		return WorkSlipQuery.EXECUTOR.getNextExecutableTask(workCenterId, number, EdpConnection.getEdpSession(abasConnection));
-		//return (new TaskManager(EdpConnection.getEdpSession(abasConnection))).getNextExecutableTask();
 	}
 
 	/* (non-Javadoc)

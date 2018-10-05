@@ -9,13 +9,13 @@
 		<div class='col-12 px-0 topNav'>
 			<div class='container-fluid'>
 				<div class='row navigation-row'>
-					<div class='col-1'>
+					<div class='col-1 h-100'>
 						<img
 							src="${pageContext.request.contextPath}/Public/icons/pm_logo_mini_white.svg"
 							class='d-block m-3 img-fluid LogoMiniPM' />
 					</div>
 
-					<div class='col-1 offset-9 px-0'>
+					<div class='col-1 h-100 offset-9 px-0'>
 						<div class='TM_backBtn h-100 w-100 btnstyle selectBackBtn'>
 							<img class='h-100 w-100 p-3'
 								src='${pageContext.request.contextPath}/Public/icons/back-arrow-white.svg' />
@@ -143,7 +143,7 @@
 						</div>
 						<div class='sortContDiv_ListHolder row'>
 							<div class='abas-list-holder sort-list-holder  col-8 px-0'>
-								<div class='dnd-frame dndf1 abas-list h-100 m-0 row'>
+								<div class='dnd-frame dndf1 abas-list m-0 row'>
 
 
 <!-- 									<div class="dnd-container col-12 px-0" value="3" -->

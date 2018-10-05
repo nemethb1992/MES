@@ -50,7 +50,15 @@ public class EdpQueryExecutor {
 	 * @param fieldNamesClass A lekérdezendő mezők neveit konstansokként tartalmazó osztály.
 	 */
 	public EdpQueryExecutor(Class<?> fieldNamesClass) {
-		fieldNames = getFieldNames(fieldNamesClass);
+		this(getFieldNames(fieldNamesClass));
+	}
+
+	/**
+	 * Kosntruktor.
+	 * @param fieldNames A lekérdezendő mezők nevei.
+	 */
+	public EdpQueryExecutor(String[] fieldNames) {
+		this.fieldNames = fieldNames;
 	}
 
 	/**

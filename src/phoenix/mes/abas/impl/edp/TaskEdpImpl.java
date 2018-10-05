@@ -7,30 +7,19 @@
 package phoenix.mes.abas.impl.edp;
 
 import de.abas.ceks.jedp.CantChangeFieldValException;
-import de.abas.ceks.jedp.CantReadFieldPropertyException;
 import de.abas.ceks.jedp.EDPEditFieldList;
 import de.abas.ceks.jedp.EDPEditObject;
-import de.abas.ceks.jedp.EDPEditor;
 import de.abas.ceks.jedp.EDPQuery;
 import de.abas.ceks.jedp.EDPRuntimeException;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.common.type.Id;
-import de.abas.erp.common.type.enums.EnumTypeCommands;
 import de.abas.erp.common.type.enums.EnumWorkOrderType;
-import de.abas.erp.db.field.StringField;
-import de.abas.erp.db.field.UnitField;
 import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESTASK;
-import de.abas.erp.db.schema.operation.Operation;
-import de.abas.erp.db.schema.part.Product;
-import de.abas.erp.db.schema.part.SelectablePart;
-import de.abas.erp.db.schema.purchasing.Reservations;
-import de.abas.erp.db.schema.purchasing.SelectablePurchasing;
 import de.abas.erp.db.schema.workorder.WorkOrders;
 import de.abas.erp.db.type.AbasUnit;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -107,7 +96,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			public static final String ID_NO = InfosysOw1MESTASK.META.ynum9.getName();
 
 			/**
-			 * A feladat elkezdésének (tervezett) napja.
+			 * A gyártási feladat elkezdésének (tervezett) napja.
 			 */
 			public static final String START_DATE = InfosysOw1MESTASK.META.ytsterm.getName();
 
@@ -386,401 +375,21 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	}
 
 	/**
-	 * Segédosztály a munkalap adatainak lekérdezéséhez.
+	 * Segédosztály a gyártási feladat (tervezett) kezdőnapjának lekérdezéséhez.
 	 * @author szizo
 	 */
-	protected static final class WorkSlipQuery extends EdpQueryExecutor {
-
-		/**
-		 * A munkalap adatainak lekérdezéséhez szükséges mezőnevek.
-		 * @author szizo
-		 */
-		public static final class Field {
-
-			/**
-			 * A munkalap száma.
-			 */
-			public static final String ID_NO = WorkOrders.META.idno.getName();
-
-			/**
-			 * A feladat elkezdésének (tervezett) napja.
-			 */
-			public static final String START_DATE = WorkOrders.META.startDateDay.getName();
-
-			/**
-			 * A termék Felhasználás-hivatkozása.
-			 */
-			public static final String USAGE = WorkOrders.META.usage.getName();
-
-			/**
-			 * A beállítási idő mértékegysége.
-			 */
-			public static final String SETUP_TIME_UNIT = WorkOrders.META.setupTimeUnit.getName();
-
-			/**
-			 * A beállítási idő.
-			 */
-			public static final String SETUP_TIME = WorkOrders.META.setupTime.getName();
-
-			/**
-			 * Egységnyi beállítási idő bruttósítva hány másodpercből áll?
-			 */
-			public static final String SETUP_TIME_SEC = WorkOrders.META.setupTimeSec.getName();
-
-			/**
-			 * A darabidő mértékegysége.
-			 */
-			public static final String UNIT_TIME_UNIT = WorkOrders.META.timeUnit.getName();
-
-			/**
-			 * A darabidő.
-			 */
-			public static final String UNIT_TIME = WorkOrders.META.timeLimUnit.getName();
-
-			/**
-			 * Egységnyi darabidő bruttósítva hány másodpercből áll?
-			 */
-			public static final String UNIT_TIME_SEC = WorkOrders.META.unitTimeSec.getName();
-
-			/**
-			 * Hányszor kell végrehajtani a műveletet?
-			 */
-			public static final String NUMBER_OF_EXECUTIONS = WorkOrders.META.elemQty.getName();
-
-			/**
-			 * A nyitott mennyiség.
-			 */
-			public static final String OUTSTANDING_QUANTITY = WorkOrders.META.unitQty.getName();
-
-			/**
-			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
-			 */
-			private Field() {
-			}
-
-		}
+	protected static final class StartDateQuery extends EdpQueryExecutor {
 
 		/**
 		 * Egyke objektum.
 		 */
-		public static final WorkSlipQuery EXECUTOR = new WorkSlipQuery();
+		public static final StartDateQuery EXECUTOR = new StartDateQuery();
 
 		/**
 		 * Konstruktor.
 		 */
-		private WorkSlipQuery() {
-			super(Field.class);
-		}
-
-	}
-
-	/**
-	 * Segédosztály a termék adatainak lekérdezéséhez.
-	 * @author szizo
-	 */
-	protected static final class ProductQuery extends EdpQueryExecutor {
-
-		/**
-		 * A termék adatainak lekérdezéséhez szükséges mezőnevek.
-		 * @author szizo
-		 */
-		public static final class Field {
-
-			/**
-			 * A termék cikkszáma.
-			 */
-			public static final String ID_NO = WorkOrders.META.product.join(castToSelectablePart(Product.META.idno)).getName();
-
-			/**
-			 * A termék keresőszava.
-			 */
-			public static final String SWD = WorkOrders.META.product.join(castToSelectablePart(Product.META.swd)).getName();
-
-			/**
-			 * A termék megnevezése az aktuálisan beállított kezelőnyelven.
-			 */
-			public static final String DESCRIPTION = WorkOrders.META.product.join(castToSelectablePart(Product.META.descrOperLang)).getName();
-
-			/**
-			 * A termék második megnevezése.
-			 */
-			public static final String DESCRIPTION2 = WorkOrders.META.product.join(castToSelectablePart(Product.META.yname2)).getName();
-
-			/**
-			 * A mennyiségi egység (raktáregység).
-			 */
-			public static final String STOCK_UNIT = WorkOrders.META.product.join(castToSelectablePart(Product.META.SU)).getName();
-
-			/**
-			 * @param field A szöveges mező.
-			 * @return A szöveges mező, a SelectablePart osztály tagjaként láttatva.
-			 */
-			@SuppressWarnings("unchecked")
-			private static StringField<SelectablePart> castToSelectablePart(StringField<? extends SelectablePart> field) {
-				return (StringField<SelectablePart>)field;
-			}
-
-			/**
-			 * @param field A mértékegység-mező.
-			 * @return A mértékegység-mező, a SelectablePart osztály tagjaként láttatva.
-			 */
-			@SuppressWarnings("unchecked")
-			private static <U extends AbasUnit> UnitField<SelectablePart, U> castToSelectablePart(UnitField<? extends SelectablePart, U> field) {
-				return (UnitField<SelectablePart, U>)field;
-			}
-
-			/**
-			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
-			 */
-			private Field() {
-			}
-
-		}
-
-		/**
-		 * Egyke objektum.
-		 */
-		public static final ProductQuery EXECUTOR = new ProductQuery();
-
-		/**
-		 * Konstruktor.
-		 */
-		private ProductQuery() {
-			super(Field.class);
-		}
-
-	}
-
-	/**
-	 * Segédosztály a művelet adatainak lekérdezéséhez.
-	 * @author szizo
-	 */
-	protected static final class OperationQuery0 extends EdpQueryExecutor {
-
-		/**
-		 * A művelet adatainak lekérdezéséhez szükséges mezőnevek.
-		 * @author szizo
-		 */
-		public static final class Field {
-
-			/**
-			 * A művelet hivatkozási száma.
-			 */
-			public static final String ID_NO = WorkOrders.META.seriesOfOperations.join(Operation.META.idno).getName();
-
-			/**
-			 * A művelet keresőszava.
-			 */
-			public static final String SWD = WorkOrders.META.seriesOfOperations.join(Operation.META.swd).getName();
-
-			/**
-			 * A művelet megnevezése az aktuálisan beállított kezelőnyelven.
-			 */
-			public static final String DESCRIPTION = WorkOrders.META.seriesOfOperations.join(Operation.META.descrOperLang).getName();
-
-			/**
-			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
-			 */
-			private Field() {
-			}
-
-		}
-
-		/**
-		 * Egyke objektum.
-		 */
-		public static final OperationQuery0 EXECUTOR = new OperationQuery0();
-
-		/**
-		 * Konstruktor.
-		 */
-		private OperationQuery0() {
-			super(Field.class);
-		}
-
-	}
-
-	/**
-	 * Segédosztály a műveletfoglalás adatainak lekérdezéséhez.
-	 * @author szizo
-	 */
-	protected static final class OperationReservationQuery extends EdpQueryExecutor {
-
-		/**
-		 * A műveletfoglalás adatainak lekérdezéséhez szükséges mezőnevek.
-		 * @author szizo
-		 */
-		public static final class Field {
-
-			/**
-			 * A műveletfoglalás tételszövege.
-			 */
-			public static final String ITEM_TEXT = WorkOrders.META.lastReservation.join(castToSelectablePurchasing(Reservations.META.itemText)).getName();
-
-			/**
-			 * @param field A szöveges mező.
-			 * @return A szöveges mező, a SelectablePurchasing osztály tagjaként láttatva.
-			 */
-			@SuppressWarnings("unchecked")
-			private static StringField<? super SelectablePurchasing> castToSelectablePurchasing(StringField<? extends SelectablePurchasing> field) {
-				return (StringField<? super SelectablePurchasing>)field;
-			}
-
-			/**
-			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
-			 */
-			private Field() {
-			}
-
-		}
-
-		/**
-		 * Egyke objektum.
-		 */
-		public static final OperationReservationQuery EXECUTOR = new OperationReservationQuery();
-
-		/**
-		 * Konstruktor.
-		 */
-		private OperationReservationQuery() {
-			super(Field.class);
-		}
-
-	}
-
-	/**
-	 * Gyártási feladat részleteit leíró osztály, EDP-ben implementálva.
-	 * @author szizo
-	 */
-	protected class DetailsEdpImpl0 extends TaskDetails<EDPSession> {
-
-		/**
-		 * Konstruktor.
-		 * @param abasConnection Az Abas-kapcsolat.
-		 */
-		protected DetailsEdpImpl0(AbasConnection<EDPSession> abasConnection) {
-			super(abasConnection, abasConnectionType);
-		}
-
-		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.impl.TaskDetails#loadBasicData()
-		 */
-		@Override
-		protected void loadBasicData() {
-			loadDataFromWorkSlip();
-			loadDataFromProduct();
-		}
-
-		protected void loadDataFromWorkSlip() {
-			final EDPQuery edpQuery = WorkSlipQuery.EXECUTOR.readRecord(workSlipId, abasConnectionObject);
-			if (null == edpQuery) {
-				return;
-			}
-			workSlipNo = edpQuery.getField(WorkSlipQuery.Field.ID_NO);
-			startDate = AbasDate.valueOf(edpQuery.getField(WorkSlipQuery.Field.START_DATE));
-			usage = edpQuery.getField(WorkSlipQuery.Field.USAGE);
-			final AbasUnit setupTimeAbasUnit = AbasUnit.UNITS.valueOf(edpQuery.getField(WorkSlipQuery.Field.SETUP_TIME_UNIT));
-			setupTime = calculateGrossTime(new BigDecimal(edpQuery.getField(WorkSlipQuery.Field.SETUP_TIME)), setupTimeAbasUnit, new BigDecimal(edpQuery.getField(WorkSlipQuery.Field.SETUP_TIME_SEC)));
-			final AbasUnit unitTimeAbasUnit = AbasUnit.UNITS.valueOf(edpQuery.getField(WorkSlipQuery.Field.UNIT_TIME_UNIT));
-			unitTime = calculateGrossTime(new BigDecimal(edpQuery.getField(WorkSlipQuery.Field.UNIT_TIME)), unitTimeAbasUnit, new BigDecimal(edpQuery.getField(WorkSlipQuery.Field.UNIT_TIME_SEC)));
-			numberOfExecutions = new BigDecimal(edpQuery.getField(WorkSlipQuery.Field.NUMBER_OF_EXECUTIONS));
-			outstandingQuantity = new BigDecimal(edpQuery.getField(WorkSlipQuery.Field.OUTSTANDING_QUANTITY));
-		}
-
-		protected void loadDataFromProduct() {
-			final EDPQuery edpQuery = ProductQuery.EXECUTOR.readRecord(workSlipId, abasConnectionObject);
-			if (null == edpQuery) {
-				return;
-			}
-			productIdNo = edpQuery.getField(ProductQuery.Field.ID_NO);
-			productSwd = edpQuery.getField(ProductQuery.Field.SWD);
-			productDescription = edpQuery.getField(ProductQuery.Field.DESCRIPTION);
-			productDescription2 = edpQuery.getField(ProductQuery.Field.DESCRIPTION2);
-		}
-
-		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.impl.TaskDetails#loadOperationData()
-		 */
-		@Override
-		protected void loadOperationData() {
-			loadDataFromOperation();
-			loadDataFromOperationReservation();
-		}
-
-		protected void loadDataFromOperation() {
-			final EDPQuery edpQuery = OperationQuery0.EXECUTOR.readRecord(workSlipId, abasConnectionObject);
-			if (null == edpQuery) {
-				return;
-			}
-			operationIdNo = edpQuery.getField(OperationQuery0.Field.ID_NO);
-			operationSwd = edpQuery.getField(OperationQuery0.Field.SWD);
-			operationDescription = edpQuery.getField(OperationQuery0.Field.DESCRIPTION);
-		}
-
-		protected void loadDataFromOperationReservation() {
-			final EDPQuery edpQuery = OperationReservationQuery.EXECUTOR.readRecord(workSlipId, abasConnectionObject);
-			if (null == edpQuery) {
-				return;
-			}
-			operationReservationText = edpQuery.getField(OperationReservationQuery.Field.ITEM_TEXT);
-		}
-
-		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.impl.TaskDetails#loadSalesOrderData()
-		 */
-		@Override
-		protected void loadSalesOrderData() {
-			// TODO
-			throw new RuntimeException("Not yet implemented!");
-		}
-
-		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.impl.TaskDetails#getBillOfMaterials()
-		 */
-		@Override
-		protected List<BomElement> getBillOfMaterials() {
-			final EDPEditor infoSystemQuery = abasConnectionObject.createEditor();
-			try {
-				infoSystemQuery.beginEditCmd(Integer.toString(EnumTypeCommands.Infosystem.getCode()), "MESTASK");
-				infoSystemQuery.setFieldVal(InfosysOw1MESTASK.META.yas.getName(), workSlipId.toString());
-				infoSystemQuery.setFieldVal(InfosysOw1MESTASK.META.ydbj.getName(), "1");
-				infoSystemQuery.setFieldVal(InfosysOw1MESTASK.META.start.getName(), "");
-				final int rowCount = infoSystemQuery.getRowCount();
-				switch (rowCount) {
-					case 0:
-						return Collections.emptyList();
-					case 1:
-						return Collections.singletonList(newBomElement(infoSystemQuery, 1));
-					default:
-						final List<BomElement> bom = new ArrayList<>(rowCount);
-						for (int i = 1; i <= rowCount; i++) {
-							bom.add(newBomElement(infoSystemQuery, i));
-						}
-						return Collections.unmodifiableList(bom);
-				}
-			} catch (Exception e) {
-				throw new EDPRuntimeException(e);
-			} finally {
-				if (infoSystemQuery.isActive()) {
-					infoSystemQuery.endEditCancel();
-				}
-			}
-		}
-
-		/**
-		 * A megadott darabjegyzéksor adatait tartalmazó objektum létrehozása.
-		 * @param infoSystemQuery A lefuttatott infosystem-lekérdezés.
-		 * @param rowNo Az eredménysor száma.
-		 * @return A darabjegyzéksor adatait tartalmazó objektum.
-		 * @throws CantReadFieldPropertyException Ha hiba történt valamelyik mező értékének beolvasása során.
-		 */
-		protected BomElement newBomElement(EDPEditor infoSystemQuery, int rowNo) throws CantReadFieldPropertyException {
-			return new BomElementImpl(infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytelemnum.getName()),
-					infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytelemsuch.getName()),
-					infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytnamebspr.getName()),
-					infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytyname2.getName()),
-					new BigDecimal(infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytmenge.getName())),
-					infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytlebspr.getName()));
+		private StartDateQuery() {
+			super(new String[] {WorkOrders.META.startDateDay.getName()});
 		}
 
 	}
@@ -907,7 +516,8 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 */
 	@Override
 	public AbasDate getStartDate(AbasConnection<?> abasConnection) {
-		return getDetails(abasConnection).getStartDate();
+		final EDPQuery edpQuery = StartDateQuery.EXECUTOR.readRecord(workSlipId, EdpConnection.getEdpSession(abasConnection));
+		return (null == edpQuery ? null : AbasDate.valueOf(edpQuery.getField(1)));
 	}
 
 	/* (non-Javadoc)

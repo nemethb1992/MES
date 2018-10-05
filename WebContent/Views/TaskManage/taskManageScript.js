@@ -155,18 +155,6 @@ function BuildUp()
 function setToday()
 {
 	
-//	var d = new Date();
-//	function month(){
-//		if((d.getMonth()+1)<10){
-//			return ("0"+(d.getMonth()+1));
-//			}
-//		else{
-//			return (d.getMonth()+1);
-//		}
-//		
-//	}
-//	var strDate = d.getFullYear() + "-" + month() + "-" + d.getDate();
-	
 	var now = new Date();
 
 	var day = ("0" + now.getDate()).slice(-2);
@@ -185,7 +173,7 @@ function ButtonScriptElements()
 	});
 	
 		$(".date-null").click(function(){
-		setToday(".datepicker_own");
+			$('.datepicker_own').val(null);
 		abasListLoader();
 	});
 		
