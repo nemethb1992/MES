@@ -114,7 +114,7 @@ html {
 
 .topNav
 {
-	height: 70px !important;
+	height: 65px !important;
     background: #dc3545;
     text-align: center;
     box-shadow: 0 2px 3px #404040;
@@ -216,7 +216,7 @@ html {
 }
 .navigation-row
 {
-	height: 70px;
+	height: 65px;
 }
 
 .logged-name {

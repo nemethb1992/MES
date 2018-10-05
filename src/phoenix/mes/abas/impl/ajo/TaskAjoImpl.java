@@ -127,6 +127,45 @@ public class TaskAjoImpl extends TaskImpl<DbContext> {
 			super(abasConnection, abasConnectionType);
 		}
 
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.TaskDetails#setAbasConnectionObject(phoenix.mes.abas.AbasConnection, java.lang.Class)
+		 */
+		@Override
+		protected void setAbasConnectionObject(AbasConnection<DbContext> abasConnection, Class<DbContext> abasConnectionType) {
+			super.setAbasConnectionObject(abasConnection, abasConnectionType);
+			final OperatingLanguage operatingLanguage = abasConnection.getOperatingLanguage();
+			if (null == unitNamesRepository || operatingLanguage != unitNamesRepository.getLanguage()) {
+				unitNamesRepository = new UnitNamesRepository(operatingLanguage);
+			}
+		}
+
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.TaskDetails#loadBasicData()
+		 */
+		@Override
+		protected void loadBasicData() {
+			// TODO Auto-generated method stub
+
+		}
+
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.TaskDetails#loadOperationData()
+		 */
+		@Override
+		protected void loadOperationData() {
+			// TODO Auto-generated method stub
+
+		}
+
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.TaskDetails#loadSalesOrderData()
+		 */
+		@Override
+		protected void loadSalesOrderData() {
+			// TODO Auto-generated method stub
+
+		}
+
 		/**
 		 * @param unit Az Abas-mértékegység.
 		 * @return Az Abas-mértékegység neve az aktuálisan beállított kezelőnyelven.

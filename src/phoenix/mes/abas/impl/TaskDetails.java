@@ -12,11 +12,8 @@ import de.abas.erp.db.type.AbasUnit;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import phoenix.mes.OperatingLanguage;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.BomElement;
@@ -155,18 +152,6 @@ public abstract class TaskDetails<C> implements Task.Details {
 		if (!abasConnectionObject.equals(this.abasConnectionObject)) {
 			this.abasConnectionObject = abasConnectionObject;
 		}
-		final OperatingLanguage operatingLanguage = abasConnection.getOperatingLanguage();
-		if (null == unitNamesRepository || operatingLanguage != unitNamesRepository.getLanguage()) {
-			unitNamesRepository = new UnitNamesRepository(operatingLanguage);
-		}
-
-	}
-
-	/**
-	 * @return Az Abas-kapcsolat objektuma.
-	 */
-	protected C getAbasConnectionObject() {
-		return abasConnectionObject;
 	}
 
 	/**

@@ -31,6 +31,15 @@ public abstract class InfoSystemTableConverter<R> extends InfoSystemExecutor {
 	}
 
 	/**
+	 * Konstruktor.
+	 * @param swd Az infosystem keresőszava.
+	 * @param tableFieldNames A lekérdezendő táblázati mezők nevei.
+	 */
+	public InfoSystemTableConverter(String swd, String[] tableFieldNames) {
+		super(swd, null, tableFieldNames);
+	}
+
+	/**
 	 * @param filterCriteria Az infosystem indításához szükséges mezőbeállítások.
 	 * @param edpSession Az EDP-munkamenet.
 	 * @return Az infosystem táblázatsorai objektumok listájaként.

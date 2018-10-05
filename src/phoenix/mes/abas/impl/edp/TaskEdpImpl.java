@@ -45,8 +45,17 @@ import phoenix.mes.abas.impl.TaskDetails;
  */
 public class TaskEdpImpl extends TaskImpl<EDPSession> {
 
+	/**
+	 * Alaposztály a gyártási feladat adatainak lekérdezéséhez.
+	 * @author szizo
+	 */
 	protected static abstract class TaskDataQuery extends InfoSystemExecutor {
 
+		/**
+		 * @param criteriaFieldNames A szűrőmezők nevei.
+		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
+		 * @return Az infosystem indításához szükséges mezőbeállítások.
+		 */
 		protected static EDPEditFieldList getFilterCriteria(String[] criteriaFieldNames, Id workSlipId) {
 			try {
 				return new EDPEditFieldList(criteriaFieldNames, new String[] {workSlipId.toString(), "1", " "});
@@ -63,6 +72,12 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			super("MESTASK", headerFieldNamesClass, null);
 		}
 
+		/**
+		 * A lekérdezés végrehajtása.
+		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
+		 * @param edpSession Az EDP-munkamenet.
+		 * @return A lekérdezendő mezők értékei.
+		 */
 		public EDPEditObject executeQuery(Id workSlipId, EDPSession edpSession) {
 			return executeQuery(getFilterCriteria(getCriteriaFieldNames(), workSlipId), edpSession);
 		}

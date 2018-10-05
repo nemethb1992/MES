@@ -105,11 +105,11 @@
 <!-- 					</div> -->
 					<div class='sortStationListCont container-fluid'>
 						<div class='sortContDiv_nav row px-0'>
-							<div class='abas-list-head sort-list-head sort-list h-100 col-6'>
-								<div class='row h-100'>
+							<div class='abas-list-head sort-list-head sort-list h-100 col-8'>
+								<div class='row h-100 w-50'>
 									<div class=' px-0 py-2 col-12'>
 										<div class='container h-100'>
-											<div class='row h-100'>
+											<div class='row h-100 py-1'>
 												<div class='col-8'>
 													<input class='datepicker_own w-100 h-100' type='date' style='font-size: 17px;'/>
 												</div>
@@ -125,7 +125,7 @@
 									<div class='input-icon-holderDiv  col px-0'></div>
 								</div>
 							</div>
-							<div class='ws-list-head sort-list-head sort-list col-6 h-100'>
+							<div class='ws-list-head sort-list-head sort-list col-4 h-100'>
 								<div class='input-icon-holderDiv stationName-holderDiv  h-100'>
 									<img class='h-100 float-left py-3'
 										src='${pageContext.request.contextPath}/Public/icons/computerSignGray.svg'>
@@ -142,11 +142,59 @@
 							</div>
 						</div>
 						<div class='sortContDiv_ListHolder row'>
-							<div class='abas-list-holder sort-list-holder  col-6 px-0'>
-								<div class='dnd-frame dndf1 abas-list  row'></div>
+							<div class='abas-list-holder sort-list-holder  col-8 px-0'>
+								<div class='dnd-frame dndf1 abas-list h-100 m-0 row'>
+
+
+<!-- 									<div class="dnd-container col-12 px-0" value="3" -->
+<!-- 										style="max-height: 80px;"> -->
+<!-- 										<div class="container-fluid"> -->
+<!-- 											<div class="row"> -->
+<!-- 												<div class='col-11 px-0'> -->
+<!-- 													<div class='container-fluid'> -->
+<!-- 														<div class='row'> -->
+<!-- 															<div class="col-2 px-0 pl-2 py-2 dnd-input-div"> -->
+<!-- 																<p>Worksheet No.</p> -->
+<!-- 																<textarea disabled class="dnd-input dnd-in1">118392001</textarea> -->
+<!-- 															</div> -->
+<!-- 															<div class="col-2 px-0 py-2 dnd-input-div"> -->
+<!-- 																<p>Article</p> -->
+<!-- 																<textarea disabled class="dnd-input dnd-in1">10000044323RB</textarea> -->
+<!-- 															</div> -->
+<!-- 															<div class="col-2 px-0 py-2 dnd-input-div"> -->
+<!-- 																<p>Search word</p> -->
+<!-- 																<textarea disabled class="dnd-input dnd-in1">PWR1000004432</textarea> -->
+<!-- 															</div> -->
+<!-- 															<div class="col-2 px-0 py-2 dnd-input-div"> -->
+<!-- 																<p>Place of use</p> -->
+<!-- 																<textarea disabled class="dnd-input dnd-in1">ROBOTBA</textarea> -->
+<!-- 															</div> -->
+<!-- 															<div class="col-2 px-0 py-2 dnd-input-div"> -->
+<!-- 																<p>Name</p> -->
+<!-- 																<textarea wrap="soft" class="dnd-input dnd-in1">Sondergeh.-1 KUKA 590-70069</textarea> -->
+<!-- 															</div> -->
+<!-- 															<div class="col-2 px-0 py-2 dnd-input-div"> -->
+<!-- 																<p>Name 2</p> -->
+<!-- 																<textarea disabled class="dnd-input dnd-in1"></textarea> -->
+<!-- 															</div> -->
+<!-- 														</div> -->
+<!-- 													</div> -->
+<!-- 												</div> -->
+<!-- 												<div class='col-1 px-0'> -->
+<!-- 													<div class="w-100 h-100 dnd-input-div px-0"> -->
+<!-- 														<input class="h-100 w-100 task-panel-button" value="" -->
+<!-- 															type="button"> -->
+<!-- 													</div> -->
+<!-- 												</div> -->
+<!-- 											</div> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+
+
+								</div>
 							</div>
-							<div class='ws-list-holder sort-list-holder col-6 px-0'>
-								<div class='dnd-frame  dndf2'></div>
+							<div class='ws-list-holder sort-list-holder col-4 px-0'>
+								<div class='dnd-frame h-100 m-0 dndf2'></div>
 							</div>
 						</div>
 					</div>

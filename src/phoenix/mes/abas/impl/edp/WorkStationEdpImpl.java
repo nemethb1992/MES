@@ -6,7 +6,9 @@
 
 package phoenix.mes.abas.impl.edp;
 
+import de.abas.ceks.jedp.CantChangeFieldValException;
 import de.abas.ceks.jedp.EDPConstants;
+import de.abas.ceks.jedp.EDPEditFieldList;
 import de.abas.ceks.jedp.EDPEditor;
 import de.abas.ceks.jedp.EDPQuery;
 import de.abas.ceks.jedp.EDPRuntimeException;
@@ -16,26 +18,13 @@ import de.abas.ceks.jedp.StandardEDPSelectionCriteria;
 import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.common.type.Id;
 import de.abas.erp.common.type.IdImpl;
-import de.abas.erp.common.type.enums.EnumFilingModeExtended;
-import de.abas.erp.common.type.enums.EnumMaterialProvidedTransition;
-import de.abas.erp.common.type.enums.EnumProductionListElementType;
 import de.abas.erp.common.type.enums.EnumTypeCommands;
-import de.abas.erp.common.type.enums.EnumWorkOrderType;
 import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESWSLIPS;
 import de.abas.erp.db.schema.capacity.WorkCenter;
-import de.abas.erp.db.schema.materialsallocation.MaterialsAllocation;
-import de.abas.erp.db.schema.purchasing.Reservations;
-import de.abas.erp.db.schema.workorder.WorkOrders;
-import de.abas.erp.db.selection.Conditions;
-import de.abas.erp.db.selection.Order;
-import de.abas.erp.db.selection.SelectionBuilder;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.Task;
@@ -48,30 +37,30 @@ import phoenix.mes.abas.impl.WorkStationImpl;
 public class WorkStationEdpImpl extends WorkStationImpl {
 
 	/**
-	 * Segédosztály a gyártási feladat részleteinek lekérdezéséhez.
+	 * Segédosztály a munkaállomáshoz kapcsolódó gyártási feladatok lekérdezéséhez.
 	 * @author szizo
 	 */
-	protected static final class WorkSlipQuery extends EdpQueryExecutor {
+	protected static final class WorkSlipQuery extends InfoSystemTableConverter<Task> {
 
 		/**
-		 * A gyártási feladat részleteinek lekérdezéséhez szükséges mezőnevek.
-		 * @author szizo
+		 * A szűrőmezők nevei a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt gyártási feladatok lekérdezéséhez.
 		 */
-		public static final class Field {
+		protected static final String[] unassignedTasksFilterCriteria = {InfosysOw1MESWSLIPS.META.ymgr.getName(), InfosysOw1MESWSLIPS.META.ystermig.getName(), InfosysOw1MESWSLIPS.META.start.getName()};
 
-			public static final String ID = WorkOrders.META.id.getName();
+		/**
+		 * A szűrőmezők nevei a munkaállomáshoz hozzárendelt, de felfüggesztett gyártási feladatok lekérdezéséhez.
+		 */
+		protected static final String[] suspendedTasksFilterCriteria = {InfosysOw1MESWSLIPS.META.ymgr.getName(), InfosysOw1MESWSLIPS.META.ymnum.getName(), InfosysOw1MESWSLIPS.META.ymegszak.getName(), InfosysOw1MESWSLIPS.META.start.getName()};
 
-			public static final String WORK_ORDER_SUGGESTION = WorkOrders.META.wOrderInWSlips.join(WorkOrders.META.lastReservation).getName();
+		/**
+		 * A szűrőmezők nevei a munkaállomáshoz hozzárendelt és végrehajtható gyártási feladatok lekérdezéséhez.
+		 */
+		protected static final String[] executableTasksFilterCriteria = {InfosysOw1MESWSLIPS.META.ymgr.getName(), InfosysOw1MESWSLIPS.META.ymnum.getName(), InfosysOw1MESWSLIPS.META.start.getName()};
 
-			public static final String OPERATION_RESERVATION = WorkOrders.META.lastReservation.getName();
-
-			/**
-			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
-			 */
-			private Field() {
-			}
-
-		}
+		/**
+		 * A szűrőmezők nevei a munkaállomás következő végrehajtható gyártási feladatának lekérdezéséhez.
+		 */
+		protected static final String[] nextExecutableTaskFilterCriteria = {InfosysOw1MESWSLIPS.META.ymgr.getName(), InfosysOw1MESWSLIPS.META.ymnum.getName(), InfosysOw1MESWSLIPS.META.ycsakelso.getName(), InfosysOw1MESWSLIPS.META.start.getName()};
 
 		/**
 		 * Egyke objektum.
@@ -82,258 +71,72 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 		 * Konstruktor.
 		 */
 		private WorkSlipQuery() {
-			super(Field.class);
+			super("MESWSLIPS", new String[] {InfosysOw1MESWSLIPS.Row.META.ytas.getName()});
 		}
 
-	}
-
-	protected static final class ReservationQuery extends EdpQueryExecutor {
-
-		public static final class Field {
-
-			public static final String ID = Reservations.META.id.getName();
-
-			public static final String OUTSTANDING_QUANTITY = Reservations.META.outstDelQty.getName();
-
-			public static final String PREVIOUS_RESERVATION_ID = Reservations.META.prevResSameLev.getName();
-
-			public static final String SCHEDULED = Reservations.META.scheduled.getName();
-
-			public static final String ELEMENT_TYPE = Reservations.META.elemType.getName();
-
-			public static final String WORK_SLIP_ID = Reservations.META.workSlip.getName();
-
-			public static final String MATERIAL_TRANSITION = Reservations.META.provMatTransition.getName();
-
-			public static final String ORIGINAL_QUANTITY = Reservations.META.unitQty.getName();
-
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.edp.InfoSystemTableConverter#createRowObject(de.abas.ceks.jedp.EDPEditFieldList)
+		 */
+		@Override
+		protected TaskEdpImpl createRowObject(EDPEditFieldList rowData) {
+			return new TaskEdpImpl(new IdImpl(rowData.getField(1).getValue()));
 		}
 
 		/**
-		 * Egyke objektum.
-		 */
-		public static final ReservationQuery EXECUTOR = new ReservationQuery();
-
-		/**
-		 * Konstruktor.
-		 */
-		private ReservationQuery() {
-			super(Field.class);
-		}
-
-	}
-
-	/**
-	 * Segédosztály a munkaállomáshoz kapcsolódó feladatok lekérdezéséhez.
-	 * @author szizo
-	 */
-	protected class TaskManager0 {
-
-		/**
-		 * Az EDP-munkamenet.
-		 */
-		protected final EDPSession edpSession;
-
-		/**
-		 * Konstruktor.
+		 * @param workCenterId Az Abas-beli gépcsoport azonosítója.
+		 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa (AbasDate.INFINITY, ha nincs szükség időkorlátra).
 		 * @param edpSession Az EDP-munkamenet.
+		 * @return A vizsgált kezdődátum-intervallumba eső, a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt gyártási feladatok listája.
 		 */
-		protected TaskManager0(EDPSession edpSession) {
-			this.edpSession = edpSession;
+		public List<Task> getUnassignedTasks(String workCenterId, AbasDate startDateUntil, EDPSession edpSession) {
+			try {
+				return getRows(new EDPEditFieldList(unassignedTasksFilterCriteria, new String[] {workCenterId, startDateUntil.toString(), " "}), edpSession);
+			} catch (CantChangeFieldValException e) {
+				throw new EDPRuntimeException(e);
+			}
 		}
 
 		/**
-		 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa.
-		 * @return A vizsgált kezdődátum-intervallumba eső, a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt feladatok listája.
-		 */
-		public List<Task> getUnassignedTasks(AbasDate startDateUntil) {
-			final SelectionBuilder<WorkOrders> selectionCriteria = createWorkSlipSelectionBuilder(0, false);
-			selectionCriteria.add(Conditions.le(WorkOrders.META.startDateDay, startDateUntil));
-			return createTaskList(selectionCriteria);
-		}
-
-		/**
-		 * Közös szűrőfeltételek összeállítása munkalapok lekérdezéséhez.
+		 * @param workCenterId Az Abas-beli gépcsoport azonosítója.
 		 * @param workStationNumber A munkaállomás sorszáma.
-		 * @param suspendedTasks A felfüggesztett munkalapokat kell kilistázni?
-		 * @return A szűrőfeltételek.
+		 * @param edpSession Az EDP-munkamenet.
+		 * @return A munkaállomáshoz hozzárendelt, de felfüggesztett gyártási feladatok listája.
 		 */
-		protected SelectionBuilder<WorkOrders> createWorkSlipSelectionBuilder(int workStationNumber, boolean suspendedTasks) {
-			final SelectionBuilder<WorkOrders> selectionCriteria = SelectionBuilder.create(WorkOrders.class);
-			selectionCriteria.setFilingMode(EnumFilingModeExtended.Active);
-			selectionCriteria.addOrder(Order.asc(WorkOrders.META.startDateDay));
-			selectionCriteria.add(Conditions.eq(WorkOrders.META.type, EnumWorkOrderType.WorkSlips));
-			selectionCriteria.add(Conditions.eq(WorkOrders.META.workCenter.getName(), workCenterId));
-			selectionCriteria.add(Conditions.eq(WorkOrders.META.ires1, workStationNumber));
-			// VORORT
-			selectionCriteria.add(Conditions.eq(WorkOrders.META.warehGrp.getName(), "9"));
-			selectionCriteria.add(Conditions.eq(WorkOrders.META.bres1, suspendedTasks));
-			selectionCriteria.add(Conditions.gt(WorkOrders.META.unitQty, BigDecimal.ZERO));
-			return selectionCriteria;
-		}
-
-		/**
-		 * A munkalap-szűrés végrehajtása.
-		 * @param selectionCriteria Szűrőfeltételek a munkalapok lekérdezéséhez.
-		 * @return A szűrésnek megfelelő feladatok listája.
-		 */
-		protected List<Task> createTaskList(SelectionBuilder<WorkOrders> selectionCriteria) {
-			final List<Task> taskList = new ArrayList<>();
-			final EDPQuery edpQuery = edpSession.createQuery();
+		public List<Task> getSuspendedTasks(String workCenterId, int workStationNumber, EDPSession edpSession) {
 			try {
-				edpQuery.enableQueryMetaData(false);
-				edpQuery.startQuery(new StandardEDPSelection(WorkOrders.META.tableDesc().toString(), new StandardEDPSelectionCriteria(selectionCriteria.build().getCriteria())), WorkSlipQuery.EXECUTOR.getFieldNames());
-				while (edpQuery.getNextRecord()) {
-					if (isExecutableOperation(edpQuery.getField(WorkSlipQuery.Field.OPERATION_RESERVATION), edpQuery.getField(WorkSlipQuery.Field.WORK_ORDER_SUGGESTION))) {
-						taskList.add(new TaskEdpImpl(new IdImpl(edpQuery.getField(WorkSlipQuery.Field.ID))));
-					}
-				}
-			} catch (Exception e) {
+				return getRows(new EDPEditFieldList(suspendedTasksFilterCriteria, new String[] {workCenterId, Integer.toString(workStationNumber), "1", " "}), edpSession);
+			} catch (CantChangeFieldValException e) {
 				throw new EDPRuntimeException(e);
 			}
-			return taskList;
 		}
 
-		protected boolean isExecutableOperation(String operationReservationId, String workOrderSuggestionId) {
-			final Map<String, Map<String, String>> reservations = getReservations(workOrderSuggestionId);
-			Map<String, String> reservation = reservations.get(operationReservationId);
-			if (isCompletedReservation(reservation)) {
-				return false;
-			}
-			while (null != (reservation = reservations.get(reservation.get(ReservationQuery.Field.PREVIOUS_RESERVATION_ID)))) {
-				if ("0".equals(reservation.get(ReservationQuery.Field.SCHEDULED))) {
-					continue;
-				}
-				switch (EnumProductionListElementType.fromInternal(reservation.get(ReservationQuery.Field.ELEMENT_TYPE))) {
-					case Product:
-						if (isOpenMaterialReservation(reservation)) {
-							return false;
-						}
-						break;
-					case Operation:
-						if (!Id.NULLREF.toString().equals(reservation.get(ReservationQuery.Field.WORK_SLIP_ID))) {
-							return (EnumMaterialProvidedTransition.ParallelBeginning == EnumMaterialProvidedTransition.fromInternal(ReservationQuery.Field.MATERIAL_TRANSITION)
-									? isPartiallyCompletedReservation(reservation)
-									: isCompletedReservation(reservation));
-						}
-						break;
-					default:
-				}
-			}
-			return true;
-		}
-
-		protected Map<String, Map<String, String>> getReservations(String workOrderSuggestionId) {
-			final Map<String, Map<String, String>> reservations = new HashMap<>();
-			final StandardEDPSelectionCriteria selectionCriteria = new StandardEDPSelectionCriteria();
-			selectionCriteria.setAliveFlag(EDPConstants.ALIVEFLAG_ALIVE);
-			selectionCriteria.set(Reservations.META.reservingProcess.getName() + "==" + workOrderSuggestionId);
-			final EDPQuery edpQuery = edpSession.createQuery();
+		/**
+		 * @param workCenterId Az Abas-beli gépcsoport azonosítója.
+		 * @param workStationNumber A munkaállomás sorszáma.
+		 * @param edpSession Az EDP-munkamenet.
+		 * @return A munkaállomáshoz hozzárendelt és végrehajtható gyártási feladatok listája.
+		 */
+		public List<Task> getExecutableTasks(String workCenterId, int workStationNumber, EDPSession edpSession) {
 			try {
-				edpQuery.enableQueryMetaData(false);
-				final String[] fieldNames = ReservationQuery.EXECUTOR.getFieldNames();
-				edpQuery.startQuery(new StandardEDPSelection(Reservations.META.tableDesc().toString(), selectionCriteria), fieldNames);
-				final int hashMapCapacity = (int)Math.ceil(fieldNames.length / 0.75);
-				while (edpQuery.getNextRecord()) {
-					final Map<String, String> reservationData = new HashMap<>(hashMapCapacity);
-					for (String fieldName : fieldNames) {
-						reservationData.put(fieldName, edpQuery.getField(fieldName));
-					}
-					reservations.put(edpQuery.getField(ReservationQuery.Field.ID), reservationData);
-				}
-			} catch (Exception e) {
+				return getRows(new EDPEditFieldList(executableTasksFilterCriteria, new String[] {workCenterId, Integer.toString(workStationNumber), " "}), edpSession);
+			} catch (CantChangeFieldValException e) {
 				throw new EDPRuntimeException(e);
 			}
-			return reservations;
 		}
 
 		/**
-		 * @param reservation A vizsgálandó foglalás.
-		 * @return A foglalás lezárt, azaz a nyitott mennyisége nulla vagy negatív?
+		 * @param workCenterId Az Abas-beli gépcsoport azonosítója.
+		 * @param workStationNumber A munkaállomás sorszáma.
+		 * @param edpSession Az EDP-munkamenet.
+		 * @return A munkaállomás következő végrehajtható gyártási feladata (null, ha a munkaállomás feladatlistája üres).
 		 */
-		public boolean isCompletedReservation(Map<String, String> reservation) {
-			return (0 >= new BigDecimal(reservation.get(ReservationQuery.Field.OUTSTANDING_QUANTITY)).signum());
-		}
-
-		/**
-		 * @param materialReservation A vizsgálandó anyagfoglalás.
-		 * @return Az anyagfoglalás nyitott, azaz (legalább részben) nem készletfedezetű?
-		 */
-		public boolean isOpenMaterialReservation(Map<String, String> materialReservation) {
-			if (isCompletedReservation(materialReservation)) {
-				return false;
-			}
-			final SelectionBuilder<MaterialsAllocation> selectionCriteria = SelectionBuilder.create(MaterialsAllocation.class);
-			selectionCriteria.setFilingMode(EnumFilingModeExtended.Both);
-			selectionCriteria.add(Conditions.eq(MaterialsAllocation.META.res.getName(), materialReservation.get(ReservationQuery.Field.ID)));
-			selectionCriteria.add(Conditions.eq(MaterialsAllocation.META.scheduled, true));
-			selectionCriteria.add(Conditions.eq(MaterialsAllocation.META.active, true));
-			final EDPQuery edpQuery = edpSession.createQuery();
+		public Task getNextExecutableTask(String workCenterId, int workStationNumber, EDPSession edpSession) {
 			try {
-				edpQuery.enableQueryMetaData(false);
-				edpQuery.startQuery(new StandardEDPSelection(MaterialsAllocation.META.tableDesc().toString(), new StandardEDPSelectionCriteria(selectionCriteria.build().getCriteria())), MaterialsAllocation.META.procure.getName());
-				if (edpQuery.getNextRecord()) {
-					if (!Id.NULLREF.toString().equals(edpQuery.getField(1))) {
-						edpQuery.breakQuery();
-						return true;
-					}
-				}
-			} catch (Exception e) {
+				final List<Task> taskList = getRows(new EDPEditFieldList(nextExecutableTaskFilterCriteria, new String[] {workCenterId, Integer.toString(workStationNumber), "1", " "}), edpSession);
+				return (taskList.isEmpty() ? null : taskList.get(0));
+			} catch (CantChangeFieldValException e) {
 				throw new EDPRuntimeException(e);
 			}
-			return false;
-		}
-
-		/**
-		 * @param reservation A vizsgálandó foglalás.
-		 * @return A foglalás legalább részben lezárt, azaz a nyitott mennyisége kevesebb, mint az eredeti mennyisége?
-		 */
-		public boolean isPartiallyCompletedReservation(Map<String, String> reservation) {
-			return (1 == (new BigDecimal(reservation.get(ReservationQuery.Field.ORIGINAL_QUANTITY))).compareTo(new BigDecimal(reservation.get(ReservationQuery.Field.OUTSTANDING_QUANTITY))));
-		}
-
-		/**
-		 * @return A munkaállomáshoz hozzárendelt, de felfüggesztett feladatok listája.
-		 */
-		public List<Task> getSuspendedTasks() {
-			return createTaskList(createWorkSlipSelectionBuilder(number, true));
-		}
-
-		/**
-		 * @return A munkaállomáshoz hozzárendelt és végrehajtható feladatok listája.
-		 */
-		public List<Task> getExecutableTasks() {
-			return createTaskList(createExecutableWorkSlipSelectionBuilder());
-		}
-
-		/**
-		 * Szűrőfeltételek összeállítása a munkaállomáshoz hozzárendelt és végrehajtható munkalapok lekérdezéséhez.
-		 * @return A szűrőfeltételek.
-		 */
-		protected SelectionBuilder<WorkOrders> createExecutableWorkSlipSelectionBuilder() {
-			final SelectionBuilder<WorkOrders> selectionCriteria = createWorkSlipSelectionBuilder(number, false);
-			selectionCriteria.addOrder(Order.asc(WorkOrders.META.ires2));
-			return selectionCriteria;
-		}
-
-		/**
-		 * @return A munkaállomás következő végrehajtható feladata (null, ha a munkaállomás feladatlistája üres).
-		 */
-		public Task getNextExecutableTask() {
-			final EDPQuery edpQuery = edpSession.createQuery();
-			try {
-				edpQuery.enableQueryMetaData(false);
-				edpQuery.startQuery(new StandardEDPSelection(WorkOrders.META.tableDesc().toString(), new StandardEDPSelectionCriteria(createExecutableWorkSlipSelectionBuilder().build().getCriteria())), WorkSlipQuery.EXECUTOR.getFieldNames());
-				while (edpQuery.getNextRecord()) {
-					if (isExecutableOperation(edpQuery.getField(WorkSlipQuery.Field.OPERATION_RESERVATION), edpQuery.getField(WorkSlipQuery.Field.WORK_ORDER_SUGGESTION))) {
-						edpQuery.breakQuery();
-						return (new TaskEdpImpl(new IdImpl(edpQuery.getField(WorkSlipQuery.Field.ID))));
-					}
-				}
-			} catch (Exception e) {
-				throw new EDPRuntimeException(e);
-			}
-			return null;
 		}
 
 	}
@@ -505,7 +308,8 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 	 */
 	@Override
 	public List<Task> getUnassignedTasks(AbasDate startDateUntil, AbasConnection<?> abasConnection) {
-		return (new TaskManager(EdpConnection.getEdpSession(abasConnection))).getUnassignedTasks(startDateUntil);
+		return WorkSlipQuery.EXECUTOR.getUnassignedTasks(workCenterId, startDateUntil, EdpConnection.getEdpSession(abasConnection));
+		//return (new TaskManager(EdpConnection.getEdpSession(abasConnection))).getUnassignedTasks(startDateUntil);
 	}
 
 	/* (non-Javadoc)
@@ -513,7 +317,8 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 	 */
 	@Override
 	public List<Task> getSuspendedTasks(AbasConnection<?> abasConnection) {
-		return (new TaskManager(EdpConnection.getEdpSession(abasConnection))).getSuspendedTasks();
+		return WorkSlipQuery.EXECUTOR.getSuspendedTasks(workCenterId, number, EdpConnection.getEdpSession(abasConnection));
+		//return (new TaskManager(EdpConnection.getEdpSession(abasConnection))).getSuspendedTasks();
 	}
 
 	/* (non-Javadoc)
@@ -521,7 +326,8 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 	 */
 	@Override
 	public List<Task> getExecutableTasks(AbasConnection<?> abasConnection) {
-		return (new TaskManager(EdpConnection.getEdpSession(abasConnection))).getExecutableTasks();
+		return WorkSlipQuery.EXECUTOR.getExecutableTasks(workCenterId, number, EdpConnection.getEdpSession(abasConnection));
+		//return (new TaskManager(EdpConnection.getEdpSession(abasConnection))).getExecutableTasks();
 	}
 
 	/* (non-Javadoc)
@@ -529,7 +335,8 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 	 */
 	@Override
 	public Task getNextExecutableTask(AbasConnection<?> abasConnection) {
-		return (new TaskManager(EdpConnection.getEdpSession(abasConnection))).getNextExecutableTask();
+		return WorkSlipQuery.EXECUTOR.getNextExecutableTask(workCenterId, number, EdpConnection.getEdpSession(abasConnection));
+		//return (new TaskManager(EdpConnection.getEdpSession(abasConnection))).getNextExecutableTask();
 	}
 
 	/* (non-Javadoc)

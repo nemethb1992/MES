@@ -128,7 +128,7 @@ function BuildUp()
     url:  '/'+path+'/BuildUp',
     success: function (respond) {
     	  $( ".tmts_stationContainer" ).empty();
-    	  $( ".dndf1" ).empty();
+//    	  $( ".dndf1" ).empty();
     	  $( ".dndf2" ).empty();
     	  $(".station_label").val("");
     	  $( ".tmts_stationContainer" ).append(respond[0]);
@@ -196,8 +196,8 @@ function ButtonScriptElements()
 	});
 	
 	$('.refresh_btn').click(function(){
-  	  $( ".dndf1" ).empty();
-  	  $( ".dndf2" ).empty();
+  	  $(".dndf1").empty();
+  	  $(".dndf2").empty();
 		setToday(".datepicker_own");
 		SessionStoreStation();
 		BuildUp();

@@ -85,7 +85,7 @@
 }
 .tmts_stationBtnDivCont {
 	height: 44px;
-	background: #efefef;
+	background: white;
 	border-bottom: 1px solid #e0e6e8;
 	background-image: url(Public/icons/computerSignGray.svg);
 	background-size: 25px;
@@ -97,11 +97,7 @@
 }
 .tmts_stationBtnDivCont:hover {
 	/*     border: 1px solid #dc3545; */
-	background-color: white;
-		border-left: -1px 1px 6px #a1a1a1;
-    box-shadow: -1px 1px 6px #a1a1a1;
-		-moz-box-shadow: -1px 1px 6px #a1a1a1;
-	    -webkit-box-shadow: -1px 1px 6px #a1a1a1;
+	background-color: #efefef;
 	z-index: 1;
 }
 
@@ -298,7 +294,7 @@ border-bottom: 1px solid #e0e6e8;
 	padding: 17px 0 0 0;
 	text-align: left;
 	background: none;
-	font-size: 20px;
+	font-size: 18px;
 }
 
 /* .icon-form { */
@@ -379,7 +375,7 @@ border-bottom: 1px solid #e0e6e8;
 
 .dnd-frame {
     margin: 5px 0px 0px 0px;
-    height: 99%;
+    max-height: 99%;
     overflow-y: scroll;
 }
 
@@ -400,17 +396,21 @@ border-bottom: 1px solid #e0e6e8;
 	color: black;
 	font-size: medium;
 	background: none;
-	width: 100%;
 	word-wrap: break-word;
 }
 
 .dnd-input-div input {
-	font-size: 15px;
-	height: 20px;
+	font-size: 12px;
+	width: 100%;
+}
+.dnd-input-div textarea {
+	font-size: 14px;
+	width: 100%;
+	 resize: none;
 }
 
 .dnd-input-div p {
-	font-size: 12px;
+	font-size: 11px;
 	margin-bottom: 0px;
 	color: #a7a7a7;
 }
@@ -419,7 +419,7 @@ border-bottom: 1px solid #e0e6e8;
 	cursor: pointer;
 	background: white;
 	background-image: url(Public/icons/right-arrow.svg);
-	background-size: 50%;
+	background-size: 25%;
 	background-repeat: no-repeat;
 	background-position: center;
 	transition: 0.5s;
@@ -428,7 +428,7 @@ border-bottom: 1px solid #e0e6e8;
 .task-panel-button:hover {
 	background: white;
 	background-image: url(Public/icons/right-arrow.svg);
-	background-size: 55%;
+	background-size: 26%;
 	background-repeat: no-repeat;
 	background-position: center;
 	box-shadow: 0px 0px 10px #9e9a9a;
