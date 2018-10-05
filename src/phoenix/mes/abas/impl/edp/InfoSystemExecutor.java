@@ -37,13 +37,23 @@ public class InfoSystemExecutor {
 	/**
 	 * Konstruktor.
 	 * @param swd Az infosystem keresőszava.
-	 * @param headerFieldNamesClass A lekérdezendő fejrészmezők neveit konstansként tartalmazó osztály (null, ha nincs lekérdezendő fejrészmező).
-	 * @param tableFieldNamesClass A lekérdezendő táblázati mezők neveit konstansként tartalmazó osztály (null, ha nincs lekérdezendő táblázati mező).
+	 * @param headerFieldNamesClass A lekérdezendő fejrészmezők neveit konstansokként tartalmazó osztály (null, ha nincs lekérdezendő fejrészmező).
+	 * @param tableFieldNamesClass A lekérdezendő táblázati mezők neveit konstansokként tartalmazó osztály (null, ha nincs lekérdezendő táblázati mező).
 	 */
 	public InfoSystemExecutor(String swd, Class<?> headerFieldNamesClass, Class<?> tableFieldNamesClass) {
+		this(swd, EdpQueryExecutor.getFieldNames(headerFieldNamesClass), EdpQueryExecutor.getFieldNames(tableFieldNamesClass));
+	}
+
+	/**
+	 * Konstruktor.
+	 * @param swd Az infosystem keresőszava.
+	 * @param headerFieldNames A lekérdezendő fejrészmezők nevei (null, ha nincs lekérdezendő fejrészmező).
+	 * @param tableFieldNames A lekérdezendő táblázati mezők nevei (null, ha nincs lekérdezendő táblázati mező).
+	 */
+	public InfoSystemExecutor(String swd, String[] headerFieldNames, String[] tableFieldNames) {
 		this.swd = swd;
-		headerFieldNames = EdpQueryExecutor.getFieldNames(headerFieldNamesClass);
-		tableFieldNames = EdpQueryExecutor.getFieldNames(tableFieldNamesClass);
+		this.headerFieldNames = headerFieldNames;
+		this.tableFieldNames = tableFieldNames;
 	}
 
 	/**

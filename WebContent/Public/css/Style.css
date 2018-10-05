@@ -35,7 +35,7 @@ font-size: 14px;
 	cursor: pointer;
 	background: transparent;
 	background-image: url(Public/icons/logoutSimple.svg);
-	background-size: 35px;
+	background-size: 30px;
 	background-repeat: no-repeat;
 	background-position: center;
 	transition: 0.2s;
@@ -117,7 +117,7 @@ html {
 	height: 70px !important;
     background: #dc3545;
     text-align: center;
-	box-shadow: 0 3px 5px #404040;
+    box-shadow: 0 2px 3px #404040;
     color: white;
     z-index: 10;
 }
@@ -139,9 +139,9 @@ html {
 }
 
 .light-shadow {
-	box-shadow: 0px 2px 15px #bbbbbb;
-	-moz-box-shadow: 0px 2px 15px #bbbbbb;
-	-webkit-box-shadow: 0px 2px 15px #bbbbbb;
+	box-shadow: 0px 2px 15px #a7a7a7;
+	-moz-box-shadow: 0px 2px 15px #a7a7a7;
+	-webkit-box-shadow: 0px 2px 15px #a7a7a7;
 }
 
 .very-light-shadow {
@@ -217,4 +217,9 @@ html {
 .navigation-row
 {
 	height: 70px;
+}
+
+.logged-name {
+    font-size: 21px;
+    text-align: left;
 }

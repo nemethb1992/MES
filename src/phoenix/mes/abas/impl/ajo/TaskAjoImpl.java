@@ -29,12 +29,16 @@ import de.abas.erp.db.selection.SelectionBuilder;
 import de.abas.erp.db.type.AbasUnit;
 import de.abas.erp.db.util.QueryUtil;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import phoenix.mes.OperatingLanguage;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.impl.TaskImpl;
+import phoenix.mes.abas.impl.UnitNamesRepository;
 import phoenix.mes.abas.impl.TaskDetails;
 
 /**
@@ -48,6 +52,57 @@ public class TaskAjoImpl extends TaskImpl<DbContext> {
 	 * @author szizo
 	 */
 	protected class DetailsAjoImpl extends TaskDetails<DbContext> {
+
+		/**
+		 * Segédosztály a mértékegységek neveinek kíírásához.
+		 * @author szizo
+		 */
+		protected class UnitNamesRepository {
+
+			/**
+			 * A gyűjtemény nyelve.
+			 */
+			protected final OperatingLanguage language;
+
+			/**
+			 * Mértékegység -> név összerendelés.
+			 */
+			protected final Map<AbasUnit, String> unitNames = new HashMap<>(5);
+
+			/**
+			 * Konstruktor.
+			 * @param language A gyűjtemény nyelve.
+			 */
+			protected UnitNamesRepository(OperatingLanguage language) {
+				this.language = language;
+			}
+
+			/**
+			 * @param unit Az Abas-mértékegység.
+			 * @return Az Abas-mértékegység neve.
+			 */
+			public String getUnitName(AbasUnit unit) {
+				String unitName = unitNames.get(unit);
+				if (null == unitName) {
+					unitName = DetailsAjoImpl.this.getUnitName(unit);
+					unitNames.put(unit, unitName);
+				}
+				return unitName;
+			}
+
+			/**
+			 * @return A gyűjtemény nyelve.
+			 */
+			public OperatingLanguage getLanguage() {
+				return language;
+			}
+
+		}
+
+		/**
+		 * Segédobjektum a mértékegységek neveinek kíírásához.
+		 */
+		protected UnitNamesRepository unitNamesRepository;
 
 		/**
 		 * A termék.
@@ -72,10 +127,10 @@ public class TaskAjoImpl extends TaskImpl<DbContext> {
 			super(abasConnection, abasConnectionType);
 		}
 
-		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.impl.TaskDetails#getUnitName(de.abas.erp.db.type.AbasUnit)
+		/**
+		 * @param unit Az Abas-mértékegység.
+		 * @return Az Abas-mértékegység neve az aktuálisan beállított kezelőnyelven.
 		 */
-		@Override
 		protected String getUnitName(AbasUnit unit) {
 			final SelectionBuilder<TableOfUnits.Row> criteria = SelectionBuilder.create(TableOfUnits.Row.class);
 			criteria.setFilingMode(EnumFilingModeExtended.Active);

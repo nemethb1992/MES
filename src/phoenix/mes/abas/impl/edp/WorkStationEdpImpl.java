@@ -378,7 +378,7 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 				infoSystemQuery.beginEditCmd(Integer.toString(EnumTypeCommands.Infosystem.getCode()), "MESWSLIPS");
 				infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ymgr.getName(), workCenterId);
 				infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ymnum.getName(), Integer.toString(workStationNumber));
-				infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ystop.getName(), Boolean.toString(suspendedTasks));
+				infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ymegszak.getName(), Boolean.toString(suspendedTasks));
 				if (null != startDateUntil) {
 					infoSystemQuery.setFieldVal(InfosysOw1MESWSLIPS.META.ystermig.getName(), startDateUntil.toString());
 				}

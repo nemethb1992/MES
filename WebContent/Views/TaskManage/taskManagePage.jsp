@@ -14,13 +14,14 @@
 							src="${pageContext.request.contextPath}/Public/icons/pm_logo_mini_white.svg"
 							class='d-block m-3 img-fluid LogoMiniPM' />
 					</div>
-					<div class='col-1 offset-9'>
+
+					<div class='col-1 offset-9 px-0'>
 						<div class='TM_backBtn h-100 w-100 btnstyle selectBackBtn'>
 							<img class='h-100 w-100 p-3'
 								src='${pageContext.request.contextPath}/Public/icons/back-arrow-white.svg' />
 						</div>
 					</div>
-					<div class='col-1  pr-0'>
+					<div class='col-1  px-0'>
 						<form method='POST' class='h-100'
 							action='${pageContext.request.contextPath}/Home'>
 							<input class='btn_logout' type='submit' value='' />
@@ -77,22 +78,31 @@
 				class='select-panel TM_content_layer row'>
 				<%-- 						<%@include --%>
 				<%-- 							file="/Views/TaskManage/PageElements/stationTaskSort.jsp"%> --%>
-				<div class=' col-2 pl-0 pr-3'>
-					<div class='cont_header'>
-						<div class='input-icon-holderDiv'>
-							<div class='refresh_btn'></div>
+				<div class=' col-2 pl-0'>
+					<div class='container-fluid'>
+						<div class='row light-shadow'>
+							<div class='cont_header col-12 px-0'>
+								<div class='input-icon-holderDiv float-right h-100'>
+									<div class='refresh_btn h-100'>
+										<img class='h-100 float-left p-3'
+											src='${pageContext.request.contextPath}/Public/icons/reloadGray.svg'>
+									</div>
+								</div>
+							</div>
+							<div class='col-12 px-0'>
+								<div class='tmts_stationContainer row px-3'></div>
+							</div>
 						</div>
 					</div>
-					<div class='tmts_stationContainer row px-3'></div>
 				</div>
-				<div class='sortContDiv col-10  px-0'>
-					<div class='cont_header'>
-						<div class='input-icon-holderDiv ts-loggedName-div'>
-							<img class='icon-form'
-								src='${pageContext.request.contextPath}/Public/icons/user-shape-white.svg'><input
-								disabled value=''>
-						</div>
-					</div>
+				<div class='sortContDiv col-10  px-0 light-shadow'>
+<!-- 					<div class='cont_header'> -->
+<!-- 						<div class='input-icon-holderDiv ts-loggedName-div'> -->
+<!-- 							<img class='icon-form' -->
+<%-- 								src='${pageContext.request.contextPath}/Public/icons/user-shape-white.svg'><input --%>
+<!-- 								disabled value=''> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
 					<div class='sortStationListCont container-fluid'>
 						<div class='sortContDiv_nav row px-0'>
 							<div class='abas-list-head sort-list-head sort-list h-100 col-6'>
@@ -101,7 +111,7 @@
 										<div class='container h-100'>
 											<div class='row h-100'>
 												<div class='col-8'>
-													<input class='datepicker_own w-100 h-100' type='date' />
+													<input class='datepicker_own w-100 h-100' type='date' style='font-size: 17px;'/>
 												</div>
 												<div class='col-2 px-0'>
 													<button class='date-button date-refresh h-100 w-100'></button>
@@ -115,17 +125,19 @@
 									<div class='input-icon-holderDiv  col px-0'></div>
 								</div>
 							</div>
-							<div class='ws-list-head sort-list-head sort-list col-6'>
-								<div class='input-icon-holderDiv stationName-holderDiv'>
-									<img class='icon-form'
-										src='${pageContext.request.contextPath}/Public/icons/computerSignGray.svg'><input
-										class='ts_wsNameInp station_label'
+							<div class='ws-list-head sort-list-head sort-list col-6 h-100'>
+								<div class='input-icon-holderDiv stationName-holderDiv  h-100'>
+									<img class='h-100 float-left py-3'
+										src='${pageContext.request.contextPath}/Public/icons/computerSignGray.svg'>
+										<input
+										class='ts_wsNameInp station_label h-100 p-3'
 										value='<%=dict.getWord(Entry.SELECT_A_WORKSTATION)%>'>
 								</div>
-								<div class='input-icon-holderDiv sum-holderDiv'>
-									<img class='icon-form'
-										src='${pageContext.request.contextPath}/Public/icons/sumSignGray.svg'><input
-										class='ts_sumTime' value='0:00:00'>
+								<div class='input-icon-holderDiv h-100 w-50 sum-holderDiv'>
+									<img class='icon-form h-100 float-right p-3'
+										src='${pageContext.request.contextPath}/Public/icons/sumSignGray.svg'>
+										<input
+										class='ts_sumTime h-100 float-right py-3' value='0:00:00'>
 								</div>
 							</div>
 						</div>

@@ -31,7 +31,7 @@ public interface Task extends Serializable {
 		String getWorkSlipNo();
 
 		/**
-		 * @return A feladat elkezdésének (tervezett) napja.
+		 * @return A gyártási feladat elkezdésének (tervezett) napja.
 		 */
 		AbasDate getStartDate();
 
@@ -171,13 +171,13 @@ public interface Task extends Serializable {
 	}
 
 	/**
-	 * @return A feladathoz tartozó munkalap azonosítója.
+	 * @return A gyártási feladathoz tartozó munkalap azonosítója.
 	 */
 	Id getWorkSlipId();
 
 	/**
 	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A feladat elkezdésének (tervezett) napja.
+	 * @return A gyártási feladat elkezdésének (tervezett) napja.
 	 */
 	AbasDate getStartDate(AbasConnection<?> abasConnection);
 

@@ -8,15 +8,12 @@ package phoenix.mes.abas.impl.edp;
 
 import de.abas.ceks.jedp.CantChangeFieldValException;
 import de.abas.ceks.jedp.CantReadFieldPropertyException;
-import de.abas.ceks.jedp.EDPConstants;
 import de.abas.ceks.jedp.EDPEditFieldList;
 import de.abas.ceks.jedp.EDPEditObject;
 import de.abas.ceks.jedp.EDPEditor;
 import de.abas.ceks.jedp.EDPQuery;
 import de.abas.ceks.jedp.EDPRuntimeException;
 import de.abas.ceks.jedp.EDPSession;
-import de.abas.ceks.jedp.StandardEDPSelection;
-import de.abas.ceks.jedp.StandardEDPSelectionCriteria;
 import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.common.type.Id;
 import de.abas.erp.common.type.enums.EnumTypeCommands;
@@ -24,7 +21,6 @@ import de.abas.erp.common.type.enums.EnumWorkOrderType;
 import de.abas.erp.db.field.StringField;
 import de.abas.erp.db.field.UnitField;
 import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESTASK;
-import de.abas.erp.db.schema.company.TableOfUnits;
 import de.abas.erp.db.schema.operation.Operation;
 import de.abas.erp.db.schema.part.Product;
 import de.abas.erp.db.schema.part.SelectablePart;
@@ -49,11 +45,40 @@ import phoenix.mes.abas.impl.TaskDetails;
  */
 public class TaskEdpImpl extends TaskImpl<EDPSession> {
 
+	protected static abstract class TaskDataQuery extends InfoSystemExecutor {
+
+		protected static EDPEditFieldList getFilterCriteria(String[] criteriaFieldNames, Id workSlipId) {
+			try {
+				return new EDPEditFieldList(criteriaFieldNames, new String[] {workSlipId.toString(), "1", " "});
+			} catch (CantChangeFieldValException e) {
+				throw new EDPRuntimeException(e);
+			}
+		}
+
+		/**
+		 * Konstruktor.
+		 * @param headerFieldNamesClass A lekérdezendő fejrészmezők neveit konstansokként tartalmazó osztály.
+		 */
+		public TaskDataQuery(Class<?> headerFieldNamesClass) {
+			super("MESTASK", headerFieldNamesClass, null);
+		}
+
+		public EDPEditObject executeQuery(Id workSlipId, EDPSession edpSession) {
+			return executeQuery(getFilterCriteria(getCriteriaFieldNames(), workSlipId), edpSession);
+		}
+
+		/**
+		 * @return A szűrőmezők nevei.
+		 */
+		protected abstract String[] getCriteriaFieldNames();
+
+	}
+
 	/**
 	 * Segédosztály a gyártási feladat alapadatainak lekérdezéséhez.
 	 * @author szizo
 	 */
-	protected static final class BasicDataQuery extends InfoSystemExecutor {
+	protected static final class BasicDataQuery extends TaskDataQuery {
 
 		/**
 		 * A lekérdezendő (fejrész)mezők nevei.
@@ -82,6 +107,11 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			public static final String SETUP_TIME_UNIT = InfosysOw1MESTASK.META.yzr.getName();
 
 			/**
+			 * A beállítási idő mértékegységének neve.
+			 */
+			public static final String SETUP_TIME_UNIT_NAME = InfosysOw1MESTASK.META.yzrbspr.getName();
+
+			/**
 			 * A beállítási idő.
 			 */
 			public static final String SETUP_TIME = InfosysOw1MESTASK.META.ytr.getName();
@@ -95,6 +125,11 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			 * A darabidő mértékegysége.
 			 */
 			public static final String UNIT_TIME_UNIT = InfosysOw1MESTASK.META.yze.getName();
+
+			/**
+			 * A darabidő mértékegységének neve.
+			 */
+			public static final String UNIT_TIME_UNIT_NAME = InfosysOw1MESTASK.META.yzebspr.getName();
 
 			/**
 			 * A darabidő.
@@ -137,16 +172,22 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			public static final String PRODUCT_DESCRIPTION2 = InfosysOw1MESTASK.META.yyname2.getName();
 
 			/**
-			 * A mennyiségi egység (raktáregység).
+			 * A mennyiségi egység (raktáregység) neve.
 			 */
-			public static final String STOCK_UNIT = InfosysOw1MESTASK.META.yle.getName();
+			public static final String STOCK_UNIT_NAME = InfosysOw1MESTASK.META.ylebspr.getName();
+
+			/**
+			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
+			 */
+			private Field() {
+			}
 
 		}
 
 		/**
 		 * A szűrőmezők nevei.
 		 */
-		protected static final String[] CRITERIA_FIELD_NAMES = {InfosysOw1MESTASK.META.yas.getName(), InfosysOw1MESTASK.META.yalap.getName(), InfosysOw1MESTASK.META.start.getName()};
+		protected static final String[] criteriaFieldNames = {InfosysOw1MESTASK.META.yas.getName(), InfosysOw1MESTASK.META.yalap.getName(), InfosysOw1MESTASK.META.start.getName()};
 
 		/**
 		 * Egyke objektum.
@@ -157,15 +198,15 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 * Konstruktor.
 		 */
 		private BasicDataQuery() {
-			super("MESTASK", Field.class, null);
+			super(Field.class);
 		}
 
-		public EDPEditObject executeQuery(Id workSlipId, EDPSession edpSession) {
-			try {
-				return executeQuery(new EDPEditFieldList(CRITERIA_FIELD_NAMES, new String[] {workSlipId.toString(), "1", " "}), edpSession);
-			} catch (CantChangeFieldValException e) {
-				throw new EDPRuntimeException(e);
-			}
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.edp.TaskEdpImpl.TaskDataQuery#getCriteriaFieldNames()
+		 */
+		@Override
+		protected String[] getCriteriaFieldNames() {
+			return criteriaFieldNames;
 		}
 
 	}
@@ -174,7 +215,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 * Segédosztály a művelet adatainak lekérdezéséhez.
 	 * @author szizo
 	 */
-	protected static final class OperationQuery extends InfoSystemExecutor {
+	protected static final class OperationQuery extends TaskDataQuery {
 
 		/**
 		 * A lekérdezendő (fejrész)mezők nevei.
@@ -202,12 +243,18 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			 */
 			public static final String ITEM_TEXT = InfosysOw1MESTASK.META.yptext.getName();
 
+			/**
+			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
+			 */
+			private Field() {
+			}
+
 		}
 
 		/**
 		 * A szűrőmezők nevei.
 		 */
-		protected static final String[] CRITERIA_FIELD_NAMES = {InfosysOw1MESTASK.META.yas.getName(), InfosysOw1MESTASK.META.ymuv.getName(), InfosysOw1MESTASK.META.start.getName()};
+		protected static final String[] criteriaFieldNames = {InfosysOw1MESTASK.META.yas.getName(), InfosysOw1MESTASK.META.ymuv.getName(), InfosysOw1MESTASK.META.start.getName()};
 
 		/**
 		 * Egyke objektum.
@@ -218,15 +265,15 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 * Konstruktor.
 		 */
 		private OperationQuery() {
-			super("MESTASK", Field.class, null);
+			super(Field.class);
 		}
 
-		public EDPEditObject executeQuery(Id workSlipId, EDPSession edpSession) {
-			try {
-				return executeQuery(new EDPEditFieldList(CRITERIA_FIELD_NAMES, new String[] {workSlipId.toString(), "1", " "}), edpSession);
-			} catch (CantChangeFieldValException e) {
-				throw new EDPRuntimeException(e);
-			}
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.edp.TaskEdpImpl.TaskDataQuery#getCriteriaFieldNames()
+		 */
+		@Override
+		protected String[] getCriteriaFieldNames() {
+			return criteriaFieldNames;
 		}
 
 	}
@@ -235,10 +282,10 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 * Segédosztály a gyártási feladathoz kapcsolódó darabjegyzék adatainak lekérdezéséhez.
 	 * @author szizo
 	 */
-	protected static final class BomQuery extends InfoSystemExecutor {
+	protected static final class BomQuery extends InfoSystemTableConverter<BomElement> {
 
 		/**
-		 * A lekérdezendő (fejrész)mezők nevei.
+		 * A lekérdezendő (táblázati) mezők nevei.
 		 * @author szizo
 		 */
 		public static final class Field {
@@ -269,16 +316,22 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			public static final String QUANTITY_PER_PRODUCT = InfosysOw1MESTASK.Row.META.ytmenge.getName();
 
 			/**
-			 * A beépülési mennyiség (egy késztermékre vonatkozóan).
+			 * A beépülési mennyiség egységének (raktáregység) neve.
 			 */
-			public static final String STOCK_UNIT = InfosysOw1MESTASK.Row.META.ytle.getName();
+			public static final String STOCK_UNIT_NAME = InfosysOw1MESTASK.Row.META.ytlebspr.getName();
+
+			/**
+			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
+			 */
+			private Field() {
+			}
 
 		}
 
 		/**
 		 * A szűrőmezők nevei.
 		 */
-		protected static final String[] CRITERIA_FIELD_NAMES = {InfosysOw1MESTASK.META.yas.getName(), InfosysOw1MESTASK.META.ydbj.getName(), InfosysOw1MESTASK.META.start.getName()};
+		protected static final String[] criteriaFieldNames = {InfosysOw1MESTASK.META.yas.getName(), InfosysOw1MESTASK.META.ydbj.getName(), InfosysOw1MESTASK.META.start.getName()};
 
 		/**
 		 * Egyke objektum.
@@ -289,15 +342,30 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 * Konstruktor.
 		 */
 		private BomQuery() {
-			super("MESTASK", null, Field.class);
+			super("MESTASK", Field.class);
 		}
 
-		public EDPEditObject executeQuery(Id workSlipId, EDPSession edpSession) {
-			try {
-				return executeQuery(new EDPEditFieldList(CRITERIA_FIELD_NAMES, new String[] {workSlipId.toString(), "1", " "}), edpSession);
-			} catch (CantChangeFieldValException e) {
-				throw new EDPRuntimeException(e);
-			}
+		/**
+		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
+		 * @param edpSession Az EDP-munkamenet.
+		 * @return A darabjegyzék sorainak adatait tartalmazó objektumok listája.
+		 */
+		public List<BomElement> getRows(Id workSlipId, EDPSession edpSession) {
+			final List<BomElement> rows = getRows(TaskDataQuery.getFilterCriteria(criteriaFieldNames, workSlipId), edpSession);
+			return (1 < rows.size() ? Collections.unmodifiableList(rows) : rows);
+		}
+
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.edp.InfoSystemTableConverter#createRowObject(de.abas.ceks.jedp.EDPEditFieldList)
+		 */
+		@Override
+		protected BomElementImpl createRowObject(EDPEditFieldList rowData) {
+			return new BomElementImpl(rowData.getField(Field.ID_NO).getValue(),
+					rowData.getField(Field.SWD).getValue(),
+					rowData.getField(Field.DESCRIPTION).getValue(),
+					rowData.getField(Field.DESCRIPTION2).getValue(),
+					new BigDecimal(rowData.getField(Field.QUANTITY_PER_PRODUCT).getValue()),
+					rowData.getField(Field.STOCK_UNIT_NAME).getValue());
 		}
 
 	}
@@ -580,27 +648,6 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.impl.TaskDetails#getUnitName(de.abas.erp.db.type.AbasUnit)
-		 */
-		@Override
-		protected String getUnitName(AbasUnit unit) {
-			final StandardEDPSelectionCriteria criteria = new StandardEDPSelectionCriteria();
-			criteria.setAliveFlag(EDPConstants.ALIVEFLAG_ALIVE);
-			criteria.set(TableOfUnits.Row.META.unitCode.getName() + "==" + unit);
-			final EDPQuery edpQuery = abasConnectionObject.createQuery();
-			try {
-				edpQuery.enableQueryMetaData(false);
-				edpQuery.startQuery(new StandardEDPSelection(unitsTableName, criteria), TableOfUnits.Row.META.unitOperLang.getName());
-				if (edpQuery.getNextRecord()) {
-					return edpQuery.getField(1);
-				}
-				throw new EDPRuntimeException("Ismeretlen mértékegység: " + unit);
-			} catch (Exception e) {
-				throw new EDPRuntimeException(e);
-			}
-		}
-
-		/* (non-Javadoc)
 		 * @see phoenix.mes.abas.impl.TaskDetails#loadBasicData()
 		 */
 		@Override
@@ -619,10 +666,8 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			usage = edpQuery.getField(WorkSlipQuery.Field.USAGE);
 			final AbasUnit setupTimeAbasUnit = AbasUnit.UNITS.valueOf(edpQuery.getField(WorkSlipQuery.Field.SETUP_TIME_UNIT));
 			setupTime = calculateGrossTime(new BigDecimal(edpQuery.getField(WorkSlipQuery.Field.SETUP_TIME)), setupTimeAbasUnit, new BigDecimal(edpQuery.getField(WorkSlipQuery.Field.SETUP_TIME_SEC)));
-			setupTimeUnit = unitNamesRepository.getUnitName(setupTimeAbasUnit);
 			final AbasUnit unitTimeAbasUnit = AbasUnit.UNITS.valueOf(edpQuery.getField(WorkSlipQuery.Field.UNIT_TIME_UNIT));
 			unitTime = calculateGrossTime(new BigDecimal(edpQuery.getField(WorkSlipQuery.Field.UNIT_TIME)), unitTimeAbasUnit, new BigDecimal(edpQuery.getField(WorkSlipQuery.Field.UNIT_TIME_SEC)));
-			unitTimeUnit = unitNamesRepository.getUnitName(unitTimeAbasUnit);
 			numberOfExecutions = new BigDecimal(edpQuery.getField(WorkSlipQuery.Field.NUMBER_OF_EXECUTIONS));
 			outstandingQuantity = new BigDecimal(edpQuery.getField(WorkSlipQuery.Field.OUTSTANDING_QUANTITY));
 		}
@@ -636,7 +681,6 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			productSwd = edpQuery.getField(ProductQuery.Field.SWD);
 			productDescription = edpQuery.getField(ProductQuery.Field.DESCRIPTION);
 			productDescription2 = edpQuery.getField(ProductQuery.Field.DESCRIPTION2);
-			stockUnit = unitNamesRepository.getUnitName(AbasUnit.UNITS.valueOf(edpQuery.getField(ProductQuery.Field.STOCK_UNIT)));
 		}
 
 		/* (non-Javadoc)
@@ -721,7 +765,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 					infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytnamebspr.getName()),
 					infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytyname2.getName()),
 					new BigDecimal(infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytmenge.getName())),
-					unitNamesRepository.getUnitName(AbasUnit.UNITS.valueOf(infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytle.getName()))));
+					infoSystemQuery.getFieldVal(rowNo, InfosysOw1MESTASK.Row.META.ytlebspr.getName()));
 		}
 
 	}
@@ -741,27 +785,6 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.impl.TaskDetails#getUnitName(de.abas.erp.db.type.AbasUnit)
-		 */
-		@Override
-		protected String getUnitName(AbasUnit unit) {
-			final StandardEDPSelectionCriteria criteria = new StandardEDPSelectionCriteria();
-			criteria.setAliveFlag(EDPConstants.ALIVEFLAG_ALIVE);
-			criteria.set(TableOfUnits.Row.META.unitCode.getName() + "==" + unit);
-			final EDPQuery edpQuery = abasConnectionObject.createQuery();
-			try {
-				edpQuery.enableQueryMetaData(false);
-				edpQuery.startQuery(new StandardEDPSelection(unitsTableName, criteria), TableOfUnits.Row.META.unitOperLang.getName());
-				if (edpQuery.getNextRecord()) {
-					return edpQuery.getField(1);
-				}
-				throw new EDPRuntimeException("Ismeretlen mértékegység: " + unit);
-			} catch (Exception e) {
-				throw new EDPRuntimeException(e);
-			}
-		}
-
-		/* (non-Javadoc)
 		 * @see phoenix.mes.abas.impl.TaskDetails#loadBasicData()
 		 */
 		@Override
@@ -774,15 +797,17 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			productDescription = result.getField(BasicDataQuery.Field.PRODUCT_DESCRIPTION).getValue();
 			productDescription2 = result.getField(BasicDataQuery.Field.PRODUCT_DESCRIPTION2).getValue();
 			usage = result.getField(BasicDataQuery.Field.USAGE).getValue();
-			final AbasUnit setupTimeAbasUnit = AbasUnit.UNITS.valueOf(result.getField(BasicDataQuery.Field.SETUP_TIME_UNIT).getValue());
-			setupTime = calculateGrossTime(new BigDecimal(result.getField(BasicDataQuery.Field.SETUP_TIME).getValue()), setupTimeAbasUnit, new BigDecimal(result.getField(BasicDataQuery.Field.SETUP_TIME_SEC).getValue()));
-			setupTimeUnit = unitNamesRepository.getUnitName(setupTimeAbasUnit);
-			final AbasUnit unitTimeAbasUnit = AbasUnit.UNITS.valueOf(result.getField(BasicDataQuery.Field.UNIT_TIME_UNIT).getValue());
-			unitTime = calculateGrossTime(new BigDecimal(result.getField(BasicDataQuery.Field.UNIT_TIME).getValue()), unitTimeAbasUnit, new BigDecimal(result.getField(BasicDataQuery.Field.UNIT_TIME_SEC).getValue()));
-			unitTimeUnit = unitNamesRepository.getUnitName(unitTimeAbasUnit);
+			setupTime = calculateGrossTime(new BigDecimal(result.getField(BasicDataQuery.Field.SETUP_TIME).getValue()),
+					AbasUnit.UNITS.valueOf(result.getField(BasicDataQuery.Field.SETUP_TIME_UNIT).getValue()),
+					new BigDecimal(result.getField(BasicDataQuery.Field.SETUP_TIME_SEC).getValue()));
+			setupTimeUnit = result.getField(BasicDataQuery.Field.SETUP_TIME_UNIT_NAME).getValue();
+			unitTime = calculateGrossTime(new BigDecimal(result.getField(BasicDataQuery.Field.UNIT_TIME).getValue()),
+					AbasUnit.UNITS.valueOf(result.getField(BasicDataQuery.Field.UNIT_TIME_UNIT).getValue()),
+					new BigDecimal(result.getField(BasicDataQuery.Field.UNIT_TIME_SEC).getValue()));
+			unitTimeUnit = result.getField(BasicDataQuery.Field.UNIT_TIME_UNIT_NAME).getValue();
 			numberOfExecutions = new BigDecimal(result.getField(BasicDataQuery.Field.NUMBER_OF_EXECUTIONS).getValue());
 			outstandingQuantity = new BigDecimal(result.getField(BasicDataQuery.Field.OUTSTANDING_QUANTITY).getValue());
-			stockUnit = unitNamesRepository.getUnitName(AbasUnit.UNITS.valueOf(result.getField(BasicDataQuery.Field.STOCK_UNIT).getValue()));
+			stockUnit = result.getField(BasicDataQuery.Field.STOCK_UNIT_NAME).getValue();
 		}
 
 		/* (non-Javadoc)
@@ -811,42 +836,10 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 */
 		@Override
 		protected List<BomElement> getBillOfMaterials() {
-			final EDPEditObject result = BomQuery.EXECUTOR.executeQuery(workSlipId, abasConnectionObject);
-			final int rowCount = result.getRowCount();
-			switch (rowCount) {
-				case 0:
-					return Collections.emptyList();
-				case 1:
-					return Collections.singletonList(newBomElement(result.getFields(1)));
-				default:
-					final List<BomElement> bom = new ArrayList<>(rowCount);
-					for (int i = 1; i <= rowCount; i++) {
-						bom.add(newBomElement(result.getFields(i)));
-					}
-					return Collections.unmodifiableList(bom);
-			}
-		}
-
-		/**
-		 * A megadott darabjegyzéksor adatait tartalmazó objektum létrehozása.
-		 * @param bomRow Az infosystem táblázatsora, ami a darabjegyzéksor adatait tartalmazza.
-		 * @return A darabjegyzéksor adatait tartalmazó objektum.
-		 */
-		protected BomElement newBomElement(EDPEditFieldList bomRow) {
-			return new BomElementImpl(bomRow.getField(BomQuery.Field.ID_NO).getValue(),
-					bomRow.getField(BomQuery.Field.SWD).getValue(),
-					bomRow.getField(BomQuery.Field.DESCRIPTION).getValue(),
-					bomRow.getField(BomQuery.Field.DESCRIPTION2).getValue(),
-					new BigDecimal(bomRow.getField(BomQuery.Field.QUANTITY_PER_PRODUCT).getValue()),
-					unitNamesRepository.getUnitName(AbasUnit.UNITS.valueOf(bomRow.getField(BomQuery.Field.STOCK_UNIT).getValue())));
+			return BomQuery.EXECUTOR.getRows(workSlipId, abasConnectionObject);
 		}
 
 	}
-
-	/**
-	 * A mértékegységek adattáblájának neve (hatékonysági okokból gyorsítótárazva).
-	 */
-	protected static final String unitsTableName = TableOfUnits.Row.META.tableDesc().toString();
 
 	/**
 	 * Az objektum kiírhatóságához kell.
@@ -879,7 +872,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 
 	/**
 	 * Konstruktor.
-	 * @param workSlipId A feladathoz tartozó munkalap azonosítója.
+	 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 	 * @param edpSession Az EDP-munkamenet.
 	 */
 	public TaskEdpImpl(Id workSlipId, EDPSession edpSession) {
@@ -888,7 +881,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 
 	/**
 	 * Konstruktor.
-	 * @param workSlipId A feladathoz tartozó munkalap azonosítója.
+	 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 	 */
 	TaskEdpImpl(Id workSlipId) {
 		super(workSlipId, EDPSession.class);

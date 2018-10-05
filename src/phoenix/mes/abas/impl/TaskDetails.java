@@ -28,57 +28,6 @@ import phoenix.mes.abas.Task.BomElement;
 public abstract class TaskDetails<C> implements Task.Details {
 
 	/**
-	 * Segédosztály a mértékegységek neveinek kíírásához.
-	 * @author szizo
-	 */
-	protected class UnitNamesRepository {
-
-		/**
-		 * A gyűjtemény nyelve.
-		 */
-		protected final OperatingLanguage language;
-
-		/**
-		 * Mértékegység -> név összerendelés.
-		 */
-		protected final Map<AbasUnit, String> unitNames = new HashMap<>(5);
-
-		/**
-		 * Konstruktor.
-		 * @param language A gyűjtemény nyelve.
-		 */
-		protected UnitNamesRepository(OperatingLanguage language) {
-			this.language = language;
-		}
-
-		/**
-		 * @param unit Az Abas-mértékegység.
-		 * @return Az Abas-mértékegység neve.
-		 */
-		public String getUnitName(AbasUnit unit) {
-			String unitName = unitNames.get(unit);
-			if (null == unitName) {
-				unitName = TaskDetails.this.getUnitName(unit);
-				unitNames.put(unit, unitName);
-			}
-			return unitName;
-		}
-
-		/**
-		 * @return A gyűjtemény nyelve.
-		 */
-		public OperatingLanguage getLanguage() {
-			return language;
-		}
-
-	}
-
-	/**
-	 * Segédobjektum a mértékegységek neveinek kíírásához.
-	 */
-	protected UnitNamesRepository unitNamesRepository;
-
-	/**
 	 * Az Abas-kapcsolat objektuma.
 	 */
 	protected C abasConnectionObject;
@@ -89,7 +38,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	protected String workSlipNo = null;
 
 	/**
-	 * A feladat elkezdésének (tervezett) napja.
+	 * A gyártási feladat elkezdésének (tervezett) napja.
 	 */
 	protected AbasDate startDate = null;
 
@@ -203,14 +152,14 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	protected void setAbasConnectionObject(AbasConnection<C> abasConnection, Class<C> abasConnectionType) {
 		final C abasConnectionObject = AbasConnection.getConnectionObject(abasConnection, abasConnectionType);
-		if (abasConnectionObject.equals(this.abasConnectionObject)) {
-			return;
+		if (!abasConnectionObject.equals(this.abasConnectionObject)) {
+			this.abasConnectionObject = abasConnectionObject;
 		}
 		final OperatingLanguage operatingLanguage = abasConnection.getOperatingLanguage();
 		if (null == unitNamesRepository || operatingLanguage != unitNamesRepository.getLanguage()) {
 			unitNamesRepository = new UnitNamesRepository(operatingLanguage);
 		}
-		this.abasConnectionObject = abasConnectionObject;
+
 	}
 
 	/**
@@ -219,12 +168,6 @@ public abstract class TaskDetails<C> implements Task.Details {
 	protected C getAbasConnectionObject() {
 		return abasConnectionObject;
 	}
-
-	/**
-	 * @param unit Az Abas-mértékegység.
-	 * @return Az Abas-mértékegység neve az aktuálisan beállított kezelőnyelven.
-	 */
-	protected abstract String getUnitName(AbasUnit unit);
 
 	/**
 	 * A gyártási feladat alapadatait jelentő tagváltozók kitöltése.

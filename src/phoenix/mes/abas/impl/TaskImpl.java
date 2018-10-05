@@ -27,7 +27,7 @@ public abstract class TaskImpl<C> implements Task {
 	private static final long serialVersionUID = -2756046396258670508L;
 
 	/**
-	 * A feladathoz tartozó munkalap azonosítója.
+	 * A gyártási feladathoz tartozó munkalap azonosítója.
 	 */
 	protected final Id workSlipId;
 
@@ -43,7 +43,7 @@ public abstract class TaskImpl<C> implements Task {
 
 	/**
 	 * Konstruktor.
-	 * @param workSlipId A feladathoz tartozó munkalap azonosítója.
+	 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 	 * @param abasConnectionType Az Abas-kapcsolat osztálya.
 	 */
 	protected TaskImpl(Id workSlipId, Class<C> abasConnectionType) {
