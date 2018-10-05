@@ -14,7 +14,6 @@ if(info == null)
 		<div id='loginLeftSide'
 			class='col-md-1 col-lg-5 d-none d-md-block h-100'>
 
-
 			<div id='loginPicture' class='m-3 d-md-none d-lg-block'></div>
 
 			<div id='FooterName'>

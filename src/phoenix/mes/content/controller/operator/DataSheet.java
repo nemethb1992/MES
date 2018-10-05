@@ -1,7 +1,6 @@
 package phoenix.mes.content.controller.operator;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.security.auth.login.LoginException;
@@ -11,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.IdImpl;
 import phoenix.mes.abas.AbasConnection;
@@ -54,7 +52,7 @@ public class DataSheet extends HttpServlet {
 
 			if(taskDetails == null)
 			{
-				Task nextTask = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7776380,9,0)"), abasConnection);
+				Task nextTask = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7896209,9,0)"), abasConnection);
 				taskDetails = nextTask.getDetails(abasConnection);
 				session.setAttribute("Task", taskDetails);
 			}
@@ -94,9 +92,10 @@ public class DataSheet extends HttpServlet {
 	
 	protected String getDataSheet(Task.Details taskDetails)
 	{
+		
 		 String[] stationSplit = workstation.split("!");
-		 String view ="						<div class='container'>\r\n" + 
-    			"								<div class='row px-0'>\r\n" + 
+		 String view ="						<div class='container-fluid'>\r\n" + 
+    			"								<div class='row'>\r\n" + 
     			"									<div class='col-12 col-md-12 col-lg-6 col-xl-6 px-0'>\r\n" + 
     			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
     			"											<p>"+dict.getWord(Entry.WORKSTATION)+"</p>\r\n" +  //Munkaállomás

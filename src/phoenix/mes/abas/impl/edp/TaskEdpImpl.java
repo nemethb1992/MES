@@ -156,6 +156,11 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			public static final String OUTSTANDING_QUANTITY = InfosysOw1MESTASK.META.ymge.getName();
 
 			/**
+			 * A kalkulált gyártási átfutási idő (normaidő) munkaórában.
+			 */
+			public static final String CALCULATED_PRODUCTION_TIME = InfosysOw1MESTASK.META.yvzeit.getName();
+
+			/**
 			 * A termék cikkszáma.
 			 */
 			public static final String PRODUCT_ID_NO = InfosysOw1MESTASK.META.ytenum.getName();
@@ -432,6 +437,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			numberOfExecutions = new BigDecimal(result.getField(BasicDataQuery.Field.NUMBER_OF_EXECUTIONS).getValue());
 			outstandingQuantity = new BigDecimal(result.getField(BasicDataQuery.Field.OUTSTANDING_QUANTITY).getValue());
 			stockUnit = result.getField(BasicDataQuery.Field.STOCK_UNIT_NAME).getValue();
+			calculatedProductionTime = new BigDecimal(result.getField(BasicDataQuery.Field.CALCULATED_PRODUCTION_TIME).getValue());
 		}
 
 		/* (non-Javadoc)

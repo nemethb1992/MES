@@ -182,4 +182,14 @@
     <servlet-name>FileHandler</servlet-name>
     <url-pattern>/FileHandler</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Timer</display-name>
+    <servlet-name>Timer</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.operator.Timer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Timer</servlet-name>
+    <url-pattern>/Timer</url-pattern>
+  </servlet-mapping>
 </web-app>

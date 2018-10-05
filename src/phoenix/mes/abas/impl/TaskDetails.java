@@ -130,6 +130,11 @@ public abstract class TaskDetails<C> implements Task.Details {
 	protected String stockUnit = null;
 
 	/**
+	 * A kalkulált gyártási átfutási idő (normaidő) munkaórában.
+	 */
+	protected BigDecimal calculatedProductionTime = null;
+
+	/**
 	 * A gyártási feladathoz kapcsolódó darabjegyzék.
 	 */
 	protected List<BomElement> bom = null;
@@ -424,6 +429,17 @@ public abstract class TaskDetails<C> implements Task.Details {
 			loadBasicData();
 		}
 		return stockUnit;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task.Details#getCalculatedProductionTime()
+	 */
+	@Override
+	public BigDecimal getCalculatedProductionTime() {
+		if (null == workSlipNo) {
+			loadBasicData();
+		}
+		return calculatedProductionTime;
 	}
 
 	/* (non-Javadoc)

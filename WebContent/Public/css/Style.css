@@ -10,7 +10,9 @@
 {
 	box-shadow: 0 22px 100px #999999;
 }
-
+html,body{
+    height:100%;
+}
 @font-face {
 	font-family: mediumFont;
 	src: url("Public/fonts/Montserrat-Medium.ttf");

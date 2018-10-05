@@ -14,6 +14,9 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+.flex-fill {
+    flex:1;
+}
 #contentFrame
 {
 	height: 100%;
@@ -62,19 +65,16 @@
 }
 .btn_navHeader
 {
-	height: 130px;
-	width: 300px;
+	min-height: 155px;
     background: #f5f5f5;
     transition: 0.1s;
 }
 #btn_lejelentes
 {
-	float: left;
     border-right: 1px solid #dedede;
 }
 #btn_megszakitas
 {
-	float: right;
     border-left: 1px solid #dedede;
 }
 .inputContainer
@@ -98,7 +98,7 @@
 .btn_leftNavigation
 {
     width: auto;
-    height: 130px !important;
+    min-height: 155px !important;
     border-bottom: 1px solid #dedede;
     color: #989898;
     text-align: center;
@@ -113,6 +113,10 @@
 .btn_leftNavigation img
 {
 	height: 50px !important;
+}
+.station-upper-row
+{
+	min-height: 155px;
 }
 .rightSide
 {

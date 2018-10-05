@@ -126,6 +126,11 @@ public interface Task extends Serializable {
 		String getStockUnit();
 
 		/**
+		 * @return A kalkulált gyártási átfutási idő (normaidő) munkaórában.
+		 */
+		BigDecimal getCalculatedProductionTime();
+
+		/**
 		 * @return A gyártási feladathoz kapcsolódó darabjegyzék.
 		 */
 		List<BomElement> getBom();

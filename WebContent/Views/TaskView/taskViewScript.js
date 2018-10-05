@@ -14,7 +14,7 @@ $(document).keypress(function(e) {
     		    data:{
     		    	quantity: $('#submit_input').val()
     		    },
-    		    success: function (respond) {
+    		    success: function (response) {
     		    	$("#submit_input").val("");
     		    	DataSheet_Clear();
     		    	DataSheet_Load();
@@ -33,15 +33,24 @@ function getView(tab = 1)
 	    data:{
 	    	tabNo: tab
 	    },
-	    success: function (respond) {
+	    success: function (response) {
 	    	$( "#SwitchPanel" ).empty();
-	  	  	$( "#SwitchPanel" ).append(respond);
-			//TaskTimer();
+	  	  	$( "#SwitchPanel" ).append(response);
+	  	  setTimer();
+	    }
+	});
+	
+}
+
+function setTimer()
+{
+	$.ajax({
+	    url:  '/'+path+'/Timer',
+	    success: function (response) {
+	  	  	TaskTimer(response);
 	    }
 	});
 }
-
-
 
 function openAsset(item)
 {
@@ -51,7 +60,7 @@ function openAsset(item)
 	    data:{
 	    	file: value
 	    },
-	    success: function (respond) {
+	    success: function (response) {
 	    	
 	    }
 	});
@@ -108,40 +117,37 @@ function headerNavBtnDeafult()
 	$('#btn_megszakitas input').css({'display':'none'});
 }
 
+String.prototype.toHHMMSS = function () {
+    var sec_num = parseInt(this, 10); // don't forget the second parm
+    var hours = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+    if (hours < 10) {
+        hours = "0" + hours;
+    }
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+    if (seconds < 10) {
+        seconds = "0" + seconds;
+    }
+    var time = hours + ':' + minutes + ':' + seconds;
+    return time;
+}
+
 function TaskTimer(time)
 {
-	var preNow = new Date().getTime();
-	var targetTime = preNow + time;
-
-	var x = setInterval(function() {
-		var now = new Date().getTime();
-		var distance = targetTime - now;
-		var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-		var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-		if(distance > 0)
-		{
-			$('.timerPanel').html(hours + ":" + minutes + ":" + seconds);
-		}
-		if (distance < 0) {
-			clearInterval(x);
-			$('#timerContainer').css({background:'#dc3545'});
-			var downNow = new Date().getTime();
-			var y = setInterval(function() {
-				var now = new Date().getTime();
-				var distance = now - downNow;
-				var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-				var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-				var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-				$('.timerPanel').html(hours + ":" + minutes + ":" + seconds);
-				console.log(hours + ":" + minutes + ":" + seconds);
-//				if (distance < 0) {
-//				clearInterval(y);  
-//				}
-			}, 1000)
-
-		}
-	}, 1000)
-
+	var count = time.split('.')[0]; // it's 00:01:02
+	var counter = setInterval(timer, 1000);
+	function timer() {
+	 if (parseInt(count) <= 0) {
+	    clearInterval(counter);
+	    return;
+	 }
+	 var temp = count.toHHMMSS();
+	 count = (parseInt(count) - 1).toString();
+	 $('.timerPanel').html(temp);
+	}
 }
 
