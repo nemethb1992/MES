@@ -28,20 +28,23 @@ public class DataSheet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected Dictionary dict;
-	protected String workstation;
-	protected String workstationName;
-	protected Task.Details taskDetails;
+
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		String wsCode;
+		String wsName = "";
+		Task.Details taskDetails;
+		Task task ;
+		
 		HttpSession session = request.getSession();
 		AbasConnection<EDPSession> abasConnection = null;
-		
+
 		String username=(String)session.getAttribute("username");
 		String pass=(String)session.getAttribute("pass");
 		String tab = request.getParameter("tabNo");
 		dict = (Dictionary)session.getAttribute("Dictionary");
-		workstation="234PG!1";
+		wsCode="234PG!1";
 		String view = "";
 		
 		// 	    String workstation=(String)session.getAttribute("workstation");
@@ -53,29 +56,31 @@ public class DataSheet extends HttpServlet {
 		if(session.getAttribute("workstationName") == null)
 		{
 			try {
-				workstationName = getWorkStationName();
-				session.setAttribute("workstationName", workstationName);
+				wsName = getWorkStationName(wsCode);
+				session.setAttribute("workstationName", wsName);
 			} catch (SQLException e) {
-				workstationName = "";
+				wsName = "";
 			}
 		}
 		
 		try {
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLanguage(), true);
-			taskDetails = (Task.Details)session.getAttribute("Task");
-			
-			if(taskDetails == null)
+			task = (Task)session.getAttribute("Task");
+			if(task == null)
 			{
-				Task nextTask = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7896209,9,0)"), abasConnection);
-				taskDetails = nextTask.getDetails(abasConnection);
-				session.setAttribute("Task", taskDetails);
+//				task = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7896209,9,0)"), abasConnection);
+				task = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(8027770,9,0)"), abasConnection);
+				session.setAttribute("Task", task);
+				taskDetails = task.getDetails(abasConnection);
 			}
+
+			taskDetails = task.getDetails(abasConnection);
 			
-	    	List<BomElement> bom = taskDetails.getBom();
+	    	List<BomElement> bom = taskDetails.getBom(); // TODO
 	    	
 			switch (tab) {
 			case "1":
-				view = getDataSheet(taskDetails);
+				view = getDataSheet(taskDetails,wsCode,wsName);
 				break;
 			case "2":
 				view = getDocuments(taskDetails);
@@ -103,97 +108,35 @@ public class DataSheet extends HttpServlet {
 		response.getWriter().write(view); 
 	}
 	
-	protected String getDataSheet(Task.Details taskDetails)
+	protected String getDataSheet(Task.Details taskDetails, String wsCode, String wsName)
 	{
 		
-		 String[] stationSplit = workstation.split("!");
-//		 String view ="						<div class='container-fluid'>\r\n" + 
-//    			"								<div class='row'>\r\n" + 
-//    			"									<div class='col-12 col-md-12 col-lg-6 col-xl-6 px-0'>\r\n" + 
-//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-//    			"											<p>"+dict.getWord(Entry.WORKSTATION)+"</p>\r\n" +  //Munkaállomás
-//    			"											<input class='px-2 w-100' type='text' value='"+stationSplit[0]+" - "+stationSplit[1]+"'/>\r\n" + 
-//    			"										</div>\r\n" + 
-//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-//    			"											<p>"+dict.getWord(Entry.WORKSHEET_NO)+"</p>\r\n" +  //Munkalapszám
-//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getWorkSlipNo()+"'/>\r\n" + 
-//    			"										</div>\r\n" + 
-//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-//    			"											<p>"+dict.getWord(Entry.ARTICLE)+"</p>\r\n" +  //Cikkszám
-//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getProductIdNo()+"'/>\r\n" + 
-//    			"										</div>\r\n" + 
-//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-//    			"											<p>"+dict.getWord(Entry.SEARCH_WORD)+"</p>\r\n" +  //Keresőszó
-//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getProductSwd()+"'/>\r\n" + 
-//    			"										</div>\r\n" + 
-//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-//    			"											<p>"+dict.getWord(Entry.OPERATION_NUMEBER)+"</p>\r\n" +  //Műveleti azonosító
-//    			"											<input class='px-2 w-100'  type='text' value='"+taskDetails.getOperationIdNo()+"'/>\r\n" + 
-//    			"										</div>\r\n" + 
-//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-//    			"											<p>"+dict.getWord(Entry.SETTING_TIME)+"</p>\r\n" +  //Beállítási idő
-//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getSetupTime()+"'/>\r\n" + 
-//    			"										</div>\r\n" + 
-//    			"									</div>\r\n" + 
-//    			"									<div class='col-12 col-md-12 col-lg-6 col-xl-6 px-0'>\r\n" + 
-//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-//    			"											<p>"+dict.getWord(Entry.NAME)+"</p>\r\n" +  //Megnevezés
-//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOperationDescription()+"'/>\r\n" + 
-//    			"										</div>\r\n" + 
-//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-//    			"											<p>"+dict.getWord(Entry.PLACE_OF_USE)+"</p>\r\n" +  //Felhasználás
-//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getUsage()+"'/>\r\n" + 
-//    			"										</div>\r\n" + 
-//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-//    			"											<p>"+dict.getWord(Entry.SEARCH_WORD)+"</p>\r\n" +  //Keresőszó
-//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOperationSwd()+"'/>\r\n" + 
-//    			"										</div>\r\n" + 
-//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-//    			"											<p>"+dict.getWord(Entry.NAME)+"</p>\r\n" +  //Megnevezés
-//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getProductDescription()+"'/>\r\n" + 
-//    			"										</div>\r\n" + 
-//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-//    			"											<p>"+dict.getWord(Entry.TIME_FOR_PCS)+"</p>\r\n" +  //Darabidő
-//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getUnitTime()+"'/>\r\n" + 
-//    			"										</div>\r\n" + 
-//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-//    			"											<p>"+dict.getWord(Entry.OPEN_QUANTITY)+"</p>\r\n" +  //Nyitott mennyiség
-//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOutstandingQuantity()+"'/>\r\n" + 
-//    			"										</div>\r\n" + 
-//    			"									</div>\r\n" + 
-//    			"									<div class='col-12 px-0'>\r\n" + 
-//    			"										<div class='inputContainer BigTextInput cc_element mx-2 mx-lg-3 my-2'>\r\n" + 
-//    			"											<p class='mb-0'>"+dict.getWord(Entry.PRODUCTION_INFO)+"</p>" +  //Gyártási információ
-//    			"											<textarea>"+taskDetails.getOperationReservationText()+"</textarea>\r\n" + 
-//    			"										</div>\r\n" + 
-//    			"									</div>\r\n" + 
-//    			"								</div>\r\n" + 
-//    			"							</div>"; 
+		 String[] stationSplit = wsCode.split("!");
 		 
 		 String view = "				<div class='container-fluid px-0'>\r\n" + 
 		 		"							<div class='row data-row mx-3 mt-3'>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.WORKSTATION)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' value='"+stationSplit[0]+" - "+stationSplit[1]+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled value='"+stationSplit[0]+" - "+stationSplit[1]+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.WORKSHEET_NO)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getWorkSlipNo()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getWorkSlipNo()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.GET_STARTED)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getStartDate()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getStartDate()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.WORKSTATION_NAME)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' value='"+workstationName+"'>\r\n" +
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+wsName+"'>\r\n" +
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.PLACE_OF_USE)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getUsage()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getUsage()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"							</div>\r\n" + 
@@ -201,25 +144,25 @@ public class DataSheet extends HttpServlet {
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.ARTICLE)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.SEARCH_WORD)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getProductSwd()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getProductSwd()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.OPEN_QUANTITY)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getOutstandingQuantity()+" "+taskDetails.getStockUnit()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getOutstandingQuantity()+" "+taskDetails.getStockUnit()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.NAME)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getProductDescription()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getProductDescription()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.NAME)+" 2</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getProductDescription2()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getProductDescription2()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"							</div>\r\n" + 
@@ -227,35 +170,35 @@ public class DataSheet extends HttpServlet {
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3 px-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.OPERATION_NUMEBER)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getOperationIdNo()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getOperationIdNo()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.SEARCH_WORD)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getOperationSwd()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getOperationSwd()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.NAME)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getOperationDescription()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getOperationDescription()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3 px-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.EXECUTION_NO)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getNumberOfExecutions()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getNumberOfExecutions()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.SETTING_TIME)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getSetupTime()+" "+taskDetails.getSetupTimeUnit()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getSetupTime()+" "+taskDetails.getSetupTimeUnit()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.TIME_FOR_PCS)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getUnitTime()+" "+taskDetails.getUnitTimeUnit()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text disabled  value='"+taskDetails.getUnitTime()+" "+taskDetails.getUnitTimeUnit()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"								<div class='col-12  px-3'>\r\n" + 
-		 		"									<div class='inputContainer BigTextInput'>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p class='mb-0'>"+dict.getWord(Entry.PRODUCTION_INFO)+"</p>\r\n" + 
-		 		"										<textarea class='px-2 w-100 h6'>"+taskDetails.getOperationReservationText()+"</textarea>\r\n" + 
+		 		"										<textarea class='px-2 w-100 h6'  disabled >"+taskDetails.getOperationReservationText()+"</textarea>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"							</div>\r\n" + 
@@ -279,11 +222,11 @@ public class DataSheet extends HttpServlet {
     	String view = "				<table class=\"table table-striped mytable\">\r\n" + 
     			"  								<thead>\r\n" + 
     			"  								  <tr>\r\n" + 
-    			"     								 <th scope=\"col\">"+dict.getWord(Entry.ARTICLE)+"</th>\r\n" + //Cikkszám
-    			"     								 <th scope=\"col\">"+dict.getWord(Entry.SEARCH_WORD)+"</th>\r\n" +  //Kereszöszó
-    			"   									 <th scope=\"col\">"+dict.getWord(Entry.NAME)+" 1</th>\r\n" +  //Megnevezés 1
-    			"  									 <th scope=\"col\">"+dict.getWord(Entry.NAME)+" 2</th>\r\n" +   //Megnevezés 2
-    			"  									 <th scope=\"col\">"+dict.getWord(Entry.PLUG_IN_QUANTITY)+"</th>\r\n" +  //Beépülö menny.
+    			"     								 <th scope=\"col\">"+dict.getWord(Entry.ARTICLE)+"</th>\r\n" + 
+    			"     								 <th scope=\"col\">"+dict.getWord(Entry.SEARCH_WORD)+"</th>\r\n" +  
+    			"   									 <th scope=\"col\">"+dict.getWord(Entry.NAME)+" 1</th>\r\n" +  
+    			"  									 <th scope=\"col\">"+dict.getWord(Entry.NAME)+" 2</th>\r\n" +   
+    			"  									 <th scope=\"col\">"+dict.getWord(Entry.PLUG_IN_QUANTITY)+"</th>\r\n" + 
     			"   								  </tr>\r\n" + 
     			"  								</thead>\r\n" + 
     			"  								<tbody class='darabjegyz-tbody'>";
@@ -300,21 +243,29 @@ public class DataSheet extends HttpServlet {
 		return view;
 	}
 	
-	protected String getDescription(Task.Details data)
+	protected String getDescription(Task.Details taskDetails)
 	{
-		String view = "<div class='tab4_element inputContainer BigTextInput cc_element h-50'>\r\n" + 
-    			"	<p>"+dict.getWord(Entry.INFO_ARTICLE)+" 1</p><textarea></textarea></div>\r\n" + 
-    			"<div class='tab4_element inputContainer BigTextInput cc_element h-50'>\r\n" + 
-    			"	<p>"+dict.getWord(Entry.INFO_ARTICLE)+" 2</p><textarea></textarea></div>\r\n" + 
-    			"	";
+		String view ="					<div class='conteiner-fluid h-100'>\r\n" + 
+				"							<div class='row h-100 m-3'>\r\n" + 
+				"								<div class='col'>\r\n" + 
+				"									<p class='h5 p-2'>"+dict.getWord(Entry.INFO_ARTICLE)+" 1</p>\r\n" + 
+				"									<textarea disabled class='BigTextInput light-shadow'>"+taskDetails.getSalesOrderItemText()+"</textarea>\r\n" + 
+				"								</div>\r\n" + 
+				"								<div class='col'>\r\n" + 
+				"									<p class='h5 p-2'>"+dict.getWord(Entry.INFO_ARTICLE)+" 2</p>\r\n" + 
+				"									<textarea disabled class='BigTextInput light-shadow'>"+taskDetails.getSalesOrderItemText()+"</textarea>\r\n" + 
+				"								</div>\r\n" + 
+				"							</div>\r\n" + 
+				"						</div>";
+		
 		return view;
 	}
 	
-	protected String getWorkStationName() throws SQLException
+	protected String getWorkStationName(String wsCode) throws SQLException
 	{
 		PostgreSqlOperationsMES postgreSql = new PostgreSqlOperationsMES(true); 
 		OperatingLanguage language = dict.getLanguage();
-		String[] stationSplit = workstation.split("!");
+		String[] stationSplit = wsCode.split("!");
 		String command, field;
 		
 		switch (language) {

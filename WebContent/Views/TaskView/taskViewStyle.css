@@ -75,10 +75,28 @@
 
 .nav-contianer
 {
-	background-image: url(Public/icons/pm_logo_white.svg);
-	background-size: 500px;
+	background-image: url(Public/icons/pm_logo_normal.svg);
+	background-size: 420px;
 	background-repeat: no-repeat;
 	background-position: center;
+	    background-position-x: 42%;
+}
+#btn_lejelentes .my-nav-btn
+{
+	background-image: linear-gradient(to right, white , #e5e5e5);
+}
+
+#btn_lejelentes .my-nav-btn:hover
+{
+	background-image: linear-gradient(to right, white , #dcdcdc);
+}
+#btn_megszakitas .my-nav-btn
+{
+	background-image: linear-gradient(to left, white , #e5e5e5);
+}
+#btn_megszakitas .my-nav-btn:hover
+{
+	background-image: linear-gradient(to left, white , #dcdcdc);
 }
 .btn_navHeader
 {
@@ -103,14 +121,16 @@
 	background-position: center;
     border-left: 1px solid #dedede;
 }
+.submit-action-btn
+{
+	background:#f0f0f0;
+	    color: #4f4f4f;
+}
 .btn_navHeader p
 {
 	padding-top: 140px;
 }
-.inputContainer
-{
-    color: #4f4f4f;
-}
+
 .inputContainer p
 {
 	color: #8b8b8b;
@@ -126,6 +146,17 @@
 	text-align: left;
 	font-family: lightFont;
 }
+.inputContainer textarea
+{
+	font-size: x-large;
+    color: #4f4f4f;
+	background: transparent;
+	border:none;
+	text-align: left;
+	font-family: lightFont;
+	resize: none;
+	
+}
 .big-nav-button
 {
     width: auto;
@@ -134,7 +165,7 @@
 .btn_leftNavigation
 {
     border-bottom: 1px solid #dedede;
-    color: #989898;
+    color: #4f4f4f;
     text-align: center;
     cursor: pointer;
 }
@@ -199,20 +230,18 @@
     margin: 0px 10px 10px 10px;
     border: 1px solid #e6e6e6;
 }
-.BigTextInput textarea
+.BigTextInput
 {
+	background: white;
 	font-size:x-large;
 	width: 100%;
+	height: 91%;
     text-align: left;
     word-wrap: break-word;
     font-family: lightFont;
     border: none;
     resize: none;
-    background: transparent;
-}
-.tab4_element textarea
-{
-	height: 220px;
+    overflow-x: hidden; 
 }
 #tab3_table
 {
@@ -239,9 +268,13 @@
 {
 	width: auto;
 }
-.number_Input
+.my-nav-container
 {
-    display: none;
+	display: none;
+}
+.my-nav-container p,.my-nav-container h4
+{
+	color: #4f4f4f;
 }
 .list-group-item.active {
     background-color: #dc3545;
@@ -252,5 +285,5 @@
 }
 .mytable
 {
-	font-size: 14px;
+	font-size: 16px;
 }

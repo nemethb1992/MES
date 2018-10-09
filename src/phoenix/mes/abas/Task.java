@@ -141,7 +141,7 @@ public interface Task extends Serializable {
 	 * Gyártási feladathoz kapcsolódó darabjegyzék elemeit leíró típus.
 	 * @author szizo
 	 */
-	interface BomElement {
+	interface BomElement extends Serializable {
 
 		/**
 		 * @return A beépülő cikk hivatkozási száma.

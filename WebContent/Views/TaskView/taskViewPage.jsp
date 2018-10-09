@@ -7,26 +7,6 @@
 
 </script>
 <div class='container-fluid h-100'>
-<!-- 	<div class='row'> -->
-<!-- 		<div class='col-12 px-0 topNav'> -->
-<!-- 			<div class='container-fluid'> -->
-<!-- 				<div class='row navigation-row'> -->
-<!-- 					<div class='col-1 h-100'> -->
-<!-- 						<img -->
-<%-- 							src="${pageContext.request.contextPath}/Public/icons/pm_logo_mini_white.svg" --%>
-<!-- 							class='d-block m-3 img-fluid LogoMiniPM' /> -->
-<!-- 					</div> -->
-
-<!-- 					<div class='col top-nav-button offset-10  px-0'> -->
-<!-- 						<form method='POST' class='h-100' -->
-<%-- 							action='${pageContext.request.contextPath}/Home'> --%>
-<!-- 							<input class='btn_logout' type='submit' value='' /> -->
-<!-- 						</form> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 		</div> -->
 		
 	<div class='row'>
 		<div class='col-12 h-100'>
@@ -44,17 +24,24 @@
 						<div class='container-fluid px-0 h-100'>
 							<div class='nav-contianer h-100'>
 								<div id='btn_lejelentes'
-									class='submit-form btn_navHeader h-100 float-left '>
+									class='submit-form btn_navHeader h-100 float-left light-shadow'>
 									<p class='h6 text-center h-100 ' id='p_lejelentes'><%=dict.getWord(Entry.SUBMIT)%></p>
 									<div class='container-fluid my-nav-container h-100'>
 										<div class='row h-100'>
-											<div class='col-11'>
-												<input
-													class='number_Input navBtnInside_element mx-auto  h-25 mt-4'
-													id=submit_input type='number' />
+											<div class='col-11 px-5'>
+												<h4 class='h4 mt-5 mb-2'><%=dict.getWord(Entry.SUBMIT)%></h4>
+												<div class="input-group mb-3 w-75 h-25">
+													<input type="number" class="form-control h-100"
+														placeholder="<%=dict.getWord(Entry.FINISHED_QUANTITY)%>"
+														aria-label="<%=dict.getWord(Entry.FINISHED_QUANTITY)%>"
+														aria-describedby="button-addon2">
+													<div class="input-group-append w-25">
+														<button class="btn btn-outline-secondary w-100 submit-action-btn" type="button" id="button-addon2"><%=dict.getWord(Entry.SEND)%></button>
+													</div>
+												</div>
 											</div>
-											<div class='col-1'>
-												<input type='button' />
+											<div class='col-1 px-0'>
+												<input type='button'  class='w-100 h-100 my-nav-btn lejelent-btn' />
 											</div>
 										</div>
 									</div>
@@ -66,21 +53,18 @@
 									</form>
 								</div>
 								<div id='btn_megszakitas'
-									class='btn_navHeader h-100 float-right'>
+									class='btn_navHeader h-100 float-right light-shadow'>
 									<p class='h6 text-center h-100'><%=dict.getWord(Entry.INTERRUPT)%></p>
 									<div class='container-fluid my-nav-container h-100'>
 										<div class='row h-100'>
-											<div class='col-11'>
-												<input
-													class='number_Input navBtnInside_element mx-auto  h-25 mt-4'
-													type='number' />
+											<div class='col-1 px-0'>
+												<input type='button' class='w-100 h-100 my-nav-btn megszak-btn'  />
 											</div>
-											<div class='col-1'>
-												<input type='button' />
+											<div class='col-11'>
+
 											</div>
 										</div>
 									</div>
-
 								</div>
 							</div>
 						</div>
@@ -121,7 +105,8 @@
 				<div
 					class='operator-switch-grid col-9 col-md-9 col-lg-10 col-xl-10 px-0'>
 					<div id='SwitchPanel' class='rightCont'>
-					
+
+
 						
 					</div>
 				</div>

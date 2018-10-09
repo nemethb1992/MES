@@ -17,6 +17,11 @@ import phoenix.mes.abas.Task.BomElement;
 public class BomElementImpl implements BomElement {
 
 	/**
+	 * Az objektum kiírhatóságához kell.
+	 */
+	private static final long serialVersionUID = 1470242670840659210L;
+
+	/**
 	 * A beépülő cikk hivatkozási száma.
 	 */
 	protected final String idNo;

@@ -221,6 +221,63 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	}
 
 	/**
+	 * Segédosztály a kapcsolódó vevői rendelés adatainak lekérdezéséhez.
+	 * @author szizo
+	 */
+	protected static final class SalesOrderQuery extends TaskDataQuery {
+
+		/**
+		 * A lekérdezendő (fejrész)mezők nevei.
+		 * @author szizo
+		 */
+		public static final class Field {
+
+			/**
+			 * A kapcsolódó vevői rendeléstétel szabadszövege.
+			 */
+			public static final String ITEM_TEXT = InfosysOw1MESTASK.META.ypftext.getName();
+
+			/**
+			 * A kapcsolódó vevői rendeléstétel második szabadszövege.
+			 */
+			public static final String ITEM_TEXT2 = InfosysOw1MESTASK.META.yypftext.getName();
+
+			/**
+			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
+			 */
+			private Field() {
+			}
+
+		}
+
+		/**
+		 * A szűrőmezők nevei.
+		 */
+		protected static final String[] criteriaFieldNames = {InfosysOw1MESTASK.META.yas.getName(), InfosysOw1MESTASK.META.ymb.getName(), InfosysOw1MESTASK.META.start.getName()};
+
+		/**
+		 * Egyke objektum.
+		 */
+		public static final SalesOrderQuery EXECUTOR = new SalesOrderQuery();
+
+		/**
+		 * Konstruktor.
+		 */
+		private SalesOrderQuery() {
+			super(Field.class);
+		}
+
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.edp.TaskEdpImpl.TaskDataQuery#getCriteriaFieldNames()
+		 */
+		@Override
+		protected String[] getCriteriaFieldNames() {
+			return criteriaFieldNames;
+		}
+
+	}
+
+	/**
 	 * Segédosztály a művelet adatainak lekérdezéséhez.
 	 * @author szizo
 	 */
@@ -457,8 +514,9 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 */
 		@Override
 		protected void loadSalesOrderData() {
-			// TODO
-			throw new RuntimeException("Not yet implemented!");
+			final EDPEditFieldList result = SalesOrderQuery.EXECUTOR.executeQuery(workSlipId, abasConnectionObject).getHeaderFields();
+			salesOrderItemText = result.getField(SalesOrderQuery.Field.ITEM_TEXT).getValue();
+			salesOrderItemText2 = result.getField(SalesOrderQuery.Field.ITEM_TEXT2).getValue();
 		}
 
 		/* (non-Javadoc)
