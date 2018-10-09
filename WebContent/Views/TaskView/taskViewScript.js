@@ -41,15 +41,55 @@ function getView(tab = 1)
 	});
 	
 }
-
 function setTimer()
 {
 	$.ajax({
 	    url:  '/'+path+'/Timer',
 	    success: function (response) {
-	  	  	TaskTimer(response);
+	    	timerStart(response);
+
+
 	    }
 	});
+	
+}
+
+var counter = null;
+function timerStart(time)
+{
+	if(counter == null)
+	{
+	var count = time.split('.')[0];
+	counter = setInterval(timer, 1000);
+	function timer() {
+	 if (parseInt(count) <= 0) {
+	    clearInterval(counter);
+	    timeUp();
+	    return;
+		 
+	 }
+	 var temp = count.toHHMMSS();
+	 count = (parseInt(count) - 1).toString();
+	 $('.timerPanel').html(temp);
+	}
+	}
+};
+var upcounter = null;
+function timeUp()
+{
+	if(upcounter == null)
+	{
+	$("#timerContainer").css("background", "#dc3545");
+	var count = "0";
+	upcounter = setInterval(uptimer, 1000);
+	function uptimer() {
+		console.log("asd");
+	 var temp = count.toHHMMSS();
+	 count = (parseInt(count) + 1).toString();
+	 $('.timerPanel').html(temp);
+	}
+	}
+	
 }
 
 function openAsset(item)
@@ -78,44 +118,62 @@ $('.btn_leftNavigation').click(function(){
 	$('.btn_leftNavigation').css({'background-color':'', 'color':'','border':''});
 	$(this).css({'background-color':'#f5f5f5','background-size':'24%','border-left':'3px solid #ff6666'});
 });
+//$('#navigationContainer').click(headerNavBtnDeafult());
+
+//$('#btn_leftNav_1').click(function(){
+//	getView(1);
+//	headerNavBtnDeafult();
+//})
+//$('#btn_leftNav_2').click(function(){
+//	getView(2);
+//	headerNavBtnDeafult();
+//})
+//$('#btn_leftNav_3').click(function(){
+//	getView(3);
+//	headerNavBtnDeafult();
+//})
+//$('#btn_leftNav_4').click(function(){
+//	getView(4);
+//	headerNavBtnDeafult();
+//})
+
 $('#btn_lejelentes').click(function(){
-	$('.btn_navHeader').css({'background-color':'', 'color':'','width':'','border':''});
-	$(this).css({'width':'465px','border-right':'3px solid #ff6666'});
-	$('#btn_megszakitas input').css({'display':'none'});
-	$('#btn_lejelentes input').css({'display':'block'});
+	openSubmit(this);
 });
 $('#btn_megszakitas').click(function(){
-	$('.btn_navHeader').css({'background-color':'', 'color':'','width':'','border':''});
-	$(this).css({'width':'465px','border-left':'3px solid #ff6666'});
-	$('#btn_lejelentes input').css({'display':'none'});
-	$('#btn_megszakitas input').css({'display':'block'});
+	openInterupt(this);
 });
-$('#navigationContainer').click(headerNavBtnDeafult());
-
-$('#btn_leftNav_1').click(function(){
-	getView(1);
-	headerNavBtnDeafult();
-})
-$('#btn_leftNav_2').click(function(){
-	getView(2);
-	headerNavBtnDeafult();
-})
-$('#btn_leftNav_3').click(function(){
-	getView(3);
-	headerNavBtnDeafult();
-})
-$('#btn_leftNav_4').click(function(){
-	getView(4);
-	headerNavBtnDeafult();
-})
 
 }
-function headerNavBtnDeafult()
+
+function openInterupt(item)
 {
-	$('.btn_navHeader').css({'background-color':'', 'color':'','width':'','border':''});
-	$('#btn_lejelentes input').css({'display':'none'});
-	$('#btn_megszakitas input').css({'display':'none'});
+	closeNavButtons();
+	$(item).css({'width':'80%'});
+	$('#btn_megszakitas p').css({'display':'none'});
+	$('#btn_megszakitas .my-nav-container').css({'display':'block'});
+	$('#btn_megszakitas').css({'background':'white'});
 }
+function openSubmit(item)
+{
+	closeNavButtons();
+	$(item).css({'width':'80%'});
+	$('#btn_lejelentes p').css({'display':'none'});
+	$('#btn_lejelentes .my-nav-container').css({'display':'block'});
+	$('#btn_lejelentes').css({'background':'white'});
+}
+function closeNavButtons()
+{
+	$('.btn_navHeader').css({'background':'', 'color':'','width':'','border':''});
+	$('.btn_navHeader p').css({'display':''});	
+}
+
+//function headerNavBtnDeafult()
+//{
+//	$('.btn_navHeader').css({'background-color':'', 'color':'','width':'','border':''});
+//	$('#btn_lejelentes input').css({'display':'none'});
+//	$('#btn_megszakitas input').css({'display':'none'});
+//}
 
 String.prototype.toHHMMSS = function () {
     var sec_num = parseInt(this, 10); // don't forget the second parm
@@ -136,18 +194,4 @@ String.prototype.toHHMMSS = function () {
     return time;
 }
 
-function TaskTimer(time)
-{
-	var count = time.split('.')[0]; // it's 00:01:02
-	var counter = setInterval(timer, 1000);
-	function timer() {
-	 if (parseInt(count) <= 0) {
-	    clearInterval(counter);
-	    return;
-	 }
-	 var temp = count.toHHMMSS();
-	 count = (parseInt(count) - 1).toString();
-	 $('.timerPanel').html(temp);
-	}
-}
 

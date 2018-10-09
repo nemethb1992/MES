@@ -78,5 +78,25 @@ public class PostgreSqlOperationsMES {
     		}
     	}
     }
+    
+    public String sqlSingleQuery(String command, String field) throws SQLException
+    {
+    	dbOpen();
+    	Statement stmt = conn.createStatement();
+    	try {
+    		ResultSet rs = stmt.executeQuery(command);
+    		String item = "";
+    		while (rs.next())
+    		{
+    			item = rs.getString(field);
+    		}
+    		return item;
+    	} finally {
+    		try {
+    			stmt.close();
+    		} catch (SQLException e) {
+    		}
+    	}
+    }
 
 }

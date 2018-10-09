@@ -95,6 +95,11 @@
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/list.svg</location>
 		</link>
 		<link>
+			<name>WebContent/Public/icons/logoutGry.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/logoutGry.svg</location>
+		</link>
+		<link>
 			<name>WebContent/Public/icons/logoutSimple.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/logoutSimple.svg</location>
@@ -118,6 +123,16 @@
 			<name>WebContent/Public/icons/up-arrow.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/up-arrow.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/upload.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/upload.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/warning.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/warning.svg</location>
 		</link>
 		<link>
 			<name>WebContent/Public/icons/wrench.svg</name>

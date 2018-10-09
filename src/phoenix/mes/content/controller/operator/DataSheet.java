@@ -1,6 +1,7 @@
 package phoenix.mes.content.controller.operator;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.security.auth.login.LoginException;
@@ -12,11 +13,13 @@ import javax.servlet.http.HttpSession;
 
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.IdImpl;
+import phoenix.mes.OperatingLanguage;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.BomElement;
 import phoenix.mes.content.Dictionary;
+import phoenix.mes.content.PostgreSqlOperationsMES;
 import phoenix.mes.content.Dictionary.Entry;
 
 
@@ -26,30 +29,41 @@ public class DataSheet extends HttpServlet {
 
 	protected Dictionary dict;
 	protected String workstation;
+	protected String workstationName;
 	protected Task.Details taskDetails;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		dict = (Dictionary)session.getAttribute("Dictionary");
+		AbasConnection<EDPSession> abasConnection = null;
+		
 		String username=(String)session.getAttribute("username");
 		String pass=(String)session.getAttribute("pass");
 		String tab = request.getParameter("tabNo");
+		dict = (Dictionary)session.getAttribute("Dictionary");
+		workstation="234PG!1";
+		String view = "";
+		
 		// 	    String workstation=(String)session.getAttribute("workstation");
 		//		String[] stationSplit = workstation.split("!");
-		workstation="234PG!1";
-		AbasConnection<EDPSession> abasConnection = null;
-
-		String view = "";
-
 		//			int stationNo = Integer.parseInt(stationSplit[1]);
 		//        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dictionary.getLanguage(), true);
 		//        	Task nextTask = AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0],stationNo, abasConnection).getNextExecutableTask(abasConnection);
-
+		
+		if(session.getAttribute("workstationName") == null)
+		{
+			try {
+				workstationName = getWorkStationName();
+				session.setAttribute("workstationName", workstationName);
+			} catch (SQLException e) {
+				workstationName = "";
+			}
+		}
+		
 		try {
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLanguage(), true);
 			taskDetails = (Task.Details)session.getAttribute("Task");
-
+			
 			if(taskDetails == null)
 			{
 				Task nextTask = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7896209,9,0)"), abasConnection);
@@ -79,7 +93,6 @@ public class DataSheet extends HttpServlet {
 		}catch(LoginException e)
 		{
 			System.out.println(e);
-			//TODO Jelezni a felhasználó felé.
 		}finally
 		{
 			abasConnection.close();
@@ -94,68 +107,160 @@ public class DataSheet extends HttpServlet {
 	{
 		
 		 String[] stationSplit = workstation.split("!");
-		 String view ="						<div class='container-fluid'>\r\n" + 
-    			"								<div class='row'>\r\n" + 
-    			"									<div class='col-12 col-md-12 col-lg-6 col-xl-6 px-0'>\r\n" + 
-    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-    			"											<p>"+dict.getWord(Entry.WORKSTATION)+"</p>\r\n" +  //Munkaállomás
-    			"											<input class='px-2 w-100' type='text' value='"+stationSplit[0]+" - "+stationSplit[1]+"'/>\r\n" + 
-    			"										</div>\r\n" + 
-    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-    			"											<p>"+dict.getWord(Entry.WORKSHEET_NO)+"</p>\r\n" +  //Munkalapszám
-    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getWorkSlipNo()+"'/>\r\n" + 
-    			"										</div>\r\n" + 
-    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-    			"											<p>"+dict.getWord(Entry.ARTICLE)+"</p>\r\n" +  //Cikkszám
-    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getProductIdNo()+"'/>\r\n" + 
-    			"										</div>\r\n" + 
-    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-    			"											<p>"+dict.getWord(Entry.SEARCH_WORD)+"</p>\r\n" +  //Keresőszó
-    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getProductSwd()+"'/>\r\n" + 
-    			"										</div>\r\n" + 
-    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-    			"											<p>"+dict.getWord(Entry.OPERATION_NUMEBER)+"</p>\r\n" +  //Műveleti azonosító
-    			"											<input class='px-2 w-100'  type='text' value='"+taskDetails.getOperationIdNo()+"'/>\r\n" + 
-    			"										</div>\r\n" + 
-    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-    			"											<p>"+dict.getWord(Entry.SETTING_TIME)+"</p>\r\n" +  //Beállítási idő
-    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getSetupTime()+"'/>\r\n" + 
-    			"										</div>\r\n" + 
-    			"									</div>\r\n" + 
-    			"									<div class='col-12 col-md-12 col-lg-6 col-xl-6 px-0'>\r\n" + 
-    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-    			"											<p>"+dict.getWord(Entry.NAME)+"</p>\r\n" +  //Megnevezés
-    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOperationDescription()+"'/>\r\n" + 
-    			"										</div>\r\n" + 
-    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-    			"											<p>"+dict.getWord(Entry.PLACE_OF_USE)+"</p>\r\n" +  //Felhasználás
-    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getUsage()+"'/>\r\n" + 
-    			"										</div>\r\n" + 
-    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-    			"											<p>"+dict.getWord(Entry.SEARCH_WORD)+"</p>\r\n" +  //Keresőszó
-    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOperationSwd()+"'/>\r\n" + 
-    			"										</div>\r\n" + 
-    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-    			"											<p>"+dict.getWord(Entry.NAME)+"</p>\r\n" +  //Megnevezés
-    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getProductDescription()+"'/>\r\n" + 
-    			"										</div>\r\n" + 
-    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-    			"											<p>"+dict.getWord(Entry.TIME_FOR_PCS)+"</p>\r\n" +  //Darabidő
-    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getUnitTime()+"'/>\r\n" + 
-    			"										</div>\r\n" + 
-    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
-    			"											<p>"+dict.getWord(Entry.OPEN_QUANTITY)+"</p>\r\n" +  //Nyitott mennyiség
-    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOutstandingQuantity()+"'/>\r\n" + 
-    			"										</div>\r\n" + 
-    			"									</div>\r\n" + 
-    			"									<div class='col-12 px-0'>\r\n" + 
-    			"										<div class='inputContainer BigTextInput cc_element mx-2 mx-lg-3 my-2'>\r\n" + 
-    			"											<p class='mb-0'>"+dict.getWord(Entry.PRODUCTION_INFO)+"</p>" +  //Gyártási információ
-    			"											<textarea>"+taskDetails.getOperationReservationText()+"</textarea>\r\n" + 
-    			"										</div>\r\n" + 
-    			"									</div>\r\n" + 
-    			"								</div>\r\n" + 
-    			"							</div>"; 
+//		 String view ="						<div class='container-fluid'>\r\n" + 
+//    			"								<div class='row'>\r\n" + 
+//    			"									<div class='col-12 col-md-12 col-lg-6 col-xl-6 px-0'>\r\n" + 
+//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+//    			"											<p>"+dict.getWord(Entry.WORKSTATION)+"</p>\r\n" +  //Munkaállomás
+//    			"											<input class='px-2 w-100' type='text' value='"+stationSplit[0]+" - "+stationSplit[1]+"'/>\r\n" + 
+//    			"										</div>\r\n" + 
+//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+//    			"											<p>"+dict.getWord(Entry.WORKSHEET_NO)+"</p>\r\n" +  //Munkalapszám
+//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getWorkSlipNo()+"'/>\r\n" + 
+//    			"										</div>\r\n" + 
+//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+//    			"											<p>"+dict.getWord(Entry.ARTICLE)+"</p>\r\n" +  //Cikkszám
+//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getProductIdNo()+"'/>\r\n" + 
+//    			"										</div>\r\n" + 
+//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+//    			"											<p>"+dict.getWord(Entry.SEARCH_WORD)+"</p>\r\n" +  //Keresőszó
+//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getProductSwd()+"'/>\r\n" + 
+//    			"										</div>\r\n" + 
+//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+//    			"											<p>"+dict.getWord(Entry.OPERATION_NUMEBER)+"</p>\r\n" +  //Műveleti azonosító
+//    			"											<input class='px-2 w-100'  type='text' value='"+taskDetails.getOperationIdNo()+"'/>\r\n" + 
+//    			"										</div>\r\n" + 
+//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+//    			"											<p>"+dict.getWord(Entry.SETTING_TIME)+"</p>\r\n" +  //Beállítási idő
+//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getSetupTime()+"'/>\r\n" + 
+//    			"										</div>\r\n" + 
+//    			"									</div>\r\n" + 
+//    			"									<div class='col-12 col-md-12 col-lg-6 col-xl-6 px-0'>\r\n" + 
+//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+//    			"											<p>"+dict.getWord(Entry.NAME)+"</p>\r\n" +  //Megnevezés
+//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOperationDescription()+"'/>\r\n" + 
+//    			"										</div>\r\n" + 
+//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+//    			"											<p>"+dict.getWord(Entry.PLACE_OF_USE)+"</p>\r\n" +  //Felhasználás
+//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getUsage()+"'/>\r\n" + 
+//    			"										</div>\r\n" + 
+//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+//    			"											<p>"+dict.getWord(Entry.SEARCH_WORD)+"</p>\r\n" +  //Keresőszó
+//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOperationSwd()+"'/>\r\n" + 
+//    			"										</div>\r\n" + 
+//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+//    			"											<p>"+dict.getWord(Entry.NAME)+"</p>\r\n" +  //Megnevezés
+//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getProductDescription()+"'/>\r\n" + 
+//    			"										</div>\r\n" + 
+//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+//    			"											<p>"+dict.getWord(Entry.TIME_FOR_PCS)+"</p>\r\n" +  //Darabidő
+//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getUnitTime()+"'/>\r\n" + 
+//    			"										</div>\r\n" + 
+//    			"										<div class='inputContainer cc_element mt-2 mx-2 mx-lg-3'>\r\n" + 
+//    			"											<p>"+dict.getWord(Entry.OPEN_QUANTITY)+"</p>\r\n" +  //Nyitott mennyiség
+//    			"											<input class='px-2 w-100' type='text' value='"+taskDetails.getOutstandingQuantity()+"'/>\r\n" + 
+//    			"										</div>\r\n" + 
+//    			"									</div>\r\n" + 
+//    			"									<div class='col-12 px-0'>\r\n" + 
+//    			"										<div class='inputContainer BigTextInput cc_element mx-2 mx-lg-3 my-2'>\r\n" + 
+//    			"											<p class='mb-0'>"+dict.getWord(Entry.PRODUCTION_INFO)+"</p>" +  //Gyártási információ
+//    			"											<textarea>"+taskDetails.getOperationReservationText()+"</textarea>\r\n" + 
+//    			"										</div>\r\n" + 
+//    			"									</div>\r\n" + 
+//    			"								</div>\r\n" + 
+//    			"							</div>"; 
+		 
+		 String view = "				<div class='container-fluid px-0'>\r\n" + 
+		 		"							<div class='row data-row mx-3 mt-3'>\r\n" + 
+		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
+		 		"										<p>"+dict.getWord(Entry.WORKSTATION)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' value='"+stationSplit[0]+" - "+stationSplit[1]+"'>\r\n" + 
+		 		"									</div>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
+		 		"										<p>"+dict.getWord(Entry.WORKSHEET_NO)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getWorkSlipNo()+"'>\r\n" + 
+		 		"									</div>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
+		 		"										<p>"+dict.getWord(Entry.GET_STARTED)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getStartDate()+"'>\r\n" + 
+		 		"									</div>\r\n" + 
+		 		"								</div>\r\n" + 
+		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
+		 		"										<p>"+dict.getWord(Entry.WORKSTATION_NAME)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' value='"+workstationName+"'>\r\n" +
+		 		"									</div>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
+		 		"										<p>"+dict.getWord(Entry.PLACE_OF_USE)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getUsage()+"'>\r\n" + 
+		 		"									</div>\r\n" + 
+		 		"								</div>\r\n" + 
+		 		"							</div>\r\n" + 
+		 		"							<div class='row data-row m-3'>\r\n" + 
+		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
+		 		"										<p>"+dict.getWord(Entry.ARTICLE)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
+		 		"									</div>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
+		 		"										<p>"+dict.getWord(Entry.SEARCH_WORD)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getProductSwd()+"'>\r\n" + 
+		 		"									</div>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
+		 		"										<p>"+dict.getWord(Entry.OPEN_QUANTITY)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getOutstandingQuantity()+" "+taskDetails.getStockUnit()+"'>\r\n" + 
+		 		"									</div>\r\n" + 
+		 		"								</div>\r\n" + 
+		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
+		 		"										<p>"+dict.getWord(Entry.NAME)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getProductDescription()+"'>\r\n" + 
+		 		"									</div>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
+		 		"										<p>"+dict.getWord(Entry.NAME)+" 2</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getProductDescription2()+"'>\r\n" + 
+		 		"									</div>\r\n" + 
+		 		"								</div>\r\n" + 
+		 		"							</div>\r\n" + 
+		 		"							<div class='row data-row m-3'>\r\n" + 
+		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3 px-3'>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
+		 		"										<p>"+dict.getWord(Entry.OPERATION_NUMEBER)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getOperationIdNo()+"'>\r\n" + 
+		 		"									</div>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
+		 		"										<p>"+dict.getWord(Entry.SEARCH_WORD)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getOperationSwd()+"'>\r\n" + 
+		 		"									</div>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
+		 		"										<p>"+dict.getWord(Entry.NAME)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getOperationDescription()+"'>\r\n" + 
+		 		"									</div>\r\n" + 
+		 		"								</div>\r\n" + 
+		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3 px-3'>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
+		 		"										<p>"+dict.getWord(Entry.EXECUTION_NO)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getNumberOfExecutions()+"'>\r\n" + 
+		 		"									</div>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
+		 		"										<p>"+dict.getWord(Entry.SETTING_TIME)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getSetupTime()+" "+taskDetails.getSetupTimeUnit()+"'>\r\n" + 
+		 		"									</div>\r\n" + 
+		 		"									<div class='inputContainer'>\r\n" + 
+		 		"										<p>"+dict.getWord(Entry.TIME_FOR_PCS)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' value='"+taskDetails.getUnitTime()+" "+taskDetails.getUnitTimeUnit()+"'>\r\n" + 
+		 		"									</div>\r\n" + 
+		 		"								</div>\r\n" + 
+		 		"								<div class='col-12  px-3'>\r\n" + 
+		 		"									<div class='inputContainer BigTextInput'>\r\n" + 
+		 		"										<p class='mb-0'>"+dict.getWord(Entry.PRODUCTION_INFO)+"</p>\r\n" + 
+		 		"										<textarea class='px-2 w-100 h6'>"+taskDetails.getOperationReservationText()+"</textarea>\r\n" + 
+		 		"									</div>\r\n" + 
+		 		"								</div>\r\n" + 
+		 		"							</div>\r\n" + 
+		 		"						</div>";
+		 
 		return view;
 	}
 	
@@ -203,5 +308,27 @@ public class DataSheet extends HttpServlet {
     			"	<p>"+dict.getWord(Entry.INFO_ARTICLE)+" 2</p><textarea></textarea></div>\r\n" + 
     			"	";
 		return view;
+	}
+	
+	protected String getWorkStationName() throws SQLException
+	{
+		PostgreSqlOperationsMES postgreSql = new PostgreSqlOperationsMES(true); 
+		OperatingLanguage language = dict.getLanguage();
+		String[] stationSplit = workstation.split("!");
+		String command, field;
+		
+		switch (language) {
+		case hu:
+			command = "SELECT nev_hu FROM stations WHERE csoport = '"+stationSplit[0]+"' AND sorszam = "+stationSplit[1];
+			field = "nev_hu";
+			break;
+
+		default:
+			command = "SELECT nev_de FROM stations WHERE csoport = '"+stationSplit[0]+"' AND sorszam = "+stationSplit[1];
+			field = "nev_hu";
+			break;
+		}
+		
+		return postgreSql.sqlSingleQuery(command, field);
 	}
 }
