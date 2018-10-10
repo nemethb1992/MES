@@ -81,23 +81,26 @@
 	background-position: center;
 	    background-position-x: 42%;
 }
+.my-nav-btn
+{
+	background-color: white;
+	background-image: url(Public/icons/cross-mark.svg);
+	background-size: 40px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
 #btn_lejelentes .my-nav-btn
 {
-	background-image: linear-gradient(to right, white , #e5e5e5);
-}
-
-#btn_lejelentes .my-nav-btn:hover
-{
-	background-image: linear-gradient(to right, white , #dcdcdc);
+    border-left: 1px solid #dedede;
 }
 #btn_megszakitas .my-nav-btn
 {
-	background-image: linear-gradient(to left, white , #e5e5e5);
+    border-right: 1px solid #dedede;
 }
-#btn_megszakitas .my-nav-btn:hover
+.my-nav-btn:hover
 {
-	background-image: linear-gradient(to left, white , #dcdcdc);
 }
+
 .btn_navHeader
 {
 	min-width: 100px;
@@ -271,6 +274,7 @@
 .my-nav-container
 {
 	display: none;
+	background: white;
 }
 .my-nav-container p,.my-nav-container h4
 {

@@ -75,6 +75,11 @@
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/calendar.svg</location>
 		</link>
 		<link>
+			<name>WebContent/Public/icons/cross-mark.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/cross-mark.svg</location>
+		</link>
+		<link>
 			<name>WebContent/Public/icons/delete-sign.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/delete-sign.svg</location>
