@@ -7,7 +7,8 @@
 
 </script>
 <div class='container-fluid h-100'>
-		
+
+	<p class='actual-time actual-time-tv fixed-bottom my-0 py-4 h5'></p>
 	<div class='row'>
 		<div class='col-12 h-100'>
 			<div class='container-fluid px-0'>
@@ -36,12 +37,15 @@
 														aria-label="<%=dict.getWord(Entry.FINISHED_QUANTITY)%>"
 														aria-describedby="button-addon2">
 													<div class="input-group-append w-25">
-														<button class="btn btn-outline-secondary w-100 submit-action-btn" type="button" id="button-addon2"><%=dict.getWord(Entry.SEND)%></button>
+														<button
+															class="btn btn-outline-secondary w-100 submit-action-btn"
+															type="button" id="button-addon2"><%=dict.getWord(Entry.SEND)%></button>
 													</div>
 												</div>
 											</div>
 											<div class='col-1 px-0'>
-												<input type='button'  class='w-100 h-100 my-nav-btn lejelent-btn' />
+												<input type='button'
+													class='w-100 h-100 my-nav-btn lejelent-btn' />
 											</div>
 										</div>
 									</div>
@@ -58,11 +62,10 @@
 									<div class='container-fluid my-nav-container h-100'>
 										<div class='row h-100'>
 											<div class='col-1 px-0'>
-												<input type='button' class='w-100 h-100 my-nav-btn megszak-btn'  />
+												<input type='button'
+													class='w-100 h-100 my-nav-btn megszak-btn' />
 											</div>
-											<div class='col-11'>
-
-											</div>
+											<div class='col-11'></div>
 										</div>
 									</div>
 								</div>

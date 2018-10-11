@@ -50,9 +50,9 @@
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/HU.svg</location>
 		</link>
 		<link>
-			<name>WebContent/Public/icons/back-arrow-white.svg</name>
+			<name>WebContent/Public/icons/backArrowgray.svg</name>
 			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/back-arrow-white.svg</location>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/backArrowgray.svg</location>
 		</link>
 		<link>
 			<name>WebContent/Public/icons/btn_settings.svg</name>

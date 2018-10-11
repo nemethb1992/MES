@@ -31,7 +31,7 @@ public class LanguageSetter extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	public void languageSetup(HttpServletRequest request, HttpServletResponse response)
+	public OperatingLanguage languageSetup(HttpServletRequest request, HttpServletResponse response)
 	{
 		HttpSession session = request.getSession();
 		OperatingLanguage Language = OperatingLanguage.hu;
@@ -57,6 +57,7 @@ public class LanguageSetter extends HttpServlet {
 			}
 			session.setAttribute("Dictionary", new Dictionary(Language));
 		}
+		return Language;
 	}
 
 }

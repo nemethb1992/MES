@@ -52,31 +52,26 @@ public class DataSheet extends HttpServlet {
 		//			int stationNo = Integer.parseInt(stationSplit[1]);
 		//        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dictionary.getLanguage(), true);
 		//        	Task nextTask = AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0],stationNo, abasConnection).getNextExecutableTask(abasConnection);
-		
-		if(session.getAttribute("workstationName") == null)
-		{
-			try {
-				wsName = getWorkStationName(wsCode);
-				session.setAttribute("workstationName", wsName);
-			} catch (SQLException e) {
-				wsName = "";
-			}
+
+		try {
+			wsName = getWorkStationName(wsCode);
+		} catch (SQLException e) {
+			wsName = " - ";
 		}
-		
+
+
 		try {
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLanguage(), true);
 			task = (Task)session.getAttribute("Task");
 			if(task == null)
 			{
-//				task = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7896209,9,0)"), abasConnection);
-				task = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(8027770,9,0)"), abasConnection);
+				task = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(8027770,9,0)"), abasConnection); //"(7896209,9,0)"
 				session.setAttribute("Task", task);
 				taskDetails = task.getDetails(abasConnection);
 			}
 
 			taskDetails = task.getDetails(abasConnection);
 			
-	    	List<BomElement> bom = taskDetails.getBom(); // TODO
 	    	
 			switch (tab) {
 			case "1":
@@ -86,7 +81,7 @@ public class DataSheet extends HttpServlet {
 				view = getDocuments(taskDetails);
 				break;
 			case "3":
-				view = getBom(bom);
+				view = getBom(taskDetails);
 				break;
 			case "4":
 				view = getDescription(taskDetails);
@@ -100,7 +95,11 @@ public class DataSheet extends HttpServlet {
 			System.out.println(e);
 		}finally
 		{
-			abasConnection.close();
+			try {
+				abasConnection.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
 		}
 
 		response.setContentType("text/plain"); 
@@ -217,8 +216,11 @@ public class DataSheet extends HttpServlet {
 		return view;
 	}
 	
-	protected String getBom(List<BomElement> li)
+	protected String getBom(Task.Details taskDetails)
 	{
+
+    	List<BomElement> li = taskDetails.getBom();
+		
     	String view = "				<table class=\"table table-striped mytable\">\r\n" + 
     			"  								<thead>\r\n" + 
     			"  								  <tr>\r\n" + 
@@ -253,7 +255,7 @@ public class DataSheet extends HttpServlet {
 				"								</div>\r\n" + 
 				"								<div class='col'>\r\n" + 
 				"									<p class='h5 p-2'>"+dict.getWord(Entry.INFO_ARTICLE)+" 2</p>\r\n" + 
-				"									<textarea disabled class='BigTextInput light-shadow'>"+taskDetails.getSalesOrderItemText()+"</textarea>\r\n" + 
+				"									<textarea disabled class='BigTextInput light-shadow'>"+taskDetails.getSalesOrderItemText2()+"</textarea>\r\n" + 
 				"								</div>\r\n" + 
 				"							</div>\r\n" + 
 				"						</div>";
@@ -269,17 +271,22 @@ public class DataSheet extends HttpServlet {
 		String command, field;
 		
 		switch (language) {
-		case hu:
-			command = "SELECT nev_hu FROM stations WHERE csoport = '"+stationSplit[0]+"' AND sorszam = "+stationSplit[1];
-			field = "nev_hu";
+		case en:
+			command = "SELECT nev_en FROM stations WHERE csoport = '"+stationSplit[0]+"' AND sorszam = "+stationSplit[1];
+			field = "nev_en";
 			break;
-
-		default:
+		case de:
 			command = "SELECT nev_de FROM stations WHERE csoport = '"+stationSplit[0]+"' AND sorszam = "+stationSplit[1];
+			field = "nev_de";
+			break;
+		case hu:
+		default:
+			command = "SELECT nev_hu FROM stations WHERE csoport = '"+stationSplit[0]+"' AND sorszam = "+stationSplit[1];
 			field = "nev_hu";
 			break;
 		}
 		
 		return postgreSql.sqlSingleQuery(command, field);
 	}
+		
 }

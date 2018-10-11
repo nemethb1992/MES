@@ -25,6 +25,7 @@ public class Dictionary {
 		SUBMIT("Lejelentés","Rückmeldung","Submit"),
 		EXECUTION_NO("Végrehajtás száma","Implementierungsnummer","Implementation number"),
 		GET_STARTED("Tervezett kezdés","Geplanter Start","Planned start"),
+		CALCULATED_PROD_TIME("Gyártási idő","Produktionszeit","Production time"),
 		OPEN_QUANTITY("Nyitott mennyiség","offene Menge","Open quantity"),
 		FINISHED_QUANTITY("Kész mennyiség","Fertigmenge","Finished quantity"),
 		SEND("Küldés","Senden","Send"),

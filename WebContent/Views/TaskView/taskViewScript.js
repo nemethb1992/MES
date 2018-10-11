@@ -4,6 +4,7 @@ $(document).ready(function(){
 	TabControlEventHolder();
 	ApplicationCountDown();
 	getView();
+	 DisplayTime();
 });
 
 $(document).keypress(function(e) {

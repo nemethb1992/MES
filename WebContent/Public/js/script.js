@@ -53,6 +53,28 @@ function loadingAnimation(element)
 	$(element).append("<div class='loaderCycle mx-auto mt-5  abas-cycle'></div>");	
 }
 
+function DisplayTime(){
+
+	setInterval(function(){
+
+	    var currentTime = new Date();
+	    var year = currentTime.getFullYear();
+	    var month = currentTime.getMonth() + 1;
+	    var day = currentTime.getDate();
+	    var hours = currentTime.getHours();
+	    var minutes = currentTime.getMinutes();
+	    var seconds = currentTime.getSeconds();
+	    // Add leading zeros
+	    minutes = (minutes < 10 ? "0" : "") + minutes;
+	    seconds = (seconds < 10 ? "0" : "") + seconds;
+	    hours = (hours < 10 ? "0" : "") + hours;
+
+	    // Compose the string for display
+	    var currentTimeString = year +"."+ month +"."+ day + " -   " + hours + ":" + minutes + ":" + seconds;
+	    $(".actual-time").text(currentTimeString);
+
+	},1000);
+}
 
 //
 //var distance = IDLE_TIMEOUT - _idleSecondsCounter;

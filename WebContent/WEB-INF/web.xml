@@ -192,4 +192,14 @@
     <servlet-name>Timer</servlet-name>
     <url-pattern>/Timer</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>StationControl</display-name>
+    <servlet-name>StationControl</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.manager.StationControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StationControl</servlet-name>
+    <url-pattern>/StationControl</url-pattern>
+  </servlet-mapping>
 </web-app>

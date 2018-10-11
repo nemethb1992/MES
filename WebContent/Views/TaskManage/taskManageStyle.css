@@ -37,6 +37,13 @@
 .refresh_btn {
 	cursor: pointer;
 }
+.datepicker_own {
+font-size: 14px;
+    background: #efefef;
+    padding-left: 15px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
 .refresh_btn:hover {
 	background: #e6e6e6;
 }
@@ -71,18 +78,6 @@
     background-size: 27px;
 	background-image: url(Public/icons/delete-sign.svg);
 }
-.date-refresh
-{
-	margin-right: 10px; 
-	border-radius: 0px;
-    background-size: 25px;
-	background-image: url(Public/icons/searchSign.svg);
-}
-.date-refresh:hover
-{
-    background-size: 27px;
-	background-image: url(Public/icons/searchSign.svg);
-}
 .tmts_stationBtnDivCont {
 	height: 44px;
 	background: white;
@@ -99,24 +94,6 @@
 	/*     border: 1px solid #dc3545; */
 	background-color: #efefef;
 	z-index: 1;
-}
-
-.TM_btn_select {
-    margin-top: 5%;
-    padding-top: 30%;
-    padding-bottom: 30%;
-}
-
-.TM_btn_select p {
-	color: #737373;
-	text-align: center;
-	font-size: larger;
-	padding-top: 10%;
-}
-
-.TM_btn_select img {
-	width: 50%;
-	max-width: 200px;
 }
 
 .TM_content_layer {
@@ -250,7 +227,7 @@
 	background: white;
 }
 
-.tmts_stationContainer {
+.station-container {
 	overflow-y: visible;
 	overflow-x: hidden;
 	max-height: 582px;
@@ -262,7 +239,7 @@
 	border: none;
 	font-size: 14px;
 	color: #737373;
-	max-width: 70%;
+	width: 100%;
 	padding: 15px 0 0 10px;
 }
 
@@ -276,20 +253,27 @@
 	float: left;
 }
 
-.cont_header {
+.cont_header 
+{
 	background: white;
-border-bottom: 1px solid #e0e6e8;
+	border-bottom: 1px solid #e0e6e8;
 	width: 100%;
 	z-index: 4;
 	height: 65px;
 }
 
-.input-icon-holderDiv {
+.input-icon-holderDiv 
+{
 	float: left;
-	height: 50px;
+
 }
-
-
+.stationName-holderDiv input {
+	width: 80%;
+}
+.actual-time-tm
+{
+	margin-left: 185px;
+}
 .input-icon-holderDiv input {
 	padding: 17px 0 0 0;
 	text-align: left;
@@ -359,9 +343,7 @@ border-bottom: 1px solid #e0e6e8;
 	margin-left: 0px;
 }
 
-.stationName-holderDiv input {
-	width: 175px;
-}
+
 
 .dnd-container {
 	border: 1px solid #bbbbbb;
@@ -422,6 +404,7 @@ border-bottom: 1px solid #e0e6e8;
 .task-panel-button {
 	cursor: pointer;
 	background: transparent;
+	border-color: transparent;
 	background-image: url(Public/icons/right-arrow.svg);
 	background-size: 40%;
 	background-repeat: no-repeat;
@@ -437,7 +420,8 @@ border-bottom: 1px solid #e0e6e8;
 	background-position: center;
 	box-shadow: 0px 0px 10px #9e9a9a;
 	-moz-box-shadow: 0px 0px 10px #9e9a9a;
-	-webkit-box-shadow: 0px 0px 10px #9e9a9a;
+	-webkit-box-shadow: 0px 0px 10px #9e9a9a;;
+	border-left: 1px solid #e0e6e8;
 }
 
 .up-task-button {
@@ -476,6 +460,7 @@ border-bottom: 1px solid #e0e6e8;
 	
 }
 
+
 .dnd-downer {
 	/* 	display: none; */
 	
@@ -495,4 +480,54 @@ border-bottom: 1px solid #e0e6e8;
 {
 	-ms-flex: 0 0 94%;
     flex: 0 0 94%;
+}
+
+.topNav
+{
+	height: 70px !important;
+    background: transparent;
+    text-align: center;
+    color: white;
+}
+.top-nav-button
+{
+	width: 80px;
+	border-left: 1px solid #dedede;
+	border-bottom: 1px solid #dedede;
+	
+}
+
+
+.activity-button {
+    margin-top: 5%;
+    padding-top: 30%;
+    padding-bottom: 30%;
+}
+
+.activity-button p {
+	color: #737373;
+	text-align: center;
+	font-size: larger;
+	padding-top: 10%;
+}
+
+.activity-button img {
+	width: 50%;
+	max-width: 200px;
+}
+
+.my-col-1,.my-col-7,.my-col-6
+{
+	-ms-flex: 0 0 11%;
+    flex: 0 0 11%;
+}
+.my-col-2
+{
+	-ms-flex: 0 0 14%;
+    flex: 0 0 14%;
+}
+.my-col-3,.my-col-4
+{
+	-ms-flex: 0 0 13%;
+    flex: 0 0 13%;
 }

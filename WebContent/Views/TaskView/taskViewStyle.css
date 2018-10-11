@@ -276,6 +276,10 @@
 	display: none;
 	background: white;
 }
+.actual-time-tv
+{
+	margin-left: 75px;
+}
 .my-nav-container p,.my-nav-container h4
 {
 	color: #4f4f4f;

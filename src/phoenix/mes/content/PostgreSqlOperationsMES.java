@@ -9,6 +9,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import phoenix.mes.OperatingLanguage;
+
 public class PostgreSqlOperationsMES {
 
 	static {
@@ -69,6 +71,40 @@ public class PostgreSqlOperationsMES {
     		while (rs.next())
     		{
     			li.add(rs.getString(field));
+    		}
+    		return li;
+    	} finally {
+    		try {
+    			stmt.close();
+    		} catch (SQLException e) {
+    		}
+    	}
+    }
+    
+    public Collection<String> sqlGetStaton(String command, OperatingLanguage language) throws SQLException
+    {
+		String field;
+		
+		switch (language) {
+		case en:
+			field = "nev_en";
+			break;
+		case de:
+			field = "nev_de";
+			break;
+		case hu:
+		default:
+			field = "nev_hu";
+			break;
+		}
+    	dbOpen();
+    	Statement stmt = conn.createStatement();
+    	try {
+    		ResultSet rs = stmt.executeQuery(command);
+        	Collection<String> li = new ArrayList<String>();
+    		while (rs.next())
+    		{
+    			li.add(rs.getString("csoport")+"!"+rs.getString("sorszam")+"!"+rs.getString(field));
     		}
     		return li;
     	} finally {
