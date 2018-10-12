@@ -23,6 +23,11 @@ public class Timer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
+	/*
+	 *
+	 * Másodpercben visszaadja az aktuális gyártási idő mértéként.
+	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String username=(String)session.getAttribute("username");
@@ -51,9 +56,6 @@ public class Timer extends HttpServlet {
 				inSecondTime = rawTime.multiply(new BigDecimal(3600));
 			}
 		}
-		
-
-		
 		response.setContentType("text/plain"); 
 		response.setCharacterEncoding("UTF-8"); 
 		response.getWriter().write(inSecondTime.toPlainString());
@@ -63,26 +65,5 @@ public class Timer extends HttpServlet {
 		doGet(request, response);
 	}
 
-	public static String formatSeconds(int timeInSeconds)
-	{
-	    int hours = timeInSeconds / 3600;
-	    int secondsLeft = timeInSeconds - hours * 3600;
-	    int minutes = secondsLeft / 60;
-	    int seconds = secondsLeft - minutes * 60;
 
-	    String formattedTime = "";
-	    if (hours < 10)
-	        formattedTime += "";
-	    formattedTime += hours + ":";
-
-	    if (minutes < 10)
-	        formattedTime += "0";
-	    formattedTime += minutes + ":";
-
-	    if (seconds < 10)
-	        formattedTime += "0";
-	    formattedTime += seconds ;
-
-	    return formattedTime;
-	}
 }

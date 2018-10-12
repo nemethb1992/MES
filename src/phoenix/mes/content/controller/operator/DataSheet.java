@@ -21,6 +21,7 @@ import phoenix.mes.abas.Task.BomElement;
 import phoenix.mes.content.Dictionary;
 import phoenix.mes.content.PostgreSqlOperationsMES;
 import phoenix.mes.content.Dictionary.Entry;
+import phoenix.mes.content.Format;
 
 
 public class DataSheet extends HttpServlet {
@@ -65,7 +66,7 @@ public class DataSheet extends HttpServlet {
 			task = (Task)session.getAttribute("Task");
 			if(task == null)
 			{
-				task = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(8027770,9,0)"), abasConnection); //"(7896209,9,0)"
+				task = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(8027770,9,0)"), abasConnection); // "(8027770,9,0)"
 				session.setAttribute("Task", task);
 				taskDetails = task.getDetails(abasConnection);
 			}
@@ -75,13 +76,13 @@ public class DataSheet extends HttpServlet {
 	    	
 			switch (tab) {
 			case "1":
-				view = getDataSheet(taskDetails,wsCode,wsName);
+				view = getDataSheet(taskDetails,wsCode,wsName,request);
 				break;
 			case "2":
 				view = getDocuments(taskDetails);
 				break;
 			case "3":
-				view = getBom(taskDetails);
+				view = getBom(taskDetails, request);
 				break;
 			case "4":
 				view = getDescription(taskDetails);
@@ -107,7 +108,7 @@ public class DataSheet extends HttpServlet {
 		response.getWriter().write(view); 
 	}
 	
-	protected String getDataSheet(Task.Details taskDetails, String wsCode, String wsName)
+	protected String getDataSheet(Task.Details taskDetails, String wsCode, String wsName, HttpServletRequest request)
 	{
 		
 		 String[] stationSplit = wsCode.split("!");
@@ -151,7 +152,7 @@ public class DataSheet extends HttpServlet {
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.OPEN_QUANTITY)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getOutstandingQuantity()+" "+taskDetails.getStockUnit()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+Format.byLocale(taskDetails.getOutstandingQuantity(), request)+" "+taskDetails.getStockUnit()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
@@ -183,15 +184,15 @@ public class DataSheet extends HttpServlet {
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3 px-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.EXECUTION_NO)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getNumberOfExecutions()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+Format.byLocale(taskDetails.getNumberOfExecutions(),request)+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.SETTING_TIME)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getSetupTime()+" "+taskDetails.getSetupTimeUnit()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+Format.byLocale(taskDetails.getSetupTime(),request)+" "+taskDetails.getSetupTimeUnit()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.TIME_FOR_PCS)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text disabled  value='"+taskDetails.getUnitTime()+" "+taskDetails.getUnitTimeUnit()+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text disabled  value='"+Format.byLocale(taskDetails.getUnitTime(),request)+" "+taskDetails.getUnitTimeUnit()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"								<div class='col-12  px-3'>\r\n" + 
@@ -216,7 +217,7 @@ public class DataSheet extends HttpServlet {
 		return view;
 	}
 	
-	protected String getBom(Task.Details taskDetails)
+	protected String getBom(Task.Details taskDetails, HttpServletRequest request)
 	{
 
     	List<BomElement> li = taskDetails.getBom();
@@ -238,7 +239,7 @@ public class DataSheet extends HttpServlet {
     				"<td>"+bomItem.getSwd()+"</td>" + 
     				"<td>"+bomItem.getDescription()+"</td>" + 
     				"<td>"+bomItem.getDescription2()+"</td>" + 
-    				"<td>"+bomItem.getQuantityPerProduct()+" "+bomItem.getStockUnit()+"</td>" + 
+    				"<td>"+Format.byLocale(bomItem.getQuantityPerProduct(),request)+" "+bomItem.getStockUnit()+"</td>" + 
     				"</tr>";
 		}		
     	view += "</tbody></table>";

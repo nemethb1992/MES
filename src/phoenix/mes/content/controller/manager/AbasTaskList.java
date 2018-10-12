@@ -22,6 +22,7 @@ import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.Dictionary;
 import phoenix.mes.content.Dictionary.Entry;
+import phoenix.mes.content.Format;
 import phoenix.mes.content.controller.operator.Timer;
 
 
@@ -101,7 +102,7 @@ public class AbasTaskList extends HttpServlet {
 						"															</div>\r\n" + 
 						"															<div class=\"col my-col-7 px-1 py-2 dnd-input-div\">\r\n" + 
 						"																<p>"+dict.getWord(Entry.CALCULATED_PROD_TIME)+"</p>\r\n" + 
-						"																<textarea disabled class=\"dnd-input dnd-in1\">"+Timer.formatSeconds(taskDetails.getCalculatedProductionTime().multiply(new BigDecimal(3600)).stripTrailingZeros().intValue())+"</textarea>\r\n" + 
+						"																<textarea disabled class=\"dnd-input dnd-in1\">"+Format.toTime(taskDetails.getCalculatedProductionTime().multiply(new BigDecimal(3600)).stripTrailingZeros().intValue())+"</textarea>\r\n" + 
 						"															</div>\r\n" + 
 						"														</div>\r\n" + 
 						"													</div>\r\n" + 

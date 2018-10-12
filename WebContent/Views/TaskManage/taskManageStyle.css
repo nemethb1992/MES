@@ -387,7 +387,8 @@ font-size: 14px;
 .dnd-input-div textarea {
 	font-size: 14px;
 	width: 100%;
-	 resize: none;
+	resize: none;
+	overflow-y: auto;	  
 }
 
 .dnd-input-div p {
