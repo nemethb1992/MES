@@ -17,7 +17,7 @@ import phoenix.mes.content.PostgreSqlOperationsMES;
 /**
  * Servlet implementation class StationControl
  */
-public class StationControl extends HttpServlet {
+public class WorkstationControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -109,7 +109,7 @@ public class StationControl extends HttpServlet {
 		try {
 			list = postgreSql.sqlGetStaton(command,language);    	
 			for (String item : list) {
-				view += "<div class='tmts_stationBtnDivCont col-12 px-0' value='"+item+"' OnClick='clickOnStation(this)'><input disabled class='si1'value='"+item.split("!")[0]+" - "+item.split("!")[1]+"- "+item.split("!")[2]+"'></div>";
+				view += "<div class='tmts_stationBtnDivCont col-12 px-0' value='"+item+"' OnClick='clickOnStation(this)'><input disabled class='si1'value='"+item.split("!")[2]+"'></div>";
 			}
 		} catch (SQLException e) {
 			//TODO Jelezni a felhasználó felé.

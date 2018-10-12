@@ -172,7 +172,7 @@ var opened = true;
 function openInterupt(item)
 {
 	closeNavButtons();
-	$(item).css({'width':'80%'});
+	$(item).css({'width':'60%'});
 	$('#btn_megszakitas p').css({'display':'none'});
 	$('#btn_megszakitas .my-nav-container').css({'display':'block'});
 	$('#btn_megszakitas').css({'background':'white'});
@@ -180,7 +180,7 @@ function openInterupt(item)
 function openSubmit(item)
 {
 	closeNavButtons();
-	$(item).css({'width':'80%'});
+	$(item).css({'width':'60%'});
 	$('#btn_lejelentes p').css({'display':'none'});
 	$('#btn_lejelentes .my-nav-container').css({'display':'block'});
 	$('#btn_lejelentes').css({'background':'white'});

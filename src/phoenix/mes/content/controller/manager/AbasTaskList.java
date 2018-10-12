@@ -71,8 +71,8 @@ public class AbasTaskList extends HttpServlet {
 				
 				layout += "							<div class=\"dnd-container col-12 px-0\" value=\"3\"\r\n" + 
 						"										style=\"max-height: 80px;\">\r\n" + 
-						"										<div class=\"container-fluid\">\r\n" + 
-						"											<div class=\"row\">\r\n" + 
+						"										<div class=\"container-fluid h-100\">\r\n" + 
+						"											<div class=\"row h-100\">\r\n" + 
 						"												<div class='col abas-listitem-data-col px-0'>\r\n" + 
 						"													<div class='container-fluid'>\r\n" + 
 						"														<div class='row'>\r\n" + 

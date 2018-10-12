@@ -24,6 +24,7 @@ function datepicker()
 		format: 'yyyy-mm-dd',
 		autoclose: true,
 		keyboardNavigation : true
+//		language: 'hu'
 	}).on('changeDate', function (ev) {
 		abasListLoader();
 	});
@@ -217,7 +218,7 @@ function WorkStationItemCollect()
 function FirstStationList()
 {
 	$.ajax({
-		url:  '/'+path+'/StationControl',
+		url:  '/'+path+'/WorkstationControl',
 		success: function (view) {
 //			$( ".dndf1" ).empty();
 			$( ".dndf2" ).empty();
@@ -235,7 +236,7 @@ function StationItemSelect(item)
 		level++;
 	var value = $(item).attr("value");
 	$.ajax({
-		url:  '/'+path+'/StationControl',
+		url:  '/'+path+'/WorkstationControl',
 		data: {
 			element: value,
 			level: level
@@ -252,7 +253,7 @@ function clickOnStation(item)
 
 	$(this).css({'background-image':'url(Public/icons/computerSignRed.svg)','background-color' : '#ebebeb','border-left':'5px solid #ff6666'});
 	var station = $(item).attr("value");
-	$(".station_label").val(station.split("!")[2]);
+	$(".station_label").val(station.split("!")[2] + "  (" + station.split("!")[0] +"-"+ station.split("!")[1]+")");
 	SelectedStation = station;
 	SessionStoreStation(station);
 	abasListLoader();

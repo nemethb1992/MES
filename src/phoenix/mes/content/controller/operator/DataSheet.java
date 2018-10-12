@@ -250,13 +250,13 @@ public class DataSheet extends HttpServlet {
 	{
 		String view ="					<div class='conteiner-fluid h-100'>\r\n" + 
 				"							<div class='row h-100 m-3'>\r\n" + 
-				"								<div class='col'>\r\n" + 
+				"								<div class='mx-3 col col-textarea light-shadow'>\r\n" + 
 				"									<p class='h5 p-2'>"+dict.getWord(Entry.INFO_ARTICLE)+" 1</p>\r\n" + 
-				"									<textarea disabled class='BigTextInput light-shadow'>"+taskDetails.getSalesOrderItemText()+"</textarea>\r\n" + 
+				"									<textarea disabled class='p-3 BigTextInput'>"+taskDetails.getSalesOrderItemText()+"</textarea>\r\n" + 
 				"								</div>\r\n" + 
-				"								<div class='col'>\r\n" + 
+				"								<div class='mx-3 col col-textarea light-shadow'>\r\n" + 
 				"									<p class='h5 p-2'>"+dict.getWord(Entry.INFO_ARTICLE)+" 2</p>\r\n" + 
-				"									<textarea disabled class='BigTextInput light-shadow'>"+taskDetails.getSalesOrderItemText2()+"</textarea>\r\n" + 
+				"									<textarea disabled class='p-3 BigTextInput'>"+taskDetails.getSalesOrderItemText2()+"</textarea>\r\n" + 
 				"								</div>\r\n" + 
 				"							</div>\r\n" + 
 				"						</div>";

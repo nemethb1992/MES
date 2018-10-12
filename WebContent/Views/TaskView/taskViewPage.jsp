@@ -18,7 +18,7 @@
 						class='col-3 col-md-3 col-lg-2 col-xl-2 px-0'>
 						<img class='d-block mx-auto mt-3'
 							src='${pageContext.request.contextPath}/Public/icons/timer.svg'>
-						<p class='timerPanel h1 text-center pt-3'></p>
+						<p class='timerPanel h2 text-center pt-3'></p>
 					</div>
 					<div
 						class='button-container light-shadow col-9 col-md-9 col-lg-10 col-xl-10 px-0'>
@@ -75,33 +75,38 @@
 				</div>
 			</div>
 			<div class='row'>
-				<div id='' class='light-shadow left-buttons col-3 col-md-3 col-lg-2 col-xl-2'>
-					<div class='btn_leftNavigation big-nav-button row'>
-						<div class='col-12' id='btn_leftNav_1'>
-							<img class='d-block mx-auto mt-5 h-50'
-								src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav1.svg'>
-							<p class='mt-4 h5 nav-btn-1'><%=dict.getWord(Entry.IDS)%></p>
-						</div>
-					</div>
-					<div class='btn_leftNavigation big-nav-button row'>
-						<div class='col-12' id='btn_leftNav_2'>
-							<img class='d-block mx-auto mt-5 h-50'
-								src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav2.svg'>
-							<p class='mt-4 h5 nav-btn-2'><%=dict.getWord(Entry.DOCUMENTS)%></p>
-						</div>
-					</div>
-					<div class='btn_leftNavigation big-nav-button row'>
-						<div class='col-12' id='btn_leftNav_3'>
-							<img class='d-block mx-auto mt-5 h-50'
-								src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav3.svg'>
-							<p class='mt-4 h5 nav-btn-3'><%=dict.getWord(Entry.BILL_OF_MATERIAL)%></p>
-						</div>
-					</div>
-					<div class='btn_leftNavigation big-nav-button row'>
-						<div class='col-12' id='btn_leftNav_4'>
-							<img class='d-block mx-auto mt-5 h-50'
-								src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav4.svg'>
-							<p class='mt-4 h5 nav-btn-4'><%=dict.getWord(Entry.ORDER_INFO)%></p>
+				<div id=''
+					class='left-buttons col-3 col-md-3 col-lg-2 col-xl-2'>
+					<div class='row'>
+						<div class='col light-shadow bord-radius-nav'>
+							<div class='btn_leftNavigation big-nav-button row'>
+								<div class='col-12' id='btn_leftNav_1'>
+									<img class='d-block mx-auto mt-4 h-50'
+										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav1.svg'>
+									<p class='my-4 h5 nav-btn-1'><%=dict.getWord(Entry.IDS)%></p>
+								</div>
+							</div>
+							<div class='btn_leftNavigation big-nav-button row'>
+								<div class='col-12' id='btn_leftNav_2'>
+									<img class='d-block mx-auto mt-4 h-50'
+										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav2.svg'>
+									<p class='my-4 h5 nav-btn-2'><%=dict.getWord(Entry.DOCUMENTS)%></p>
+								</div>
+							</div>
+							<div class='btn_leftNavigation big-nav-button row'>
+								<div class='col-12' id='btn_leftNav_3'>
+									<img class='d-block mx-auto mt-4 h-50'
+										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav3.svg'>
+									<p class='my-4 h5 nav-btn-3'><%=dict.getWord(Entry.BILL_OF_MATERIAL)%></p>
+								</div>
+							</div>
+							<div class='btn_leftNavigation bord-radius-nav big-nav-button row'>
+								<div class='col-12 ' id='btn_leftNav_4'>
+									<img class='d-block mx-auto mt-4 h-50'
+										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav4.svg'>
+									<p class='my-4 h5 nav-btn-4'><%=dict.getWord(Entry.ORDER_INFO)%></p>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

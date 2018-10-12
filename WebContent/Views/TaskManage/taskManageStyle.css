@@ -79,9 +79,9 @@ font-size: 14px;
 	background-image: url(Public/icons/delete-sign.svg);
 }
 .tmts_stationBtnDivCont {
-	height: 44px;
+	height: 50px;
 	background: white;
-	border-bottom: 1px solid #e0e6e8;
+	border-bottom: 1px solid #d6d6d6;
 	background-image: url(Public/icons/computerSignGray.svg);
 	background-size: 25px;
 	background-repeat: no-repeat;
@@ -250,29 +250,19 @@ font-size: 14px;
 .cont_header 
 {
 	background: white;
-	border-bottom: 1px solid #e0e6e8;
+	border: 1px solid #d6d6d6;
 	width: 100%;
 	z-index: 4;
 	height: 65px;
 }
 
-.input-icon-holderDiv 
-{
-	float: left;
 
-}
 .stationName-holderDiv input {
 	width: 80%;
 }
 .actual-time-tm
 {
 	margin-left: 185px;
-}
-.input-icon-holderDiv input {
-	padding: 17px 0 0 0;
-	text-align: left;
-	background: none;
-	font-size: 18px;
 }
 
 /* .icon-form { */
@@ -302,7 +292,7 @@ font-size: 14px;
 
 .sortContDiv_nav {
 	height: 65px;
-	border-bottom: 1px solid #e0e6e8;
+	border: 1px solid #d6d6d6;
 	z-index: 10;
 	background: white;
 }
@@ -356,7 +346,7 @@ font-size: 14px;
 
 .dnd-frame {
     margin: 5px 0px 0px 0px;
-    max-height: 99%;
+    max-height: 100%;
     overflow-y: scroll;
 }
 
@@ -382,7 +372,7 @@ font-size: 14px;
 
 .dnd-input-div input {
 	font-size: 12px;
-	width: 100%;
+	border-radius: 5px;
 }
 .dnd-input-div textarea {
 	font-size: 14px;
@@ -496,8 +486,8 @@ font-size: 14px;
 
 .activity-button {
     margin-top: 5%;
-    padding-top: 30%;
-    padding-bottom: 30%;
+    padding-top: 50%;
+    padding-bottom: 50%;
     background: white;
 }
 
@@ -527,4 +517,9 @@ font-size: 14px;
 {
 	-ms-flex: 0 0 13%;
     flex: 0 0 13%;
+}
+.col-nav-logout, .col-nav-back, .col-nav-language
+{
+	-ms-flex: 0 0 100px;
+    flex: 0 0 100px;
 }

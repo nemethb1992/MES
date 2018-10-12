@@ -76,7 +76,7 @@
 .nav-contianer
 {
 	background-image: url(Public/icons/pm_logo_normal.svg);
-	background-size: 420px;
+	background-size: 20%;
 	background-repeat: no-repeat;
 	background-position: center;
 	    background-position-x: 42%;
@@ -142,7 +142,7 @@
 }
 .inputContainer input
 {
-	font-size: x-large;
+	font-size: larger;
     color: #4f4f4f;
 	background: transparent;
 	border:none;
@@ -151,7 +151,7 @@
 }
 .inputContainer textarea
 {
-	font-size: x-large;
+	font-size: larger;
     color: #4f4f4f;
 	background: transparent;
 	border:none;
@@ -163,11 +163,10 @@
 .big-nav-button
 {
     width: auto;
-    min-height: 200px !important;
 }
 .btn_leftNavigation
 {
-    border-bottom: 1px solid #dedede;
+    border-bottom: 1px solid #cfcfcf;
     color: #4f4f4f;
     text-align: center;
     cursor: pointer;
@@ -209,6 +208,7 @@
 .data-row
 {
 	background: white;
+	border-radius: 15px;
 }
 #documentContainer
 {
@@ -235,7 +235,6 @@
 }
 .BigTextInput
 {
-	background: white;
 	font-size:x-large;
 	width: 100%;
 	height: 91%;
@@ -244,7 +243,17 @@
     font-family: lightFont;
     border: none;
     resize: none;
-    overflow-x: hidden; 
+    overflow-x: hidden;
+    background: white; 
+}
+.col-textarea
+{
+	border-radius: 15px;
+    background: white; 
+}
+.bord-radius-nav
+{
+	border-bottom-right-radius: 25px;
 }
 #tab3_table
 {
@@ -285,8 +294,11 @@
 	color: #4f4f4f;
 }
 .list-group-item.active {
-    background-color: #dc3545;
-    border-color: #dc3545;
+    background-color: #d2d2d2;
+    border-color: #d2d2d2;
+    color: #000;
+    font-size: 16px;
+        
 }.list-group-item:first-child {
     border-top-left-radius: .0rem;
     border-top-right-radius: .0rem;
@@ -294,4 +306,5 @@
 .mytable
 {
 	font-size: 16px;
+	background: white;
 }

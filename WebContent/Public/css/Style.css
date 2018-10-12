@@ -24,7 +24,6 @@ html,body{
 }
 
 
-
 .btn_logout-gray{
 	height: 100%;
 	width: 100%;
@@ -128,9 +127,9 @@ html {
 }
 
 .light-shadow {
-	box-shadow: 0px 2px 15px #a7a7a7;
-	-moz-box-shadow: 0px 2px 15px #a7a7a7;
-	-webkit-box-shadow: 0px 2px 15px #a7a7a7;
+	box-shadow: 0px 2px 12px #bfbfbf;
+	-moz-box-shadow: 0px 2px 12px #bfbfbf;
+	-webkit-box-shadow: 0px 2px 12px #bfbfbf;
 }
 
 .very-light-shadow {
@@ -171,6 +170,7 @@ html {
 	border-radius: 10px;
 	box-shadow: 0px 0px 10px #979797;
 }
+
 
 .lang_icon {
 	width: 25px;

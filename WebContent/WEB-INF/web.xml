@@ -194,12 +194,12 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>StationControl</display-name>
-    <servlet-name>StationControl</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.manager.StationControl</servlet-class>
+    <display-name>WorkstationControl</display-name>
+    <servlet-name>WorkstationControl</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.manager.WorkstationControl</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>StationControl</servlet-name>
-    <url-pattern>/StationControl</url-pattern>
+    <servlet-name>WorkstationControl</servlet-name>
+    <url-pattern>/WorkstationControl</url-pattern>
   </servlet-mapping>
 </web-app>
