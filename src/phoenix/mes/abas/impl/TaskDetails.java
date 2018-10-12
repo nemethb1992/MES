@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+import phoenix.mes.OperatingLanguage;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.BomElement;
@@ -28,6 +29,11 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 * Az Abas-kapcsolat objektuma.
 	 */
 	protected C abasConnectionObject;
+
+	/**
+	 * Az aktuális kezelőnyelv.
+	 */
+	protected OperatingLanguage operatingLanguage;
 
 	/**
 	 * A munkalap száma.
@@ -153,9 +159,21 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 * @param abasConnectionType Az Abas-kapcsolat osztálya.
 	 */
 	protected void setAbasConnectionObject(AbasConnection<C> abasConnection, Class<C> abasConnectionType) {
-		final C abasConnectionObject = AbasConnection.getConnectionObject(abasConnection, abasConnectionType);
-		if (!abasConnectionObject.equals(this.abasConnectionObject)) {
-			this.abasConnectionObject = abasConnectionObject;
+		final OperatingLanguage newOperatingLanguage = abasConnection.getOperatingLanguage();
+		if (newOperatingLanguage != operatingLanguage) {
+			if (null != operatingLanguage) {
+				productDescription = null;
+				operationDescription = null;
+				setupTimeUnit = null;
+				unitTimeUnit = null;
+				stockUnit = null;
+				bom = null;
+			}
+			operatingLanguage = newOperatingLanguage;
+		}
+		final C newAbasConnectionObject = AbasConnection.getConnectionObject(abasConnection, abasConnectionType);
+		if (!newAbasConnectionObject.equals(abasConnectionObject)) {
+			abasConnectionObject = newAbasConnectionObject;
 		}
 	}
 
@@ -227,6 +245,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public AbasDate getStartDate() {
+		// A startDate mező üres dátum esetén null értékű, ezért azt nem lehet vizsgálni
 		if (null == workSlipNo) {
 			loadBasicData();
 		}
@@ -238,7 +257,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getProductIdNo() {
-		if (null == workSlipNo) {
+		if (null == productIdNo) {
 			loadBasicData();
 		}
 		return productIdNo;
@@ -249,7 +268,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getProductSwd() {
-		if (null == workSlipNo) {
+		if (null == productSwd) {
 			loadBasicData();
 		}
 		return productSwd;
@@ -260,7 +279,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getProductDescription() {
-		if (null == workSlipNo) {
+		if (null == productDescription) {
 			loadBasicData();
 		}
 		return productDescription;
@@ -271,7 +290,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getProductDescription2() {
-		if (null == workSlipNo) {
+		if (null == productDescription2) {
 			loadBasicData();
 		}
 		return productDescription2;
@@ -282,7 +301,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getUsage() {
-		if (null == workSlipNo) {
+		if (null == usage) {
 			loadBasicData();
 		}
 		return usage;
@@ -304,7 +323,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getSalesOrderItemText2() {
-		if (null == salesOrderItemText) {
+		if (null == salesOrderItemText2) {
 			loadSalesOrderData();
 		}
 		return salesOrderItemText2;
@@ -326,7 +345,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getOperationSwd() {
-		if (null == operationIdNo) {
+		if (null == operationSwd) {
 			loadOperationData();
 		}
 		return operationSwd;
@@ -337,7 +356,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getOperationDescription() {
-		if (null == operationIdNo) {
+		if (null == operationDescription) {
 			loadOperationData();
 		}
 		return operationDescription;
@@ -348,7 +367,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getOperationReservationText() {
-		if (null == operationIdNo) {
+		if (null == operationReservationText) {
 			loadOperationData();
 		}
 		return operationReservationText;
@@ -359,7 +378,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public BigDecimal getSetupTime() {
-		if (null == workSlipNo) {
+		if (null == setupTime) {
 			loadBasicData();
 		}
 		return setupTime;
@@ -370,7 +389,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getSetupTimeUnit() {
-		if (null == workSlipNo) {
+		if (null == setupTimeUnit) {
 			loadBasicData();
 		}
 		return setupTimeUnit;
@@ -381,7 +400,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public BigDecimal getUnitTime() {
-		if (null == workSlipNo) {
+		if (null == unitTime) {
 			loadBasicData();
 		}
 		return unitTime;
@@ -392,7 +411,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getUnitTimeUnit() {
-		if (null == workSlipNo) {
+		if (null == unitTimeUnit) {
 			loadBasicData();
 		}
 		return unitTimeUnit;
@@ -403,7 +422,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public BigDecimal getNumberOfExecutions() {
-		if (null == workSlipNo) {
+		if (null == numberOfExecutions) {
 			loadBasicData();
 		}
 		return numberOfExecutions;
@@ -414,7 +433,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public BigDecimal getOutstandingQuantity() {
-		if (null == workSlipNo) {
+		if (null == outstandingQuantity) {
 			loadBasicData();
 		}
 		return outstandingQuantity;
@@ -425,7 +444,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getStockUnit() {
-		if (null == workSlipNo) {
+		if (null == stockUnit) {
 			loadBasicData();
 		}
 		return stockUnit;
@@ -436,7 +455,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public BigDecimal getCalculatedProductionTime() {
-		if (null == workSlipNo) {
+		if (null == calculatedProductionTime) {
 			loadBasicData();
 		}
 		return calculatedProductionTime;

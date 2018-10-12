@@ -97,7 +97,7 @@
 						</div>
 					</div>
 				</div>
-				<div class='sortContDiv col-10  px-0 light-shadow'>
+				<div class='sortContDiv col-10  px-0'>
 <!-- 					<div class='cont_header'> -->
 <!-- 						<div class='input-icon-holderDiv ts-loggedName-div'> -->
 <!-- 							<img class='icon-form' -->
@@ -106,7 +106,7 @@
 <!-- 						</div> -->
 <!-- 					</div> -->
 					<div class='sortStationListCont container-fluid'>
-						<div class='sortContDiv_nav row px-0'>
+						<div class='sortContDiv_nav row px-0 light-shadow'>
 							<div class='abas-list-head sort-list-head sort-list h-100 col-8'>
 								<div class='row h-100 w-50'>
 									<div class=' px-0 py-2 col-12'>
@@ -143,9 +143,8 @@
 							</div>
 						</div>
 						<div class='sortContDiv_ListHolder row'>
-							<div class='abas-list-holder sort-list-holder  col-8 px-0'>
-								<div class='dnd-frame dndf1 abas-list m-0 row'>
-								</div>
+							<div class='abas-list-holder dndf1   sort-list-holder  col-8 px-0'>
+
 							</div>
 							<div class='ws-list-holder sort-list-holder col-4 px-0'>
 								<div class='dnd-frame h-100 m-0 dndf2'></div>

@@ -221,12 +221,6 @@ font-size: 14px;
 	background: white;
 }
 
-
-
-.sortStationListCont {
-	background: white;
-}
-
 .station-container {
 	overflow-y: visible;
 	overflow-x: hidden;
@@ -309,6 +303,8 @@ font-size: 14px;
 .sortContDiv_nav {
 	height: 65px;
 	border-bottom: 1px solid #e0e6e8;
+	z-index: 10;
+	background: white;
 }
 
 .abas-list-head, .abas-list-holder {
@@ -323,8 +319,7 @@ font-size: 14px;
 
 
 .sort-list-holder {
-	height: 700px;
-	background: #efefef;
+	max-height: 730px;
 }
 
 .search-icon-form {
@@ -502,6 +497,7 @@ font-size: 14px;
     margin-top: 5%;
     padding-top: 30%;
     padding-bottom: 30%;
+    background: white;
 }
 
 .activity-button p {

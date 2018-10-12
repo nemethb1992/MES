@@ -61,13 +61,14 @@ public class AbasTaskList extends HttpServlet {
 			int stationNo = Integer.parseInt(Station[1]);
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLanguage(), true);
 			List<Task> li = AbasObjectFactory.INSTANCE.createWorkStation(Station[0], stationNo, abasConnection).getUnassignedTasks(abasDate, abasConnection);
-			
+
+			layout += "<div class='abas-list dnd-frame m-0 row light-shadow'>";
 			for (Task task: li) {
 				final Task.Details taskDetails = task.getDetails(abasConnection);
 				String startDate = taskDetails.getStartDate().toString();
 				String startDateFormated = startDate.substring(0,4) + "." + startDate.substring(4,6) + "." + startDate.substring(6,8) + ".";		
 				
-				layout += "						<div class=\"dnd-container col-12 px-0\" value=\"3\"\r\n" + 
+				layout += "							<div class=\"dnd-container col-12 px-0\" value=\"3\"\r\n" + 
 						"										style=\"max-height: 80px;\">\r\n" + 
 						"										<div class=\"container-fluid\">\r\n" + 
 						"											<div class=\"row\">\r\n" + 
@@ -113,8 +114,9 @@ public class AbasTaskList extends HttpServlet {
 						"												</div>\r\n" + 
 						"											</div>\r\n" + 
 						"										</div>\r\n" + 
-						"									</div>";
+						"	 								</div>";
 			}
+			layout +="</div>";
 		}catch(LoginException e){
 			System.out.println(e);
 		}finally
