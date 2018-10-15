@@ -375,7 +375,7 @@ font-size: 14px;
 	border-radius: 5px;
 }
 .dnd-input-div textarea {
-	font-size: 14px;
+	font-size: 12px;
 	width: 100%;
 	resize: none;
 	overflow-y: auto;	  
@@ -391,8 +391,8 @@ font-size: 14px;
 	cursor: pointer;
 	background: transparent;
 	border-color: transparent;
-	background-image: url(Public/icons/right-arrow.svg);
-	background-size: 40%;
+	background-image: url(Public/icons/add.svg);
+	background-size: 60%;
 	background-repeat: no-repeat;
 	background-position: center;
 	transition: 0.2s;
@@ -400,8 +400,8 @@ font-size: 14px;
 
 .task-panel-button:hover {
 	background: white;
-	background-image: url(Public/icons/right-arrow.svg);
-	background-size: 43%;
+	background-image: url(Public/icons/add.svg);
+	background-size: 63%;
 	background-repeat: no-repeat;
 	background-position: center;
 	box-shadow: 0px 0px 10px #9e9a9a;
@@ -409,42 +409,23 @@ font-size: 14px;
 	-webkit-box-shadow: 0px 0px 10px #9e9a9a;;
 	border-left: 1px solid #e0e6e8;
 }
-
-.up-task-button {
-	background-image: url(Public/icons/up-arrow.svg);
-}
-
-.up-task-button:hover {
-	background-image: url(Public/icons/up-arrow.svg);
-}
-
-.remove-task-button {
-	background-image: url(Public/icons/letter-x.svg);
-}
-
-.remove-task-button:hover {
-	background-image: url(Public/icons/letter-x.svg);
-}
-
-.down-task-button {
-	background-image: url(Public/icons/down-arrow.svg);
-}
-
-.down-task-button:hover {
-	background-image: url(Public/icons/down-arrow.svg);
-}
-
-.mini-button {
+.mini-button,.mini-button:hover
+{
 	background-size: 25%;
+	transition: 0.1s;
+}
+.up-task-button,.up-task-button:hover {
+	background-image: url(Public/icons/up-arrow.svg);
 }
 
-.mini-button:hover {
-	background-size: 30%;
+.down-task-button,.down-task-button:hover {
+	background-image: url(Public/icons/down-arrow.svg);
+}
+.remove-task-button,.remove-task-button:hover {
+	background-image: url(Public/icons/letter-x.svg);
+	background-size: 18%;
 }
 
-.dnd-input-cont {
-	
-}
 
 
 .dnd-downer {
@@ -462,11 +443,7 @@ font-size: 14px;
 	-ms-flex: 0 0 12%;
     flex: 0 0 12%;
 }
-.abas-listitem-data-col
-{
-	-ms-flex: 0 0 94%;
-    flex: 0 0 94%;
-}
+
 
 .topNav
 {
@@ -503,10 +480,15 @@ font-size: 14px;
 	max-width: 200px;
 }
 
-.my-col-1,.my-col-7,.my-col-6
+.my-col-1
 {
 	-ms-flex: 0 0 11%;
     flex: 0 0 11%;
+}
+.my-col-7,.my-col-6,.my-col-8
+{
+	-ms-flex: 0 0 9%;
+    flex: 0 0 9%;
 }
 .my-col-2
 {
@@ -515,11 +497,16 @@ font-size: 14px;
 }
 .my-col-3,.my-col-4
 {
-	-ms-flex: 0 0 13%;
-    flex: 0 0 13%;
+	-ms-flex: 0 0 12%;
+    flex: 0 0 12%;
 }
 .col-nav-logout, .col-nav-back, .col-nav-language
 {
 	-ms-flex: 0 0 100px;
     flex: 0 0 100px;
+}
+.col-button
+{
+	-ms-flex: 0 0 40px;
+    flex: 0 0 40px;
 }

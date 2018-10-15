@@ -149,10 +149,10 @@
 							</div>
 						</div>
 						<div class='sortContDiv_ListHolder row'>
-							<div class='abas-list-holder dndf1   sort-list-holder  col-8 px-0'>
+							<div class='abas-list-holder dndf1   sort-list-holder  col-9 px-0'>
 
 							</div>
-							<div class='ws-list-holder sort-list-holder col-4 px-0'>
+							<div class='ws-list-holder sort-list-holder col-3 px-0'>
 								<div class='dnd-frame h-100 m-0 dndf2'></div>
 							</div>
 						</div>

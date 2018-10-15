@@ -70,11 +70,6 @@
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/btn_wscontrol.svg</location>
 		</link>
 		<link>
-			<name>WebContent/Public/icons/calendar.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/calendar.svg</location>
-		</link>
-		<link>
 			<name>WebContent/Public/icons/cross-mark.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/cross-mark.svg</location>
@@ -85,29 +80,14 @@
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/delete-sign.svg</location>
 		</link>
 		<link>
-			<name>WebContent/Public/icons/down-arrow.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/down-arrow.svg</location>
-		</link>
-		<link>
 			<name>WebContent/Public/icons/letter-x.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/letter-x.svg</location>
 		</link>
 		<link>
-			<name>WebContent/Public/icons/list.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/list.svg</location>
-		</link>
-		<link>
 			<name>WebContent/Public/icons/logoutGry.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/logoutGry.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/logoutSimple.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/logoutSimple.svg</location>
 		</link>
 		<link>
 			<name>WebContent/Public/icons/padlock.svg</name>
@@ -120,24 +100,9 @@
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/pm_logo_normal.svg</location>
 		</link>
 		<link>
-			<name>WebContent/Public/icons/right-arrow.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/right-arrow.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/sketch.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/sketch.svg</location>
-		</link>
-		<link>
 			<name>WebContent/Public/icons/up-arrow.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/up-arrow.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/upload.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/upload.svg</location>
 		</link>
 		<link>
 			<name>WebContent/Public/icons/warning.svg</name>

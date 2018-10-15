@@ -26,39 +26,66 @@ function datepicker()
 		keyboardNavigation : true
 //		language: 'hu'
 	}).on('changeDate', function (ev) {
-		abasListLoader();
+		ListLoader();
 	});
 }
-function abasListLoader()
+
+function ListLoader()
+{
+
+	if(level > 1)
+	{
+		if(workstationListLoader() == true)
+		{
+			var date = $(".datepicker_own").val();
+			if(date != null && date != "" && date != "undefinied")
+			{
+				date = date.split('-')[0] + date.split('-')[1] + date.split('-')[2];
+			}
+			else
+			{
+				date = null;
+			}
+			$( ".dndf1" ).empty();
+			loadingAnimation('.abas-list-holder');
+			$.ajax({
+				url:  '/'+path+'/AbasTaskList',
+				data: {
+					date: date
+				},
+				success: function (respond) {
+
+					$( ".dndf1" ).empty();
+					$( ".dndf1" ).append(respond);
+
+				},
+				error: function() {
+					$( ".dndf1" ).empty();
+				}  
+			});
+		}
+	}
+
+}
+function workstationListLoader()
 {
 	if(level > 1)
 	{
-		var date = $(".datepicker_own").val();
-		if(date != null && date != "" && date != "undefinied")
-		{
-			date = date.split('-')[0] + date.split('-')[1] + date.split('-')[2];
-		}
-		else
-		{
-			date = null;
-		}
-		$( ".dndf1" ).empty();
+		$( ".dndf2" ).empty();
 		loadingAnimation('.abas-list-holder');
 		$.ajax({
-			url:  '/'+path+'/AbasTaskList',
-			data: {
-				date: date
-			},
+			url:  '/'+path+'/StationTaskList',
 			success: function (respond) {
 
-				$( ".dndf1" ).empty();
-				$( ".dndf1" ).append(respond);
-
+				$( ".dndf2" ).empty();
+				$( ".dndf2" ).append(respond);
 			},
 			error: function() {
-				$( ".dndf1" ).empty();
+				$( ".dndf2" ).empty();
+			
 			}  
 		});
+		return true;
 	}
 
 }
@@ -138,12 +165,12 @@ function setToday()
 function ButtonScriptElements()
 {
 	$(".date-refresh").click(function(){
-		abasListLoader();
+		ListLoader();
 	});
 
 	$(".date-null").click(function(){
 		$('.datepicker_own').val(null);
-		abasListLoader();
+		ListLoader();
 	});
 
 	$('#btn_select_1').click(function(){
@@ -232,6 +259,7 @@ function FirstStationList()
 
 function StationItemSelect(item)
 {
+	$( ".station-container" ).empty();
 	if(level < 3)
 		level++;
 	var value = $(item).attr("value");
@@ -242,7 +270,6 @@ function StationItemSelect(item)
 			level: level
 		},
 		success: function (view) {
-			$( ".station-container" ).empty();
 			$( ".station-container" ).append(view);
 		}
 	});
@@ -256,7 +283,7 @@ function clickOnStation(item)
 	$(".station_label").val(station.split("!")[2] + "  (" + station.split("!")[0] +"-"+ station.split("!")[1]+")");
 	SelectedStation = station;
 	SessionStoreStation(station);
-	abasListLoader();
+	ListLoader();
 
 }
 

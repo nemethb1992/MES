@@ -45,7 +45,7 @@ public class DataSheet extends HttpServlet {
 		String pass=(String)session.getAttribute("pass");
 		String tab = request.getParameter("tabNo");
 		dict = (Dictionary)session.getAttribute("Dictionary");
-		wsCode="234PG!1";
+		wsCode="234PG!1!Test Workstation";
 		String view = "";
 		
 		// 	    String workstation=(String)session.getAttribute("workstation");
@@ -66,14 +66,12 @@ public class DataSheet extends HttpServlet {
 			task = (Task)session.getAttribute("Task");
 			if(task == null)
 			{
-				task = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(8027770,9,0)"), abasConnection); // "(8027770,9,0)"
+				task = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7896209,9,0)"), abasConnection); // "(8027770,9,0)"
 				session.setAttribute("Task", task);
 				taskDetails = task.getDetails(abasConnection);
 			}
 
-			taskDetails = task.getDetails(abasConnection);
-			
-	    	
+			taskDetails = task.getDetails(abasConnection);				    	
 			switch (tab) {
 			case "1":
 				view = getDataSheet(taskDetails,wsCode,wsName,request);
@@ -113,12 +111,13 @@ public class DataSheet extends HttpServlet {
 		
 		 String[] stationSplit = wsCode.split("!");
 		 
+		 
 		 String view = "				<div class='container-fluid px-0'>\r\n" + 
 		 		"							<div class='row data-row mx-3 mt-3'>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.WORKSTATION)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled value='"+stationSplit[0]+" - "+stationSplit[1]+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled value='"+stationSplit[0]+" - "+stationSplit[1]+" - "+stationSplit[2]+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.WORKSHEET_NO)+"</p>\r\n" + 

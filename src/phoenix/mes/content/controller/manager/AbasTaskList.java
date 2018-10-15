@@ -44,7 +44,7 @@ public class AbasTaskList extends HttpServlet {
 			dict  = (Dictionary)session.getAttribute("Dictionary");
 			response.setContentType("text/plain"); 
 			response.setCharacterEncoding("UTF-8"); 
-			response.getWriter().write(abasList(station, date, username, pass));
+			response.getWriter().write(abasList(station, date, username, pass,request));
 		}
 	}
 	
@@ -52,7 +52,7 @@ public class AbasTaskList extends HttpServlet {
 		doGet(request, response);
 	}
 	
-	protected String abasList(String station, String date, String username, String pass)
+	protected String abasList(String station, String date, String username, String pass, HttpServletRequest request)
 	{
 		AbasConnection<EDPSession> abasConnection = null;
 		String[] Station = station.split("!");
@@ -101,13 +101,17 @@ public class AbasTaskList extends HttpServlet {
 						"																<textarea disabled class=\"dnd-input dnd-in1\">"+startDateFormated+"</textarea>\r\n" + 
 						"															</div>\r\n" + 
 						"															<div class=\"col my-col-7 px-1 py-2 dnd-input-div\">\r\n" + 
+						"																<p>"+dict.getWord(Entry.OPEN_QUANTITY)+"</p>\r\n" + 
+						"																<textarea disabled class=\"dnd-input dnd-in1\">"+Format.byLocale(taskDetails.getOutstandingQuantity(), request)+" "+taskDetails.getStockUnit()+"</textarea>\r\n" + 
+						"															</div>\r\n" +
+						"															<div class=\"col my-col-8 px-1 py-2 dnd-input-div\">\r\n" + 
 						"																<p>"+dict.getWord(Entry.CALCULATED_PROD_TIME)+"</p>\r\n" + 
 						"																<textarea disabled class=\"dnd-input dnd-in1\">"+Format.toTime(taskDetails.getCalculatedProductionTime().multiply(new BigDecimal(3600)).stripTrailingZeros().intValue())+"</textarea>\r\n" + 
 						"															</div>\r\n" + 
 						"														</div>\r\n" + 
 						"													</div>\r\n" + 
 						"												</div>\r\n" + 
-						"												<div class='col p-1'>\r\n" + 
+						"												<div class='col col-button p-1'>\r\n" + 
 						"													<div class=\"w-100 h-100 dnd-input-div px-0\">\r\n" + 
 						"														<input class=\"h-100 w-100 task-panel-button\" value=\"\"\r\n" + 
 						"															type=\"button\">\r\n" + 
