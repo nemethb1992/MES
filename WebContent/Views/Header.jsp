@@ -5,9 +5,25 @@
 <head>
 
 
+
 <%@page import="phoenix.mes.content.Dictionary"%>
+<%@page import="phoenix.mes.OperatingLanguage"%>
+<%@page import="phoenix.mes.content.controller.LanguageSetter"%>
 <%@page import="phoenix.mes.content.Dictionary.Entry"%>
-<% Dictionary dict = (Dictionary)session.getAttribute("Dictionary"); %>
+<% 
+	Dictionary dict;
+	if(session.getAttribute("Dictionary") != null){
+		dict = (Dictionary)session.getAttribute("Dictionary"); 
+	}
+	else
+	{
+		LanguageSetter setter = new LanguageSetter();
+		OperatingLanguage language = setter.languageSetup(request,response);
+		dict = new Dictionary(language);
+		session.setAttribute("Dictionary", dict);
+	}
+
+%>
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <script src="${pageContext.request.contextPath}/Public/js/jquery-3.3.1.js"></script>
@@ -15,9 +31,14 @@
 <script src="${pageContext.request.contextPath}/Public/js/bootstrap.js"></script>
 <script src="${pageContext.request.contextPath}/Public/js/script.js"></script>
 <script src="${pageContext.request.contextPath}/Public/js/language.js"></script>
+<script src="${pageContext.request.contextPath}/Public/js/datepicker.js"></script>
 <link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/Public/icons/pm_logo_mini.ico"/>
+
+
+
     <style>
     <%@ include file="/Public/css/bootstrap.min.css"%>
+    <%@ include file="/Public/css/datepicker.css"%>
     <%@ include file="/Public/css/bootstrap-grid.min.css"%>
     <%@ include file="/Public/css/gijgo.min.css"%>
     <%@ include file="/Public/css/Style.css"%>
@@ -37,3 +58,18 @@ $(document).ready(function () {
 </script>
 </head>
 <body> 
+<div id="lang_div">
+	<div  onclick="selectLanguage(this)" class="lang_bub" class="lang_bub" id="en">
+		<img class="lang_icon" src="${pageContext.request.contextPath}/Public/icons/EN.svg">
+	</div>
+	<div onclick="selectLanguage(this)" class="lang_bub" class="lang_bub" id="de">
+		<img class="lang_icon" src="${pageContext.request.contextPath}/Public/icons/DE.svg">
+	</div>
+	<div onclick="selectLanguage(this)" class="lang_bub" class="lang_bub" id="hu">
+		<img class="lang_icon" src="${pageContext.request.contextPath}/Public/icons/HU.svg">
+	</div>
+</div>
+<div class='countDownSpan'>
+<p class='w-50 float-left'>Time:</p>
+<span class='w-50 float-right' id="counterSpan"></span>
+</div>

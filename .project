@@ -50,9 +50,29 @@
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/HU.svg</location>
 		</link>
 		<link>
-			<name>WebContent/Public/icons/calendar.svg</name>
+			<name>WebContent/Public/icons/backArrowgray.svg</name>
 			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/calendar.svg</location>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/backArrowgray.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/btn_settings.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/btn_settings.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/btn_vision.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/btn_vision.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/btn_wscontrol.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/btn_wscontrol.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/cross-mark.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/cross-mark.svg</location>
 		</link>
 		<link>
 			<name>WebContent/Public/icons/delete-sign.svg</name>
@@ -60,34 +80,34 @@
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/delete-sign.svg</location>
 		</link>
 		<link>
-			<name>WebContent/Public/icons/down-arrow.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/down-arrow.svg</location>
-		</link>
-		<link>
 			<name>WebContent/Public/icons/letter-x.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/letter-x.svg</location>
 		</link>
 		<link>
-			<name>WebContent/Public/icons/list.svg</name>
+			<name>WebContent/Public/icons/logoutGry.svg</name>
 			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/list.svg</location>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/logoutGry.svg</location>
 		</link>
 		<link>
-			<name>WebContent/Public/icons/right-arrow.svg</name>
+			<name>WebContent/Public/icons/padlock.svg</name>
 			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/right-arrow.svg</location>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/padlock.svg</location>
 		</link>
 		<link>
-			<name>WebContent/Public/icons/sketch.svg</name>
+			<name>WebContent/Public/icons/pm_logo_normal.svg</name>
 			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/sketch.svg</location>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/pm_logo_normal.svg</location>
 		</link>
 		<link>
 			<name>WebContent/Public/icons/up-arrow.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/up-arrow.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/warning.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/warning.svg</location>
 		</link>
 		<link>
 			<name>WebContent/Public/icons/wrench.svg</name>
@@ -100,9 +120,9 @@
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/js/bootstrap.js</location>
 		</link>
 		<link>
-			<name>WebContent/Public/json/langsrc.json</name>
+			<name>WebContent/Public/pdf/proba.pdf</name>
 			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/json/langsrc.json</location>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/pdf/proba.pdf</location>
 		</link>
 	</linkedResources>
 </projectDescription>

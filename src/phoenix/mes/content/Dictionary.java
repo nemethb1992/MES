@@ -1,8 +1,6 @@
 package phoenix.mes.content;
 
-
-import de.abas.erp.common.type.enums.EnumLanguageCode;
-
+import phoenix.mes.OperatingLanguage;
 
 public class Dictionary {
 
@@ -13,6 +11,7 @@ public class Dictionary {
 		NEXT("Tovább","Weiter","Next"),
 		LOGIN("Bejelentkezés","Login","Login"),
 		WORKSTATION("Munkaállomás","Arbeitsplatz","Workstation"),
+		WORKSTATION_NAME("Munkaállomás neve","Arbeitsplatz Name","Workstation name"),
 		WORKSHEET_NO("Munkalapszám","Arbeitsschein-Nr.","Worksheet No."),
 		ARTICLE("Cikkszám","Artikel-Nr.","Article"),
 		SEARCH_WORD("Keresőszó","Suchwort","Search word"),
@@ -20,8 +19,13 @@ public class Dictionary {
 		PLACE_OF_USE("Felhasználás","Verwendung","Place of use"),
 		REMAINING_TIME("Hátralévő idő","Restlaufzeit","Remaining time"),
 		TASK_START("Feladat indítása","Arbeit starten","Task start"),
+		START_TIME("Indítás ideje","Startzeit","Start time"),
+		END_TIME("Várható befejezés","Erwarteter Abschluss","Expected completion"),
 		INTERRUPT("Megszakítás","Abbrechen","Interrupt"),
 		SUBMIT("Lejelentés","Rückmeldung","Submit"),
+		EXECUTION_NO("Végrehajtás száma","Implementierungsnummer","Implementation number"),
+		GET_STARTED("Tervezett kezdés","Geplanter Start","Planned start"),
+		CALCULATED_PROD_TIME("Gyártási idő","Produktionszeit","Production time"),
 		OPEN_QUANTITY("Nyitott mennyiség","offene Menge","Open quantity"),
 		FINISHED_QUANTITY("Kész mennyiség","Fertigmenge","Finished quantity"),
 		SEND("Küldés","Senden","Send"),
@@ -42,6 +46,7 @@ public class Dictionary {
 		LOGGED_IN("Bejelentkezve:","Angemeldet:","Logged in:"),
 		LOGOUT("Kijelentkezés","Abmelden","Logout"),
 		SELECT_AN_AREA("Válasszon területet!","Wählen Sie einen Bereich!","Select an area!"),
+		SELECT_A_WORKSTATION("Válasszon állomást!","Wählen Sie eine Arbeitsstation!","Select a workstation!"),
 		REFRESH("Frissítés","Aktualisieren","Refresh"),
 		ASSIGNED_TASKS("Hozzárendelt feladatok","zugeordnete Arbeitsgänge","Assigned tasks"),
 		TASK_NUMBER("Munkaszám","Betriebsauftrag","Task number"),
@@ -55,13 +60,15 @@ public class Dictionary {
 		SAVE("Mentés","Speichern","Save"),
 		STATION("Állomás:","Arbeitsplatz:","Station:"),
 		TASKS("Feladatok","Aufgaben","Tasks"),
+		TASK("Feladat","Aufgabe","Task"),
 		STATIONS("Állomások","Arbeitsplätze","Stations"),
+		LOGIN_FAILED("Sikertelen bejelentkezés","Anmeldung fehlgeschlagen","Login failed"),
 		IDS("Azonosítók","IDs","IDs");
 
 		private final String hungarianText;
-		
+
 		private final String germanText;
-		
+
 		private final String englishText;
 
 		private Entry(String hungarianText, String germanText, String englishText) {
@@ -70,18 +77,18 @@ public class Dictionary {
 			this.englishText = englishText;
 		}
 
-		public String getTranslationIn(EnumLanguageCode language) {
+		public String getTranslationIn(OperatingLanguage language) {
 			switch (language) {
-				case German:
+				case de:
 					return germanText;
-				case English:
+				case en:
 					return englishText;
-				case Hungarian:
+				case hu:
 				default:
 					return hungarianText;
 			}
 		}
-		
+
 		public String getHungarianText() {
 			return hungarianText;
 		}
@@ -89,20 +96,20 @@ public class Dictionary {
 		public String getGermanText() {
 			return germanText;
 		}
-	
+
 		public String getEnglishText() {
 			return englishText;
 		}
 
 	}
 
-	protected final EnumLanguageCode language;
+	protected final OperatingLanguage language;
 
-	public Dictionary(EnumLanguageCode language) {
+	public Dictionary(OperatingLanguage language) {
 		this.language = language;
 	}
 
-	public EnumLanguageCode getLanguage() {
+	public OperatingLanguage getLanguage() {
 		return language;
 	}
 

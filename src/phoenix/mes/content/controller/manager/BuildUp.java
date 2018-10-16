@@ -28,7 +28,7 @@ public class BuildUp extends HttpServlet {
 		try {
 			list = postgreSql.sqlQuery(command,"long");
 			for (String item : list) {
-				station += "<div class='tmts_stationBtnDivCont col px-0' value='"+item+"' OnClick='PC_Select(this)'><input disabled class='si1'value='"+item+"'></div>";
+				station += "<div class='tmts_stationBtnDivCont col-12 px-0' value='"+item+"' OnClick='PC_Select(this)'><input disabled class='si1'value='"+item+"'></div>";
 			}
 			layout.add(station);
 		} catch (SQLException e) {

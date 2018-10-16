@@ -35,14 +35,17 @@
 }
 
 .refresh_btn {
-	height: 100%;
-	width: 50px;
-	float: right;
-	background-image: url(Public/icons/reload.svg);
-	background-size: 50%;
-	background-repeat: no-repeat;
-	background-position: center;
 	cursor: pointer;
+}
+.datepicker_own {
+font-size: 14px;
+    background: #efefef;
+    padding-left: 15px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+.refresh_btn:hover {
+	background: #e6e6e6;
 }
 
 .date-button {
@@ -53,10 +56,12 @@
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
-    margin: 6px;
+    margin-left: 6px;
+    margin-right: 6px;
     border: none;
     border-bottom-right-radius: 5px;
     border-top-right-radius: 5px;
+    transition: background-size 0.2s, background 0.3s;
 }
 .date-button:hover {
 	background: #d9d9d9;
@@ -65,54 +70,30 @@
 }
 .date-null
 {
-    background-size: 27%;
+    background-size: 25px;
 	background-image: url(Public/icons/delete-sign.svg);
 }
 .date-null:hover
 {
-    background-size: 27%;
+    background-size: 27px;
 	background-image: url(Public/icons/delete-sign.svg);
 }
-.date-refresh
-{
-	margin-right: 10px; 
-	border-radius: 0px;
-    background-size: 25%;
-	background-image: url(Public/icons/searchSign.svg);
-}
-.date-refresh:hover
-{
-    background-size: 25%;
-	background-image: url(Public/icons/searchSign.svg);
-}
 .tmts_stationBtnDivCont {
-	height: 44px;
+	height: 50px;
 	background: white;
-	border-left: 5px solid #dc3545;
-	border-bottom: 1px solid #e0e6e8;
+	border-bottom: 1px solid #d6d6d6;
 	background-image: url(Public/icons/computerSignGray.svg);
-	background-size: 13%;
+	background-size: 25px;
 	background-repeat: no-repeat;
-	background-position-x: 93%;
+	background-position-x: 96%;
 	background-position-y: center;
 	cursor: pointer;
 	z-index: 0;
 }
-
-
-.TM_btn_select {
-	padding-top: 50%;
-}
-
-.TM_btn_select p {
-	color: #989898;
-	text-align: center;
-	font-size: larger;
-	padding-top: 10%;
-}
-
-.TM_btn_select img {
-	width: 50%;
+.tmts_stationBtnDivCont:hover {
+	/*     border: 1px solid #dc3545; */
+	background-color: #efefef;
+	z-index: 1;
 }
 
 .TM_content_layer {
@@ -124,26 +105,18 @@
 	height: 100%;
 }
 
-.TM_backBtn {
-	display: inline-block;
-	height: 40px;
-	cursor: pointer;
-	margin: 15px 0 0 15px;
-}
 
 .selectBackBtn {
 	margin: 0 0 10px 0;
+	border-radius: 0px;
 }
-
-.TM_backBtn p {
-	padding: 10px;
-	display: inline-block;
-	color: #989898;
+.selectBackBtn:hover {
+	background: #ff9797;
 }
 
 .TM_backBtn img {
-	width: 30px;
-	height: 30px;
+	width: 50px;
+	height: 50px;
 	padding: 5px;
 	float: left;
 }
@@ -248,21 +221,7 @@
 	background: white;
 }
 
-.tmts_stationBtnDivCont:hover {
-	/*     border: 1px solid #dc3545; */
-	background-color: #ebebeb;
-	/* 	border-left: 5px solid #dc3545; */
-	/* 	box-shadow: 0px 0px 15px #9e9a9a; */
-	/* 	-moz-box-shadow: 0px 0px 15px #9e9a9a; */
-	/*     -webkit-box-shadow: 0px 0px 15px #9e9a9a; */
-	/*     z-index: 9999; */
-}
-
-.sortStationListCont {
-	background: white;
-}
-
-.tmts_stationContainer {
+.station-container {
 	overflow-y: visible;
 	overflow-x: hidden;
 	max-height: 582px;
@@ -273,8 +232,8 @@
 	background: transparent;
 	border: none;
 	font-size: 14px;
-	color: #888888;
-	max-width: 70%;
+	color: #737373;
+	width: 100%;
 	padding: 15px 0 0 10px;
 }
 
@@ -288,33 +247,29 @@
 	float: left;
 }
 
-.cont_header {
-	background: #dc3545;
-	border-bottom: 1px solid #dc3545;
+.cont_header 
+{
+	background: white;
+	border: 1px solid #d6d6d6;
 	width: 100%;
-	z-index: 9999;
-	height: 50px;
-}
-
-.input-icon-holderDiv {
-	float: left;
-	height: 50px;
+	z-index: 4;
+	height: 65px;
 }
 
 
-.input-icon-holderDiv input {
-	float: left;
-	font-size: medium;
-	padding: 17px 0 0 0;
-	text-align: left;
-	background: none;
+.stationName-holderDiv input {
+	width: 80%;
+}
+.actual-time-tm
+{
+	margin-left: 185px;
 }
 
-.icon-form {
-	height: 25px;
-	margin: 13px;
-	float: left;
-}
+/* .icon-form { */
+/* 	height: 25px; */
+/* 	margin: 13px; */
+/* 	float: left; */
+/* } */
 
 .dnd-icon {
 	width: 4.5% !important;
@@ -336,8 +291,10 @@
 }
 
 .sortContDiv_nav {
-	height: 50px;
-	border-bottom: 1px solid #e0e6e8;
+	height: 65px;
+	border: 1px solid #d6d6d6;
+	z-index: 10;
+	background: white;
 }
 
 .abas-list-head, .abas-list-holder {
@@ -352,8 +309,7 @@
 
 
 .sort-list-holder {
-	height: 530px;
-	background: #efefef;
+	max-height: 730px;
 }
 
 .search-icon-form {
@@ -372,9 +328,7 @@
 	margin-left: 0px;
 }
 
-.stationName-holderDiv input {
-	width: 175px;
-}
+
 
 .dnd-container {
 	border: 1px solid #bbbbbb;
@@ -382,13 +336,17 @@
 	background: white;
 }
 
+/* .dnd-container:hover { */
+/* 	background: white; */
+/* } */
+
 .dnd-container:mousedown {
 	background: red;
 }
 
 .dnd-frame {
     margin: 5px 0px 0px 0px;
-    max-height: 515px;
+    max-height: 100%;
     overflow-y: scroll;
 }
 
@@ -409,79 +367,146 @@
 	color: black;
 	font-size: medium;
 	background: none;
-	width: 100%;
 	word-wrap: break-word;
 }
 
 .dnd-input-div input {
-	font-size: 15px;
-	height: 20px;
+	font-size: 12px;
+	border-radius: 5px;
+}
+.dnd-input-div textarea {
+	font-size: 12px;
+	width: 100%;
+	resize: none;
+	overflow-y: auto;	  
 }
 
 .dnd-input-div p {
-	font-size: 12px;
+	font-size: 11px;
 	margin-bottom: 0px;
 	color: #a7a7a7;
 }
 
 .task-panel-button {
 	cursor: pointer;
-	background: white;
-	background-image: url(Public/icons/right-arrow.svg);
-	background-size: 50%;
+	background: transparent;
+	border-color: transparent;
+	background-image: url(Public/icons/add.svg);
+	background-size: 60%;
 	background-repeat: no-repeat;
 	background-position: center;
-	transition: 0.5s;
+	transition: 0.2s;
 }
 
 .task-panel-button:hover {
 	background: white;
-	background-image: url(Public/icons/right-arrow.svg);
-	background-size: 55%;
+	background-image: url(Public/icons/add.svg);
+	background-size: 63%;
 	background-repeat: no-repeat;
 	background-position: center;
 	box-shadow: 0px 0px 10px #9e9a9a;
 	-moz-box-shadow: 0px 0px 10px #9e9a9a;
-	-webkit-box-shadow: 0px 0px 10px #9e9a9a;
+	-webkit-box-shadow: 0px 0px 10px #9e9a9a;;
+	border-left: 1px solid #e0e6e8;
 }
-
-.up-task-button {
-	background-image: url(Public/icons/up-arrow.svg);
-}
-
-.up-task-button:hover {
-	background-image: url(Public/icons/up-arrow.svg);
-}
-
-.remove-task-button {
-	background-image: url(Public/icons/letter-x.svg);
-}
-
-.remove-task-button:hover {
-	background-image: url(Public/icons/letter-x.svg);
-}
-
-.down-task-button {
-	background-image: url(Public/icons/down-arrow.svg);
-}
-
-.down-task-button:hover {
-	background-image: url(Public/icons/down-arrow.svg);
-}
-
-.mini-button {
+.mini-button,.mini-button:hover
+{
 	background-size: 25%;
+	transition: 0.1s;
+}
+.up-task-button,.up-task-button:hover {
+	background-image: url(Public/icons/up-arrow.svg);
 }
 
-.mini-button:hover {
-	background-size: 30%;
+.down-task-button,.down-task-button:hover {
+	background-image: url(Public/icons/down-arrow.svg);
+}
+.remove-task-button,.remove-task-button:hover {
+	background-image: url(Public/icons/letter-x.svg);
+	background-size: 18%;
 }
 
-.dnd-input-cont {
-	
-}
+
 
 .dnd-downer {
 	/* 	display: none; */
 	
+}
+.article-col
+{
+	-ms-flex: 0 0 110px;
+    flex: 0 0 110px;
+}
+
+.placeofuse-col
+{
+	-ms-flex: 0 0 12%;
+    flex: 0 0 12%;
+}
+
+
+.topNav
+{
+	height: 70px !important;
+    background: transparent;
+    text-align: center;
+    color: white;
+}
+.top-nav-button
+{
+	width: 80px;
+	border-left: 1px solid #dedede;
+	border-bottom: 1px solid #dedede;
+	
+}
+
+
+.activity-button {
+    margin-top: 5%;
+    padding-top: 50%;
+    padding-bottom: 50%;
+    background: white;
+}
+
+.activity-button p {
+	color: #737373;
+	text-align: center;
+	font-size: larger;
+	padding-top: 10%;
+}
+
+.activity-button img {
+	width: 50%;
+	max-width: 200px;
+}
+
+.my-col-1
+{
+	-ms-flex: 0 0 11%;
+    flex: 0 0 11%;
+}
+.my-col-7,.my-col-6,.my-col-8
+{
+	-ms-flex: 0 0 9%;
+    flex: 0 0 9%;
+}
+.my-col-2
+{
+	-ms-flex: 0 0 14%;
+    flex: 0 0 14%;
+}
+.my-col-3,.my-col-4
+{
+	-ms-flex: 0 0 12%;
+    flex: 0 0 12%;
+}
+.col-nav-logout, .col-nav-back, .col-nav-language
+{
+	-ms-flex: 0 0 100px;
+    flex: 0 0 100px;
+}
+.col-button
+{
+	-ms-flex: 0 0 40px;
+    flex: 0 0 40px;
 }

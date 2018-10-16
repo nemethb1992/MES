@@ -5,9 +5,13 @@
 	padding: 0px;
 	outline: 0px;
 }
+
 .element-shadow
 {
 	box-shadow: 0 22px 100px #999999;
+}
+html,body{
+    height:100%;
 }
 @font-face {
 	font-family: mediumFont;
@@ -19,29 +23,24 @@
 	src: url("Public/fonts/Montserrat-Light.ttf");
 }
 
-.datepicker_own {
-font-size: 14px;
-    background: #efefef;
-    padding-left: 15px;
-    margin: 6px 0 6px 0px;
-    border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px;
-}
 
-.btn_logout {
+.btn_logout-gray{
+	height: 100%;
+	width: 100%;
 	cursor: pointer;
 	background: transparent;
-	background-image: url(Public/icons/logout.svg);
-	background-size: 35px;
+	background-image: url(Public/icons/logoutGry.svg);
+	background-size: 30px;
 	background-repeat: no-repeat;
 	background-position: center;
-	border-radius: 0 0 0 10px;
+	transition: 0.2s;
+	border-left: 1px solid #dedede;
 }
 
-.btn_logout:hover {
+.btn_logout-gray:hover {
 	background: #ff9797;
-	background-image: url(Public/icons/logout.svg);
-	background-size: 35px;
+	background-image: url(Public/icons/logoutGry.svg);
+	background-size: 30px;
 	background-repeat: no-repeat;
 	background-position: center;
 }
@@ -65,6 +64,7 @@ input {
 }
 
 body {
+	height: 100%;
 	background: transparent;
 	font-family: lightFont;
 	color: #888888;
@@ -93,10 +93,26 @@ html {
 }
 
 .mycontainer {
-	min-height: 700px;
+	min-height: 900px;
 	border-radius: 10px;
 	box-shadow: 0 22px 100px #999999;
 	background: #f5f5f5;
+}
+
+#leftwrap
+{
+    background: #dc3545;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    text-align: center;
+    color: white;
+}
+
+
+
+.LogoMiniPM
+{
+	height: 35px;
 }
 
 .titleStyle {
@@ -111,9 +127,9 @@ html {
 }
 
 .light-shadow {
-	box-shadow: 0px 1px 5px #bbbbbb;
-	-moz-box-shadow: 0px 1px 5px #bbbbbb;
-	-webkit-box-shadow: 0px 1px 5px #bbbbbb;
+	box-shadow: 0px 2px 12px #bfbfbf;
+	-moz-box-shadow: 0px 2px 12px #bfbfbf;
+	-webkit-box-shadow: 0px 2px 12px #bfbfbf;
 }
 
 .very-light-shadow {
@@ -148,12 +164,13 @@ html {
 	float: left;
 	min-width: 35px;
 	height: 35px;
-	top: 20px;
+	bottom: 20px;
 	left: 20px;
 	/*border: 1px solid gray;*/
 	border-radius: 10px;
 	box-shadow: 0px 0px 10px #979797;
 }
+
 
 .lang_icon {
 	width: 25px;
@@ -169,7 +186,10 @@ html {
 	border-radius: 10px;
 	display: inline-block;
 }
-
+.actual-time
+{
+	color: #9f9f9f;
+}
 .lang_bub:hover {
 	background: #f3f3f3;
 }
@@ -177,4 +197,17 @@ html {
 .lang_bub:active {
 	background: #E2E1D9;
 	box-shadow: 0px 0px 5px #ff6666 inset;
+}
+
+.countDownSpan
+{
+	position: absolute;
+		bottom:0px;
+		right: 10px;
+		width: 110px;
+}
+
+.logged-name {
+    font-size: 21px;
+    text-align: left;
 }

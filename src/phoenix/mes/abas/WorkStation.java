@@ -31,25 +31,25 @@ public interface WorkStation extends Serializable {
 	/**
 	 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa (AbasDate.INFINITY, ha nincs szükség időkorlátra).
 	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A vizsgált kezdődátum-intervallumba eső, a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt feladatok listája.
+	 * @return A vizsgált kezdődátum-intervallumba eső, a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt gyártási feladatok listája.
 	 */
 	List<Task> getUnassignedTasks(AbasDate startDateUntil, AbasConnection<?> abasConnection);
 
 	/**
 	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A munkaállomáshoz hozzárendelt, de felfüggesztett feladatok listája.
+	 * @return A munkaállomáshoz hozzárendelt, de felfüggesztett gyártási feladatok listája.
 	 */
 	List<Task> getSuspendedTasks(AbasConnection<?> abasConnection);
 
 	/**
 	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A munkaállomáshoz hozzárendelt és végrehajtható feladatok listája.
+	 * @return A munkaállomáshoz hozzárendelt és végrehajtható gyártási feladatok listája.
 	 */
 	List<Task> getExecutableTasks(AbasConnection<?> abasConnection);
 
 	/**
 	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A munkaállomás következő végrehajtható feladata (null, ha a munkaállomás feladatlistája üres).
+	 * @return A munkaállomás következő végrehajtható gyártási feladata (null, ha a munkaállomás feladatlistája üres).
 	 */
 	Task getNextExecutableTask(AbasConnection<?> abasConnection);
 

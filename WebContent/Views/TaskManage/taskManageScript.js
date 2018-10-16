@@ -1,250 +1,231 @@
 var SelectedStation = null;
 var path = location.pathname.split('/')[1];
+var level = 0;
+
 $(document).ready(function(){
-	TM_startUp();
-	ButtonScriptElements();
-	dnd_sortlist_scripts();
-	collect_list_ws();
-	languageStartUp('2');
-	setToday(".datepicker_own");
+	TaskManagerStartUp();
+	FirstStationList();
 });
 
 
-
-function PC_Select(item)
+function TaskManagerStartUp()
 {
-	var pc = $(item).attr("value");
-	$.ajax({
-	    url:  '/'+path+'/StationPC',
-	    data: {
-	    pc_name: pc
-	    },
-	    success: function (respond) {
-	    	//TODO Oszlopfrissítések
-	    	  $( ".tmts_stationContainer" ).empty();
-	    	  $( ".tmts_stationContainer" ).append(respond);
-
-	    }
+	setToday();
+	ApplicationCountDown();
+	ButtonScriptElements();
+	WorkStationItemCollect();
+	$('#TM_Select_container_activity').show();
+	DisplayTime();
+	datepicker();
+}
+function datepicker()
+{
+	$('.datepicker_own').datepicker({
+		format: 'yyyy-mm-dd',
+		autoclose: true,
+		keyboardNavigation : true
+//		language: 'hu'
+	}).on('changeDate', function (ev) {
+		ListLoader();
 	});
 }
 
-function Group_Select(item)
+function ListLoader()
 {
-	var group = $(item).attr("value");
-	$.ajax({
-	    url: '/'+path+'/StationGroup',
-	    data: {
-	    group_item: group
-	    },
-	    success: function (respond) {
-	    	  $( ".tmts_stationContainer" ).empty();
-	    	  $( ".tmts_stationContainer" ).append(respond);
-	    }
-	});
-}
-function Station_Select(item)
-{
-	var station = $(item).attr("value");
-	$(".station_label").val(station.replace("!"," - "));
-	SelectedStation = station;
-	SessionStoreStation(station);
-	abasListLoader();
-}
-function abasListLoader()
-{
-	var date = $(".datepicker_own").val();
-	if(date != null && date != "" && date != "undefinied")
+
+	if(level > 1)
 	{
-		date = date.split('-')[0] + date.split('-')[1] + date.split('-')[2];
-	}
-	else
-	{
-		date = null;
-	}
-	console.log(date);
-	$( ".dndf1" ).empty();
-	$('.abas-list').append("<div class='loaderCycle mx-auto mt-5  abas-cycle'></div>");
-	$.ajax({
-	    url:  '/'+path+'/AbasTaskList',
-	    data: {
-	     date: date
-	    },
-	    success: function (respond) {
+		if(workstationListLoader() == true)
+		{
+			var date = $(".datepicker_own").val();
+			if(date != null && date != "" && date != "undefinied")
+			{
+				date = date.split('-')[0] + date.split('-')[1] + date.split('-')[2];
+			}
+			else
+			{
+				date = null;
+			}
+			$( ".dndf1" ).empty();
+			loadingAnimation('.abas-list-holder');
+			$.ajax({
+				url:  '/'+path+'/AbasTaskList',
+				data: {
+					date: date
+				},
+				success: function (respond) {
 
-	    	$( ".dndf1" ).empty();
-	    	  $( ".dndf1" ).append(respond);
-	    	
-	    },
-        error: function() {
-	    	$( ".dndf1" ).empty();
-        }  
-	});
+					$( ".dndf1" ).empty();
+					$( ".dndf1" ).append(respond);
+
+				},
+				error: function() {
+					$( ".dndf1" ).empty();
+				}  
+			});
+		}
+	}
+
 }
+function workstationListLoader()
+{
+	if(level > 1)
+	{
+		$( ".dndf2" ).empty();
+		loadingAnimation('.abas-list-holder');
+		$.ajax({
+			url:  '/'+path+'/StationTaskList',
+			success: function (respond) {
 
+				$( ".dndf2" ).empty();
+				$( ".dndf2" ).append(respond);
+			},
+			error: function() {
+				$( ".dndf2" ).empty();
+			
+			}  
+		});
+		return true;
+	}
+
+}
 function SessionStoreStation(station)
 {
 	// Tárolja a kiválasztott állomás nevét egy session változóban.
 	$.ajax({
-	    url:  '/'+path+'/StoreSelectedStation',
-	    data: {
-	     station: station,
-	    },
-	    success: function (respond) {
-	    }
+		url:  '/'+path+'/StoreSelectedStation',
+		data: {
+			station: station,
+		},
+		success: function (respond) {
+		}
 	});
 }
 function AddToList(item)
 {
 	var value = $(item).attr("value");
 	$.ajax({
-	    url:  '/'+path+'/AddToList',
-	    data: {
-	    value: value
-	    },
-	    success: function (respond) {
-	    	console.log(respond);
+		url:  '/'+path+'/AddToList',
+		data: {
+			value: value
+		},
+		success: function (respond) {
+			console.log(respond);
 
-	    }
+		}
 	});
 }
 function RemoveFromList(item)
 {
 	var value = $(item).attr("value");
 	$.ajax({
-	    url:  '/'+path+'/RemoveFromList',
-	    data: {
-		    value: value
-	    },
-	    success: function (respond) {
-	    	console.log(respond);
-	    }
+		url:  '/'+path+'/RemoveFromList',
+		data: {
+			value: value
+		},
+		success: function (respond) {
+			console.log(respond);
+		}
 	});
 }
-function TM_startUp()
-{
-$('#TM_Select_container_activity').show();
-}
-function BuildUp()
-{		
-	$.ajax({
-    url:  '/'+path+'/BuildUp',
-    success: function (respond) {
-    	  $( ".tmts_stationContainer" ).empty();
-    	  $( ".dndf1" ).empty();
-    	  $( ".dndf2" ).empty();
-    	  $(".station_label").val("");
-    	  $( ".tmts_stationContainer" ).append(respond[0]);
-    }
-});
-	}
+
+
+
 //function TaskSizeSwitch(item)
 //{
-//		var height = $(item).height();
-//		if(height < 100)
-//		{
-//		$('.dnd-container').animate({height:'60px'}, 120)
-//		$('.dnd-downer').hide();
-//		$(item).animate({height:'150px'}, 120)
-//		$(item).find('.dnd-downer').show();
-//		}
-//		else{
-//			$(item).animate({height:'50px'}, 120)
-//			$(item).find('.dnd-downer').hide();
-//		}
-//		
-//	
+//var height = $(item).height();
+//if(height < 100)
+//{
+//$('.dnd-container').animate({height:'60px'}, 120)
+//$('.dnd-downer').hide();
+//$(item).animate({height:'150px'}, 120)
+//$(item).find('.dnd-downer').show();
 //}
-function setToday(datepicker)
-{
-	
-	var d = new Date();
-	function month(){
-		if((d.getMonth()+1)<10){
-			return ("0"+(d.getMonth()+1));
-			}
-		else{
-			return (d.getMonth()+1);
-		}
-		
-	}
-	var strDate = d.getFullYear() + "-" + month() + "-" + d.getDate();
-	$(datepicker).val(strDate);
-}
-function ButtonScriptElements()
+//else{
+//$(item).animate({height:'50px'}, 120)
+//$(item).find('.dnd-downer').hide();
+//}
+
+
+//}
+function setToday()
 {
 
+	var now = new Date();
+
+	var day = ("0" + now.getDate()).slice(-2);
+
+	var month = ("0" + (now.getMonth() + 1)).slice(-2);
+
+	var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+
+	$('.datepicker_own').val(today);
+}
+
+function ButtonScriptElements()
+{
 	$(".date-refresh").click(function(){
-		abasListLoader();
+		ListLoader();
 	});
-		$(".date-null").click(function(){
-		setToday(".datepicker_own");
-		abasListLoader();
+
+	$(".date-null").click(function(){
+		$('.datepicker_own').val(null);
+		ListLoader();
 	});
+
 	$('#btn_select_1').click(function(){
-		BuildUp();
+		FirstStationList();
 		$('.select-panel').hide();
 		$('#TM_Select_container1').css("display", "flex");
 	});
-	
+
 	$('.refresh_btn').click(function(){
-  	  $( ".dndf1" ).empty();
-  	  $( ".dndf2" ).empty();
+		$(".dndf1").empty();
+		$(".dndf2").empty();
 		setToday(".datepicker_own");
 		SessionStoreStation();
-		BuildUp();
+		FirstStationList();
 	});
+
 	$('#btn_select_2').click(function(){
 		$('.select-panel').hide();
 		$('#TM_Select_container2').show();
 	});
+
 	$('#btn_select_3').click(function(){
 		$('.select-panel').hide();
 		$('#TM_Select_container3').show();
 	});
+
 	$('.TM_backBtn').click(function(){
 		$('.select-panel').hide();
 		$('#TM_Select_container_activity').show();
 	});
 
-	$('.tmts_stationBtnDivCont').click(function(){
-		$('.tmts_stationBtnDivCont').css({'background-image':'','background-color' : '','border-left':''})
-		$(this).css({'background-image':'url(Public/icons/computerSignRed.svg)','background-color' : '#ebebeb','border-left':'5px solid #ff6666'})
-		var AllomasNev = $(this).children('.si1').val();
-		$('.ts_wsNameInp').val(AllomasNev);
-	});
 	$('.ts_searchInp').focusin(function(){
 		$(this).css({'width':'55%','max-width':'200px'});
 	});
+
 	$('.ts_searchInp').focusout(function(){
 		if($(this).val() == "")
-			{
-				$(this).css('width','');
-			}
+		{
+			$(this).css('width','');
+		}
 	});
-    $('.AbasSearchImg').click(function(){
-    	$('.AbasSearchIn').focus();
-    });
-    $('.WSSearchImg').click(function(){
-    	$('.WSSearchIn').focus();
-    });
 
-}
-function dnd_sortlist_scripts()
-{
-//	$('.dndf1, .dndf2, #stationVisionHolder').sortable({
-//		connectWith: ".dndf1, .dndf2",
-//		stop: function(){
-//			collect_list_ws();
-//		}
-//	});
-//	$('.dndf1, .dndf2, #stationVisionHolder').disableSelection();
-	
+	$('.AbasSearchImg').click(function(){
+		$('.AbasSearchIn').focus();
+	});
 
+	$('.WSSearchImg').click(function(){
+		$('.WSSearchIn').focus();
+	});
 }
 
-// Data control scripts #################
 
-function collect_list_ws()
+//Data control scripts #################
+
+function WorkStationItemCollect()
 {
 	var list = [];
 	$('.ws-list-holder .dnd-upper .dnd-in1').each(function(){
@@ -252,12 +233,57 @@ function collect_list_ws()
 		list.push(value);
 	})
 	if(list.length == 0)
-		{
-//			$('.ws-list-holder .dnd-frame').append("<p class='appended-text'>Üres lista</p>");
-		}
+	{
+//		$('.ws-list-holder .dnd-frame').append("<p class='appended-text'>Üres lista</p>");
+	}
 	else
-		{
-			$('.appended-text').remove();
-		}
-	console.log(list);
+	{
+		$('.appended-text').remove();
+	}
 }
+
+function FirstStationList()
+{
+	$.ajax({
+		url:  '/'+path+'/WorkstationControl',
+		success: function (view) {
+//			$( ".dndf1" ).empty();
+			$( ".dndf2" ).empty();
+			$(".station_label").val("");
+			$( ".station-container" ).empty();
+			$( ".station-container" ).append(view);
+			level = 0;
+		}
+	});
+}
+
+function StationItemSelect(item)
+{
+	$( ".station-container" ).empty();
+	if(level < 3)
+		level++;
+	var value = $(item).attr("value");
+	$.ajax({
+		url:  '/'+path+'/WorkstationControl',
+		data: {
+			element: value,
+			level: level
+		},
+		success: function (view) {
+			$( ".station-container" ).append(view);
+		}
+	});
+}
+
+function clickOnStation(item)
+{
+
+	$(this).css({'background-image':'url(Public/icons/computerSignRed.svg)','background-color' : '#ebebeb','border-left':'5px solid #ff6666'});
+	var station = $(item).attr("value");
+	$(".station_label").val(station.split("!")[2] + "  (" + station.split("!")[0] +"-"+ station.split("!")[1]+")");
+	SelectedStation = station;
+	SessionStoreStation(station);
+	ListLoader();
+
+}
+

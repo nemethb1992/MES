@@ -11,6 +11,7 @@ import de.abas.erp.common.type.Id;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Gyártási feladat típusa.
@@ -30,7 +31,7 @@ public interface Task extends Serializable {
 		String getWorkSlipNo();
 
 		/**
-		 * @return A feladat elkezdésének (tervezett) napja.
+		 * @return A gyártási feladat elkezdésének (tervezett) napja.
 		 */
 		AbasDate getStartDate();
 
@@ -124,16 +125,64 @@ public interface Task extends Serializable {
 		 */
 		String getStockUnit();
 
+		/**
+		 * @return A kalkulált gyártási átfutási idő (normaidő) munkaórában.
+		 */
+		BigDecimal getCalculatedProductionTime();
+
+		/**
+		 * @return A gyártási feladathoz kapcsolódó darabjegyzék.
+		 */
+		List<BomElement> getBom();
+
 	}
 
 	/**
-	 * @return A feladathoz tartozó munkalap azonosítója.
+	 * Gyártási feladathoz kapcsolódó darabjegyzék elemeit leíró típus.
+	 * @author szizo
+	 */
+	interface BomElement extends Serializable {
+
+		/**
+		 * @return A beépülő cikk hivatkozási száma.
+		 */
+		String getIdNo();
+
+		/**
+		 * @return A beépülő cikk keresőszava.
+		 */
+		String getSwd();
+
+		/**
+		 * @return A beépülő cikk megnevezése az aktuálisan beállított kezelőnyelven.
+		 */
+		String getDescription();
+
+		/**
+		 * @return A beépülő cikk második megnevezése.
+		 */
+		String getDescription2();
+
+		/**
+		 * @return A beépülési mennyiség (egy késztermékre vonatkozóan).
+		 */
+		BigDecimal getQuantityPerProduct();
+
+		/**
+		 * @return A mennyiségi egység (raktáregység).
+		 */
+		String getStockUnit();
+
+	}
+
+	/**
+	 * @return A gyártási feladathoz tartozó munkalap azonosítója.
 	 */
 	Id getWorkSlipId();
 
 	/**
 	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A feladat elkezdésének (tervezett) napja.
+	 * @return A gyártási feladat elkezdésének (tervezett) napja.
 	 */
 	AbasDate getStartDate(AbasConnection<?> abasConnection);
 

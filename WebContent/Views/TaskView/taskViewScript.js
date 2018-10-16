@@ -2,138 +2,229 @@ var path = location.pathname.split('/')[1];
 
 $(document).ready(function(){
 	TabControlEventHolder();
-	DataSheet_Load();
-	languageStartUp('3');
+	ApplicationCountDown();
+	getView();
+	 DisplayTime();
 });
+
 $(document).keypress(function(e) {
-    if(e.which == 13) {
-    	if($("#submit_input").is(":focus"))
-    		$.ajax({
-    		    url:  '/'+path+'/Submit',
-    		    data:{
-    		    	quantity: $('#submit_input').val()
-    		    },
-    		    success: function (respond) {
-    		    	$("#submit_input").val("");
-    		    	DataSheet_Clear();
-    		    	DataSheet_Load();
-    		    	headerNavBtnDeafult();
-    		    }
-    		});
-    }
+	if(e.which == 13) {
+		if($("#submit_input").is(":focus"))
+			$.ajax({
+				url:  '/'+path+'/Submit',
+				data:{
+					quantity: $('#submit_input').val()
+				},
+				success: function (response) {
+					$("#submit_input").val("");
+					DataSheet_Clear();
+					DataSheet_Load();
+					headerNavBtnDeafult();
+				}
+			});
+	}
 });
-function DataSheet_Load()
+
+function getView(tab = 1)
+{
+	$( "#SwitchPanel" ).empty();
+	loadingAnimation("#SwitchPanel");
+	$.ajax({
+		url:  '/'+path+'/DataSheet',
+		data:{
+			tabNo: tab
+		},
+		success: function (response) {
+			$( "#SwitchPanel" ).empty();
+			$( "#SwitchPanel" ).append(response);
+			setTimer();
+		}
+	});
+
+}
+
+function setTimer()
 {
 	$.ajax({
-	    url:  '/'+path+'/DataSheet',
-	    success: function (respond) {
-	    	Data_Clear();
-	    	Data_Load(respond);
-			//TaskTimer();
-	    }
+		url:  '/'+path+'/Timer',
+		success: function (response) {
+			timerStart(response);
+		}
+	});
+
+}
+
+var counter = null;
+function timerStart(time)
+{
+	if(counter == null)
+	{
+		var count = time.split('.')[0];
+		counter = setInterval(timer, 1000);
+		function timer() {
+			if (parseInt(count) <= 0) {
+				clearInterval(counter);
+				timeUp();
+				return;
+
+			}
+			var temp = count.toHHMMSS();
+			count = (parseInt(count) - 1).toString();
+			$('.timerPanel').html(temp);
+		}
+	}
+};
+var upcounter = null;
+function timeUp()
+{
+	if(upcounter == null)
+	{
+		$("#timerContainer").css("background", "#dc3545");
+		var count = "0";
+		upcounter = setInterval(uptimer, 1000);
+		function uptimer() {
+			console.log("asd");
+			var temp = count.toHHMMSS();
+			count = (parseInt(count) + 1).toString();
+			$('.timerPanel').html(temp);
+		}
+	}
+
+}
+
+function openAsset(item)
+{
+	var value = $(item).attr('value');
+	$.ajax({
+		url:  '/'+path+'/FileHandler',
+		data:{
+			file: value
+		},
+		success: function (response) {
+
+		}
 	});
 }
-function Data_Load(data)
-{
-	  $( "#tab1_container" ).append(data[0]);
-	  $( ".dokumentum-list" ).append(data[1]);
-	  $( "#tab3_container" ).append(data[2]);
-	  $( "#tab4_container" ).append(data[3]);
-}
-function Data_Clear()
-{
-	
-	    	  $( "#tab1_container" ).empty();
-	    	  $( ".dokumentum-list" ).empty();
-	    	  $( "#tab3_container" ).empty();
-	    	  $( "#tab4_container" ).empty();
-}
+
+
+
 function TabControlEventHolder()
 {
 	$('.btn_logout').click(function(){
-		
+
 		$.ajax({url:  '/'+path+'/Home'});
 	})
-$('.btn_leftNavigation').click(function(){
-	$('.btn_leftNavigation').css({'background-color':'', 'color':'','border':''});
-	$(this).css({'background-color':'#f5f5f5','background-size':'24%','border-left':'3px solid #ff6666'});
-});
-$('#btn_lejelentes').click(function(){
-	$('.btn_navHeader').css({'background-color':'', 'color':'','width':'','border':''});
-	$(this).css({'width':'465px','border-right':'3px solid #ff6666'});
-	$('#btn_megszakitas input').css({'display':'none'});
-	$('#btn_lejelentes input').css({'display':'block'});
-});
-$('#btn_megszakitas').click(function(){
-	$('.btn_navHeader').css({'background-color':'', 'color':'','width':'','border':''});
-	$(this).css({'width':'465px','border-left':'3px solid #ff6666'});
-	$('#btn_lejelentes input').css({'display':'none'});
-	$('#btn_megszakitas input').css({'display':'block'});
-});
-$('#navigationContainer').click(headerNavBtnDeafult());
-$('#btn_leftNav_1').click(function(){
-	$('.rightCont').hide();
-	$('#tab1_container').show();
-	headerNavBtnDeafult();
-})
-$('#btn_leftNav_2').click(function(){
-	$('.rightCont').hide();
-	$('#tab2_container').show();
-	headerNavBtnDeafult();
-})
-$('#btn_leftNav_3').click(function(){
-	$('.rightCont').hide();
-	$('#tab3_container').show();
-	headerNavBtnDeafult();
-})
-$('#btn_leftNav_4').click(function(){
-	$('.rightCont').hide();
-	$('#tab4_container').show();
-	headerNavBtnDeafult();
-})
+	$('.btn_leftNavigation').click(function(){
+		$('.btn_leftNavigation').css({'background-color':'', 'color':'','border':''});
+		$(this).css({'background-color':'#f5f5f5','background-size':'24%','border-left':'3px solid #ff6666'});
+	});
+	$('#navigationContainer').click(closeNavButtons());
 
-}
-function headerNavBtnDeafult()
-{
-	$('.btn_navHeader').css({'background-color':'', 'color':'','width':'','border':''});
-	$('#btn_lejelentes input').css({'display':'none'});
-	$('#btn_megszakitas input').css({'display':'none'});
-}
+	$('#btn_leftNav_1').click(function(){
+		closeNavButtons();
+		getView(1);
+	})
+	$('#btn_leftNav_2').click(function(){
+		closeNavButtons();
+		getView(2);
+	})
+	$('#btn_leftNav_3').click(function(){
+		closeNavButtons();
+		getView(3);
+	})
+	$('#btn_leftNav_4').click(function(){
+		closeNavButtons();
+		getView(4);
+	})
 
-function TaskTimer(time)
-{
-	var preNow = new Date().getTime();
-	var targetTime = preNow + time;
-
-	var x = setInterval(function() {
-		var now = new Date().getTime();
-		var distance = targetTime - now;
-		var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-		var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-		var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-		if(distance > 0)
+	$('#btn_lejelentes').click(function(){
+		if(opened != false)
 		{
-			$('.timerPanel').html(hours + ":" + minutes + ":" + seconds);
+			console.log("l1");
+			closeInterupt();
+			openSubmit(this);
 		}
-		if (distance < 0) {
-			clearInterval(x);
-			$('#timerContainer').css({background:'#dc3545'});
-			var downNow = new Date().getTime();
-			var y = setInterval(function() {
-				var now = new Date().getTime();
-				var distance = now - downNow;
-				var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-				var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-				var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-				$('.timerPanel').html(hours + ":" + minutes + ":" + seconds);
-				console.log(hours + ":" + minutes + ":" + seconds);
-//				if (distance < 0) {
-//				clearInterval(y);  
-//				}
-			}, 1000)
-
+		opened = true;
+	});
+	$('#btn_megszakitas').click(function(){
+		if(opened != false)
+		{
+			console.log("r1");
+			closeSubmit();
+			openInterupt(this);
 		}
-	}, 1000)
-
+		opened = true;
+	});
+	$('.btn_navHeader .lejelent-btn').click(function(){
+		opened = false;
+		console.log("l2");
+		closeSubmit();
+	});
+	$('.btn_navHeader .megszak-btn').click(function(){
+		opened = false;
+		console.log("r2");
+		closeInterupt();
+	});
 }
+
+var opened = true;
+
+function openInterupt(item)
+{
+	closeNavButtons();
+	$(item).css({'width':'60%'});
+	$('#btn_megszakitas p').css({'display':'none'});
+	$('#btn_megszakitas .my-nav-container').css({'display':'block'});
+	$('#btn_megszakitas').css({'background':'white'});
+}
+function openSubmit(item)
+{
+	closeNavButtons();
+	$(item).css({'width':'60%'});
+	$('#btn_lejelentes p').css({'display':'none'});
+	$('#btn_lejelentes .my-nav-container').css({'display':'block'});
+	$('#btn_lejelentes').css({'background':'white'});
+}
+
+function closeSubmit()
+{
+	$('#btn_lejelentes').css({'background':'', 'color':'','width':'','border':''});
+	$('#btn_lejelentes .my-nav-container').css({'display':'none'});
+	$('#btn_lejelentes p').css({'display':''});
+}
+function closeInterupt()
+{
+	$('#btn_megszakitas').css({'background':'', 'color':'','width':'','border':''});
+	$('#btn_megszakitas .my-nav-container').css({'display':'none'});
+	$('#btn_megszakitas p').css({'display':''});
+}
+
+function closeNavButtons()
+{
+	$('.btn_navHeader').css({'background':'', 'color':'','width':'','border':''});
+	$('.btn_navHeader .my-nav-container').css({'display':'none'});
+	$('.btn_navHeader p').css({'display':''});
+}
+
+
+
+String.prototype.toHHMMSS = function () {
+	var sec_num = parseInt(this, 10); // don't forget the second parm
+	var hours = Math.floor(sec_num / 3600);
+	var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+	var seconds = sec_num - (hours * 3600) - (minutes * 60);
+
+	if (hours < 10) {
+		hours = "0" + hours;
+	}
+	if (minutes < 10) {
+		minutes = "0" + minutes;
+	}
+	if (seconds < 10) {
+		seconds = "0" + seconds;
+	}
+	var time = hours + ':' + minutes + ':' + seconds;
+	return time;
+}
+
 

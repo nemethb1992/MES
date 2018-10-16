@@ -172,4 +172,34 @@
     <servlet-name>Operator</servlet-name>
     <url-pattern>/Operator</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>FileHandler</display-name>
+    <servlet-name>FileHandler</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.FileHandler</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FileHandler</servlet-name>
+    <url-pattern>/FileHandler</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Timer</display-name>
+    <servlet-name>Timer</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.operator.Timer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Timer</servlet-name>
+    <url-pattern>/Timer</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>WorkstationControl</display-name>
+    <servlet-name>WorkstationControl</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.manager.WorkstationControl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WorkstationControl</servlet-name>
+    <url-pattern>/WorkstationControl</url-pattern>
+  </servlet-mapping>
 </web-app>
