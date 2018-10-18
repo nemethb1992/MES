@@ -100,6 +100,11 @@
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/pm_logo_normal.svg</location>
 		</link>
 		<link>
+			<name>WebContent/Public/icons/pm_logo_white.svg</name>
+			<type>1</type>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/pm_logo_white.svg</location>
+		</link>
+		<link>
 			<name>WebContent/Public/icons/up-arrow.svg</name>
 			<type>1</type>
 			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/up-arrow.svg</location>

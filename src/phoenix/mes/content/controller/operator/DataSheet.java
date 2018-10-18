@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import de.abas.ceks.jedp.EDPSession;
-import de.abas.erp.common.type.IdImpl;
 import phoenix.mes.OperatingLanguage;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
@@ -33,7 +32,6 @@ public class DataSheet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		String wsCode;
 		String wsName = "";
 		Task.Details taskDetails;
 		Task task ;
@@ -44,80 +42,74 @@ public class DataSheet extends HttpServlet {
 		String username=(String)session.getAttribute("username");
 		String pass=(String)session.getAttribute("pass");
 		String tab = request.getParameter("tabNo");
+		String workstation = (String)session.getAttribute("operatorWorkstation");
 		dict = (Dictionary)session.getAttribute("Dictionary");
-		wsCode="234PG!1!Test Workstation";
+//		workstation="234PG!1!Test Workstation";
 		String view = "";
-		
-		// 	    String workstation=(String)session.getAttribute("workstation");
-		//		String[] stationSplit = workstation.split("!");
-		//			int stationNo = Integer.parseInt(stationSplit[1]);
-		//        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dictionary.getLanguage(), true);
-		//        	Task nextTask = AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0],stationNo, abasConnection).getNextExecutableTask(abasConnection);
-
-		try {
-			wsName = getWorkStationName(wsCode);
-		} catch (SQLException e) {
-			wsName = " - ";
-		}
-
-
-		try {
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLanguage(), true);
-			task = (Task)session.getAttribute("Task");
-			if(task == null)
-			{
-				task = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7896209,9,0)"), abasConnection); // "(8027770,9,0)"
-				session.setAttribute("Task", task);
-				taskDetails = task.getDetails(abasConnection);
-			}
-
-			taskDetails = task.getDetails(abasConnection);				    	
-			switch (tab) {
-			case "1":
-				view = getDataSheet(taskDetails,wsCode,wsName,request);
-				break;
-			case "2":
-				view = getDocuments(taskDetails);
-				break;
-			case "3":
-				view = getBom(taskDetails, request);
-				break;
-			case "4":
-				view = getDescription(taskDetails);
-				break;
-			default:
-				break;
-			}
-			
-		}catch(LoginException e)
-		{
-			System.out.println(e);
-		}finally
+		        	
+		if(workstation != null)
 		{
 			try {
-				abasConnection.close();
-			} catch (Exception e2) {
-				// TODO: handle exception
+				wsName = getWorkStationName(workstation);
+			} catch (SQLException e) {
+				wsName = " - ";
+			}
+			try {
+				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLanguage(), true);
+				task = (Task)session.getAttribute("Task");
+				if(task == null)
+				{
+//					task = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7896209,9,0)"), abasConnection); // "(8027770,9,0)"
+//					task = AbasObjectFactory.INSTANCE.createWorkStation("380PG",1, abasConnection).getNextExecutableTask(abasConnection);
+					task = AbasObjectFactory.INSTANCE.createWorkStation(workstation.split("!")[0],Integer.parseInt(workstation.split("!")[1]), abasConnection).getNextExecutableTask(abasConnection);
+					session.setAttribute("Task", task);
+					taskDetails = task.getDetails(abasConnection);
+				}
+
+				taskDetails = task.getDetails(abasConnection);				    	
+				switch (tab) {
+				case "1":
+					view = getDataSheet(taskDetails,workstation,wsName,request);
+					break;
+				case "2":
+					view = getDocuments(taskDetails);
+					break;
+				case "3":
+					view = getBom(taskDetails, request);
+					break;
+				case "4":
+					view = getDescription(taskDetails);
+					break;
+				default:
+					break;
+				}
+				
+			}catch(LoginException e)
+			{
+				System.out.println(e);
+			}finally
+			{
+				try {
+					abasConnection.close();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
 			}
 		}
-
 		response.setContentType("text/plain"); 
 		response.setCharacterEncoding("UTF-8"); 
 		response.getWriter().write(view); 
 	}
 	
-	protected String getDataSheet(Task.Details taskDetails, String wsCode, String wsName, HttpServletRequest request)
+	protected String getDataSheet(Task.Details taskDetails, String workstation, String wsName, HttpServletRequest request)
 	{
-		
-		 String[] stationSplit = wsCode.split("!");
-		 
-		 
+
 		 String view = "				<div class='container-fluid px-0'>\r\n" + 
 		 		"							<div class='row data-row mx-3 mt-3'>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.WORKSTATION)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled value='"+stationSplit[0]+" - "+stationSplit[1]+" - "+stationSplit[2]+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled value='"+workstation.split("!")[0]+" - "+workstation.split("!")[1]+" - "+wsName+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+dict.getWord(Entry.WORKSHEET_NO)+"</p>\r\n" + 

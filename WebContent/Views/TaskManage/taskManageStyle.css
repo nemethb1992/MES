@@ -96,9 +96,8 @@ font-size: 14px;
 	z-index: 1;
 }
 
-.TM_content_layer {
+TM_content_layer {
 	height: inherit;
-	display: none;
 }
 
 #TM_Select_container_activity {
@@ -163,8 +162,18 @@ font-size: 14px;
 	display: block;
 	float: left;
 	width: 59%;
+	color: white;
 }
-
+.computer-data p,.computer-data input{
+	background: none;
+	color: white;
+	font-size: smaller;
+	margin-bottom: 0px;
+}
+.computer-data p
+{
+	font-family: mediumFont;
+}
 .TV_stationContent p, .TV_stationContent input {
 	display: block;
 	height: 18px;
@@ -175,16 +184,20 @@ font-size: 14px;
 }
 
 #TV_timerContainer {
-	width: 40%;
-	float: right;
 	color: white;
 	border-left: 1px solid;
 }
+.titleStyle
+{
+	color: white;
+}
 
 #TV_timerContainer img {
-	height: 70px;
-	margin: 0px auto;
-	padding: 0 0 5px 0;
+	max-width: 60px;
+	display: block;
+}
+.computer-icon {
+	max-width: 30px;
 	display: block;
 }
 
@@ -192,10 +205,6 @@ font-size: 14px;
 	font-size: x-large;
 }
 
-.TV_stationHeader {
-	margin-bottom: 10px;
-	background: none;
-}
 
 .sortContDivCont {
 	width: 102%;
@@ -428,10 +437,6 @@ font-size: 14px;
 
 
 
-.dnd-downer {
-	/* 	display: none; */
-	
-}
 .article-col
 {
 	-ms-flex: 0 0 110px;
@@ -500,10 +505,15 @@ font-size: 14px;
 	-ms-flex: 0 0 12%;
     flex: 0 0 12%;
 }
-.col-nav-logout, .col-nav-back, .col-nav-language
+.col-nav-logout, .col-nav-language
 {
 	-ms-flex: 0 0 100px;
     flex: 0 0 100px;
+}
+.col-nav-back{
+	-ms-flex: 0 0 150px;
+    flex: 0 0 150px;
+	
 }
 .col-button
 {

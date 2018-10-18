@@ -202,4 +202,44 @@
     <servlet-name>WorkstationControl</servlet-name>
     <url-pattern>/WorkstationControl</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Todo</display-name>
+    <servlet-name>Todo</servlet-name>
+    <servlet-class>phoenix.mes.content.navigation.Todo</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Todo</servlet-name>
+    <url-pattern>/Todo</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>StationActivity</display-name>
+    <servlet-name>StationActivity</servlet-name>
+    <servlet-class>phoenix.mes.content.navigation.StationActivity</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StationActivity</servlet-name>
+    <url-pattern>/StationActivity</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Settings</display-name>
+    <servlet-name>Settings</servlet-name>
+    <servlet-class>phoenix.mes.content.navigation.Settings</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Settings</servlet-name>
+    <url-pattern>/Settings</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Main</display-name>
+    <servlet-name>Main</servlet-name>
+    <servlet-class>phoenix.mes.content.navigation.Main</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Main</servlet-name>
+    <url-pattern>/Main</url-pattern>
+  </servlet-mapping>
 </web-app>

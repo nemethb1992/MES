@@ -45,6 +45,10 @@
     <%@ include file="/Views/Login/loginStyle.css"%>
     <%@ include file="/Views/TaskView/taskViewStyle.css"%>
     <%@ include file="/Views/TaskManage/taskManageStyle.css"%>
+    <%@ include file="/Views/TaskManage/Settings/Settings.css"%>
+<%--     <%@ include file="/Views/TaskManage/MainPanel/MainPanel.css"%> --%>
+<%--     <%@ include file="/Views/TaskManage/TodoPanel/TodoPanel.css"%> --%>
+<%--     <%@ include file="/Views/TaskManage/StationActivity/StationActivity.css"%> --%>
     <%@ include file="/Views/WelcomePage/WelcomePage.css"%>
     </style>
 

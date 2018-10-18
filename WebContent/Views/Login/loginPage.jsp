@@ -33,7 +33,7 @@ if(info == null)
 			<form id='LR_form' method='POST'
 				action='${pageContext.request.contextPath}/Dashboard'>
 				
-				<input type='hidden' name='workstation' class='workstation' value='<%= request.getParameter("ws") %>'/>
+				<input type='hidden' name='workstation' class='workstation' value='<%=request.getParameter("workstation")%>'/>
 				<input name='infoTitle' class='w-100 mt-5' value='<%=info%>'/>
 				<div class="form-group">
 				<p id='login_title' class='w-100 w-100 h5 mt-3'><%=dict.getWord(Entry.LOGIN)%></p>

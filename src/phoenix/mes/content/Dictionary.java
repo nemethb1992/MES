@@ -63,6 +63,7 @@ public class Dictionary {
 		TASK("Feladat","Aufgabe","Task"),
 		STATIONS("Állomások","Arbeitsplätze","Stations"),
 		LOGIN_FAILED("Sikertelen bejelentkezés","Anmeldung fehlgeschlagen","Login failed"),
+		LOGIN_FAILED_MISSING_WS("Nincs regisztrált munkaállomás","Fehlende registrierte Arbeitsstation","Missing registered workstation"),
 		IDS("Azonosítók","IDs","IDs");
 
 		private final String hungarianText;

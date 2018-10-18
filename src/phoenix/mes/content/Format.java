@@ -2,15 +2,12 @@ package phoenix.mes.content;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import phoenix.mes.OperatingLanguage;
-import phoenix.mes.content.controller.operator.Timer;
 
 public class Format {
 	

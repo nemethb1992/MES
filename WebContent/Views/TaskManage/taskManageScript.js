@@ -14,7 +14,6 @@ function TaskManagerStartUp()
 	ApplicationCountDown();
 	ButtonScriptElements();
 	WorkStationItemCollect();
-	$('#TM_Select_container_activity').show();
 	DisplayTime();
 	datepicker();
 }
@@ -174,9 +173,7 @@ function ButtonScriptElements()
 	});
 
 	$('#btn_select_1').click(function(){
-		FirstStationList();
-		$('.select-panel').hide();
-		$('#TM_Select_container1').css("display", "flex");
+		$('#btn_select_1').submit();
 	});
 
 	$('.refresh_btn').click(function(){
@@ -187,20 +184,17 @@ function ButtonScriptElements()
 		FirstStationList();
 	});
 
+	$('#btn_select_1').click(function(){
+		$('#btn_select_1').submit();
+	});
 	$('#btn_select_2').click(function(){
-		$('.select-panel').hide();
-		$('#TM_Select_container2').show();
+		$('#btn_select_2').submit();
 	});
 
 	$('#btn_select_3').click(function(){
-		$('.select-panel').hide();
-		$('#TM_Select_container3').show();
+		$('#btn_select_3').submit();
 	});
 
-	$('.TM_backBtn').click(function(){
-		$('.select-panel').hide();
-		$('#TM_Select_container_activity').show();
-	});
 
 	$('.ts_searchInp').focusin(function(){
 		$(this).css({'width':'55%','max-width':'200px'});
@@ -212,7 +206,7 @@ function ButtonScriptElements()
 			$(this).css('width','');
 		}
 	});
-
+	
 	$('.AbasSearchImg').click(function(){
 		$('.AbasSearchIn').focus();
 	});
@@ -220,6 +214,7 @@ function ButtonScriptElements()
 	$('.WSSearchImg').click(function(){
 		$('.WSSearchIn').focus();
 	});
+
 }
 
 

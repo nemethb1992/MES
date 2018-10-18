@@ -33,13 +33,33 @@ html,body{
 	background-size: 30px;
 	background-repeat: no-repeat;
 	background-position: center;
-	transition: 0.2s;
+	transition: 0.1s;
 	border-left: 1px solid #dedede;
 }
 
 .btn_logout-gray:hover {
 	background: #ff9797;
 	background-image: url(Public/icons/logoutGry.svg);
+	background-size: 25px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.btn_back-gray{
+	height: 100%;
+	width: 100%;
+	cursor: pointer;
+	background: transparent;
+	background-image: url(Public/icons/backArrowgray.svg);
+	background-size: 40px;
+	background-repeat: no-repeat;
+	background-position: center;
+	transition: 0.1s;
+	border-left: 1px solid #dedede;
+}
+
+.btn_back-gray:hover {
+	background: #e1e1e1;
+	background-image: url(Public/icons/backArrowgray.svg);
 	background-size: 30px;
 	background-repeat: no-repeat;
 	background-position: center;
