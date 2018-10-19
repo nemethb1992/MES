@@ -17,7 +17,7 @@ import de.abas.ceks.jedp.StandardEDPSelectionCriteria;
 import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.common.type.Id;
 import de.abas.erp.common.type.IdImpl;
-import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESWSLIPS;
+import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESWORKSTATION;
 import de.abas.erp.db.schema.capacity.WorkCenter;
 
 import java.util.List;
@@ -41,22 +41,22 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 		/**
 		 * A szűrőmezők nevei a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt gyártási feladatok lekérdezéséhez.
 		 */
-		protected static final String[] unassignedTasksFilterCriteria = {InfosysOw1MESWSLIPS.META.ymgr.getName(), InfosysOw1MESWSLIPS.META.ystermig.getName(), InfosysOw1MESWSLIPS.META.start.getName()};
+		protected static final String[] unassignedTasksFilterCriteria = {InfosysOw1MESWORKSTATION.META.ymgr.getName(), InfosysOw1MESWORKSTATION.META.ystermig.getName(), InfosysOw1MESWORKSTATION.META.start.getName()};
 
 		/**
 		 * A szűrőmezők nevei a munkaállomáshoz hozzárendelt, de felfüggesztett gyártási feladatok lekérdezéséhez.
 		 */
-		protected static final String[] suspendedTasksFilterCriteria = {InfosysOw1MESWSLIPS.META.ymgr.getName(), InfosysOw1MESWSLIPS.META.ymnum.getName(), InfosysOw1MESWSLIPS.META.ymegszak.getName(), InfosysOw1MESWSLIPS.META.start.getName()};
+		protected static final String[] suspendedTasksFilterCriteria = {InfosysOw1MESWORKSTATION.META.ymgr.getName(), InfosysOw1MESWORKSTATION.META.ymnum.getName(), InfosysOw1MESWORKSTATION.META.ymegszak.getName(), InfosysOw1MESWORKSTATION.META.start.getName()};
 
 		/**
 		 * A szűrőmezők nevei a munkaállomáshoz hozzárendelt és végrehajtható gyártási feladatok lekérdezéséhez.
 		 */
-		protected static final String[] executableTasksFilterCriteria = {InfosysOw1MESWSLIPS.META.ymgr.getName(), InfosysOw1MESWSLIPS.META.ymnum.getName(), InfosysOw1MESWSLIPS.META.start.getName()};
+		protected static final String[] executableTasksFilterCriteria = {InfosysOw1MESWORKSTATION.META.ymgr.getName(), InfosysOw1MESWORKSTATION.META.ymnum.getName(), InfosysOw1MESWORKSTATION.META.start.getName()};
 
 		/**
 		 * A szűrőmezők nevei a munkaállomás következő végrehajtható gyártási feladatának lekérdezéséhez.
 		 */
-		protected static final String[] nextExecutableTaskFilterCriteria = {InfosysOw1MESWSLIPS.META.ymgr.getName(), InfosysOw1MESWSLIPS.META.ymnum.getName(), InfosysOw1MESWSLIPS.META.ycsakelso.getName(), InfosysOw1MESWSLIPS.META.start.getName()};
+		protected static final String[] nextExecutableTaskFilterCriteria = {InfosysOw1MESWORKSTATION.META.ymgr.getName(), InfosysOw1MESWORKSTATION.META.ymnum.getName(), InfosysOw1MESWORKSTATION.META.ycsakelso.getName(), InfosysOw1MESWORKSTATION.META.start.getName()};
 
 		/**
 		 * Egyke objektum.
@@ -67,7 +67,7 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 		 * Konstruktor.
 		 */
 		private WorkSlipQuery() {
-			super("MESWSLIPS", new String[] {InfosysOw1MESWSLIPS.Row.META.ytas.getName()});
+			super("MESWORKSTATION", new String[] {InfosysOw1MESWORKSTATION.Row.META.ytas.getName()});
 		}
 
 		/* (non-Javadoc)

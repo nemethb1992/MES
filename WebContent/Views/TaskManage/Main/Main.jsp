@@ -1,5 +1,6 @@
 <%@include file="/Views/Header.jsp"%>
 <script>
+
 	
 <%@ include file="/Views/TaskManage/taskManageScript.js"%>
 	

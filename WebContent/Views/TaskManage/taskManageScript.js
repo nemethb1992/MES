@@ -17,6 +17,7 @@ function TaskManagerStartUp()
 	DisplayTime();
 	datepicker();
 }
+
 function datepicker()
 {
 	$('.datepicker_own').datepicker({
@@ -31,6 +32,7 @@ function datepicker()
 
 function ListLoader()
 {
+	SessionStoreStation(SelectedStation);
 
 	if(level > 1)
 	{
@@ -64,8 +66,8 @@ function ListLoader()
 			});
 		}
 	}
-
 }
+
 function workstationListLoader()
 {
 	if(level > 1)
@@ -86,8 +88,8 @@ function workstationListLoader()
 		});
 		return true;
 	}
-
 }
+
 function SessionStoreStation(station)
 {
 	// Tárolja a kiválasztott állomás nevét egy session változóban.
@@ -100,53 +102,7 @@ function SessionStoreStation(station)
 		}
 	});
 }
-function AddToList(item)
-{
-	var value = $(item).attr("value");
-	$.ajax({
-		url:  '/'+path+'/AddToList',
-		data: {
-			value: value
-		},
-		success: function (respond) {
-			console.log(respond);
 
-		}
-	});
-}
-function RemoveFromList(item)
-{
-	var value = $(item).attr("value");
-	$.ajax({
-		url:  '/'+path+'/RemoveFromList',
-		data: {
-			value: value
-		},
-		success: function (respond) {
-			console.log(respond);
-		}
-	});
-}
-
-
-
-//function TaskSizeSwitch(item)
-//{
-//var height = $(item).height();
-//if(height < 100)
-//{
-//$('.dnd-container').animate({height:'60px'}, 120)
-//$('.dnd-downer').hide();
-//$(item).animate({height:'150px'}, 120)
-//$(item).find('.dnd-downer').show();
-//}
-//else{
-//$(item).animate({height:'50px'}, 120)
-//$(item).find('.dnd-downer').hide();
-//}
-
-
-//}
 function setToday()
 {
 
@@ -214,7 +170,6 @@ function ButtonScriptElements()
 	$('.WSSearchImg').click(function(){
 		$('.WSSearchIn').focus();
 	});
-
 }
 
 
@@ -272,12 +227,10 @@ function StationItemSelect(item)
 
 function clickOnStation(item)
 {
-
 	$(this).css({'background-image':'url(Public/icons/computerSignRed.svg)','background-color' : '#ebebeb','border-left':'5px solid #ff6666'});
 	var station = $(item).attr("value");
 	$(".station_label").val(station.split("!")[2] + "  (" + station.split("!")[0] +"-"+ station.split("!")[1]+")");
 	SelectedStation = station;
-	SessionStoreStation(station);
 	ListLoader();
 
 }

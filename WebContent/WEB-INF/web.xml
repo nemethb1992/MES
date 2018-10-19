@@ -42,56 +42,8 @@
     <servlet-name>Home</servlet-name>
     <url-pattern>/Home</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>BuildUp</display-name>
-    <servlet-name>BuildUp</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.manager.BuildUp</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>BuildUp</servlet-name>
-    <url-pattern>/BuildUp</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>StationGroup</display-name>
-    <servlet-name>StationGroup</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.manager.StationGroup</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>StationGroup</servlet-name>
-    <url-pattern>/StationGroup</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>StationSingle</display-name>
-    <servlet-name>StationSingle</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.manager.StationSingle</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>StationSingle</servlet-name>
-    <url-pattern>/StationSingle</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>StationPC</display-name>
-    <servlet-name>StationPC</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.manager.StationPC</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>StationPC</servlet-name>
-    <url-pattern>/StationPC</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>WriteToStation</display-name>
-    <servlet-name>WriteToStation</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.manager.WriteToStation</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>WriteToStation</servlet-name>
-    <url-pattern>/WriteToStation</url-pattern>
-  </servlet-mapping>
+
+
   <servlet>
     <description></description>
     <display-name>StationTaskList</display-name>
@@ -112,26 +64,7 @@
     <servlet-name>AbasTaskList</servlet-name>
     <url-pattern>/AbasTaskList</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>AddToList</display-name>
-    <servlet-name>AddToList</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.manager.AddToList</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>AddToList</servlet-name>
-    <url-pattern>/AddToList</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>RemoveFromList</display-name>
-    <servlet-name>RemoveFromList</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.manager.RemoveFromList</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>RemoveFromList</servlet-name>
-    <url-pattern>/RemoveFromList</url-pattern>
-  </servlet-mapping>
+
   <servlet>
     <description></description>
     <display-name>LanguageSetter</display-name>

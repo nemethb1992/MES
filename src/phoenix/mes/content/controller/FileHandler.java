@@ -33,20 +33,19 @@ public class FileHandler extends HttpServlet {
 	
 	protected static boolean open(String url) throws Exception
 	{
+		File pdfFile = new File(url);
+		if (pdfFile.exists()) {
 
-				File pdfFile = new File(url);
-				if (pdfFile.exists()) {
+			if (Desktop.isDesktopSupported()) {
+				Desktop.getDesktop().open(pdfFile);
+				return true;
+			} else {
+				return false;
+			}
 
-					if (Desktop.isDesktopSupported()) {
-						Desktop.getDesktop().open(pdfFile);
-						return true;
-					} else {
-						return false;
-					}
-
-				} else {
-					return false;
-				}
+		} else {
+			return false;
+		}
 
 
 	}

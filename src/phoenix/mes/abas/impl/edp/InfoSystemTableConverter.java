@@ -40,12 +40,12 @@ public abstract class InfoSystemTableConverter<R> extends InfoSystemExecutor {
 	}
 
 	/**
-	 * @param filterCriteria Az infosystem indításához szükséges mezőbeállítások.
+	 * @param inputFieldValues Az eredmény lekérdezése előtti mezőbeállítások (null, ha nincs szükség bemenetekre).
 	 * @param edpSession Az EDP-munkamenet.
 	 * @return Az infosystem táblázatsorai objektumok listájaként.
 	 */
-	public List<R> getRows(EDPEditFieldList filterCriteria, EDPSession edpSession) {
-		final EDPEditObject result = executeQuery(filterCriteria, edpSession);
+	public List<R> getRows(EDPEditFieldList inputFieldValues, EDPSession edpSession) {
+		final EDPEditObject result = executeQuery(inputFieldValues, edpSession);
 		final int rowCount = result.getRowCount();
 		switch (rowCount) {
 			case 0:

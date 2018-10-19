@@ -58,16 +58,16 @@ public class InfoSystemExecutor {
 
 	/**
 	 * Infosystemen keresztüli lekérdezés végrehajtása.
-	 * @param filterCriteria Az infosystem indításához szükséges mezőbeállítások.
+	 * @param inputFieldValues Az eredmény lekérdezése előtti mezőbeállítások (null, ha nincs szükség bemenetekre).
 	 * @param edpSession Az EDP-munkamenet.
 	 * @return A lekérdezendő mezők értékei az infosystem lefuttatása után.
 	 */
-	public EDPEditObject executeQuery(EDPEditFieldList filterCriteria, EDPSession edpSession) {
+	public EDPEditObject executeQuery(EDPEditFieldList inputFieldValues, EDPSession edpSession) {
 		final EDPEditor infoSystemQuery = edpSession.createEditor();
 		try {
 			infoSystemQuery.beginEditCmd("(Infosystem)", swd);
-			if (null != filterCriteria) {
-				infoSystemQuery.updateEditFields(filterCriteria);
+			if (null != inputFieldValues) {
+				infoSystemQuery.updateEditFields(inputFieldValues);
 			}
 			return infoSystemQuery.getEditObject(headerFieldNames, tableFieldNames);
 		} catch (EDPException e) {
