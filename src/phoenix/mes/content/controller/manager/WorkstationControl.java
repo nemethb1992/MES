@@ -3,6 +3,7 @@ package phoenix.mes.content.controller.manager;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -55,15 +56,11 @@ public class WorkstationControl extends HttpServlet {
 	protected String getPcItems()
 	{
 		PostgreSqlOperationsMES postgreSql = new PostgreSqlOperationsMES(true);
-		Collection<String> list;
-		String view ="";
-		
-   	    String command ="SELECT * FROM profitcenter";
-   	    
+		String view = "";
+		final String sqlFieldName = "long";
 		try {
-			list = postgreSql.sqlQuery(command,"long");
-			for (String item : list) {
-				view += "<div class='tmts_stationBtnDivCont col-12 px-0' value='"+item+"' OnClick='StationItemSelect(this)'><input disabled class='si1'value='"+item+"'></div>";
+			for (Map<String, String> row : postgreSql.sqlQuery("SELECT * FROM profitcenter", sqlFieldName)) {
+				view += "<div class='tmts_stationBtnDivCont col-12 px-0' value='"+row.get(sqlFieldName)+"' OnClick='StationItemSelect(this)'><input disabled class='si1'value='"+row.get(sqlFieldName)+"'></div>";
 			}
 		} catch (SQLException e) {
 		}finally {
@@ -78,15 +75,13 @@ public class WorkstationControl extends HttpServlet {
     protected String getGroupItems(HttpServletRequest request)
     {
 		PostgreSqlOperationsMES postgreSql = new PostgreSqlOperationsMES(true); 
-    	Collection<String> list;
     	String view = ""; 
     	
    	    String command ="select stations.csoport from stations left join profitcenter on stations.pc = profitcenter.id where long='"+request.getParameter("element")+"' group by stations.csoport";
-   	    
-		try {
-			list = postgreSql.sqlQuery(command, "csoport");    	
-			for (String item : list) {
-	    		view += "<div class='tmts_stationBtnDivCont col-12 px-0' value='"+item+"' OnClick='StationItemSelect(this)'><input disabled class='si1'value='"+item+"'></div>";
+		final String sqlFieldName = "csoport";
+		try {	
+			for (Map<String, String> row : postgreSql.sqlQuery(command, sqlFieldName)) {
+	    		view += "<div class='tmts_stationBtnDivCont col-12 px-0' value='"+row.get(sqlFieldName)+"' OnClick='StationItemSelect(this)'><input disabled class='si1'value='"+row.get(sqlFieldName)+"'></div>";
 	    	}
 		} catch (SQLException e) {
 		}finally {

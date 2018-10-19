@@ -18,9 +18,6 @@ public class Home extends HttpServlet {
  	    HttpSession session = request.getSession();
  	    session.removeAttribute("username");
  	    session.removeAttribute("pass");
- 	    session.removeAttribute("selectedStation");
- 	    session.removeAttribute("operatorWorkstation");
- 	    session.removeAttribute("language");
   		getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
 	}
 

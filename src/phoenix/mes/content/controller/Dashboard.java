@@ -24,49 +24,37 @@ public class Dashboard extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-		String username,pass;
-		String layout;
-
-		username = request.getParameter("username");
-		pass = request.getParameter("password");
-		//		workstation = request.getParameter("workstation");
-		layout = (String)session.getAttribute("Layout");
-		if("operator".equals(layout))
-		{
-			Cookie[] cookies = request.getCookies();
-			if (cookies != null) {
-				for (Cookie cookie : cookies) {
-					if (cookie.getName().equals("workstation")) {
-						session.setAttribute("operatorWorkstation", cookie.getValue());
+		String username = request.getParameter("username");
+		session.setAttribute("username",username);
+		String pass = request.getParameter("password");
+		session.setAttribute("pass",pass);
+		String layout = (String)session.getAttribute("Layout");
+		try {
+			ActiveDirectoryLogin.activeDirectoryConn(username, pass);
+			String nextPage = null;
+			if("operator".equals(layout)) {
+				Cookie[] cookies = request.getCookies();
+				if (cookies != null) {
+					for (Cookie cookie : cookies) {
+						if (cookie.getName().equals("workstation")) {
+							session.setAttribute("operatorWorkstation", cookie.getValue());
+						}
 					}
 				}
+				if (session.getAttribute("operatorWorkstation") != null) {
+					nextPage = "/Views/TaskView/taskViewPage.jsp";
+				}
 			}
-		}
-
-
-		session.setAttribute("username",username);
-		session.setAttribute("pass",pass);
-		Dictionary dict  = (Dictionary)session.getAttribute("Dictionary");
-		
-		if(ActiveDirectoryLogin.activeDirectoryConn(username, pass))
-		{
-			if("operator".equals(layout) && session.getAttribute("operatorWorkstation") != null) {
-				getServletContext().getRequestDispatcher("/Views/TaskView/taskViewPage.jsp").forward(request, response);
-			}			
 			else if("manager".equals(layout)) {
-				getServletContext().getRequestDispatcher("/Views/TaskManage/Main/Main.jsp").forward(request, response);
+				nextPage = "/Views/TaskManage/Main/Main.jsp";
 			}
-			else {
-//				request.setAttribute("infoTitle", dict.getWord(Entry.LOGIN_FAILED_MISSING_WS));
-				getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
-			}
-
-		}
-		else
-		{
-			request.setAttribute("infoTitle", dict.getWord(Entry.LOGIN_FAILED));
+			getServletContext().getRequestDispatcher(null == nextPage ? "/Views/WelcomePage/WelcomePage.jsp" : nextPage).forward(request, response);
+		} catch (Throwable t) {
+			request.setAttribute("infoTitle", ((Dictionary)session.getAttribute("Dictionary")).getWord(Entry.LOGIN_FAILED));
 			getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
-
 		}
-	}       
+	}
+
+
+
 }
