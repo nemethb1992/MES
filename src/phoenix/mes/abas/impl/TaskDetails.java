@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-import phoenix.mes.OperatingLanguage;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.BomElement;
@@ -31,9 +30,9 @@ public abstract class TaskDetails<C> implements Task.Details {
 	protected C abasConnectionObject;
 
 	/**
-	 * Az aktuális kezelőnyelv.
+	 * Az aktuális kezelőnyelv kódja.
 	 */
-	protected OperatingLanguage operatingLanguage;
+	protected String operatingLanguageCode;
 
 	/**
 	 * A munkalap száma.
@@ -159,9 +158,9 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 * @param abasConnectionType Az Abas-kapcsolat osztálya.
 	 */
 	protected void setAbasConnectionObject(AbasConnection<C> abasConnection, Class<C> abasConnectionType) {
-		final OperatingLanguage newOperatingLanguage = abasConnection.getOperatingLanguage();
-		if (newOperatingLanguage != operatingLanguage) {
-			if (null != operatingLanguage) {
+		final String newOperatingLanguageCode = abasConnection.getOperatingLanguageCode();
+		if (!newOperatingLanguageCode.equals(operatingLanguageCode)) {
+			if (null != operatingLanguageCode) {
 				productDescription = null;
 				operationDescription = null;
 				setupTimeUnit = null;
@@ -169,7 +168,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 				stockUnit = null;
 				bom = null;
 			}
-			operatingLanguage = newOperatingLanguage;
+			operatingLanguageCode = newOperatingLanguageCode;
 		}
 		final C newAbasConnectionObject = AbasConnection.getConnectionObject(abasConnection, abasConnectionType);
 		if (!newAbasConnectionObject.equals(abasConnectionObject)) {

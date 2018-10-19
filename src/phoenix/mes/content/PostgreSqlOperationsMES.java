@@ -7,9 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Collection;
-
-import phoenix.mes.OperatingLanguage;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PostgreSqlOperationsMES {
 
@@ -50,7 +51,7 @@ public class PostgreSqlOperationsMES {
     public void sqlUpdate(String command) throws SQLException
     {
     	dbOpen();
-    	PreparedStatement preparedStmt = conn.prepareStatement(command);
+    	final PreparedStatement preparedStmt = conn.prepareStatement(command);
     	try {
     		preparedStmt.executeUpdate();
     	} finally {
@@ -61,16 +62,27 @@ public class PostgreSqlOperationsMES {
     	}
     }
 
-    public Collection<String> sqlQuery(String command, String field) throws SQLException
+    public List<Map<String, String>> sqlQuery(String command, String firstField, String... moreFields) throws SQLException
     {
     	dbOpen();
-    	Statement stmt = conn.createStatement();
+    	final Statement stmt = conn.createStatement();
     	try {
-    		ResultSet rs = stmt.executeQuery(command);
-        	Collection<String> li = new ArrayList<String>();
-    		while (rs.next())
+    		final ResultSet rs = stmt.executeQuery(command);
+        	final List<Map<String, String>> li = new ArrayList<>();
+        	final int initialCapacity = (null == moreFields ? 1 : (int)Math.ceil((1 + moreFields.length) / 0.75));
+        	while (rs.next())
     		{
-    			li.add(rs.getString(field));
+    			final Map<String, String> row;
+    			if (null == moreFields) {
+    				row = Collections.singletonMap(firstField, rs.getString(firstField));
+    			} else {
+    				row = new HashMap<>(initialCapacity);
+    				row.put(firstField, rs.getString(firstField));
+        			for (String field : moreFields) {
+        				row.put(field, rs.getString(field));
+        			}
+    			}
+    			li.add(row);
     		}
     		return li;
     	} finally {
@@ -80,59 +92,11 @@ public class PostgreSqlOperationsMES {
     		}
     	}
     }
-    
-    public Collection<String> sqlGetStaton(String command, OperatingLanguage language) throws SQLException
-    {
-		String field;
-		
-		switch (language) {
-		case en:
-			field = "nev_en";
-			break;
-		case de:
-			field = "nev_de";
-			break;
-		case hu:
-		default:
-			field = "nev_hu";
-			break;
-		}
-    	dbOpen();
-    	Statement stmt = conn.createStatement();
-    	try {
-    		ResultSet rs = stmt.executeQuery(command);
-        	Collection<String> li = new ArrayList<String>();
-    		while (rs.next())
-    		{
-    			li.add(rs.getString("csoport")+"!"+rs.getString("sorszam")+"!"+rs.getString(field));
-    		}
-    		return li;
-    	} finally {
-    		try {
-    			stmt.close();
-    		} catch (SQLException e) {
-    		}
-    	}
-    }
-    
+
     public String sqlSingleQuery(String command, String field) throws SQLException
     {
-    	dbOpen();
-    	Statement stmt = conn.createStatement();
-    	try {
-    		ResultSet rs = stmt.executeQuery(command);
-    		String item = "";
-    		while (rs.next())
-    		{
-    			item = rs.getString(field);
-    		}
-    		return item;
-    	} finally {
-    		try {
-    			stmt.close();
-    		} catch (SQLException e) {
-    		}
-    	}
+    	final List<Map<String, String>> results = sqlQuery(command, field);
+    	return (results.isEmpty() ? "" : results.get(0).get(field));
     }
 
 }

@@ -14,7 +14,7 @@ import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
-import phoenix.mes.content.Dictionary;
+import phoenix.mes.content.OutputFormatter;
 
 /**
  * Servlet implementation class Timer
@@ -32,7 +32,7 @@ public class Timer extends HttpServlet {
 		HttpSession session = request.getSession();
 		String username=(String)session.getAttribute("username");
 		String pass=(String)session.getAttribute("pass");
-		Dictionary dict = (Dictionary)session.getAttribute("Dictionary");
+		OutputFormatter dict = (OutputFormatter)session.getAttribute("OutputFormatter");
 		Task task;
 		BigDecimal inSecondTime = new BigDecimal(0);
 		
@@ -43,7 +43,7 @@ public class Timer extends HttpServlet {
 			task = (Task)session.getAttribute("Task");
 			
 			try {
-				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLanguage(), true);
+				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLocale(), true);
 			} catch (LoginException e) {
 				
 			}

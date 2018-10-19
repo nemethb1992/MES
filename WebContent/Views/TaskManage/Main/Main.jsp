@@ -35,7 +35,7 @@
 						<img
 							src='${pageContext.request.contextPath}/Public/icons/btn_wscontrol.svg'
 							class='mx-auto d-block'>
-						<p id='activity_tab1'><%=dict.getWord(Entry.TASKS)%></p>
+						<p id='activity_tab1'><%=outputFormatter.getWord(DictionaryEntry.TASKS)%></p>
 					</form>
 				</div>
 				<div class='col-12 col-md-4'>
@@ -44,7 +44,7 @@
 						<img
 							src='${pageContext.request.contextPath}/Public/icons/btn_vision.svg'
 							class='mx-auto d-block'>
-						<p id='activity_tab2'><%=dict.getWord(Entry.STATIONS)%></p>
+						<p id='activity_tab2'><%=outputFormatter.getWord(DictionaryEntry.STATIONS)%></p>
 					</form>
 				</div>
 				<div class='col-12 col-md-4'>
@@ -53,7 +53,7 @@
 						<img
 							src='${pageContext.request.contextPath}/Public/icons/btn_settings.svg'
 							class='mx-auto d-block'>
-						<p id='activity_tab3'><%=dict.getWord(Entry.OPTIONS)%></p>
+						<p id='activity_tab3'><%=outputFormatter.getWord(DictionaryEntry.OPTIONS)%></p>
 					</form>
 				</div>
 			</div>

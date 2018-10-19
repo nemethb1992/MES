@@ -6,8 +6,6 @@
 
 package phoenix.mes.abas;
 
-import phoenix.mes.OperatingLanguage;
-
 /**
  * Abas-kapcsolatot reprezentáló típus.
  * @param <C> Az Abas-kapcsolat típusa.
@@ -54,9 +52,9 @@ public interface AbasConnection<C> {
 	C getConnectionObject();
 
 	/**
-	 * @return Az Abas-kapcsolat aktuális kezelőnyelve.
+	 * @return Az Abas-kapcsolat aktuális kezelőnyelvének kódja.
 	 */
-	OperatingLanguage getOperatingLanguage();
+	String getOperatingLanguageCode();
 
 	/**
 	 * Az Abas-kapcsolat lezárása.

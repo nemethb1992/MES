@@ -37,14 +37,14 @@
 				<div class='row'>
 					<div class='col '>
 						<div class="form-group">
-							<p class='h3'><%=dict.getWord(Entry.OPTIONS)%></p>
+							<p class='h3'><%=outputFormatter.getWord(DictionaryEntry.OPTIONS)%></p>
 						</div>
 					</div>
 				</div>
 				<div class='row'>
 					<div class='col '>
 						<div class="form-group">
-							<p class='h4'><%=dict.getWord(Entry.AREA)%></p>
+							<p class='h4'><%=outputFormatter.getWord(DictionaryEntry.AREA)%></p>
 						</div>
 					</div>
 				</div>
@@ -53,27 +53,27 @@
 						<div class="form-group">
 							<label for="exampleFormControlSelect1">Profit Center</label> <select
 								class="form-control" id="exampleFormControlSelect1">
-								<%
-									Collection<String> pcList;
-									pcList = (Collection<String>) request.getAttribute("Pc");
-									for (String item : pcList) {
-										out.println("<option>" + item + "</option>");
-									}
-								%>
+<%-- 								<% --%>
+// 									Collection<String> pcList;
+// 									pcList = (Collection<String>) request.getAttribute("Pc");
+// 									for (String item : pcList) {
+// 										out.println("<option>" + item + "</option>");
+// 									}
+<%-- 								%> --%>
 							</select>
 						</div>
 					</div>
 					<div class='col'>
 						<div class="form-group">
-							<label for="exampleFormControlSelect1"><%=dict.getWord(Entry.GROUP)%></label>
+							<label for="exampleFormControlSelect1"><%=outputFormatter.getWord(DictionaryEntry.GROUP)%></label>
 							<select class="form-control" id="exampleFormControlSelect1">
-								<%
-									Collection<String> groupList;
-									groupList = (Collection<String>) request.getAttribute("Group");
-									for (String item : groupList) {
-										out.println("<option>" + item + "</option>");
-									}
-								%>
+<%-- 								<% --%>
+// 									Collection<String> groupList;
+// 									groupList = (Collection<String>) request.getAttribute("Group");
+// 									for (String item : groupList) {
+// 										out.println("<option>" + item + "</option>");
+// 									}
+<%-- 								%> --%>
 							</select>
 						</div>
 					</div>
@@ -81,7 +81,7 @@
 				<div class='row'>
 					<div class='col '>
 						<div class="form-group">
-							<p class='h4'><%=dict.getWord(Entry.RESPONSIBLES)%></p>
+							<p class='h4'><%=outputFormatter.getWord(DictionaryEntry.RESPONSIBLES)%></p>
 						</div>
 					</div>
 				</div>
@@ -160,7 +160,7 @@
 				<div class='row pt-3'>
 					<div class='col-2 '>
 						<div class="form-group">
-							<input type="submit" class="btn btn-danger settings-save-btn w-100" value='<%=dict.getWord(Entry.SAVE)%>'/>
+							<input type="submit" class="btn btn-danger settings-save-btn w-100" value='<%=outputFormatter.getWord(DictionaryEntry.SAVE)%>'/>
 						</div>
 					</div>
 				</div>

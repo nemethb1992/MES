@@ -6,22 +6,20 @@
 
 
 
-<%@page import="phoenix.mes.content.Dictionary"%>
+<%@page import="phoenix.mes.content.OutputFormatter"%>
 <%@page import="phoenix.mes.OperatingLanguage"%>
 <%@page import="phoenix.mes.content.controller.LanguageSetter"%>
-<%@page import="phoenix.mes.content.Dictionary.Entry"%>
+<%@page import="phoenix.mes.content.OutputFormatter.DictionaryEntry"%>
 <%@page import="java.util.Collection"%>
 <% 
-	Dictionary dict;
-	if(session.getAttribute("Dictionary") != null){
-		dict = (Dictionary)session.getAttribute("Dictionary"); 
+OutputFormatter outputFormatter;
+	if(session.getAttribute("OutputFormatter") != null){
+		outputFormatter = (OutputFormatter)session.getAttribute("OutputFormatter"); 
 	}
 	else
 	{
-		LanguageSetter setter = new LanguageSetter();
-		OperatingLanguage language = setter.languageSetup(request,response);
-		dict = new Dictionary(language);
-		session.setAttribute("Dictionary", dict);
+		LanguageSetter.languageSetup(request,response);
+		outputFormatter = (OutputFormatter)session.getAttribute("OutputFormatter"); 
 	}
 
 %>

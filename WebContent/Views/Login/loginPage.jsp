@@ -6,6 +6,7 @@ if(info == null)
 }
 %>
 <%@include file="/Views/Header.jsp"%>
+
 <script><%@ include file="/Views/Login/loginScript.js"%></script>
 <script src="${pageContext.request.contextPath}/Public/js/script.js"></script>
 <div class="container">
@@ -36,19 +37,19 @@ if(info == null)
 				<input type='hidden' name='workstation' class='workstation' value='<%=request.getParameter("workstation")%>'/>
 				<input name='infoTitle' class='w-100 mt-5' value='<%=info%>'/>
 				<div class="form-group">
-				<p id='login_title' class='w-100 w-100 h5 mt-3'><%=dict.getWord(Entry.LOGIN)%></p>
+				<p id='login_title' class='w-100 w-100 h5 mt-3'><%=outputFormatter.getWord(DictionaryEntry.LOGIN)%></p>
 				</div>
 				<div class="form-group mb-0">
-					<input name='username' class='inp_login px-3 w-100' placeholder='<%=dict.getWord(Entry.USER_NAME)%>'
+					<input name='username' class='inp_login px-3 w-100' placeholder='<%=outputFormatter.getWord(DictionaryEntry.USER_NAME)%>'
 						id='inp_username' type='text' value=''>
 				</div>
 				<div class="form-group">
-					<input class='inp_login px-3 w-100' placeholder='<%=dict.getWord(Entry.PASSWORD)%>' name='password' id='inp_pass'
+					<input class='inp_login px-3 w-100' placeholder='<%=outputFormatter.getWord(DictionaryEntry.PASSWORD)%>' name='password' id='inp_pass'
 						type='password' value=''>
 				</div>
 				<div class="form-group">
 					<input class='inp_login w-100' id='inp_enterbutton' type='submit'
-						value='<%=dict.getWord(Entry.NEXT)%>'>
+						value='<%=outputFormatter.getWord(DictionaryEntry.NEXT)%>'>
 				</div>
 			</form>
 		</div>

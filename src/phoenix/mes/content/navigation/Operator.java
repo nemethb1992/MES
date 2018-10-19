@@ -16,11 +16,9 @@ public class Operator extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
-		LanguageSetter setter = new LanguageSetter();
-		
+		HttpSession session = request.getSession();		
 		session.setAttribute("Layout", "operator");
-		setter.languageSetup(request,response);
+		LanguageSetter.languageSetup(request,response);
 		getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
 	}
 

@@ -44,22 +44,22 @@
 							</div>
 							<div class="col-9 px-0">
 								<div class="form-group mb-1">
-									<p class='titleStyle'><%=dict.getWord(Entry.STATION)%></p>
+									<p class='titleStyle'><%=outputFormatter.getWord(DictionaryEntry.STATION)%></p>
 									<input disabled value='testtext'>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="form-group mb-1">
-						<p><%=dict.getWord(Entry.TASK)%></p>
+						<p><%=outputFormatter.getWord(DictionaryEntry.TASK)%></p>
 						<input disabled value='testtext'>
 					</div>
 					<div class="form-group mb-1">
-						<p><%=dict.getWord(Entry.START_TIME)%></p>
+						<p><%=outputFormatter.getWord(DictionaryEntry.START_TIME)%></p>
 						<input disabled value='testtext'>
 					</div>
 					<div class="form-group mb-1">
-						<p><%=dict.getWord(Entry.END_TIME)%></p>
+						<p><%=outputFormatter.getWord(DictionaryEntry.END_TIME)%></p>
 						<input disabled value='testtext'>
 					</div>
 				</div>

@@ -1,10 +1,13 @@
 package phoenix.mes.content;
 
-import phoenix.mes.OperatingLanguage;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.NumberFormat;
+import java.util.Locale;
 
-public class Dictionary {
+public class OutputFormatter {
 
-	public enum Entry {
+	public enum DictionaryEntry {
 
 		USER_NAME("Felhasználónév","Benutzername","Username"),
 		PASSWORD("Jelszó","Kennwort","Password"),
@@ -75,19 +78,19 @@ public class Dictionary {
 
 		private final String englishText;
 
-		private Entry(String hungarianText, String germanText, String englishText) {
+		private DictionaryEntry(String hungarianText, String germanText, String englishText) {
 			this.hungarianText = hungarianText;
 			this.germanText = germanText;
 			this.englishText = englishText;
 		}
 
-		public String getTranslationIn(OperatingLanguage language) {
-			switch (language) {
-				case de:
+		public String getTranslationIn(Locale locale) {
+			switch (locale.getLanguage()) {
+				case "de":
 					return germanText;
-				case en:
+				case "en":
 					return englishText;
-				case hu:
+				case "hu":
 				default:
 					return hungarianText;
 			}
@@ -107,19 +110,58 @@ public class Dictionary {
 
 	}
 
-	protected final OperatingLanguage language;
+	protected static final BigDecimal bigDecimal3600 = new BigDecimal(3600);
+	
+	protected final Locale locale;
 
-	public Dictionary(OperatingLanguage language) {
-		this.language = language;
+	protected final NumberFormat numberFormat;
+
+	public OutputFormatter(Locale locale) {
+		this.locale = locale;
+		numberFormat = NumberFormat.getInstance(locale);
 	}
 
-	public OperatingLanguage getLanguage() {
-		return language;
+	public Locale getLocale() {
+		return locale;
 	}
 
-	public String getWord(Entry entry)
+	public String getWord(DictionaryEntry dictionaryEntry)
 	{
-		return entry.getTranslationIn(language);
+		return dictionaryEntry.getTranslationIn(locale);
+	}
+
+	public String format(BigDecimal number) {
+		return numberFormat.format(number);
+	}
+
+	public String formatWithoutTrailingZeroes(BigDecimal number) {
+		return format(number.stripTrailingZeros());
+	}
+
+	public String formatWithoutTrailingZeroes(BigDecimal number, int decimalPlaces) {
+		return formatWithoutTrailingZeroes(number.setScale(decimalPlaces, RoundingMode.HALF_UP));
+	}
+
+	public String formatTime(BigDecimal timeInHours) {
+		return formatTime(timeInHours.multiply(bigDecimal3600).intValue());
+	}
+
+	public String formatTime(int timeInSeconds) {
+	    int hours = timeInSeconds / 3600;
+	    int secondsLeft = timeInSeconds - hours * 3600;
+	    final StringBuilder formattedTime = new StringBuilder(8);
+	    formattedTime.append(hours).append(':');
+	    int minutes = secondsLeft / 60;
+	    if (minutes < 10) {
+	        formattedTime.append('0');
+	    }
+	    formattedTime.append(minutes).append(':');
+	    int seconds = secondsLeft - minutes * 60;
+	    if (seconds < 10) {
+	    	formattedTime.append('0');
+	    }
+	    formattedTime.append(seconds);
+	    return formattedTime.toString();
 	}
 
 }

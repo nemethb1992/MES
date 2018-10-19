@@ -38,7 +38,6 @@ import java.util.Set;
 import phoenix.mes.OperatingLanguage;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.impl.TaskImpl;
-import phoenix.mes.abas.impl.UnitNamesRepository;
 import phoenix.mes.abas.impl.TaskDetails;
 
 /**
@@ -60,9 +59,9 @@ public class TaskAjoImpl extends TaskImpl<DbContext> {
 		protected class UnitNamesRepository {
 
 			/**
-			 * A gyűjtemény nyelve.
+			 * A gyűjtemény nyelvének kódja.
 			 */
-			protected final OperatingLanguage language;
+			protected final String languageCode;
 
 			/**
 			 * Mértékegység -> név összerendelés.
@@ -71,10 +70,10 @@ public class TaskAjoImpl extends TaskImpl<DbContext> {
 
 			/**
 			 * Konstruktor.
-			 * @param language A gyűjtemény nyelve.
+			 * @param languageCode A gyűjtemény nyelvének kódja.
 			 */
-			protected UnitNamesRepository(OperatingLanguage language) {
-				this.language = language;
+			protected UnitNamesRepository(String languageCode) {
+				this.languageCode = languageCode;
 			}
 
 			/**
@@ -91,10 +90,10 @@ public class TaskAjoImpl extends TaskImpl<DbContext> {
 			}
 
 			/**
-			 * @return A gyűjtemény nyelve.
+			 * @return A gyűjtemény nyelvének kódja.
 			 */
-			public OperatingLanguage getLanguage() {
-				return language;
+			public String getLanguageCode() {
+				return languageCode;
 			}
 
 		}
@@ -133,9 +132,9 @@ public class TaskAjoImpl extends TaskImpl<DbContext> {
 		@Override
 		protected void setAbasConnectionObject(AbasConnection<DbContext> abasConnection, Class<DbContext> abasConnectionType) {
 			super.setAbasConnectionObject(abasConnection, abasConnectionType);
-			final OperatingLanguage operatingLanguage = abasConnection.getOperatingLanguage();
-			if (null == unitNamesRepository || operatingLanguage != unitNamesRepository.getLanguage()) {
-				unitNamesRepository = new UnitNamesRepository(operatingLanguage);
+			final String operatingLanguageCode = abasConnection.getOperatingLanguageCode();
+			if (null == unitNamesRepository || !operatingLanguageCode.equals(unitNamesRepository.getLanguageCode())) {
+				unitNamesRepository = new UnitNamesRepository(operatingLanguageCode);
 			}
 		}
 

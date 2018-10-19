@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import phoenix.mes.content.Dictionary;
-import phoenix.mes.content.Dictionary.Entry;
+import phoenix.mes.content.OutputFormatter;
+import phoenix.mes.content.OutputFormatter.DictionaryEntry;
 
 public class Dashboard extends HttpServlet {
 
@@ -50,7 +50,7 @@ public class Dashboard extends HttpServlet {
 			}
 			getServletContext().getRequestDispatcher(null == nextPage ? "/Views/WelcomePage/WelcomePage.jsp" : nextPage).forward(request, response);
 		} catch (Throwable t) {
-			request.setAttribute("infoTitle", ((Dictionary)session.getAttribute("Dictionary")).getWord(Entry.LOGIN_FAILED));
+			request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.LOGIN_FAILED));
 			getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
 		}
 	}

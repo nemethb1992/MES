@@ -9,9 +9,10 @@ package phoenix.mes.abas;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.Id;
 
+import java.util.Locale;
+
 import javax.security.auth.login.LoginException;
 
-import phoenix.mes.OperatingLanguage;
 import phoenix.mes.abas.impl.edp.EdpObjectFactory;
 
 /**
@@ -42,12 +43,12 @@ public interface AbasObjectFactory<C> {
 	 * Kapcsolódás az Abashoz a megadott bejelentkezési adatokkal.
 	 * @param userName A tartományi felhasználónév.
 	 * @param password A jelszó.
-	 * @param operatingLanguage A kezelőnyelv (null esetén a felhasználónál beállított kezelőnyelv).
+	 * @param locale A kezelőnyelv (null esetén a felhasználónál beállított kezelőnyelvvel történik a kapcsolódás).
 	 * @param testSystem A bejelentkezés a tesztrendszerbe történik?
 	 * @return A megnyitott Abas-kapcsolat.
 	 * @throws LoginException Ha hiba történt a bejelentkezés során.
 	 */
-	AbasConnection<C> openAbasConnection(String userName, String password, OperatingLanguage operatingLanguage, boolean testSystem) throws LoginException;
+	AbasConnection<C> openAbasConnection(String userName, String password, Locale locale, boolean testSystem) throws LoginException;
 
 	/**
 	 * A megadott azonosítókkal rendelkező munkaállomást reprezentáló objektum létrehozása.

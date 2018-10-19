@@ -15,14 +15,14 @@ import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
-import phoenix.mes.content.Dictionary;
-import phoenix.mes.content.Dictionary.Entry;
+import phoenix.mes.content.OutputFormatter;
+import phoenix.mes.content.OutputFormatter.DictionaryEntry;
 
 
 public class StationTaskList extends HttpServlet {
 	
 	protected static final long serialVersionUID = 1L;
-	protected Dictionary dict;
+	protected OutputFormatter dict;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -30,7 +30,7 @@ public class StationTaskList extends HttpServlet {
  	   	String username=(String)session.getAttribute("username");
  	   	String pass=(String)session.getAttribute("pass");
  	   	String station = (String)session.getAttribute("selectedStation");
-		dict  = (Dictionary)session.getAttribute("Dictionary");
+		dict  = (OutputFormatter)session.getAttribute("OutputFormatter");
  	    
 	    response.setContentType("text/plain"); 
 	    response.setCharacterEncoding("UTF-8"); 
@@ -38,7 +38,7 @@ public class StationTaskList extends HttpServlet {
 	}
 	
     protected String StationList(String username, String pass, String station)
-    {
+    { 
     	String layout = "";
     	List<Task> list = new ArrayList<Task>();
     	int stationNo;
@@ -46,7 +46,7 @@ public class StationTaskList extends HttpServlet {
     	try {
         	String[] stationSplit = station.split("!");
         	stationNo = Integer.parseInt(stationSplit[1]);
-        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLanguage(), true);
+        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLocale(), true);
         	list = AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0], stationNo, abasConnection).getExecutableTasks(abasConnection);
 
           	for (Task task: list) {
@@ -55,17 +55,17 @@ public class StationTaskList extends HttpServlet {
           				"						<div class='container px-0'>\r\n" + 
           				"							<div class='row w-100 mx-auto'>\r\n" + 
 						"								<div class='col-4 pr-0 py-2 dnd-input-div'>" + 
-						"									<p>"+dict.getWord(Entry.WORKSHEET_NO)+"</p>\r\n" +  //Munkalapszám
+						"									<p>"+dict.getWord(DictionaryEntry.WORKSHEET_NO)+"</p>\r\n" +  //Munkalapszám
 						"									<textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getWorkSlipNo()+"</textarea>\r\n" + 
-						"									<p>"+dict.getWord(Entry.ARTICLE)+"</p>\r\n"+   //Cikkszám
+						"									<p>"+dict.getWord(DictionaryEntry.ARTICLE)+"</p>\r\n"+   //Cikkszám
 						"									<textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductIdNo()+"</textarea>\r\n" + 
-						"									<p>"+dict.getWord(Entry.SEARCH_WORD)+"</p>\r\n" +   //Keresőszó
+						"									<p>"+dict.getWord(DictionaryEntry.SEARCH_WORD)+"</p>\r\n" +   //Keresőszó
 						"									<textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductSwd()+"</textarea>\r\n" + 
 						"								</div>\r\n" + 
 						"								<div class='col-6 pr-0 py-2 dnd-input-div'>\r\n" + 
-						"									<p>"+dict.getWord(Entry.PLACE_OF_USE)+"</p>\r\n" +  //Felhasználás
+						"									<p>"+dict.getWord(DictionaryEntry.PLACE_OF_USE)+"</p>\r\n" +  //Felhasználás
 						"									<textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getUsage()+"</textarea>\r\n" + 
-						"									<p>"+dict.getWord(Entry.NAME)+"</p>\r\n" +  //Termék megnevezés
+						"									<p>"+dict.getWord(DictionaryEntry.NAME)+"</p>\r\n" +  //Termék megnevezés
 						"									<textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductDescription()+"</textarea>\r\n" + 
 						"								</div>\r\n" + 
           				"								<div class='col-2 dnd-input-div px-0'>\r\n" + 

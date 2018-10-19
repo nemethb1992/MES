@@ -15,9 +15,10 @@ import de.abas.ceks.jedp.EDPVariableLanguage;
 import de.abas.erp.db.DbContext;
 import de.abas.erp.db.internal.ClientContext;
 
+import java.util.Locale;
+
 import javax.security.auth.login.LoginException;
 
-import phoenix.mes.OperatingLanguage;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.impl.EdpBasedAbasConnection;
 
@@ -63,12 +64,12 @@ public class AjoConnection extends EdpBasedAbasConnection<DbContext> {
 	/**
 	 * Konstruktor.
 	 * @param edpCredentialsProvider A bejelentkezési adatok.
-	 * @param operatingLanguage A kezelőnyelv (null esetén a felhasználónál beállított kezelőnyelv).
+	 * @param locale A kezelőnyelv (null esetén a felhasználónál beállított kezelőnyelvvel történik a kapcsolódás).
 	 * @param testSystem A bejelentkezés a tesztrendszerbe történik?
 	 * @throws LoginException Ha hiba történt a bejelentkezés során.
 	 */
-	public AjoConnection(EDPCredentialsProvider edpCredentialsProvider, OperatingLanguage operatingLanguage, boolean testSystem) throws LoginException {
-		this(startEdpSession(edpCredentialsProvider, operatingLanguage, testSystem, getEdpSessionOptions()));
+	public AjoConnection(EDPCredentialsProvider edpCredentialsProvider, Locale locale, boolean testSystem) throws LoginException {
+		this(startEdpSession(edpCredentialsProvider, locale, testSystem, getEdpSessionOptions()));
 	}
 
 	/**

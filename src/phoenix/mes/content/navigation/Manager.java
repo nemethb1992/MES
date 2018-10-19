@@ -17,10 +17,8 @@ public class Manager extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		LanguageSetter setter = new LanguageSetter();
-		
 		session.setAttribute("Layout", "manager");
-		setter.languageSetup(request,response);
+		LanguageSetter.languageSetup(request,response);
 		getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
 	}
 

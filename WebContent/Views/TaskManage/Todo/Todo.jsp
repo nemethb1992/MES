@@ -86,7 +86,7 @@
 										src='${pageContext.request.contextPath}/Public/icons/computerSignGray.svg'>
 										<input
 										class='ts_wsNameInp station_label h-100  p-3'
-										value='<%=dict.getWord(Entry.SELECT_A_WORKSTATION)%>'>
+										value='<%=outputFormatter.getWord(DictionaryEntry.SELECT_A_WORKSTATION)%>'>
 								</div>
 								<div class='input-icon-holderDiv h-100 col-3   sum-holderDiv'>
 									<div class='row h-100 '>
