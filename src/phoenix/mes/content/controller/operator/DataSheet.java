@@ -18,7 +18,7 @@ import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.BomElement;
 import phoenix.mes.content.OutputFormatter;
-import phoenix.mes.content.PostgreSqlOperationsMES;
+import phoenix.mes.content.PostgreSql;
 import phoenix.mes.content.OutputFormatter.DictionaryEntry;
 
 
@@ -256,7 +256,7 @@ public class DataSheet extends HttpServlet {
 	
 	protected String getWorkStationName(String wsCode) throws SQLException
 	{
-		PostgreSqlOperationsMES postgreSql = new PostgreSqlOperationsMES(true); 
+		PostgreSql postgreSql = new PostgreSql(true); 
 		Locale language = outputFormatter.getLocale();
 		String[] stationSplit = wsCode.split("!");
 		String command, field;

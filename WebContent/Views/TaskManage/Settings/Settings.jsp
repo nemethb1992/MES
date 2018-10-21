@@ -51,15 +51,15 @@
 				<div class='row'>
 					<div class='col'>
 						<div class="form-group">
-							<label for="exampleFormControlSelect1">Profit Center</label> <select
-								class="form-control" id="exampleFormControlSelect1">
-<%-- 								<% --%>
-// 									Collection<String> pcList;
-// 									pcList = (Collection<String>) request.getAttribute("Pc");
-// 									for (String item : pcList) {
-// 										out.println("<option>" + item + "</option>");
-// 									}
-<%-- 								%> --%>
+							<label for="exampleFormControlSelect1">Profit Center</label> 
+							<select class="form-control" id="exampleFormControlSelect1">
+								<%
+									for (Map<String, String> map : (List<Map<String, String>>) request.getAttribute("pcList")) {
+										for (Map.Entry<String, String> entry : map.entrySet()) {
+											out.println("<option>" + entry.getValue() + "</option>");
+										}
+									}
+								%>
 							</select>
 						</div>
 					</div>
@@ -67,13 +67,13 @@
 						<div class="form-group">
 							<label for="exampleFormControlSelect1"><%=outputFormatter.getWord(DictionaryEntry.GROUP)%></label>
 							<select class="form-control" id="exampleFormControlSelect1">
-<%-- 								<% --%>
-// 									Collection<String> groupList;
-// 									groupList = (Collection<String>) request.getAttribute("Group");
-// 									for (String item : groupList) {
-// 										out.println("<option>" + item + "</option>");
-// 									}
-<%-- 								%> --%>
+								<%
+									for (Map<String, String> map : (List<Map<String, String>>) request.getAttribute("groupList")) {
+										for (Map.Entry<String, String> entry : map.entrySet()) {
+											out.println("<option>" + entry.getValue() + "</option>");
+										}
+									}
+								%>
 							</select>
 						</div>
 					</div>

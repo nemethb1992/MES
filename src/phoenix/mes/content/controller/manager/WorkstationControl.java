@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import phoenix.mes.content.OutputFormatter;
-import phoenix.mes.content.PostgreSqlOperationsMES;
+import phoenix.mes.content.PostgreSql;
 
 /**
  * Servlet implementation class StationControl
@@ -54,7 +54,7 @@ public class WorkstationControl extends HttpServlet {
 	
 	protected String getPcItems()
 	{
-		PostgreSqlOperationsMES postgreSql = new PostgreSqlOperationsMES(true);
+		PostgreSql postgreSql = new PostgreSql(true);
 		String view = "";
 		String command = "SELECT long FROM profitcenter";
 		final String sqlFieldName = "long";
@@ -74,7 +74,7 @@ public class WorkstationControl extends HttpServlet {
 	
     protected String getGroupItems(HttpServletRequest request)
     {
-		PostgreSqlOperationsMES postgreSql = new PostgreSqlOperationsMES(true); 
+		PostgreSql postgreSql = new PostgreSql(true); 
     	String view = ""; 
     	
    	    String command = "select stations.csoport from stations left join profitcenter on stations.pc = profitcenter.id where long='"+request.getParameter("element")+"' group by stations.csoport";
@@ -95,7 +95,7 @@ public class WorkstationControl extends HttpServlet {
     
     protected String getStationItem(HttpServletRequest request, Locale locale)
     {
-		PostgreSqlOperationsMES postgreSql = new PostgreSqlOperationsMES(true);
+		PostgreSql postgreSql = new PostgreSql(true);
     	String view = "";
    	    final String groupSqlFieldName = "csoport";
    	    final String numberSqlFieldName = "sorszam";

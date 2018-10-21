@@ -39,7 +39,7 @@ public class StationTaskList extends HttpServlet {
 	
     protected String StationList(String username, String pass, String station)
     { 
-    	String layout = "";
+		StringBuilder layout = new StringBuilder();
     	List<Task> list = new ArrayList<Task>();
     	int stationNo;
     	AbasConnection<EDPSession> abasConnection = null;
@@ -51,39 +51,19 @@ public class StationTaskList extends HttpServlet {
 
           	for (Task task: list) {
           		final Task.Details taskDetails = task.getDetails(abasConnection);
-          		layout += "					<div class='dnd-container col-12 px-0' value='3'>\r\n" + 
-          				"						<div class='container px-0'>\r\n" + 
-          				"							<div class='row w-100 mx-auto'>\r\n" + 
-						"								<div class='col-4 pr-0 py-2 dnd-input-div'>" + 
-						"									<p>"+dict.getWord(DictionaryEntry.WORKSHEET_NO)+"</p>\r\n" +  //Munkalapszám
-						"									<textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getWorkSlipNo()+"</textarea>\r\n" + 
-						"									<p>"+dict.getWord(DictionaryEntry.ARTICLE)+"</p>\r\n"+   //Cikkszám
-						"									<textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductIdNo()+"</textarea>\r\n" + 
-						"									<p>"+dict.getWord(DictionaryEntry.SEARCH_WORD)+"</p>\r\n" +   //Keresőszó
-						"									<textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductSwd()+"</textarea>\r\n" + 
-						"								</div>\r\n" + 
-						"								<div class='col-6 pr-0 py-2 dnd-input-div'>\r\n" + 
-						"									<p>"+dict.getWord(DictionaryEntry.PLACE_OF_USE)+"</p>\r\n" +  //Felhasználás
-						"									<textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getUsage()+"</textarea>\r\n" + 
-						"									<p>"+dict.getWord(DictionaryEntry.NAME)+"</p>\r\n" +  //Termék megnevezés
-						"									<textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductDescription()+"</textarea>\r\n" + 
-						"								</div>\r\n" + 
-          				"								<div class='col-2 dnd-input-div px-0'>\r\n" + 
-          				"									<div class='row w-100 mx-auto h-100 d-flex'>\r\n" + 
-          				"										<div class='col-12 px-0'>\r\n" + 
-          				"											<input class='h-100 w-100 task-panel-button mini-button up-task-button' type='button'>\r\n" + 
-          				"										</div>\r\n" + 
-          				"										<div class='col-12 my-1 px-0'>\r\n" + 
-          				"											<input class='h-100 w-100 task-panel-button mini-button remove-task-button' type='button'>\r\n" + 
-          				"										</div>\r\n" + 
-          				"										<div class='col-12 px-0'>\r\n" + 
-          				"											<input class='h-100 w-100 task-panel-button mini-button down-task-button' type='button'>\r\n" + 
-          				"										</div>\r\n" + 
-          				"									</div>\r\n" + 
-          				"								</div>\r\n" + 
-          				"							</div>\r\n" + 
-          				"						</div>\r\n" + 
-          				"					</div>";
+
+          		
+          		layout.append("<div class='dnd-container col-12 px-0' value='3'><div class='container px-0'><div class='row w-100 mx-auto'><div class='col-4 pr-0 py-2 dnd-input-div'>");
+          		layout.append("<p>"+dict.getWord(DictionaryEntry.WORKSHEET_NO)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getWorkSlipNo()+"</textarea>");
+          		layout.append("<p>"+dict.getWord(DictionaryEntry.ARTICLE)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductIdNo()+"</textarea>");
+          		layout.append("<p>"+dict.getWord(DictionaryEntry.SEARCH_WORD)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductSwd()+"</textarea>");
+          		layout.append("</div><div class='col-6 pr-0 py-2 dnd-input-div'>");
+          		layout.append("<p>"+dict.getWord(DictionaryEntry.PLACE_OF_USE)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getUsage()+"</textarea>");
+          		layout.append("<p>"+dict.getWord(DictionaryEntry.NAME)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductDescription()+"</textarea>");
+          		layout.append("</div><div class='col-2 dnd-input-div px-0'><div class='row w-100 mx-auto h-100 d-flex'><div class='col-12 px-0'>");
+          		layout.append("<input class='h-100 w-100 task-panel-button mini-button up-task-button' type='button'></div><div class='col-12 my-1 px-0'>");
+          		layout.append("<input class='h-100 w-100 task-panel-button mini-button remove-task-button' type='button'></div><div class='col-12 px-0'>");
+          		layout.append("<input class='h-100 w-100 task-panel-button mini-button down-task-button' type='button'></div></div></div></div></div></div>");
           	}
     	}catch(LoginException e)
     	{
@@ -98,7 +78,7 @@ public class StationTaskList extends HttpServlet {
     		{}
     	}
 
-    	return layout;
+    	return layout.toString();
     }
 
 

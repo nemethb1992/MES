@@ -80,6 +80,7 @@ function workstationListLoader()
 
 				$( ".dndf2" ).empty();
 				$( ".dndf2" ).append(respond);
+				console.log(respond);
 			},
 			error: function() {
 				$( ".dndf2" ).empty();

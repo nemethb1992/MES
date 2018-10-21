@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PostgreSqlOperationsMES {
+public class PostgreSql {
 
 	static {
 		try {
@@ -26,7 +26,7 @@ public class PostgreSqlOperationsMES {
 
 	protected final boolean testSystem;
 
-	public PostgreSqlOperationsMES(final boolean testSystem)
+	public PostgreSql(final boolean testSystem)
     {
 		this.testSystem = testSystem;
     }
