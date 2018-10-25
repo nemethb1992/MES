@@ -61,54 +61,57 @@
 				</div>
 				<div class='sortContDiv col-10 pr-0'>
 					<div class='sortStationListCont container-fluid'>
-						<div class='sortContDiv_nav row px-0 light-shadow'>
-							<div class='abas-list-head sort-list-head sort-list h-100 col-5'>
-								<div class='row h-100'>
-									<div class='py-2 col-12'>
-											<div class='row h-100 py-1'>
-												<div class='col-10'>
-													<input data-date-format="yyyy/mm/dd" class='datepicker_own w-100 h-100' id="datepicker">
-   
-<!-- 													<input class='datepicker_own w-100 h-100' type='date' style='font-size: 17px;'/> -->
-												</div>
-												<div class='col-2 px-0'>
-													<button class='date-button date-null h-100 w-100'></button>
-												</div>
-											</div>
-									</div>
-									<div class='input-icon-holderDiv  col px-0'></div>
-								</div>
-							</div>
-							<div class='ws-list-head sort-list-head sort-list col-7 px-0 h-100'>
-								<div class='row h-100 mx-0'>
-								<div class='input-icon-holderDiv stationName-holderDiv col-9 h-100'>
-									<img class='h-100 float-left p-3'
-										src='${pageContext.request.contextPath}/Public/icons/computerSignGray.svg'>
-										<input
-										class='ts_wsNameInp station_label h-100  p-3'
-										value='<%=outputFormatter.getWord(DictionaryEntry.SELECT_A_WORKSTATION)%>'>
-								</div>
-								<div class='input-icon-holderDiv h-100 col-3   sum-holderDiv'>
-									<div class='row h-100 '>
-										<input
-										class='ts_sumTime h-100 col-6 float-right py-3' value='0:00:00'>
-																		<img class='icon-form col-4 h-100 float-right p-4'
-										src='${pageContext.request.contextPath}/Public/icons/sumSignGray.svg'>
-									</div>
+				<div class='sortContDiv_nav row px-0 light-shadow'>
+					<div class='abas-list-head sort-list-head sort-list h-100 col-5'>
+						<div class='row h-100'>
+							<div class='py-2 col-12'>
+								<div class='row h-100 py-1'>
+									<div class='col-10'>
+										<input data-date-format="yyyy/mm/dd"
+											class='datepicker_own w-100 h-100' id="datepicker">
 
-								</div>
+										<!-- 													<input class='datepicker_own w-100 h-100' type='date' style='font-size: 17px;'/> -->
+									</div>
+									<div class='col-2 px-0'>
+										<button class='date-button date-null h-100 w-100'></button>
+									</div>
 								</div>
 							</div>
+							<div class='input-icon-holderDiv  col px-0'></div>
 						</div>
-						<div class='sortContDiv_ListHolder row'>
-							<div class='abas-list-holder dndf1   sort-list-holder  col-9 px-0'>
-
+					</div>
+					<div class='ws-list-head sort-list-head sort-list col-7 px-0 h-100'>
+						<div class='row h-100 mx-0'>
+							<div
+								class='input-icon-holderDiv stationName-holderDiv col-9 h-100'>
+								<img class='h-100 float-left p-3'
+									src='${pageContext.request.contextPath}/Public/icons/computerSignGray.svg'>
+								<input class='ts_wsNameInp station_label h-100  p-3'
+									value='<%=outputFormatter.getWord(DictionaryEntry.SELECT_A_WORKSTATION)%>'>
 							</div>
-							<div class='ws-list-holder sort-list-holder col-3 px-0'>
-								<div class='dnd-frame h-100 m-0 dndf2'></div>
+							<div class='input-icon-holderDiv h-100 col-3   sum-holderDiv'>
+								<div class='row h-100 '>
+									<input class='ts_sumTime h-100 col-6 float-right py-3'
+										value='0:00:00'> <img
+										class='icon-form col-4 h-100 float-right p-4'
+										src='${pageContext.request.contextPath}/Public/icons/sumSignGray.svg'>
+								</div>
+
 							</div>
 						</div>
 					</div>
+				</div>
+				<div class='sortContDiv_ListHolder row'>
+					<div class='abas-list-holder    sort-list-holder  col-9 px-0'>
+						<div class='abas-list dnd-frame dndf1 m-0 row light-shadow'>
+						
+						</div>
+					</div>
+					<div class='ws-list-holder sort-list-holder col-3 px-0'>
+						<div class='dnd-frame h-100 m-0 dndf2'></div>
+					</div>
+				</div>
+			</div>
 				</div>
 			</div>
 		</div>

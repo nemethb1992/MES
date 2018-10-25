@@ -48,7 +48,7 @@ function ListLoader()
 				date = null;
 			}
 			$( ".dndf1" ).empty();
-			loadingAnimation('.abas-list-holder');
+			loadingAnimation('.abas-list');
 			$.ajax({
 				url:  '/'+path+'/AbasTaskList',
 				data: {
