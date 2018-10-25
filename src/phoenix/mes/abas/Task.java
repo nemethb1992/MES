@@ -36,6 +36,11 @@ public interface Task extends Serializable {
 		AbasDate getStartDate();
 
 		/**
+		 * @return A gyártási feladat fel van függesztve?
+		 */
+		boolean isSuspendedTask();
+
+		/**
 		 * @return A termék cikkszáma.
 		 */
 		String getProductIdNo();
@@ -182,15 +187,14 @@ public interface Task extends Serializable {
 
 	/**
 	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A gyártási feladat elkezdésének (tervezett) napja.
-	 */
-	AbasDate getStartDate(AbasConnection<?> abasConnection);
-
-	/**
-	 * @param abasConnection Az Abas-kapcsolat.
 	 * @return A gyártási feladat részleteit leíró objektum.
+	 * @throws IllegalArgumentException Ha az Abas-kapcsolat nem megfelelő típusú.
 	 */
 	Details getDetails(AbasConnection<?> abasConnection);
+
+	void schedule(WorkStation workStation, Id precedingWorkSlipId, AbasConnection<?> abasConnection);
+
+	void unSchedule(AbasConnection<?> abasConnection);
 
 /*
 Feladat indítása

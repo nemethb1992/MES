@@ -12,12 +12,77 @@ import de.abas.ceks.jedp.EDPEditor;
 import de.abas.ceks.jedp.EDPException;
 import de.abas.ceks.jedp.EDPRuntimeException;
 import de.abas.ceks.jedp.EDPSession;
+import de.abas.erp.common.type.AbasDate;
+import de.abas.erp.db.type.AbasUnit;
+
+import java.math.BigDecimal;
 
 /**
  * Osztály infosystemeken keresztüli lekérdezésekhez.
  * @author szizo
  */
 public class InfoSystemExecutor {
+
+	/**
+	 * Segédosztály több mezőérték együttes átadásához.
+	 * @author szizo
+	 */
+	public static class FieldValues {
+
+		/**
+		 * A mezőértékek.
+		 */
+		protected final EDPEditFieldList fieldValues;
+
+		/**
+		 * Konstruktor.
+		 * @param fieldValues A mezőértékek.
+		 */
+		protected FieldValues(EDPEditFieldList fieldValues) {
+			this.fieldValues = fieldValues;
+		}
+
+		/**
+		 * @param fieldName A mező neve.
+		 * @return A megadott mező tartalma szöveges formában.
+		 */
+		public String getString(String fieldName) {
+			return fieldValues.getField(fieldName).getValue();
+		}
+
+		/**
+		 * @param fieldName A mező neve.
+		 * @return A megadott mező tartalma AbasDate típusú dátumként.
+		 */
+		public AbasDate getAbasDate(String fieldName) {
+			return AbasDate.valueOf(getString(fieldName));
+		}
+
+		/**
+		 * @param fieldName A mező neve.
+		 * @return A megadott mező tartalma AbasUnit típusú mértékegységként.
+		 */
+		public AbasUnit getAbasUnit(String fieldName) {
+			return AbasUnit.UNITS.valueOf(getString(fieldName));
+		}
+
+		/**
+		 * @param fieldName A mező neve.
+		 * @return A megadott mező tartalma BigDecimal típusú tizedestörtként.
+		 */
+		public BigDecimal getBigDecimal(String fieldName) {
+			return (new BigDecimal(getString(fieldName)));
+		}
+
+		/**
+		 * @param fieldName A mező neve.
+		 * @return A megadott mező tartalma logikai értékként.
+		 */
+		public boolean getBoolean(String fieldName) {
+			return "1".equals(getString(fieldName));
+		}
+
+	}
 
 	/**
 	 * Az infosystem keresőszava.
@@ -77,6 +142,16 @@ public class InfoSystemExecutor {
 				infoSystemQuery.endEditCancel();
 			}
 		}
+	}
+
+	/**
+	 * Infosystemen keresztüli lekérdezés végrehajtása.
+	 * @param inputFieldValues Az eredmény lekérdezése előtti mezőbeállítások (null, ha nincs szükség bemenetekre).
+	 * @param edpSession Az EDP-munkamenet.
+	 * @return A lekérdezendő fejrészmezők értékei az infosystem lefuttatása után.
+	 */
+	public FieldValues getResultHeaderFields(EDPEditFieldList inputFieldValues, EDPSession edpSession) {
+		return (new FieldValues(executeQuery(inputFieldValues, edpSession).getHeaderFields()));
 	}
 
 }

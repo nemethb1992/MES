@@ -45,6 +45,11 @@ public abstract class TaskDetails<C> implements Task.Details {
 	protected AbasDate startDate = null;
 
 	/**
+	 * A gyártási feladat fel van függesztve?
+	 */
+	protected boolean suspendedTask;
+
+	/**
 	 * A termék cikkszáma.
 	 */
 	protected String productIdNo = null;
@@ -249,6 +254,18 @@ public abstract class TaskDetails<C> implements Task.Details {
 			loadBasicData();
 		}
 		return startDate;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task.Details#isSuspendedTask()
+	 */
+	@Override
+	public boolean isSuspendedTask() {
+		// A logikai érték az objektummá alakítás kiküszöbölése végett primitív típusként tárolódik, ezért a munkalap száma a kitöltöttség jelzőmezője
+		if (null == workSlipNo) {
+			loadBasicData();
+		}
+		return suspendedTask;
 	}
 
 	/* (non-Javadoc)

@@ -51,11 +51,11 @@ public abstract class InfoSystemTableConverter<R> extends InfoSystemExecutor {
 			case 0:
 				return Collections.emptyList();
 			case 1:
-				return Collections.singletonList(createRowObject(result.getFields(1)));
+				return Collections.singletonList(createRowObject(new FieldValues(result.getFields(1))));
 			default:
 				final List<R> rows = new ArrayList<>(rowCount);
 				for (int i = 1; i <= rowCount; i++) {
-					rows.add(createRowObject(result.getFields(i)));
+					rows.add(createRowObject(new FieldValues(result.getFields(i))));
 				}
 				return rows;
 		}
@@ -66,6 +66,6 @@ public abstract class InfoSystemTableConverter<R> extends InfoSystemExecutor {
 	 * @param rowData Az infosystem táblázatsora.
 	 * @return A táblázatsor objektummá alakítva.
 	 */
-	protected abstract R createRowObject(EDPEditFieldList rowData);
+	protected abstract R createRowObject(FieldValues rowData);
 
 }

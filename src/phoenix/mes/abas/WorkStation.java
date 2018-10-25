@@ -37,22 +37,20 @@ public interface WorkStation extends Serializable {
 
 	/**
 	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A munkaállomáshoz hozzárendelt, de felfüggesztett gyártási feladatok listája.
+	 * @return A gépcsoportra betervezett, de felfüggesztett gyártási feladatok listája.
 	 */
 	List<Task> getSuspendedTasks(AbasConnection<?> abasConnection);
 
 	/**
 	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A munkaállomáshoz hozzárendelt és végrehajtható gyártási feladatok listája.
+	 * @return A munkaállomásra betervezett és végrehajtható gyártási feladatok listája.
 	 */
-	List<Task> getExecutableTasks(AbasConnection<?> abasConnection);
+	List<Task> getScheduledTasks(AbasConnection<?> abasConnection);
 
 	/**
 	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A munkaállomás következő végrehajtható gyártási feladata (null, ha a munkaállomás feladatlistája üres).
+	 * @return A munkaállomás első végrehajtható gyártási feladata (null, ha a munkaállomás feladatlistája üres).
 	 */
-	Task getNextExecutableTask(AbasConnection<?> abasConnection);
-
-	void setTaskExecutionOrder(Id taskId, Id precedingTaskId, AbasConnection<?> abasConnection);
+	Task getFirstScheduledTask(AbasConnection<?> abasConnection);
 
 }

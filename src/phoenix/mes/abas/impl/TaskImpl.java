@@ -7,6 +7,7 @@
 package phoenix.mes.abas.impl;
 
 import de.abas.erp.common.type.Id;
+import de.abas.erp.common.type.IdImpl;
 
 import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
@@ -29,7 +30,7 @@ public abstract class TaskImpl<C> implements Task {
 	/**
 	 * A gyártási feladathoz tartozó munkalap azonosítója.
 	 */
-	protected final Id workSlipId;
+	protected final String workSlipId;
 
 	/**
 	 * Az Abas-kapcsolat osztálya.
@@ -46,7 +47,7 @@ public abstract class TaskImpl<C> implements Task {
 	 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 	 * @param abasConnectionType Az Abas-kapcsolat osztálya.
 	 */
-	protected TaskImpl(Id workSlipId, Class<C> abasConnectionType) {
+	protected TaskImpl(String workSlipId, Class<C> abasConnectionType) {
 		this.workSlipId = workSlipId;
 		this.abasConnectionType = abasConnectionType;
 	}
@@ -59,7 +60,8 @@ public abstract class TaskImpl<C> implements Task {
 		if (!(object instanceof Task)) {
 			return false;
 		}
-		return workSlipId.equals(((Task)object).getWorkSlipId());
+		final Id otherWorkSlipId = ((Task)object).getWorkSlipId();
+		return null != otherWorkSlipId && workSlipId.equals(otherWorkSlipId.toString());
 	}
 
 	/* (non-Javadoc)
@@ -93,7 +95,7 @@ public abstract class TaskImpl<C> implements Task {
 	 */
 	@Override
 	public Id getWorkSlipId() {
-		return workSlipId;
+		return (new IdImpl(workSlipId));
 	}
 
 	/* (non-Javadoc)

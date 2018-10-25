@@ -8,18 +8,14 @@ package phoenix.mes.abas.impl.edp;
 
 import de.abas.ceks.jedp.CantChangeFieldValException;
 import de.abas.ceks.jedp.EDPEditFieldList;
-import de.abas.ceks.jedp.EDPEditObject;
 import de.abas.ceks.jedp.EDPQuery;
 import de.abas.ceks.jedp.EDPRuntimeException;
 import de.abas.ceks.jedp.EDPSession;
-import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.common.type.Id;
 import de.abas.erp.common.type.enums.EnumWorkOrderType;
 import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESTASK;
 import de.abas.erp.db.schema.workorder.WorkOrders;
-import de.abas.erp.db.type.AbasUnit;
 
-import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -45,9 +41,9 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 		 * @return Az infosystem indításához szükséges mezőbeállítások.
 		 */
-		protected static EDPEditFieldList getFilterCriteria(String[] criteriaFieldNames, Id workSlipId) {
+		protected static EDPEditFieldList getFilterCriteria(String[] criteriaFieldNames, String workSlipId) {
 			try {
-				return new EDPEditFieldList(criteriaFieldNames, new String[] {workSlipId.toString(), "1", " "});
+				return new EDPEditFieldList(criteriaFieldNames, new String[] {workSlipId, "1", " "});
 			} catch (CantChangeFieldValException e) {
 				throw new EDPRuntimeException(e);
 			}
@@ -65,10 +61,10 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 * A lekérdezés végrehajtása.
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 		 * @param edpSession Az EDP-munkamenet.
-		 * @return A lekérdezendő mezők értékei.
+		 * @return A lekérdezendő (fejrész)mezők értékei.
 		 */
-		public EDPEditObject executeQuery(Id workSlipId, EDPSession edpSession) {
-			return executeQuery(getFilterCriteria(getCriteriaFieldNames(), workSlipId), edpSession);
+		public FieldValues getResultFields(String workSlipId, EDPSession edpSession) {
+			return getResultHeaderFields(getFilterCriteria(getCriteriaFieldNames(), workSlipId), edpSession);
 		}
 
 		/**
@@ -99,6 +95,11 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			 * A gyártási feladat elkezdésének (tervezett) napja.
 			 */
 			public static final String START_DATE = InfosysOw1MESTASK.META.ytsterm.getName();
+
+			/**
+			 * A gyártási feladat fel van függesztve?
+			 */
+			public static final String SUSPENDED_TASK = InfosysOw1MESTASK.META.ymegszak.getName();
 
 			/**
 			 * A termék Felhasználás-hivatkozása.
@@ -416,42 +417,22 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 * @param edpSession Az EDP-munkamenet.
 		 * @return A darabjegyzék sorainak adatait tartalmazó objektumok listája.
 		 */
-		public List<BomElement> getRows(Id workSlipId, EDPSession edpSession) {
+		public List<BomElement> getRows(String workSlipId, EDPSession edpSession) {
 			final List<BomElement> rows = getRows(TaskDataQuery.getFilterCriteria(criteriaFieldNames, workSlipId), edpSession);
 			return (1 < rows.size() ? Collections.unmodifiableList(rows) : rows);
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.impl.edp.InfoSystemTableConverter#createRowObject(de.abas.ceks.jedp.EDPEditFieldList)
+		 * @see phoenix.mes.abas.impl.edp.InfoSystemTableConverter#createRowObject(phoenix.mes.abas.impl.edp.InfoSystemExecutor.FieldValues)
 		 */
 		@Override
-		protected BomElementImpl createRowObject(EDPEditFieldList rowData) {
-			return new BomElementImpl(rowData.getField(Field.ID_NO).getValue(),
-					rowData.getField(Field.SWD).getValue(),
-					rowData.getField(Field.DESCRIPTION).getValue(),
-					rowData.getField(Field.DESCRIPTION2).getValue(),
-					new BigDecimal(rowData.getField(Field.QUANTITY_PER_PRODUCT).getValue()),
-					rowData.getField(Field.STOCK_UNIT_NAME).getValue());
-		}
-
-	}
-
-	/**
-	 * Segédosztály a gyártási feladat (tervezett) kezdőnapjának lekérdezéséhez.
-	 * @author szizo
-	 */
-	protected static final class StartDateQuery extends EdpQueryExecutor {
-
-		/**
-		 * Egyke objektum.
-		 */
-		public static final StartDateQuery EXECUTOR = new StartDateQuery();
-
-		/**
-		 * Konstruktor.
-		 */
-		private StartDateQuery() {
-			super(new String[] {WorkOrders.META.startDateDay.getName()});
+		protected BomElementImpl createRowObject(FieldValues rowData) {
+			return new BomElementImpl(rowData.getString(Field.ID_NO),
+					rowData.getString(Field.SWD),
+					rowData.getString(Field.DESCRIPTION),
+					rowData.getString(Field.DESCRIPTION2),
+					rowData.getBigDecimal(Field.QUANTITY_PER_PRODUCT),
+					rowData.getString(Field.STOCK_UNIT_NAME));
 		}
 
 	}
@@ -475,26 +456,27 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 */
 		@Override
 		protected void loadBasicData() {
-			final EDPEditFieldList result = BasicDataQuery.EXECUTOR.executeQuery(workSlipId, abasConnectionObject).getHeaderFields();
-			workSlipNo = result.getField(BasicDataQuery.Field.ID_NO).getValue();
-			startDate = AbasDate.valueOf(result.getField(BasicDataQuery.Field.START_DATE).getValue());
-			productIdNo = result.getField(BasicDataQuery.Field.PRODUCT_ID_NO).getValue();
-			productSwd = result.getField(BasicDataQuery.Field.PRODUCT_SWD).getValue();
-			productDescription = result.getField(BasicDataQuery.Field.PRODUCT_DESCRIPTION).getValue();
-			productDescription2 = result.getField(BasicDataQuery.Field.PRODUCT_DESCRIPTION2).getValue();
-			usage = result.getField(BasicDataQuery.Field.USAGE).getValue();
-			setupTime = calculateGrossTime(new BigDecimal(result.getField(BasicDataQuery.Field.SETUP_TIME).getValue()),
-					AbasUnit.UNITS.valueOf(result.getField(BasicDataQuery.Field.SETUP_TIME_UNIT).getValue()),
-					new BigDecimal(result.getField(BasicDataQuery.Field.SETUP_TIME_SEC).getValue()));
-			setupTimeUnit = result.getField(BasicDataQuery.Field.SETUP_TIME_UNIT_NAME).getValue();
-			unitTime = calculateGrossTime(new BigDecimal(result.getField(BasicDataQuery.Field.UNIT_TIME).getValue()),
-					AbasUnit.UNITS.valueOf(result.getField(BasicDataQuery.Field.UNIT_TIME_UNIT).getValue()),
-					new BigDecimal(result.getField(BasicDataQuery.Field.UNIT_TIME_SEC).getValue()));
-			unitTimeUnit = result.getField(BasicDataQuery.Field.UNIT_TIME_UNIT_NAME).getValue();
-			numberOfExecutions = new BigDecimal(result.getField(BasicDataQuery.Field.NUMBER_OF_EXECUTIONS).getValue());
-			outstandingQuantity = new BigDecimal(result.getField(BasicDataQuery.Field.OUTSTANDING_QUANTITY).getValue());
-			stockUnit = result.getField(BasicDataQuery.Field.STOCK_UNIT_NAME).getValue();
-			calculatedProductionTime = new BigDecimal(result.getField(BasicDataQuery.Field.CALCULATED_PRODUCTION_TIME).getValue());
+			final InfoSystemExecutor.FieldValues result = BasicDataQuery.EXECUTOR.getResultFields(workSlipId, abasConnectionObject);
+			workSlipNo = result.getString(BasicDataQuery.Field.ID_NO);
+			startDate = result.getAbasDate(BasicDataQuery.Field.START_DATE);
+			suspendedTask = result.getBoolean(BasicDataQuery.Field.SUSPENDED_TASK);
+			productIdNo = result.getString(BasicDataQuery.Field.PRODUCT_ID_NO);
+			productSwd = result.getString(BasicDataQuery.Field.PRODUCT_SWD);
+			productDescription = result.getString(BasicDataQuery.Field.PRODUCT_DESCRIPTION);
+			productDescription2 = result.getString(BasicDataQuery.Field.PRODUCT_DESCRIPTION2);
+			usage = result.getString(BasicDataQuery.Field.USAGE);
+			setupTime = calculateGrossTime(result.getBigDecimal(BasicDataQuery.Field.SETUP_TIME),
+					result.getAbasUnit(BasicDataQuery.Field.SETUP_TIME_UNIT),
+					result.getBigDecimal(BasicDataQuery.Field.SETUP_TIME_SEC));
+			setupTimeUnit = result.getString(BasicDataQuery.Field.SETUP_TIME_UNIT_NAME);
+			unitTime = calculateGrossTime(result.getBigDecimal(BasicDataQuery.Field.UNIT_TIME),
+					result.getAbasUnit(BasicDataQuery.Field.UNIT_TIME_UNIT),
+					result.getBigDecimal(BasicDataQuery.Field.UNIT_TIME_SEC));
+			unitTimeUnit = result.getString(BasicDataQuery.Field.UNIT_TIME_UNIT_NAME);
+			numberOfExecutions = result.getBigDecimal(BasicDataQuery.Field.NUMBER_OF_EXECUTIONS);
+			outstandingQuantity = result.getBigDecimal(BasicDataQuery.Field.OUTSTANDING_QUANTITY);
+			stockUnit = result.getString(BasicDataQuery.Field.STOCK_UNIT_NAME);
+			calculatedProductionTime = result.getBigDecimal(BasicDataQuery.Field.CALCULATED_PRODUCTION_TIME);
 		}
 
 		/* (non-Javadoc)
@@ -502,11 +484,11 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 */
 		@Override
 		protected void loadOperationData() {
-			final EDPEditFieldList result = OperationQuery.EXECUTOR.executeQuery(workSlipId, abasConnectionObject).getHeaderFields();
-			operationIdNo = result.getField(OperationQuery.Field.ID_NO).getValue();
-			operationSwd = result.getField(OperationQuery.Field.SWD).getValue();
-			operationDescription = result.getField(OperationQuery.Field.DESCRIPTION).getValue();
-			operationReservationText = result.getField(OperationQuery.Field.ITEM_TEXT).getValue();
+			final InfoSystemExecutor.FieldValues result = OperationQuery.EXECUTOR.getResultFields(workSlipId, abasConnectionObject);
+			operationIdNo = result.getString(OperationQuery.Field.ID_NO);
+			operationSwd = result.getString(OperationQuery.Field.SWD);
+			operationDescription = result.getString(OperationQuery.Field.DESCRIPTION);
+			operationReservationText = result.getString(OperationQuery.Field.ITEM_TEXT);
 		}
 
 		/* (non-Javadoc)
@@ -514,9 +496,9 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 */
 		@Override
 		protected void loadSalesOrderData() {
-			final EDPEditFieldList result = SalesOrderQuery.EXECUTOR.executeQuery(workSlipId, abasConnectionObject).getHeaderFields();
-			salesOrderItemText = result.getField(SalesOrderQuery.Field.ITEM_TEXT).getValue();
-			salesOrderItemText2 = result.getField(SalesOrderQuery.Field.ITEM_TEXT2).getValue();
+			final InfoSystemExecutor.FieldValues result = SalesOrderQuery.EXECUTOR.getResultFields(workSlipId, abasConnectionObject);
+			salesOrderItemText = result.getString(SalesOrderQuery.Field.ITEM_TEXT);
+			salesOrderItemText2 = result.getString(SalesOrderQuery.Field.ITEM_TEXT2);
 		}
 
 		/* (non-Javadoc)
@@ -564,24 +546,15 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 * @param edpSession Az EDP-munkamenet.
 	 */
 	public TaskEdpImpl(Id workSlipId, EDPSession edpSession) {
-		this(workSlipIdFilter(workSlipId, edpSession));
+		this(workSlipIdFilter(workSlipId, edpSession).toString());
 	}
 
 	/**
 	 * Konstruktor.
 	 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 	 */
-	TaskEdpImpl(Id workSlipId) {
+	TaskEdpImpl(String workSlipId) {
 		super(workSlipId, EDPSession.class);
-	}
-
-	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task#getStartDate(phoenix.mes.abas.AbasConnection)
-	 */
-	@Override
-	public AbasDate getStartDate(AbasConnection<?> abasConnection) {
-		final EDPQuery edpQuery = StartDateQuery.EXECUTOR.readRecord(workSlipId, EdpConnection.getEdpSession(abasConnection));
-		return (null == edpQuery ? null : AbasDate.valueOf(edpQuery.getField(1)));
 	}
 
 	/* (non-Javadoc)
