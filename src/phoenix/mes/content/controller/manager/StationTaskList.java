@@ -47,7 +47,7 @@ public class StationTaskList extends HttpServlet {
         	String[] stationSplit = station.split("!");
         	stationNo = Integer.parseInt(stationSplit[1]);
         	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLocale(), true);
-        	list = AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0], stationNo, abasConnection).getExecutableTasks(abasConnection);
+        	list = AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0], stationNo, abasConnection).getScheduledTasks(abasConnection);
 
           	for (Task task: list) {
           		final Task.Details taskDetails = task.getDetails(abasConnection);

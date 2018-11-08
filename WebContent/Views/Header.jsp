@@ -7,7 +7,6 @@
 
 
 <%@page import="phoenix.mes.content.OutputFormatter"%>
-<%@page import="phoenix.mes.OperatingLanguage"%>
 <%@page import="phoenix.mes.content.controller.LanguageSetter"%>
 <%@page import="phoenix.mes.content.OutputFormatter.DictionaryEntry"%>
 <%@page import="java.util.List"%>
@@ -15,7 +14,7 @@
 <%@page import="java.util.Collection"%>
 
 <% 
-OutputFormatter outputFormatter;
+	OutputFormatter outputFormatter;
 	if(session.getAttribute("OutputFormatter") != null){
 		outputFormatter = (OutputFormatter)session.getAttribute("OutputFormatter"); 
 	}

@@ -101,9 +101,6 @@ public class AbasTaskList extends HttpServlet {
 				layout.append("</textarea></div></div></div></div><div class='col col-button p-1'><div class='w-100 h-100 dnd-input-div px-0'><input class='h-100 w-100 task-panel-button' value='' type='button'>");
 				layout.append("</div></div></div></div></div>");
 				
-				
-				
-
 			}
 		}catch(LoginException e){
 			System.out.println(e);
