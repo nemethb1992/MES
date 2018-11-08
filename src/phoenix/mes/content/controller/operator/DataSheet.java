@@ -211,6 +211,17 @@ public class DataSheet extends HttpServlet {
 	{
 
     	List<BomElement> li = taskDetails.getBom();
+    	
+		StringBuilder layout = new StringBuilder();
+		
+		layout.append("<table class='table table-striped mytable'><thead><tr><th scope='col'>");
+		layout.append(outputFormatter.getWord(DictionaryEntry.ARTICLE));
+		layout.append("</th>th scope='col'>");
+		layout.append("");
+		layout.append("");
+		layout.append("");
+		layout.append("");
+		layout.append("");
 		
     	String view = "				<table class=\"table table-striped mytable\">\r\n" + 
     			"  								<thead>\r\n" + 

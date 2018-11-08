@@ -88,7 +88,6 @@ function timeUp()
 			$('.timerPanel').html(temp);
 		}
 	}
-
 }
 
 function openAsset(item)
