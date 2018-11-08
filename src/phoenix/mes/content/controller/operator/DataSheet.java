@@ -60,7 +60,7 @@ public class DataSheet extends HttpServlet {
 				{
 //					task = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7896209,9,0)"), abasConnection); // "(8027770,9,0)"
 //					task = AbasObjectFactory.INSTANCE.createWorkStation("380PG",1, abasConnection).getNextExecutableTask(abasConnection);
-					task = AbasObjectFactory.INSTANCE.createWorkStation(workstation.split("!")[0],Integer.parseInt(workstation.split("!")[1]), abasConnection).getNextExecutableTask(abasConnection);
+					task = AbasObjectFactory.INSTANCE.createWorkStation(workstation.split("!")[0],Integer.parseInt(workstation.split("!")[1]), abasConnection).getFirstScheduledTask(abasConnection);
 					session.setAttribute("Task", task);
 					taskDetails = task.getDetails(abasConnection);
 				}

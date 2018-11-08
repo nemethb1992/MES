@@ -83,7 +83,6 @@ function timeUp()
 		var count = "0";
 		upcounter = setInterval(uptimer, 1000);
 		function uptimer() {
-			console.log("asd");
 			var temp = count.toHHMMSS();
 			count = (parseInt(count) + 1).toString();
 			$('.timerPanel').html(temp);
@@ -105,8 +104,6 @@ function openAsset(item)
 		}
 	});
 }
-
-
 
 function TabControlEventHolder()
 {

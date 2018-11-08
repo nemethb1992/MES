@@ -52,7 +52,6 @@ public class StationTaskList extends HttpServlet {
           	for (Task task: list) {
           		final Task.Details taskDetails = task.getDetails(abasConnection);
 
-          		
           		layout.append("<div class='dnd-container col-12 px-0' value='3'><div class='container px-0'><div class='row w-100 mx-auto'><div class='col-4 pr-0 py-2 dnd-input-div'>");
           		layout.append("<p>"+dict.getWord(DictionaryEntry.WORKSHEET_NO)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getWorkSlipNo()+"</textarea>");
           		layout.append("<p>"+dict.getWord(DictionaryEntry.ARTICLE)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductIdNo()+"</textarea>");
