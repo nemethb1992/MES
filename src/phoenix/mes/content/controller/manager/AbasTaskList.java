@@ -16,6 +16,7 @@ import de.abas.erp.common.type.AbasDate;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.OutputFormatter;
 import phoenix.mes.content.OutputFormatter.DictionaryEntry;
 
@@ -52,7 +53,7 @@ public class AbasTaskList extends HttpServlet {
 		StringBuilder layout = new StringBuilder();
 		try {
 			int stationNo = Integer.parseInt(Station[1]);
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), true);
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), new AppBuild(request).isTest());
 			List<Task> li = AbasObjectFactory.INSTANCE.createWorkStation(Station[0], stationNo, abasConnection).getUnassignedTasks(abasDate, abasConnection);
 			
 			for (Task task: li) {
@@ -95,7 +96,6 @@ public class AbasTaskList extends HttpServlet {
 				layout.append(of.formatTime(taskDetails.getCalculatedProductionTime()));
 				layout.append("</textarea></div></div></div></div><div class='col col-button p-1'><div class='w-100 h-100 dnd-input-div px-0'><input class='h-100 w-100 task-panel-button' value='' type='button'>");
 				layout.append("</div></div></div></div></div>");
-				
 			}
 		}catch(LoginException e){
 			System.out.println(e);

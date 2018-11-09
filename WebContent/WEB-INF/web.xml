@@ -42,8 +42,6 @@
     <servlet-name>Logout</servlet-name>
     <url-pattern>/Logout</url-pattern>
   </servlet-mapping>
-
-
   <servlet>
     <description></description>
     <display-name>StationTaskList</display-name>
@@ -64,7 +62,6 @@
     <servlet-name>AbasTaskList</servlet-name>
     <url-pattern>/AbasTaskList</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <description></description>
     <display-name>LanguageSetter</display-name>

@@ -15,6 +15,7 @@ import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.OutputFormatter;
 import phoenix.mes.content.OutputFormatter.DictionaryEntry;
 
@@ -33,10 +34,10 @@ public class StationTaskList extends HttpServlet {
  	    
 	    response.setContentType("text/plain"); 
 	    response.setCharacterEncoding("UTF-8"); 
-	    response.getWriter().write(StationList(username,pass,station, of));
+	    response.getWriter().write(StationList(username,pass,station, of, request));
 	}
 	
-    protected String StationList(String username, String pass, String station, OutputFormatter of)
+    protected String StationList(String username, String pass, String station, OutputFormatter of, HttpServletRequest request)
     { 
 		StringBuilder layout = new StringBuilder();
     	List<Task> list = new ArrayList<Task>();
@@ -45,7 +46,7 @@ public class StationTaskList extends HttpServlet {
     	try {
         	String[] stationSplit = station.split("!");
         	stationNo = Integer.parseInt(stationSplit[1]);
-        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), true);
+        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), new AppBuild(request).isTest());
         	list = AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0], stationNo, abasConnection).getScheduledTasks(abasConnection);
 
           	for (Task task: list) {
@@ -76,7 +77,6 @@ public class StationTaskList extends HttpServlet {
     		catch(Exception e)
     		{}
     	}
-
     	return layout.toString();
     }
 

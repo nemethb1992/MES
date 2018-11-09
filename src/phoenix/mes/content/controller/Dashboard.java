@@ -1,8 +1,6 @@
 package phoenix.mes.content.controller;
 import java.io.IOException;
 
-//import com.google.gson.Gson;
-//import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.OutputFormatter;
 import phoenix.mes.content.OutputFormatter.DictionaryEntry;
 
@@ -31,8 +28,8 @@ public class Dashboard extends HttpServlet {
 		String pass = request.getParameter("password");
 		String layout = (String)session.getAttribute("Layout");
 		
-		System.out.println((new AppBuild(request)).getName());
-		System.out.println((new AppBuild(request)).isTest());
+		System.out.println((new phoenix.mes.content.AppBuild(request)).getName());
+		System.out.println((new phoenix.mes.content.AppBuild(request)).isTest());
 		
 		session.setAttribute("pass",pass);
 		session.setAttribute("username",username);

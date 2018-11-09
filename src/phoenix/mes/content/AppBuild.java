@@ -11,7 +11,7 @@ public class AppBuild {
 	{
 		String url = request.getRequestURI();
 		name = url.split("/")[1];
-		if(name.equals("MES"))
+		if((name.toLowerCase()).equals("mes"))
 			test = false;
 		else{
 			test = true;

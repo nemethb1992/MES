@@ -17,6 +17,7 @@ import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.BomElement;
+import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.OutputFormatter;
 import phoenix.mes.content.PostgreSql;
 import phoenix.mes.content.OutputFormatter.DictionaryEntry;
@@ -35,12 +36,14 @@ public class DataSheet extends HttpServlet {
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 //		workstation="234PG!1";
 		String view = "";
+		
+		boolean testSystem = new AppBuild(request).isTest();
 		        	
 		if(workstation != null)
 		{
 			String wsName = "";
 			try {
-				wsName = getWorkStationName(workstation, of);
+				wsName = getWorkStationName(workstation, of, testSystem);
 			} catch (SQLException e) {
 				wsName = " - ";
 			}
@@ -48,8 +51,8 @@ public class DataSheet extends HttpServlet {
 			String pass=(String)session.getAttribute("pass");
 			AbasConnection<EDPSession> abasConnection = null;
 			try {
-				// TODO testSystem
-				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), true);
+				// TODO testSystem 
+				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), testSystem);
 				Task task = (Task)session.getAttribute("Task");
 				if(task == null)
 				{
@@ -250,9 +253,9 @@ public class DataSheet extends HttpServlet {
 		return view;
 	}
 	
-	protected String getWorkStationName(String wsCode, OutputFormatter of) throws SQLException
+	protected String getWorkStationName(String wsCode, OutputFormatter of, boolean testSystem) throws SQLException
 	{
-		PostgreSql postgreSql = new PostgreSql(true); 
+		PostgreSql postgreSql = new PostgreSql(testSystem); 
 		Locale language = of.getLocale();
 		String[] stationSplit = wsCode.split("!");
 		String command, field;
