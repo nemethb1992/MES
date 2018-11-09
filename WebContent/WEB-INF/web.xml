@@ -34,13 +34,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>Home</display-name>
-    <servlet-name>Home</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.Home</servlet-class>
+    <display-name>Logout</display-name>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>phoenix.mes.content.navigation.Logout</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Home</servlet-name>
-    <url-pattern>/Home</url-pattern>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/Logout</url-pattern>
   </servlet-mapping>
 
 

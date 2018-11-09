@@ -5,6 +5,9 @@ import java.math.RoundingMode;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
 public class OutputFormatter {
 
 	public enum DictionaryEntry {
@@ -70,6 +73,7 @@ public class OutputFormatter {
 		STATIONS("Állomások","Arbeitsplätze","Stations"),
 		LOGIN_FAILED("Sikertelen bejelentkezés","Anmeldung fehlgeschlagen","Login failed"),
 		LOGIN_FAILED_MISSING_WS("Nincs regisztrált munkaállomás","Fehlende registrierte Arbeitsstation","Missing registered workstation"),
+		LOGIN_FAILED_EMPTY_CREDENTIALS("A felhasználónév és/vagy jelszó nincs megadva!","Ihr Benutzername und / oder Passwort ist nicht angegeben!","Your username and / or password is not specified!"),
 		IDS("Azonosítók","IDs","IDs");
 
 		private final String hungarianText;
@@ -110,12 +114,65 @@ public class OutputFormatter {
 
 	}
 
-	protected static final BigDecimal bigDecimal3600 = new BigDecimal(3600);
+	public enum OperatingLanguage {
+
+		hu(new Locale("hu")),
+		de(Locale.GERMAN),
+		en(Locale.ENGLISH);
+
+		private final Locale locale;
+
+		public static OperatingLanguage fromCode(String languageCode) {
+			try {
+				return OperatingLanguage.valueOf(languageCode);
+			} catch (IllegalArgumentException e) {
+				return null;
+			}
+		}
+
+		private OperatingLanguage(Locale locale) {
+			this.locale = locale;
+		}
+
+		public Locale getLocale() {
+			return locale;
+		}
+
+	}
+
+	public static final BigDecimal BIG_DECIMAL_3600 = new BigDecimal(3600);
 	
 	protected final Locale locale;
 
 	protected final NumberFormat numberFormat;
 
+	public static OutputFormatter forRequest(HttpServletRequest request) {
+		OperatingLanguage language = null;
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("language")) {
+					language = OperatingLanguage.fromCode(cookie.getValue());
+				}
+			}
+		}
+		if (null == language) {
+			language = OperatingLanguage.fromCode(request.getLocale().getLanguage());
+		}
+		return new OutputFormatter((null == language ? OperatingLanguage.hu : language).getLocale());
+	}
+
+	public static String isStation(String station)
+	{
+		String[] splitted = station.split("!");
+		if(2 !=  splitted.length)
+		{
+			return null;
+		}
+		return station;
+			
+	}
+	
 	public OutputFormatter(Locale locale) {
 		this.locale = locale;
 		numberFormat = NumberFormat.getInstance(locale);
@@ -143,7 +200,7 @@ public class OutputFormatter {
 	}
 
 	public String formatTime(BigDecimal timeInHours) {
-		return formatTime(timeInHours.multiply(bigDecimal3600).intValue());
+		return formatTime(timeInHours.multiply(BIG_DECIMAL_3600).intValue());
 	}
 
 	public String formatTime(int timeInSeconds) {
@@ -163,5 +220,7 @@ public class OutputFormatter {
 	    formattedTime.append(seconds);
 	    return formattedTime.toString();
 	}
+	
 
 }
+

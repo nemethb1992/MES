@@ -1,4 +1,4 @@
-package phoenix.mes.content.controller;
+package phoenix.mes.content.navigation;
 
 import java.io.IOException;
 
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-public class Home extends HttpServlet {
+public class Logout extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -20,7 +20,6 @@ public class Home extends HttpServlet {
  	    session.removeAttribute("pass");
   		getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
 	}
-
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request,response);

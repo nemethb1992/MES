@@ -6,7 +6,6 @@ if(info == null)
 }
 %>
 <%@include file="/Views/Header.jsp"%>
-
 <script><%@ include file="/Views/Login/loginScript.js"%></script>
 <script src="${pageContext.request.contextPath}/Public/js/script.js"></script>
 <div class="container">
@@ -33,7 +32,6 @@ if(info == null)
 			</div>
 			<form id='LR_form' method='POST'
 				action='${pageContext.request.contextPath}/Dashboard'>
-				
 				<input type='hidden' name='workstation' class='workstation' value='<%=request.getParameter("workstation")%>'/>
 				<input name='infoTitle' class='w-100 mt-5' value='<%=info%>'/>
 				<div class="form-group">

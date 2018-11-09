@@ -27,7 +27,7 @@
 				<div
 					class='top-nav-button px-0 d-block col col-nav-logout h-100 float-right'>
 					<form method='POST' class='h-100'
-						action='${pageContext.request.contextPath}/Home'>
+						action='${pageContext.request.contextPath}/Logout'>
 						<input class='btn_logout-gray' type='submit' value='' />
 					</form>
 				</div>

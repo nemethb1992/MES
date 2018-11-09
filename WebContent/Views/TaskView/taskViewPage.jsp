@@ -52,7 +52,7 @@
 								</div>
 								<div class='btn_navHeader h-100 float-right px-0'>
 									<form method='POST' class='h-100'
-										action='${pageContext.request.contextPath}/Home'>
+										action='${pageContext.request.contextPath}/Logout'>
 										<input class='btn_logout-gray' type='submit' value='' />
 									</form>
 								</div>

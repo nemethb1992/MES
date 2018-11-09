@@ -30,30 +30,29 @@ public class Timer extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String username=(String)session.getAttribute("username");
-		String pass=(String)session.getAttribute("pass");
-		OutputFormatter dict = (OutputFormatter)session.getAttribute("OutputFormatter");
-		Task task;
-		BigDecimal inSecondTime = new BigDecimal(0);
-		
-		AbasConnection<EDPSession> abasConnection = null;
-		
-		if(session.getAttribute("Task") != null)
+		BigDecimal inSecondTime = BigDecimal.ZERO;
+		Task task = (Task)session.getAttribute("Task");
+		if(null != task)
 		{
-			task = (Task)session.getAttribute("Task");
-			
+			String username=(String)session.getAttribute("username");
+			String pass=(String)session.getAttribute("pass");
+			AbasConnection<EDPSession> abasConnection = null;
 			try {
-				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, dict.getLocale(), true);
-			} catch (LoginException e) {
-				
-			}
-			if(abasConnection != null)
-			{
+				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, true);
 				Task.Details taskDetails = task.getDetails(abasConnection);
 				
 				BigDecimal rawTime = taskDetails.getCalculatedProductionTime();
 				
-				inSecondTime = rawTime.multiply(new BigDecimal(3600));
+				inSecondTime = rawTime.multiply(OutputFormatter.BIG_DECIMAL_3600);
+			} catch (LoginException e) {
+				
+			} finally {
+				if (null != abasConnection) {
+					try {
+						abasConnection.close();
+					} catch (Throwable t) {
+					}
+				}
 			}
 		}
 		response.setContentType("text/plain"); 

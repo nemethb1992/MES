@@ -26,58 +26,52 @@ public class DataSheet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	protected OutputFormatter outputFormatter;
-
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String wsName = "";
-		Task.Details taskDetails;
-		Task task ;
-		
 		HttpSession session = request.getSession();
-		AbasConnection<EDPSession> abasConnection = null;
-
-		String username=(String)session.getAttribute("username");
-		String pass=(String)session.getAttribute("pass");
-		String tab = request.getParameter("tabNo");
+		// TODO split
 		String workstation = (String)session.getAttribute("operatorWorkstation");
-		outputFormatter = (OutputFormatter)session.getAttribute("OutputFormatter");
-//		workstation="234PG!1!Test Workstation";
+		// TODO
+		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
+//		workstation="234PG!1";
 		String view = "";
 		        	
 		if(workstation != null)
 		{
+			String wsName = "";
 			try {
-				wsName = getWorkStationName(workstation);
+				wsName = getWorkStationName(workstation, of);
 			} catch (SQLException e) {
 				wsName = " - ";
 			}
+			String username=(String)session.getAttribute("username");
+			String pass=(String)session.getAttribute("pass");
+			AbasConnection<EDPSession> abasConnection = null;
 			try {
-				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, outputFormatter.getLocale(), true);
-				task = (Task)session.getAttribute("Task");
+				// TODO testSystem
+				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), true);
+				Task task = (Task)session.getAttribute("Task");
 				if(task == null)
 				{
 //					task = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7896209,9,0)"), abasConnection); // "(8027770,9,0)"
 //					task = AbasObjectFactory.INSTANCE.createWorkStation("380PG",1, abasConnection).getNextExecutableTask(abasConnection);
 					task = AbasObjectFactory.INSTANCE.createWorkStation(workstation.split("!")[0],Integer.parseInt(workstation.split("!")[1]), abasConnection).getFirstScheduledTask(abasConnection);
 					session.setAttribute("Task", task);
-					taskDetails = task.getDetails(abasConnection);
 				}
 
-				taskDetails = task.getDetails(abasConnection);				    	
-				switch (tab) {
+				Task.Details taskDetails = task.getDetails(abasConnection);				    	
+				switch (request.getParameter("tabNo")) {
 				case "1":
-					view = getDataSheet(taskDetails,workstation,wsName,request);
+					view = getDataSheet(taskDetails,workstation,wsName,of,request);
 					break;
 				case "2":
-					view = getDocuments(taskDetails);
+					view = getDocuments(taskDetails, of);
 					break;
 				case "3":
-					view = getBom(taskDetails, request);
+					view = getBom(taskDetails, of, request);
 					break;
 				case "4":
-					view = getDescription(taskDetails);
+					view = getItemTexts(taskDetails, of);
 					break;
 				default:
 					break;
@@ -89,9 +83,10 @@ public class DataSheet extends HttpServlet {
 			}finally
 			{
 				try {
-					abasConnection.close();
-				} catch (Exception e2) {
-					// TODO: handle exception
+					if (null != abasConnection) {
+						abasConnection.close();
+					}
+				} catch (Throwable t) {
 				}
 			}
 		}
@@ -100,32 +95,33 @@ public class DataSheet extends HttpServlet {
 		response.getWriter().write(view); 
 	}
 	
-	protected String getDataSheet(Task.Details taskDetails, String workstation, String wsName, HttpServletRequest request)
+	protected String getDataSheet(Task.Details taskDetails, String workstation, String wsName, OutputFormatter of, HttpServletRequest request)
 	{
 
+		// TODO StringBuilder
 		 String view = "				<div class='container-fluid px-0'>\r\n" + 
 		 		"							<div class='row data-row mx-3 mt-3'>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+outputFormatter.getWord(DictionaryEntry.WORKSTATION)+"</p>\r\n" + 
+		 		"										<p>"+of.getWord(DictionaryEntry.WORKSTATION)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 h6' type='text' disabled value='"+workstation.split("!")[0]+" - "+workstation.split("!")[1]+" - "+wsName+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+outputFormatter.getWord(DictionaryEntry.WORKSHEET_NO)+"</p>\r\n" + 
+		 		"										<p>"+of.getWord(DictionaryEntry.WORKSHEET_NO)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getWorkSlipNo()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+outputFormatter.getWord(DictionaryEntry.GET_STARTED)+"</p>\r\n" + 
+		 		"										<p>"+of.getWord(DictionaryEntry.GET_STARTED)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getStartDate()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+outputFormatter.getWord(DictionaryEntry.WORKSTATION_NAME)+"</p>\r\n" + 
+		 		"										<p>"+of.getWord(DictionaryEntry.WORKSTATION_NAME)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+wsName+"'>\r\n" +
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+outputFormatter.getWord(DictionaryEntry.PLACE_OF_USE)+"</p>\r\n" + 
+		 		"										<p>"+of.getWord(DictionaryEntry.PLACE_OF_USE)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getUsage()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
@@ -133,25 +129,25 @@ public class DataSheet extends HttpServlet {
 		 		"							<div class='row data-row m-3'>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+outputFormatter.getWord(DictionaryEntry.ARTICLE)+"</p>\r\n" + 
+		 		"										<p>"+of.getWord(DictionaryEntry.ARTICLE)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+outputFormatter.getWord(DictionaryEntry.SEARCH_WORD)+"</p>\r\n" + 
+		 		"										<p>"+of.getWord(DictionaryEntry.SEARCH_WORD)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getProductSwd()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+outputFormatter.getWord(DictionaryEntry.OPEN_QUANTITY)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+outputFormatter.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity())+" "+taskDetails.getStockUnit()+"'>\r\n" + 
+		 		"										<p>"+of.getWord(DictionaryEntry.OPEN_QUANTITY)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity())+" "+taskDetails.getStockUnit()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+outputFormatter.getWord(DictionaryEntry.NAME)+"</p>\r\n" + 
+		 		"										<p>"+of.getWord(DictionaryEntry.NAME)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getProductDescription()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+outputFormatter.getWord(DictionaryEntry.NAME)+" 2</p>\r\n" + 
+		 		"										<p>"+of.getWord(DictionaryEntry.NAME)+" 2</p>\r\n" + 
 		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getProductDescription2()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
@@ -159,35 +155,35 @@ public class DataSheet extends HttpServlet {
 		 		"							<div class='row data-row m-3'>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3 px-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+outputFormatter.getWord(DictionaryEntry.OPERATION_NUMEBER)+"</p>\r\n" + 
+		 		"										<p>"+of.getWord(DictionaryEntry.OPERATION_NUMEBER)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getOperationIdNo()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+outputFormatter.getWord(DictionaryEntry.SEARCH_WORD)+"</p>\r\n" + 
+		 		"										<p>"+of.getWord(DictionaryEntry.SEARCH_WORD)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getOperationSwd()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+outputFormatter.getWord(DictionaryEntry.NAME)+"</p>\r\n" + 
+		 		"										<p>"+of.getWord(DictionaryEntry.NAME)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getOperationDescription()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3 px-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+outputFormatter.getWord(DictionaryEntry.EXECUTION_NO)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+outputFormatter.formatWithoutTrailingZeroes(taskDetails.getNumberOfExecutions())+"'>\r\n" + 
+		 		"										<p>"+of.getWord(DictionaryEntry.EXECUTION_NO)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getNumberOfExecutions())+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+outputFormatter.getWord(DictionaryEntry.SETTING_TIME)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+outputFormatter.formatWithoutTrailingZeroes(taskDetails.getSetupTime())+" "+taskDetails.getSetupTimeUnit()+"'>\r\n" + 
+		 		"										<p>"+of.getWord(DictionaryEntry.SETTING_TIME)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getSetupTime())+" "+taskDetails.getSetupTimeUnit()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+outputFormatter.getWord(DictionaryEntry.TIME_FOR_PCS)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text disabled  value='"+outputFormatter.formatWithoutTrailingZeroes(taskDetails.getUnitTime())+" "+taskDetails.getUnitTimeUnit()+"'>\r\n" + 
+		 		"										<p>"+of.getWord(DictionaryEntry.TIME_FOR_PCS)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getUnitTime())+" "+taskDetails.getUnitTimeUnit()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"								<div class='col-12  px-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='mb-0'>"+outputFormatter.getWord(DictionaryEntry.PRODUCTION_INFO)+"</p>\r\n" + 
+		 		"										<p class='mb-0'>"+of.getWord(DictionaryEntry.PRODUCTION_INFO)+"</p>\r\n" + 
 		 		"										<textarea class='px-2 w-100 h6'  disabled >"+taskDetails.getOperationReservationText()+"</textarea>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
@@ -197,9 +193,9 @@ public class DataSheet extends HttpServlet {
 		return view;
 	}
 	
-	protected String getDocuments(Task.Details data)
+	protected String getDocuments(Task.Details data, OutputFormatter of)
 	{
-    	String view = "<div class='list-group dokumentum-list'><button type='button' class='list-group-item list-group-item-action active disabled'>"+outputFormatter.getWord(DictionaryEntry.DOCUMENTS)+"</button>";
+    	String view = "<div class='list-group dokumentum-list'><button type='button' class='list-group-item list-group-item-action active disabled'>"+of.getWord(DictionaryEntry.DOCUMENTS)+"</button>";
     	for (int i = 0; i < 8; i++) {
     		view +="<button type='button' onclick='openAsset(this)' class='document-button list-group-item list-group-item-action'>Dokumentum "+i+"</button>";
 		}
@@ -207,30 +203,19 @@ public class DataSheet extends HttpServlet {
 		return view;
 	}
 	
-	protected String getBom(Task.Details taskDetails, HttpServletRequest request)
+	protected String getBom(Task.Details taskDetails,OutputFormatter of, HttpServletRequest request)
 	{
 
     	List<BomElement> li = taskDetails.getBom();
-    	
-		StringBuilder layout = new StringBuilder();
-		
-		layout.append("<table class='table table-striped mytable'><thead><tr><th scope='col'>");
-		layout.append(outputFormatter.getWord(DictionaryEntry.ARTICLE));
-		layout.append("</th>th scope='col'>");
-		layout.append("");
-		layout.append("");
-		layout.append("");
-		layout.append("");
-		layout.append("");
 		
     	String view = "				<table class=\"table table-striped mytable\">\r\n" + 
     			"  								<thead>\r\n" + 
     			"  								  <tr>\r\n" + 
-    			"     								 <th scope=\"col\">"+outputFormatter.getWord(DictionaryEntry.ARTICLE)+"</th>\r\n" + 
-    			"     								 <th scope=\"col\">"+outputFormatter.getWord(DictionaryEntry.SEARCH_WORD)+"</th>\r\n" +  
-    			"   									 <th scope=\"col\">"+outputFormatter.getWord(DictionaryEntry.NAME)+" 1</th>\r\n" +  
-    			"  									 <th scope=\"col\">"+outputFormatter.getWord(DictionaryEntry.NAME)+" 2</th>\r\n" +   
-    			"  									 <th scope=\"col\">"+outputFormatter.getWord(DictionaryEntry.PLUG_IN_QUANTITY)+"</th>\r\n" + 
+    			"     								 <th scope=\"col\">"+of.getWord(DictionaryEntry.ARTICLE)+"</th>\r\n" + 
+    			"     								 <th scope=\"col\">"+of.getWord(DictionaryEntry.SEARCH_WORD)+"</th>\r\n" +  
+    			"   									 <th scope=\"col\">"+of.getWord(DictionaryEntry.NAME)+" 1</th>\r\n" +  
+    			"  									 <th scope=\"col\">"+of.getWord(DictionaryEntry.NAME)+" 2</th>\r\n" +   
+    			"  									 <th scope=\"col\">"+of.getWord(DictionaryEntry.PLUG_IN_QUANTITY)+"</th>\r\n" + 
     			"   								  </tr>\r\n" + 
     			"  								</thead>\r\n" + 
     			"  								<tbody class='darabjegyz-tbody'>";
@@ -240,23 +225,23 @@ public class DataSheet extends HttpServlet {
     				"<td>"+bomItem.getSwd()+"</td>" + 
     				"<td>"+bomItem.getDescription()+"</td>" + 
     				"<td>"+bomItem.getDescription2()+"</td>" + 
-    				"<td>"+outputFormatter.formatWithoutTrailingZeroes(bomItem.getQuantityPerProduct())+" "+bomItem.getStockUnit()+"</td>" + 
+    				"<td>"+of.formatWithoutTrailingZeroes(bomItem.getQuantityPerProduct())+" "+bomItem.getStockUnit()+"</td>" + 
     				"</tr>";
 		}		
     	view += "</tbody></table>";
 		return view;
 	}
 	
-	protected String getDescription(Task.Details taskDetails)
+	protected String getItemTexts(Task.Details taskDetails, OutputFormatter of)
 	{
 		String view ="					<div class='conteiner-fluid h-100'>\r\n" + 
 				"							<div class='row h-100 m-3'>\r\n" + 
 				"								<div class='mx-3 col col-textarea light-shadow'>\r\n" + 
-				"									<p class='h5 p-2'>"+outputFormatter.getWord(DictionaryEntry.INFO_ARTICLE)+" 1</p>\r\n" + 
+				"									<p class='h5 p-2'>"+of.getWord(DictionaryEntry.INFO_ARTICLE)+" 1</p>\r\n" + 
 				"									<textarea disabled class='p-3 BigTextInput'>"+taskDetails.getSalesOrderItemText()+"</textarea>\r\n" + 
 				"								</div>\r\n" + 
 				"								<div class='mx-3 col col-textarea light-shadow'>\r\n" + 
-				"									<p class='h5 p-2'>"+outputFormatter.getWord(DictionaryEntry.INFO_ARTICLE)+" 2</p>\r\n" + 
+				"									<p class='h5 p-2'>"+of.getWord(DictionaryEntry.INFO_ARTICLE)+" 2</p>\r\n" + 
 				"									<textarea disabled class='p-3 BigTextInput'>"+taskDetails.getSalesOrderItemText2()+"</textarea>\r\n" + 
 				"								</div>\r\n" + 
 				"							</div>\r\n" + 
@@ -265,10 +250,10 @@ public class DataSheet extends HttpServlet {
 		return view;
 	}
 	
-	protected String getWorkStationName(String wsCode) throws SQLException
+	protected String getWorkStationName(String wsCode, OutputFormatter of) throws SQLException
 	{
 		PostgreSql postgreSql = new PostgreSql(true); 
-		Locale language = outputFormatter.getLocale();
+		Locale language = of.getLocale();
 		String[] stationSplit = wsCode.split("!");
 		String command, field;
 		

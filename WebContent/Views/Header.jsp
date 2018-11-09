@@ -14,14 +14,13 @@
 <%@page import="java.util.Collection"%>
 
 <% 
-	OutputFormatter outputFormatter;
+	OutputFormatter outputFormatter = null;
 	if(session.getAttribute("OutputFormatter") != null){
 		outputFormatter = (OutputFormatter)session.getAttribute("OutputFormatter"); 
 	}
 	else
 	{
-		LanguageSetter.languageSetup(request,response);
-		outputFormatter = (OutputFormatter)session.getAttribute("OutputFormatter"); 
+		session.setAttribute("OutputFormatter", outputFormatter = OutputFormatter.forRequest(request));
 	}
 
 %>

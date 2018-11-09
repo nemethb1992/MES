@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.OutputFormatter;
 import phoenix.mes.content.OutputFormatter.DictionaryEntry;
 
@@ -24,24 +25,42 @@ public class Dashboard extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
+		
 		String username = request.getParameter("username");
-		session.setAttribute("username",username);
+		String paramStation = request.getParameter("workstation");
 		String pass = request.getParameter("password");
-		session.setAttribute("pass",pass);
 		String layout = (String)session.getAttribute("Layout");
+		
+		System.out.println((new AppBuild(request)).getName());
+		System.out.println((new AppBuild(request)).isTest());
+		
+		session.setAttribute("pass",pass);
+		session.setAttribute("username",username);
+		
 		try {
-			ActiveDirectoryLogin.activeDirectoryConn(username, pass);
+			ActiveDirectory.login(username, pass, request);
 			String nextPage = null;
 			if("operator".equals(layout)) {
-				Cookie[] cookies = request.getCookies();
-				if (cookies != null) {
-					for (Cookie cookie : cookies) {
-						if (cookie.getName().equals("workstation")) {
-							session.setAttribute("operatorWorkstation", cookie.getValue());
+				String workStation = (String)session.getAttribute("operatorWorkstation");
+				if (null == workStation || !workStation.equals(paramStation)) {
+					Cookie[] cookies = request.getCookies();
+					if (cookies != null) {
+						for (Cookie cookie : cookies) {
+							if (cookie.getName().equals("workstation")) {
+								
+								workStation = OutputFormatter.isStation(cookie.getValue());
+								if (null != workStation) {
+									session.setAttribute("operatorWorkstation", workStation);
+								}
+								else {
+									nextPage = "/Views/Login/loginPage.jsp";
+									break;
+								}
+							}
 						}
 					}
 				}
-				if (session.getAttribute("operatorWorkstation") != null) {
+				if (null != workStation) {
 					nextPage = "/Views/TaskView/taskViewPage.jsp";
 				}
 			}
@@ -54,7 +73,5 @@ public class Dashboard extends HttpServlet {
 			getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
 		}
 	}
-
-
 
 }

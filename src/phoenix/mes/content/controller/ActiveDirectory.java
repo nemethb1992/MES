@@ -7,12 +7,19 @@ import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-public class ActiveDirectoryLogin {
+import phoenix.mes.content.OutputFormatter;
+import phoenix.mes.content.OutputFormatter.DictionaryEntry;
+
+public class ActiveDirectory {
 	
-    public static void activeDirectoryConn(String user, String pwd) throws NamingException {
+    public static void login(String user, String pwd, HttpServletRequest request) throws NamingException {
+    	
         if (user.isEmpty() || pwd.isEmpty()) {
-        	throw new AuthenticationException("A felhasználónév és/vagy jelszó nincs megadva!");
+        	HttpSession session = request.getSession();
+        	throw new AuthenticationException(((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.LOGIN_FAILED_EMPTY_CREDENTIALS));
         }
         final Hashtable<String, String> env = new Hashtable<>(8);
         env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
