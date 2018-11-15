@@ -82,6 +82,14 @@ public class InfoSystemExecutor {
 			return "1".equals(getString(fieldName));
 		}
 
+		/**
+		 * @param fieldName A mező neve.
+		 * @return A megadott mező tartalma egész számként.
+		 */
+		public int getInt(String fieldName) {
+			return Integer.parseInt(getString(fieldName));
+		}
+
 	}
 
 	/**

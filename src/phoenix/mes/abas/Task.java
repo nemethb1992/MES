@@ -36,11 +36,6 @@ public interface Task extends Serializable {
 		AbasDate getStartDate();
 
 		/**
-		 * @return A gyártási feladat fel van függesztve?
-		 */
-		boolean isSuspendedTask();
-
-		/**
 		 * @return A termék cikkszáma.
 		 */
 		String getProductIdNo();
@@ -192,9 +187,35 @@ public interface Task extends Serializable {
 	 */
 	Details getDetails(AbasConnection<?> abasConnection);
 
+	/**
+	 * @return A gyártási feladat fel van függesztve?
+	 */
+	boolean isSuspendedTask();
+
+	/**
+	 * @return A gyártási feladat végrehajtása folyamatban van?
+	 */
+	boolean isInProgress();
+
+	/**
+	 * A gyártási feladat beütemezése egy konkrét munkaállomásra.
+	 * @param workStation A munkaállomás.
+	 * @param precedingWorkSlipId A munkaállomáson közvetlenül ez előtt a gyártási feladat előtt végrehajtandó munkalap azonosítója (Id.NULLREF, ha ez a gyártási feladat az első a végrehajtási listában).
+	 * @param abasConnection Az Abas-kapcsolat.
+	 */
 	void schedule(WorkStation workStation, Id precedingWorkSlipId, AbasConnection<?> abasConnection);
 
+	/**
+	 * A gyártási feladat beütemezésének visszavonása.
+	 * @param abasConnection Az Abas-kapcsolat.
+	 */
 	void unSchedule(AbasConnection<?> abasConnection);
+
+	/**
+	 * A gyártási feladat felfüggesztése.
+	 * @param abasConnection Az Abas-kapcsolat.
+	 */
+	void suspend(AbasConnection<?> abasConnection);
 
 /*
 Feladat indítása
@@ -205,7 +226,6 @@ Feladat indítása
 Lejelentés
  Bemenet: mennyiség, dolgozó (null is lehet), munkamenet
  Ha nincs ysts időbélyeg: nincs elindítva, hiba
- Anyagkivét?
  ysts = ""
 
 Feladat megszakítása

@@ -43,17 +43,12 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 		protected static final String[] unassignedTasksFilterCriteria = {InfosysOw1MESWORKSTATION.META.ymgr.getName(), InfosysOw1MESWORKSTATION.META.ystermig.getName(), InfosysOw1MESWORKSTATION.META.start.getName()};
 
 		/**
-		 * A szűrőmezők nevei a munkaállomáshoz hozzárendelt, de felfüggesztett gyártási feladatok lekérdezéséhez.
-		 */
-		protected static final String[] suspendedTasksFilterCriteria = {InfosysOw1MESWORKSTATION.META.ymgr.getName(), InfosysOw1MESWORKSTATION.META.ymnum.getName(), InfosysOw1MESWORKSTATION.META.ymegszak.getName(), InfosysOw1MESWORKSTATION.META.start.getName()};
-
-		/**
-		 * A szűrőmezők nevei a munkaállomásra betervezett és végrehajtható gyártási feladatok lekérdezéséhez.
+		 * A szűrőmezők nevei a munkaállomásra beütemezett és végrehajtható gyártási feladatok lekérdezéséhez.
 		 */
 		protected static final String[] scheduledTasksFilterCriteria = {InfosysOw1MESWORKSTATION.META.ymgr.getName(), InfosysOw1MESWORKSTATION.META.ymnum.getName(), InfosysOw1MESWORKSTATION.META.start.getName()};
 
 		/**
-		 * A szűrőmezők nevei a munkaállomás első végrehajtható gyártási feladatának lekérdezéséhez.
+		 * A szűrőmezők nevei a munkaállomás első beütemezett és végrehajtható gyártási feladatának lekérdezéséhez.
 		 */
 		protected static final String[] firstScheduledTaskFilterCriteria = {InfosysOw1MESWORKSTATION.META.ymgr.getName(), InfosysOw1MESWORKSTATION.META.ymnum.getName(), InfosysOw1MESWORKSTATION.META.ycsakelso.getName(), InfosysOw1MESWORKSTATION.META.start.getName()};
 
@@ -95,21 +90,7 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 		 * @param workCenterId Az Abas-beli gépcsoport azonosítója.
 		 * @param workStationNumber A munkaállomás sorszáma.
 		 * @param edpSession Az EDP-munkamenet.
-		 * @return A gépcsoportra betervezett, de felfüggesztett gyártási feladatok listája.
-		 */
-		public List<Task> getSuspendedTasks(String workCenterId, int workStationNumber, EDPSession edpSession) {
-			try {
-				return getRows(new EDPEditFieldList(suspendedTasksFilterCriteria, new String[] {workCenterId, Integer.toString(workStationNumber), "1", " "}), edpSession);
-			} catch (CantChangeFieldValException e) {
-				throw new EDPRuntimeException(e);
-			}
-		}
-
-		/**
-		 * @param workCenterId Az Abas-beli gépcsoport azonosítója.
-		 * @param workStationNumber A munkaállomás sorszáma.
-		 * @param edpSession Az EDP-munkamenet.
-		 * @return A munkaállomásra betervezett és végrehajtható gyártási feladatok listája.
+		 * @return A munkaállomásra beütemezett és végrehajtható gyártási feladatok listája.
 		 */
 		public List<Task> getScheduledTasks(String workCenterId, int workStationNumber, EDPSession edpSession) {
 			try {
@@ -123,7 +104,7 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 		 * @param workCenterId Az Abas-beli gépcsoport azonosítója.
 		 * @param workStationNumber A munkaállomás sorszáma.
 		 * @param edpSession Az EDP-munkamenet.
-		 * @return A munkaállomás első végrehajtható gyártási feladata (null, ha a munkaállomás feladatlistája üres).
+		 * @return A munkaállomás első beütemezett és végrehajtható gyártási feladata (null, ha a munkaállomás feladatlistája üres).
 		 */
 		public Task getFirstScheduledTask(String workCenterId, int workStationNumber, EDPSession edpSession) {
 			try {
@@ -213,14 +194,6 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 	@Override
 	public List<Task> getUnassignedTasks(AbasDate startDateUntil, AbasConnection<?> abasConnection) {
 		return WorkSlipQuery.EXECUTOR.getUnassignedTasks(workCenterId, startDateUntil, EdpConnection.getEdpSession(abasConnection));
-	}
-
-	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.WorkStation#getSuspendedTasks(phoenix.mes.abas.AbasConnection)
-	 */
-	@Override
-	public List<Task> getSuspendedTasks(AbasConnection<?> abasConnection) {
-		return WorkSlipQuery.EXECUTOR.getSuspendedTasks(workCenterId, number, EdpConnection.getEdpSession(abasConnection));
 	}
 
 	/* (non-Javadoc)

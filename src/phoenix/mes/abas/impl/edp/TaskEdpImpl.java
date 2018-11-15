@@ -13,13 +13,15 @@ import de.abas.ceks.jedp.EDPRuntimeException;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.Id;
 import de.abas.erp.common.type.enums.EnumWorkOrderType;
-import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESTASK;
+import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESTASKADMIN;
+import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESTASKDATA;
 import de.abas.erp.db.schema.workorder.WorkOrders;
 
 import java.util.Collections;
 import java.util.List;
 
 import phoenix.mes.abas.AbasConnection;
+import phoenix.mes.abas.WorkStation;
 import phoenix.mes.abas.impl.TaskImpl;
 import phoenix.mes.abas.impl.BomElementImpl;
 import phoenix.mes.abas.impl.TaskDetails;
@@ -54,7 +56,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 * @param headerFieldNamesClass A lekérdezendő fejrészmezők neveit konstansokként tartalmazó osztály.
 		 */
 		public TaskDataQuery(Class<?> headerFieldNamesClass) {
-			super("MESTASK", headerFieldNamesClass, null);
+			super("MESTASKDATA", headerFieldNamesClass, null);
 		}
 
 		/**
@@ -89,102 +91,102 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			/**
 			 * A munkalap száma.
 			 */
-			public static final String ID_NO = InfosysOw1MESTASK.META.ynum9.getName();
+			public static final String ID_NO = InfosysOw1MESTASKDATA.META.ynum9.getName();
 
 			/**
 			 * A gyártási feladat elkezdésének (tervezett) napja.
 			 */
-			public static final String START_DATE = InfosysOw1MESTASK.META.ytsterm.getName();
+			public static final String START_DATE = InfosysOw1MESTASKDATA.META.ytsterm.getName();
 
 			/**
 			 * A gyártási feladat fel van függesztve?
 			 */
-			public static final String SUSPENDED_TASK = InfosysOw1MESTASK.META.ymegszak.getName();
+			public static final String SUSPENDED_TASK = InfosysOw1MESTASKDATA.META.ymegszak.getName();
 
 			/**
 			 * A termék Felhasználás-hivatkozása.
 			 */
-			public static final String USAGE = InfosysOw1MESTASK.META.yverw.getName();
+			public static final String USAGE = InfosysOw1MESTASKDATA.META.yverw.getName();
 
 			/**
 			 * A beállítási idő mértékegysége.
 			 */
-			public static final String SETUP_TIME_UNIT = InfosysOw1MESTASK.META.yzr.getName();
+			public static final String SETUP_TIME_UNIT = InfosysOw1MESTASKDATA.META.yzr.getName();
 
 			/**
 			 * A beállítási idő mértékegységének neve.
 			 */
-			public static final String SETUP_TIME_UNIT_NAME = InfosysOw1MESTASK.META.yzrbspr.getName();
+			public static final String SETUP_TIME_UNIT_NAME = InfosysOw1MESTASKDATA.META.yzrbspr.getName();
 
 			/**
 			 * A beállítási idő.
 			 */
-			public static final String SETUP_TIME = InfosysOw1MESTASK.META.ytr.getName();
+			public static final String SETUP_TIME = InfosysOw1MESTASKDATA.META.ytr.getName();
 
 			/**
 			 * Egységnyi beállítási idő bruttósítva hány másodpercből áll?
 			 */
-			public static final String SETUP_TIME_SEC = InfosysOw1MESTASK.META.yzrsek.getName();
+			public static final String SETUP_TIME_SEC = InfosysOw1MESTASKDATA.META.yzrsek.getName();
 
 			/**
 			 * A darabidő mértékegysége.
 			 */
-			public static final String UNIT_TIME_UNIT = InfosysOw1MESTASK.META.yze.getName();
+			public static final String UNIT_TIME_UNIT = InfosysOw1MESTASKDATA.META.yze.getName();
 
 			/**
 			 * A darabidő mértékegységének neve.
 			 */
-			public static final String UNIT_TIME_UNIT_NAME = InfosysOw1MESTASK.META.yzebspr.getName();
+			public static final String UNIT_TIME_UNIT_NAME = InfosysOw1MESTASKDATA.META.yzebspr.getName();
 
 			/**
 			 * A darabidő.
 			 */
-			public static final String UNIT_TIME = InfosysOw1MESTASK.META.yte.getName();
+			public static final String UNIT_TIME = InfosysOw1MESTASKDATA.META.yte.getName();
 
 			/**
 			 * Egységnyi darabidő bruttósítva hány másodpercből áll?
 			 */
-			public static final String UNIT_TIME_SEC = InfosysOw1MESTASK.META.yzesek.getName();
+			public static final String UNIT_TIME_SEC = InfosysOw1MESTASKDATA.META.yzesek.getName();
 
 			/**
 			 * Hányszor kell végrehajtani a műveletet?
 			 */
-			public static final String NUMBER_OF_EXECUTIONS = InfosysOw1MESTASK.META.yanzahl.getName();
+			public static final String NUMBER_OF_EXECUTIONS = InfosysOw1MESTASKDATA.META.yanzahl.getName();
 
 			/**
 			 * A nyitott mennyiség.
 			 */
-			public static final String OUTSTANDING_QUANTITY = InfosysOw1MESTASK.META.ymge.getName();
+			public static final String OUTSTANDING_QUANTITY = InfosysOw1MESTASKDATA.META.ymge.getName();
 
 			/**
 			 * A kalkulált gyártási átfutási idő (normaidő) munkaórában.
 			 */
-			public static final String CALCULATED_PRODUCTION_TIME = InfosysOw1MESTASK.META.yvzeit.getName();
+			public static final String CALCULATED_PRODUCTION_TIME = InfosysOw1MESTASKDATA.META.yvzeit.getName();
 
 			/**
 			 * A termék cikkszáma.
 			 */
-			public static final String PRODUCT_ID_NO = InfosysOw1MESTASK.META.ytenum.getName();
+			public static final String PRODUCT_ID_NO = InfosysOw1MESTASKDATA.META.ytenum.getName();
 
 			/**
 			 * A termék keresőszava.
 			 */
-			public static final String PRODUCT_SWD = InfosysOw1MESTASK.META.ytesuch.getName();
+			public static final String PRODUCT_SWD = InfosysOw1MESTASKDATA.META.ytesuch.getName();
 
 			/**
 			 * A termék megnevezése az aktuálisan beállított kezelőnyelven.
 			 */
-			public static final String PRODUCT_DESCRIPTION = InfosysOw1MESTASK.META.ytenamebspr.getName();
+			public static final String PRODUCT_DESCRIPTION = InfosysOw1MESTASKDATA.META.ytenamebspr.getName();
 
 			/**
 			 * A termék második megnevezése.
 			 */
-			public static final String PRODUCT_DESCRIPTION2 = InfosysOw1MESTASK.META.yyname2.getName();
+			public static final String PRODUCT_DESCRIPTION2 = InfosysOw1MESTASKDATA.META.yyname2.getName();
 
 			/**
 			 * A mennyiségi egység (raktáregység) neve.
 			 */
-			public static final String STOCK_UNIT_NAME = InfosysOw1MESTASK.META.ylebspr.getName();
+			public static final String STOCK_UNIT_NAME = InfosysOw1MESTASKDATA.META.ylebspr.getName();
 
 			/**
 			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
@@ -197,7 +199,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		/**
 		 * A szűrőmezők nevei.
 		 */
-		protected static final String[] criteriaFieldNames = {InfosysOw1MESTASK.META.yas.getName(), InfosysOw1MESTASK.META.yalap.getName(), InfosysOw1MESTASK.META.start.getName()};
+		protected static final String[] criteriaFieldNames = {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.yalap.getName(), InfosysOw1MESTASKDATA.META.start.getName()};
 
 		/**
 		 * Egyke objektum.
@@ -236,12 +238,12 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			/**
 			 * A kapcsolódó vevői rendeléstétel szabadszövege.
 			 */
-			public static final String ITEM_TEXT = InfosysOw1MESTASK.META.ypftext.getName();
+			public static final String ITEM_TEXT = InfosysOw1MESTASKDATA.META.ypftext.getName();
 
 			/**
 			 * A kapcsolódó vevői rendeléstétel második szabadszövege.
 			 */
-			public static final String ITEM_TEXT2 = InfosysOw1MESTASK.META.yypftext.getName();
+			public static final String ITEM_TEXT2 = InfosysOw1MESTASKDATA.META.yypftext.getName();
 
 			/**
 			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
@@ -254,7 +256,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		/**
 		 * A szűrőmezők nevei.
 		 */
-		protected static final String[] criteriaFieldNames = {InfosysOw1MESTASK.META.yas.getName(), InfosysOw1MESTASK.META.ymb.getName(), InfosysOw1MESTASK.META.start.getName()};
+		protected static final String[] criteriaFieldNames = {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.ymb.getName(), InfosysOw1MESTASKDATA.META.start.getName()};
 
 		/**
 		 * Egyke objektum.
@@ -293,22 +295,22 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			/**
 			 * A művelet hivatkozási száma.
 			 */
-			public static final String ID_NO = InfosysOw1MESTASK.META.yagnum.getName();
+			public static final String ID_NO = InfosysOw1MESTASKDATA.META.yagnum.getName();
 
 			/**
 			 * A művelet keresőszava.
 			 */
-			public static final String SWD = InfosysOw1MESTASK.META.yagsuch.getName();
+			public static final String SWD = InfosysOw1MESTASKDATA.META.yagsuch.getName();
 
 			/**
 			 * A művelet megnevezése az aktuálisan beállított kezelőnyelven.
 			 */
-			public static final String DESCRIPTION = InfosysOw1MESTASK.META.yagnamebspr.getName();
+			public static final String DESCRIPTION = InfosysOw1MESTASKDATA.META.yagnamebspr.getName();
 
 			/**
 			 * A műveletfoglalás tételszövege.
 			 */
-			public static final String ITEM_TEXT = InfosysOw1MESTASK.META.yptext.getName();
+			public static final String ITEM_TEXT = InfosysOw1MESTASKDATA.META.yptext.getName();
 
 			/**
 			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
@@ -321,7 +323,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		/**
 		 * A szűrőmezők nevei.
 		 */
-		protected static final String[] criteriaFieldNames = {InfosysOw1MESTASK.META.yas.getName(), InfosysOw1MESTASK.META.ymuv.getName(), InfosysOw1MESTASK.META.start.getName()};
+		protected static final String[] criteriaFieldNames = {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.ymuv.getName(), InfosysOw1MESTASKDATA.META.start.getName()};
 
 		/**
 		 * Egyke objektum.
@@ -360,32 +362,32 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			/**
 			 * A beépülő cikk hivatkozási száma.
 			 */
-			public static final String ID_NO = InfosysOw1MESTASK.Row.META.ytelemnum.getName();
+			public static final String ID_NO = InfosysOw1MESTASKDATA.Row.META.ytelemnum.getName();
 
 			/**
 			 * A beépülő cikk keresőszava.
 			 */
-			public static final String SWD = InfosysOw1MESTASK.Row.META.ytelemsuch.getName();
+			public static final String SWD = InfosysOw1MESTASKDATA.Row.META.ytelemsuch.getName();
 
 			/**
 			 * A beépülő cikk megnevezése az aktuálisan beállított kezelőnyelven.
 			 */
-			public static final String DESCRIPTION = InfosysOw1MESTASK.Row.META.ytnamebspr.getName();
+			public static final String DESCRIPTION = InfosysOw1MESTASKDATA.Row.META.ytnamebspr.getName();
 
 			/**
 			 * A beépülő cikk második megnevezése.
 			 */
-			public static final String DESCRIPTION2 = InfosysOw1MESTASK.Row.META.ytyname2.getName();
+			public static final String DESCRIPTION2 = InfosysOw1MESTASKDATA.Row.META.ytyname2.getName();
 
 			/**
 			 * A beépülési mennyiség (egy késztermékre vonatkozóan).
 			 */
-			public static final String QUANTITY_PER_PRODUCT = InfosysOw1MESTASK.Row.META.ytmenge.getName();
+			public static final String QUANTITY_PER_PRODUCT = InfosysOw1MESTASKDATA.Row.META.ytmenge.getName();
 
 			/**
 			 * A beépülési mennyiség egységének (raktáregység) neve.
 			 */
-			public static final String STOCK_UNIT_NAME = InfosysOw1MESTASK.Row.META.ytlebspr.getName();
+			public static final String STOCK_UNIT_NAME = InfosysOw1MESTASKDATA.Row.META.ytlebspr.getName();
 
 			/**
 			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
@@ -398,7 +400,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		/**
 		 * A szűrőmezők nevei.
 		 */
-		protected static final String[] criteriaFieldNames = {InfosysOw1MESTASK.META.yas.getName(), InfosysOw1MESTASK.META.ydbj.getName(), InfosysOw1MESTASK.META.start.getName()};
+		protected static final String[] criteriaFieldNames = {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.ydbj.getName(), InfosysOw1MESTASKDATA.META.start.getName()};
 
 		/**
 		 * Egyke objektum.
@@ -409,7 +411,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 * Konstruktor.
 		 */
 		private BomQuery() {
-			super("MESTASK", Field.class);
+			super("MESTASKDATA", Field.class);
 		}
 
 		/**
@@ -438,6 +440,85 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	}
 
 	/**
+	 * Segédosztály a gyártási feladathoz kapcsolódó műveletek elvégzéséhez.
+	 * @author szizo
+	 */
+	protected static final class TaskManager extends InfoSystemExecutor {
+
+		/**
+		 * A gyártási feladat beütemezésekor beállítandó mezők nevei.
+		 */
+		protected static final String[] scheduleInputFieldNames = {InfosysOw1MESTASKADMIN.META.yas.getName(), InfosysOw1MESTASKADMIN.META.ymgr.getName(), InfosysOw1MESTASKADMIN.META.ymnum.getName(), InfosysOw1MESTASKADMIN.META.yas0.getName(), InfosysOw1MESTASKADMIN.META.ybeterv.getName()};
+
+		/**
+		 * A gyártási feladat beütemezésének visszavonásakor ill. felfüggesztésekor beállítandó mezők nevei.
+		 */
+		protected static final String[] unScheduleInputFieldNames = {InfosysOw1MESTASKADMIN.META.yas.getName(), InfosysOw1MESTASKADMIN.META.ymegszak.getName(), InfosysOw1MESTASKADMIN.META.yvisszavon.getName()};
+
+		protected static final String resultFieldName = InfosysOw1MESTASKADMIN.META.yeredmeny.getName();
+
+		/**
+		 * Egyke objektum.
+		 */
+		public static final TaskManager INSTANCE = new TaskManager();
+
+		/**
+		 * Konstruktor.
+		 */
+		private TaskManager() {
+			super("MESTASKADMIN", new String[] {resultFieldName}, null);
+		}
+
+		/**
+		 * A megadott gyártási feladat beütemezése egy konkrét munkaállomásra.
+		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
+		 * @param workStation A munkaállomás.
+		 * @param precedingWorkSlipId A munkaállomáson közvetlenül a beütemezendő gyártási feladat előtt végrehajtandó munkalap azonosítója (üres (vagy üres azonosító), ha a beütemezendő gyártási feladat az első a végrehajtási listában).
+		 * @param edpSession Az EDP-munkamenet.
+		 */
+		public void scheduleTask(String workSlipId, WorkStation workStation, String precedingWorkSlipId, EDPSession edpSession) {
+			try {
+				getResultHeaderFields(new EDPEditFieldList(scheduleInputFieldNames, new String[] {workSlipId, workStation.getWorkCenterId().toString(), Integer.toString(workStation.getNumber()), precedingWorkSlipId, " "}), edpSession);
+			} catch (CantChangeFieldValException e) {
+				throw new EDPRuntimeException(e);
+			}
+		}
+
+		/**
+		 * A megadott gyártási feladat beütemezésének visszavonása.
+		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
+		 * @param edpSession Az EDP-munkamenet.
+		 */
+		public void unScheduleTask(String workSlipId, EDPSession edpSession) {
+			unScheduleTask(workSlipId, false, edpSession);
+		}
+
+		/**
+		 * A megadott gyártási feladat beütemezésének visszavonása ill. felfüggesztése.
+		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
+		 * @param suspend A gyártási feladat felfüggesztésre kerül?
+		 * @param edpSession Az EDP-munkamenet.
+		 */
+		protected void unScheduleTask(String workSlipId, boolean suspend, EDPSession edpSession) {
+			try {
+				getResultHeaderFields(new EDPEditFieldList(unScheduleInputFieldNames, new String[] {workSlipId, suspend ? "1" : "0", " "}), edpSession);
+			} catch (CantChangeFieldValException e) {
+				throw new EDPRuntimeException(e);
+			}
+		}
+
+		/**
+		 * A megadott gyártási feladat felfüggesztése.
+		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
+		 * @param edpSession Az EDP-munkamenet.
+		 */
+		public void suspendTask(String workSlipId, EDPSession edpSession) {
+			unScheduleTask(workSlipId, true, edpSession);
+		}
+
+	}
+
+	/**
 	 * Gyártási feladat részleteit leíró osztály, EDP-ben implementálva.
 	 * @author szizo
 	 */
@@ -459,7 +540,6 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			final InfoSystemExecutor.FieldValues result = BasicDataQuery.EXECUTOR.getResultFields(workSlipId, abasConnectionObject);
 			workSlipNo = result.getString(BasicDataQuery.Field.ID_NO);
 			startDate = result.getAbasDate(BasicDataQuery.Field.START_DATE);
-			suspendedTask = result.getBoolean(BasicDataQuery.Field.SUSPENDED_TASK);
 			productIdNo = result.getString(BasicDataQuery.Field.PRODUCT_ID_NO);
 			productSwd = result.getString(BasicDataQuery.Field.PRODUCT_SWD);
 			productDescription = result.getString(BasicDataQuery.Field.PRODUCT_DESCRIPTION);
@@ -563,6 +643,30 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	@Override
 	protected DetailsEdpImpl newDetails(AbasConnection<EDPSession> abasConnection) {
 		return (new DetailsEdpImpl(abasConnection));
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task#schedule(phoenix.mes.abas.WorkStation, de.abas.erp.common.type.Id, phoenix.mes.abas.AbasConnection)
+	 */
+	@Override
+	public void schedule(WorkStation workStation, Id precedingWorkSlipId, AbasConnection<?> abasConnection) {
+		TaskManager.INSTANCE.scheduleTask(workSlipId, workStation, precedingWorkSlipId.toString(), EdpConnection.getEdpSession(abasConnection));
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task#unSchedule(phoenix.mes.abas.AbasConnection)
+	 */
+	@Override
+	public void unSchedule(AbasConnection<?> abasConnection) {
+		TaskManager.INSTANCE.unScheduleTask(workSlipId, EdpConnection.getEdpSession(abasConnection));
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task#suspend(phoenix.mes.abas.AbasConnection)
+	 */
+	@Override
+	public void suspend(AbasConnection<?> abasConnection) {
+		TaskManager.INSTANCE.suspendTask(workSlipId, EdpConnection.getEdpSession(abasConnection));
 	}
 
 }
