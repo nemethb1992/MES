@@ -12,7 +12,7 @@
 	<div class='row'>
 		<div class='col-12 h-100'>
 			<div class='container-fluid px-0'>
-				<div class='row station-upper-row'>
+				<div class='row station-upper-row timer-holder'>
 					<div id='timerContainer'
 						class='big-nav-button col-3 col-md-3 col-lg-2 col-xl-2'
 						class='col-3 col-md-3 col-lg-2 col-xl-2 px-0'>
@@ -24,6 +24,7 @@
 						class='button-container light-shadow col-9 col-md-9 col-lg-10 col-xl-10 px-0'>
 						<div class='container-fluid px-0 h-100'>
 							<div class='nav-contianer h-100'>
+
 								<div id='btn_lejelentes'
 									class='submit-form btn_navHeader h-100 float-left light-shadow'>
 									<p class='h6 text-center h-100 ' id='p_lejelentes'><%=outputFormatter.getWord(DictionaryEntry.SUBMIT)%></p>
@@ -65,7 +66,11 @@
 												<input type='button'
 													class='w-100 h-100 my-nav-btn megszak-btn' />
 											</div>
-											<div class='col-11'></div>
+											<div class='col-11'>
+												<button
+													class="btn btn-outline-secondary mt-5 w-100 submit-action-btn"
+													type="button" onclick='InterruptTask()' id="interrupt-btn"><%=outputFormatter.getWord(DictionaryEntry.INTERRUPT)%></button>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -74,7 +79,7 @@
 					</div>
 				</div>
 			</div>
-			<div class='row'>
+			<div class='row task-details-row'>
 				<div id=''
 					class='left-buttons col-3 col-md-3 col-lg-2 col-xl-2'>
 					<div class='row'>

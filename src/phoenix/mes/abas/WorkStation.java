@@ -42,9 +42,10 @@ public interface WorkStation extends Serializable {
 	List<Task> getScheduledTasks(AbasConnection<?> abasConnection);
 
 	/**
+	 * A munkaállomásra elsőként beütemezett és végrehajtható gyártási feladat elindítása.
 	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A munkaállomás első beütemezett és végrehajtható gyártási feladata (null, ha a munkaállomás feladatlistája üres).
+	 * @return Az elindított gyártási feladat (null, ha a munkaállomás feladatlistája üres).
 	 */
-	Task getFirstScheduledTask(AbasConnection<?> abasConnection);
+	Task startFirstScheduledTask(AbasConnection<?> abasConnection);
 
 }

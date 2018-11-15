@@ -28,9 +28,6 @@ public class Dashboard extends HttpServlet {
 		String pass = request.getParameter("password");
 		String layout = (String)session.getAttribute("Layout");
 		
-		System.out.println((new phoenix.mes.content.AppBuild(request)).getName());
-		System.out.println((new phoenix.mes.content.AppBuild(request)).isTest());
-		
 		session.setAttribute("pass",pass);
 		session.setAttribute("username",username);
 		

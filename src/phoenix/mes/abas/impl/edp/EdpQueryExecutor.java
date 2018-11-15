@@ -10,9 +10,12 @@ import de.abas.ceks.jedp.EDPQuery;
 import de.abas.ceks.jedp.EDPRuntimeException;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.ceks.jedp.InvalidQueryException;
+import de.abas.erp.common.type.AbasDate;
 import de.abas.erp.common.type.Id;
+import de.abas.erp.db.type.AbasUnit;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 
 /**
  * Osztály EDP-n keresztüli lekérdezésekhez.
@@ -24,6 +27,51 @@ public class EdpQueryExecutor {
 	 * A lekérdezendő mezők nevei.
 	 */
 	protected final String[] fieldNames;
+
+	/**
+	 * Szöveges mezőérték átalakítása AbasDate típusú dátummá.
+	 * @param string A mezőérték.
+	 * @return Az AbasDate típusú dátum.
+	 */
+	public static AbasDate parseAbasDate(String string) {
+		return AbasDate.valueOf(string);
+	}
+
+	/**
+	 * Szöveges mezőérték átalakítása AbasUnit típusú mértékegységgé.
+	 * @param string A mezőérték.
+	 * @return Az AbasUnit típusú mértékegység.
+	 */
+	public static AbasUnit parseAbasUnit(String string) {
+		return AbasUnit.UNITS.valueOf(string);
+	}
+
+	/**
+	 * Szöveges mezőérték átalakítása BigDecimal típusú tizedestörtté.
+	 * @param string A mezőérték.
+	 * @return A BigDecimal típusú tizedestört.
+	 */
+	public static BigDecimal parseBigDecimal(String string) {
+		return (new BigDecimal(string));
+	}
+
+	/**
+	 * Szöveges mezőérték átalakítása logikai értékké.
+	 * @param string A mezőérték.
+	 * @return A logikai érték.
+	 */
+	public static boolean parseBoolean(String string) {
+		return "1".equals(string);
+	}
+
+	/**
+	 * Szöveges mezőérték átalakítása egész számmá.
+	 * @param string A mezőérték.
+	 * @return Az egész szám.
+	 */
+	public static int parseInt(String string) {
+		return Integer.parseInt(string);
+	}
 
 	/**
 	 * @param fieldNamesClass A lekérdezendő mezők neveit konstansokként tartalmazó osztály.

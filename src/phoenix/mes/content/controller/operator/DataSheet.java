@@ -47,38 +47,39 @@ public class DataSheet extends HttpServlet {
 			} catch (SQLException e) {
 				wsName = " - ";
 			}
-			String username=(String)session.getAttribute("username");
-			String pass=(String)session.getAttribute("pass");
+			
+			String username = (String)session.getAttribute("username");
+			String pass = (String)session.getAttribute("pass");
 			AbasConnection<EDPSession> abasConnection = null;
+			
 			try {
-				// TODO testSystem 
 				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), testSystem);
 				Task task = (Task)session.getAttribute("Task");
-				if(task == null)
+				
+				if(task != null)
 				{
-//					task = AbasObjectFactory.INSTANCE.createTask(new IdImpl("(7896209,9,0)"), abasConnection); // "(8027770,9,0)"
-//					task = AbasObjectFactory.INSTANCE.createWorkStation("380PG",1, abasConnection).getNextExecutableTask(abasConnection);
+					Task.Details taskDetails = task.getDetails(abasConnection);				    	
+					switch (request.getParameter("tabNo")) {
+					case "1":
+						view = getDataSheet(taskDetails,workstation,wsName,of,request);
+						break;
+					case "2":
+						view = getDocuments(taskDetails, of);
+						break;
+					case "3":
+						view = getBom(taskDetails, of, request);
+						break;
+					case "4":
+						view = getItemTexts(taskDetails, of);
+						break;
+					default:
+						break;
+					}
 					task = AbasObjectFactory.INSTANCE.createWorkStation(workstation.split("!")[0],Integer.parseInt(workstation.split("!")[1]), abasConnection).getFirstScheduledTask(abasConnection);
 					session.setAttribute("Task", task);
 				}
 
-				Task.Details taskDetails = task.getDetails(abasConnection);				    	
-				switch (request.getParameter("tabNo")) {
-				case "1":
-					view = getDataSheet(taskDetails,workstation,wsName,of,request);
-					break;
-				case "2":
-					view = getDocuments(taskDetails, of);
-					break;
-				case "3":
-					view = getBom(taskDetails, of, request);
-					break;
-				case "4":
-					view = getItemTexts(taskDetails, of);
-					break;
-				default:
-					break;
-				}
+
 				
 			}catch(LoginException e)
 			{

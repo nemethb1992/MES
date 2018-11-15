@@ -1,11 +1,10 @@
 <%@include file="/Views/Header.jsp"%>
 <script>
 	
-<%@ include file="/Views/TaskManage/taskManageScript.js"%>
+<%@ include file="/Views/TaskManage/Todo/Todo.js"%>
 	
 </script>
 <div class='container-fluid h-100'>
-
 	<p class='actual-time w-25 actual-time-tm fixed-top my-0 py-4 h5'></p>
 	<div class='row'>
 		<div class='col-12  px-0 topNav'>
@@ -15,9 +14,6 @@
 						src="${pageContext.request.contextPath}/Public/icons/pm_logo_normal.svg"
 						class='d-block m-3 img-fluid LogoMiniPM' />
 				</div>
-
-
-
 				<div class='top-nav-button h-100 px-0 col-nav-back float-right'>
 					<form method='POST' class='h-100'
 						action='${pageContext.request.contextPath}/Main'>
@@ -34,33 +30,32 @@
 			</div>
 		</div>
 		<!-- 			<img -->
-<%-- 				src="${pageContext.request.contextPath}/Public/icons/pm_logo_mini_white.svg" --%>
-<!-- 				class='row d-block m-3 img-fluid LogoMiniPM float-left' /> -->
-<!-- 			<form method='POST' class='h-100 float-right' -->
-<%-- 				action='${pageContext.request.contextPath}/Home'> --%>
-<!-- 				<input class='btn_logout' type='submit' value='' /> -->
-<!-- 			</form> -->
-		</div>
-		<div class='row h-75'>
-				<div class=' col-2 px-0'>
-					<div class='container-fluid'>
-					<div class='row light-shadow'>
-						<div class='cont_header col-12 px-0'>
-							<div class='input-icon-holderDiv float-right h-100'>
-								<div class='refresh_btn h-100'>
-									<img class='h-100 float-left p-3'
-										src='${pageContext.request.contextPath}/Public/icons/reloadGray.svg'>
-								</div>
+		<%-- 				src="${pageContext.request.contextPath}/Public/icons/pm_logo_mini_white.svg" --%>
+		<!-- 				class='row d-block m-3 img-fluid LogoMiniPM float-left' /> -->
+		<!-- 			<form method='POST' class='h-100 float-right' -->
+		<%-- 				action='${pageContext.request.contextPath}/Home'> --%>
+		<!-- 				<input class='btn_logout' type='submit' value='' /> -->
+		<!-- 			</form> -->
+	</div>
+	<div class='row h-75'>
+		<div class=' col-2 px-0'>
+			<div class='container-fluid'>
+				<div class='row light-shadow'>
+					<div class='cont_header col-12 px-0'>
+						<div class='input-icon-holderDiv float-right h-100'>
+							<div class='refresh_btn h-100'>
+								<img class='h-100 float-left p-3' src='${pageContext.request.contextPath}/Public/icons/reloadGray.svg'>
 							</div>
 						</div>
-						<div class='col-12 px-0'>
-							<div class='station-container row px-3'></div>
-						</div>
+					</div>
+					<div class='col-12 px-0'>
+						<div class='station-container row px-3'></div>
 					</div>
 				</div>
-				</div>
-				<div class='sortContDiv col-10 pr-0'>
-					<div class='sortStationListCont container-fluid'>
+			</div>
+		</div>
+		<div class='sortContDiv col-10 pr-0'>
+			<div class='sortStationListCont container-fluid'>
 				<div class='sortContDiv_nav row px-0 light-shadow'>
 					<div class='abas-list-head sort-list-head sort-list h-100 col-5'>
 						<div class='row h-100'>
@@ -69,7 +64,6 @@
 									<div class='col-10'>
 										<input data-date-format="yyyy/mm/dd"
 											class='datepicker_own w-100 h-100' id="datepicker">
-
 										<!-- 													<input class='datepicker_own w-100 h-100' type='date' style='font-size: 17px;'/> -->
 									</div>
 									<div class='col-2 px-0'>
@@ -96,24 +90,21 @@
 										class='icon-form col-4 h-100 float-right p-4'
 										src='${pageContext.request.contextPath}/Public/icons/sumSignGray.svg'>
 								</div>
-
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class='sortContDiv_ListHolder row'>
 					<div class='abas-list-holder    sort-list-holder  col-9 px-0'>
-						<div class='abas-list dnd-frame dndf1 m-0 row light-shadow'>
-						
-						</div>
+						<div class='abas-list dnd-frame dndf1 m-0 row light-shadow'></div>
 					</div>
 					<div class='ws-list-holder sort-list-holder col-3 px-0'>
-						<div class='dnd-frame h-100 m-0 dndf2'></div>
+						<div class='dnd-frame h-100 m-0 dndf2 station-list'></div>
 					</div>
-				</div>
-			</div>
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
 
 <%@include file="/Views/Footer.jsp"%>

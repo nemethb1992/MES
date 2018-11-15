@@ -44,7 +44,7 @@
     <%@ include file="/Public/css/Style.css"%>
     <%@ include file="/Views/Login/loginStyle.css"%>
     <%@ include file="/Views/TaskView/taskViewStyle.css"%>
-    <%@ include file="/Views/TaskManage/taskManageStyle.css"%>
+    <%@ include file="/Views/TaskManage/ManagerStyle.css"%>
     <%@ include file="/Views/TaskManage/Settings/Settings.css"%>
 <%--     <%@ include file="/Views/TaskManage/MainPanel/MainPanel.css"%> --%>
 <%--     <%@ include file="/Views/TaskManage/TodoPanel/TodoPanel.css"%> --%>

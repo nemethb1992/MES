@@ -172,4 +172,54 @@
     <servlet-name>Main</servlet-name>
     <url-pattern>/Main</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ScheduleTask</display-name>
+    <servlet-name>ScheduleTask</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.manager.ScheduleTask</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ScheduleTask</servlet-name>
+    <url-pattern>/ScheduleTask</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UnScheduleTask</display-name>
+    <servlet-name>UnScheduleTask</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.manager.UnScheduleTask</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UnScheduleTask</servlet-name>
+    <url-pattern>/UnScheduleTask</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Suspend</display-name>
+    <servlet-name>Suspend</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.operator.Suspend</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Suspend</servlet-name>
+    <url-pattern>/Suspend</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>StartActualTask</display-name>
+    <servlet-name>StartActualTask</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.operator.StartActualTask</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>StartActualTask</servlet-name>
+    <url-pattern>/StartActualTask</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>OpenTask</display-name>
+    <servlet-name>OpenTask</servlet-name>
+    <servlet-class>phoenix.mes.content.navigation.OpenTask</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OpenTask</servlet-name>
+    <url-pattern>/OpenTask</url-pattern>
+  </servlet-mapping>
 </web-app>

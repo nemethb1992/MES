@@ -25,6 +25,140 @@ import phoenix.mes.abas.Task.BomElement;
 public abstract class TaskDetails<C> implements Task.Details {
 
 	/**
+	 * Segédosztály a gyártási feladat alapadatainak tárolásához.
+	 * @author szizo
+	 */
+	public class BasicData {
+
+		/**
+		 * A munkalap száma.
+		 */
+		public String workSlipNo;
+
+		/**
+		 * A gyártási feladat elkezdésének (tervezett) napja.
+		 */
+		public AbasDate startDate;
+
+		/**
+		 * A gyártási feladat fel van függesztve?
+		 */
+		public boolean suspendedTask;
+
+		/**
+		 * A termék cikkszáma.
+		 */
+		public String productIdNo;
+
+		/**
+		 * A termék keresőszava.
+		 */
+		public String productSwd;
+
+		/**
+		 * A termék megnevezése az aktuálisan beállított kezelőnyelven.
+		 */
+		public String productDescription;
+
+		/**
+		 * A termék második megnevezése.
+		 */
+		public String productDescription2;
+
+		/**
+		 * A termék Felhasználás-hivatkozása.
+		 */
+		public String usage;
+
+		/**
+		 * A beállítási idő.
+		 */
+		public BigDecimal setupTime;
+
+		/**
+		 * A beállítási idő mértékegysége.
+		 */
+		public String setupTimeUnit;
+
+		/**
+		 * A darabidő.
+		 */
+		public BigDecimal unitTime;
+
+		/**
+		 * A darabidő mértékegysége.
+		 */
+		public String unitTimeUnit;
+
+		/**
+		 * Hányszor kell végrehajtani a műveletet?
+		 */
+		public BigDecimal numberOfExecutions;
+
+		/**
+		 * A nyitott mennyiség.
+		 */
+		public BigDecimal outstandingQuantity;
+
+		/**
+		 * A mennyiségi egység (raktáregység).
+		 */
+		public String stockUnit;
+
+		/**
+		 * A kalkulált gyártási átfutási idő (normaidő) munkaórában.
+		 */
+		public BigDecimal calculatedProductionTime;
+
+	}
+
+	/**
+	 * Segédosztály a művelet adatainak tárolásához.
+	 * @author szizo
+	 */
+	public class OperationData {
+
+		/**
+		 * A művelet hivatkozási száma.
+		 */
+		public String operationIdNo;
+
+		/**
+		 * A művelet keresőszava.
+		 */
+		public String operationSwd;
+
+		/**
+		 * A művelet megnevezése az aktuálisan beállított kezelőnyelven.
+		 */
+		public String operationDescription;
+
+		/**
+		 * A műveletfoglalás tételszövege.
+		 */
+		public String operationReservationText;
+
+	}
+
+	/**
+	 * Segédosztály a gyártási feladathoz kapcsolódó vevői megbízás adatainak tárolásához.
+	 * @author szizo
+	 */
+	public class SalesOrderData {
+
+		/**
+		 * A kapcsolódó vevői rendeléstétel szabadszövege.
+		 */
+		public String salesOrderItemText;
+
+		/**
+		 * A kapcsolódó vevői rendeléstétel második szabadszövege.
+		 */
+		public String salesOrderItemText2;
+
+	}
+
+	/**
 	 * Az Abas-kapcsolat objektuma.
 	 */
 	protected C abasConnectionObject;
@@ -35,112 +169,22 @@ public abstract class TaskDetails<C> implements Task.Details {
 	protected String operatingLanguageCode;
 
 	/**
-	 * A munkalap száma.
+	 * A gyártási feladat alapadatait gyorsítótárazó objektum.
 	 */
-	protected String workSlipNo = null;
+	protected BasicData basicData = null;
 
 	/**
-	 * A gyártási feladat elkezdésének (tervezett) napja.
+	 * A művelet adatait gyorsítótárazó objektum.
 	 */
-	protected AbasDate startDate = null;
+	protected OperationData operationData = null;
 
 	/**
-	 * A termék cikkszáma.
+	 * A gyártási feladathoz kapcsolódó vevői megbízás adatait gyorsítótárazó objektum.
 	 */
-	protected String productIdNo = null;
+	protected SalesOrderData salesOrderData = null;
 
 	/**
-	 * A termék keresőszava.
-	 */
-	protected String productSwd = null;
-
-	/**
-	 * A termék megnevezése az aktuálisan beállított kezelőnyelven.
-	 */
-	protected String productDescription = null;
-
-	/**
-	 * A termék második megnevezése.
-	 */
-	protected String productDescription2 = null;
-
-	/**
-	 * A termék Felhasználás-hivatkozása.
-	 */
-	protected String usage = null;
-
-	/**
-	 * A kapcsolódó vevői rendeléstétel szabadszövege.
-	 */
-	protected String salesOrderItemText = null;
-
-	/**
-	 * A kapcsolódó vevői rendeléstétel második szabadszövege.
-	 */
-	protected String salesOrderItemText2 = null;
-
-	/**
-	 * A művelet hivatkozási száma.
-	 */
-	protected String operationIdNo = null;
-
-	/**
-	 * A művelet keresőszava.
-	 */
-	protected String operationSwd = null;
-
-	/**
-	 * A művelet megnevezése az aktuálisan beállított kezelőnyelven.
-	 */
-	protected String operationDescription = null;
-
-	/**
-	 * A műveletfoglalás tételszövege.
-	 */
-	protected String operationReservationText = null;
-
-	/**
-	 * A beállítási idő.
-	 */
-	protected BigDecimal setupTime = null;
-
-	/**
-	 * A beállítási idő mértékegysége.
-	 */
-	protected String setupTimeUnit = null;
-
-	/**
-	 * A darabidő.
-	 */
-	protected BigDecimal unitTime = null;
-
-	/**
-	 * A darabidő mértékegysége.
-	 */
-	protected String unitTimeUnit = null;
-
-	/**
-	 * Hányszor kell végrehajtani a műveletet?
-	 */
-	protected BigDecimal numberOfExecutions = null;
-
-	/**
-	 * A nyitott mennyiség.
-	 */
-	protected BigDecimal outstandingQuantity = null;
-
-	/**
-	 * A mennyiségi egység (raktáregység).
-	 */
-	protected String stockUnit = null;
-
-	/**
-	 * A kalkulált gyártási átfutási idő (normaidő) munkaórában.
-	 */
-	protected BigDecimal calculatedProductionTime = null;
-
-	/**
-	 * A gyártási feladathoz kapcsolódó darabjegyzék.
+	 * A gyártási feladathoz kapcsolódó darabjegyzéket gyorsítótárazó objektum.
 	 */
 	protected List<BomElement> bom = null;
 
@@ -161,12 +205,9 @@ public abstract class TaskDetails<C> implements Task.Details {
 		final String newOperatingLanguageCode = abasConnection.getOperatingLanguageCode();
 		if (!newOperatingLanguageCode.equals(operatingLanguageCode)) {
 			if (null != operatingLanguageCode) {
-				productDescription = null;
-				operationDescription = null;
-				setupTimeUnit = null;
-				unitTimeUnit = null;
-				stockUnit = null;
-				bom = null;
+				clearBasicDataCache();
+				clearOperationDataCache();
+				clearBomCache();
 			}
 			operatingLanguageCode = newOperatingLanguageCode;
 		}
@@ -175,26 +216,6 @@ public abstract class TaskDetails<C> implements Task.Details {
 			abasConnectionObject = newAbasConnectionObject;
 		}
 	}
-
-	/**
-	 * A gyártási feladat alapadatait jelentő tagváltozók kitöltése.
-	 */
-	protected abstract void loadBasicData();
-
-	/**
-	 * A művelethez kapcsolódó tagváltozók kitöltése.
-	 */
-	protected abstract void loadOperationData();
-
-	/**
-	 * Tagváltozók kitöltése a kapcsolódó vevői megbízás alapján.
-	 */
-	protected abstract void loadSalesOrderData();
-
-	/**
-	 * @return A gyártási feladathoz kapcsolódó darabjegyzék.
-	 */
-	protected abstract List<BomElement> getBillOfMaterials();
 
 	/**
 	 * Adott műveleti idő bruttósítása.
@@ -228,15 +249,78 @@ public abstract class TaskDetails<C> implements Task.Details {
 		throw new RuntimeException("Ismeretlen időegység: " + timeUnit);
 	}
 
+	/**
+	 * @return A gyártási feladat alapadatait gyorsítótárazó objektum.
+	 */
+	protected BasicData getBasicData() {
+		if (null == basicData) {
+			basicData = newBasicData();
+		}
+		return basicData;
+	}
+
+	/**
+	 * @return A gyártási feladat alapadatait gyorsítótárazó, újonnan létrehozott objektum.
+	 */
+	protected abstract BasicData newBasicData();
+
+	/**
+	 * A gyártási feladat alapadatait tartalmazó gyorsítótár kiürítése.
+	 */
+	public void clearBasicDataCache() {
+		basicData = null;
+	}
+
+	/**
+	 * @return A művelet adatait gyorsítótárazó objektum.
+	 */
+	protected OperationData getOperationData() {
+		if (null == operationData) {
+			operationData = newOperationData();
+		}
+		return operationData;
+	}
+
+	/**
+	 * @return A művelet adatait gyorsítótárazó, újonnan létrehozott objektum.
+	 */
+	protected abstract OperationData newOperationData();
+
+	/**
+	 * A művelet adatait tartalmazó gyorsítótár kiürítése.
+	 */
+	public void clearOperationDataCache() {
+		operationData = null;
+	}
+
+	/**
+	 * @return A gyártási feladathoz kapcsolódó vevői megbízás adatait gyorsítótárazó objektum.
+	 */
+	protected SalesOrderData getSalesOrderData() {
+		if (null == salesOrderData) {
+			salesOrderData = newSalesOrderData();
+		}
+		return salesOrderData;
+	}
+
+	/**
+	 * @return A gyártási feladathoz kapcsolódó vevői megbízás adatait gyorsítótárazó, újonnan létrehozott objektum.
+	 */
+	protected abstract SalesOrderData newSalesOrderData();
+
+	/**
+	 * A gyártási feladathoz kapcsolódó vevői megbízás adatait tartalmazó gyorsítótár kiürítése.
+	 */
+	public void clearSalesOrderDataCache() {
+		salesOrderData = null;
+	}
+
 	/* (non-Javadoc)
 	 * @see phoenix.mes.abas.Task.Details#getWorkSlipNo()
 	 */
 	@Override
 	public String getWorkSlipNo() {
-		if (null == workSlipNo) {
-			loadBasicData();
-		}
-		return workSlipNo;
+		return getBasicData().workSlipNo;
 	}
 
 	/* (non-Javadoc)
@@ -244,11 +328,15 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public AbasDate getStartDate() {
-		// A startDate mező üres dátum esetén null értékű, ezért azt nem lehet vizsgálni
-		if (null == workSlipNo) {
-			loadBasicData();
-		}
-		return startDate;
+		return getBasicData().startDate;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task.Details#isSuspendedTask()
+	 */
+	@Override
+	public boolean isSuspendedTask() {
+		return getBasicData().suspendedTask;
 	}
 
 	/* (non-Javadoc)
@@ -256,10 +344,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getProductIdNo() {
-		if (null == productIdNo) {
-			loadBasicData();
-		}
-		return productIdNo;
+		return getBasicData().productIdNo;
 	}
 
 	/* (non-Javadoc)
@@ -267,10 +352,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getProductSwd() {
-		if (null == productSwd) {
-			loadBasicData();
-		}
-		return productSwd;
+		return getBasicData().productSwd;
 	}
 
 	/* (non-Javadoc)
@@ -278,10 +360,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getProductDescription() {
-		if (null == productDescription) {
-			loadBasicData();
-		}
-		return productDescription;
+		return getBasicData().productDescription;
 	}
 
 	/* (non-Javadoc)
@@ -289,10 +368,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getProductDescription2() {
-		if (null == productDescription2) {
-			loadBasicData();
-		}
-		return productDescription2;
+		return getBasicData().productDescription2;
 	}
 
 	/* (non-Javadoc)
@@ -300,10 +376,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getUsage() {
-		if (null == usage) {
-			loadBasicData();
-		}
-		return usage;
+		return getBasicData().usage;
 	}
 
 	/* (non-Javadoc)
@@ -311,10 +384,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getSalesOrderItemText() {
-		if (null == salesOrderItemText) {
-			loadSalesOrderData();
-		}
-		return salesOrderItemText;
+		return getSalesOrderData().salesOrderItemText;
 	}
 
 	/* (non-Javadoc)
@@ -322,10 +392,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getSalesOrderItemText2() {
-		if (null == salesOrderItemText2) {
-			loadSalesOrderData();
-		}
-		return salesOrderItemText2;
+		return getSalesOrderData().salesOrderItemText2;
 	}
 
 	/* (non-Javadoc)
@@ -333,10 +400,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getOperationIdNo() {
-		if (null == operationIdNo) {
-			loadOperationData();
-		}
-		return operationIdNo;
+		return getOperationData().operationIdNo;
 	}
 
 	/* (non-Javadoc)
@@ -344,10 +408,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getOperationSwd() {
-		if (null == operationSwd) {
-			loadOperationData();
-		}
-		return operationSwd;
+		return getOperationData().operationSwd;
 	}
 
 	/* (non-Javadoc)
@@ -355,10 +416,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getOperationDescription() {
-		if (null == operationDescription) {
-			loadOperationData();
-		}
-		return operationDescription;
+		return getOperationData().operationDescription;
 	}
 
 	/* (non-Javadoc)
@@ -366,10 +424,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getOperationReservationText() {
-		if (null == operationReservationText) {
-			loadOperationData();
-		}
-		return operationReservationText;
+		return getOperationData().operationReservationText;
 	}
 
 	/* (non-Javadoc)
@@ -377,10 +432,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public BigDecimal getSetupTime() {
-		if (null == setupTime) {
-			loadBasicData();
-		}
-		return setupTime;
+		return getBasicData().setupTime;
 	}
 
 	/* (non-Javadoc)
@@ -388,10 +440,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getSetupTimeUnit() {
-		if (null == setupTimeUnit) {
-			loadBasicData();
-		}
-		return setupTimeUnit;
+		return getBasicData().setupTimeUnit;
 	}
 
 	/* (non-Javadoc)
@@ -399,10 +448,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public BigDecimal getUnitTime() {
-		if (null == unitTime) {
-			loadBasicData();
-		}
-		return unitTime;
+		return getBasicData().unitTime;
 	}
 
 	/* (non-Javadoc)
@@ -410,10 +456,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getUnitTimeUnit() {
-		if (null == unitTimeUnit) {
-			loadBasicData();
-		}
-		return unitTimeUnit;
+		return getBasicData().unitTimeUnit;
 	}
 
 	/* (non-Javadoc)
@@ -421,10 +464,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public BigDecimal getNumberOfExecutions() {
-		if (null == numberOfExecutions) {
-			loadBasicData();
-		}
-		return numberOfExecutions;
+		return getBasicData().numberOfExecutions;
 	}
 
 	/* (non-Javadoc)
@@ -432,10 +472,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public BigDecimal getOutstandingQuantity() {
-		if (null == outstandingQuantity) {
-			loadBasicData();
-		}
-		return outstandingQuantity;
+		return getBasicData().outstandingQuantity;
 	}
 
 	/* (non-Javadoc)
@@ -443,10 +480,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public String getStockUnit() {
-		if (null == stockUnit) {
-			loadBasicData();
-		}
-		return stockUnit;
+		return getBasicData().stockUnit;
 	}
 
 	/* (non-Javadoc)
@@ -454,10 +488,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	@Override
 	public BigDecimal getCalculatedProductionTime() {
-		if (null == calculatedProductionTime) {
-			loadBasicData();
-		}
-		return calculatedProductionTime;
+		return getBasicData().calculatedProductionTime;
 	}
 
 	/* (non-Javadoc)
@@ -466,9 +497,32 @@ public abstract class TaskDetails<C> implements Task.Details {
 	@Override
 	public List<BomElement> getBom() {
 		if (null == bom) {
-			bom = getBillOfMaterials();
+			bom = newBom();
 		}
 		return bom;
+	}
+
+	/**
+	 * @return A gyártási feladathoz kapcsolódó darabjegyzéket gyorsítótárazó, újonnan létrehozott objektum.
+	 */
+	protected abstract List<BomElement> newBom();
+
+	/**
+	 * A gyártási feladathoz kapcsolódó darabjegyzéket tartalmazó gyorsítótár kiürítése.
+	 */
+	public void clearBomCache() {
+		bom = null;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task.Details#clearCache()
+	 */
+	@Override
+	public void clearCache() {
+		clearBasicDataCache();
+		clearOperationDataCache();
+		clearSalesOrderDataCache();
+		clearBomCache();
 	}
 
 }

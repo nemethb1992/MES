@@ -80,46 +80,5 @@ public class WorkstationControl extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
-	
-//	protected String getPcItems(PostgreSql postgreSql) throws SQLException
-//	{
-//		String view = "";
-//		String command = "SELECT long FROM profitcenter";
-//		final String sqlFieldName = "long";
-//			for (Map<String, String> row : postgreSql.sqlQuery(command, sqlFieldName)) {
-//				view += "<div class='tmts_stationBtnDivCont col-12 px-0' value='"+row.get(sqlFieldName)+"' OnClick='StationItemSelect(this)'><input disabled class='si1'value='"+row.get(sqlFieldName)+"'></div>";
-//			}
-//		return view;
-//	}
-//	
-//    protected String getGroupItems(PostgreSql postgreSql, HttpServletRequest request) throws SQLException
-//    {
-//    	String view = ""; 
-//    	
-//   	    String command = "select stations.csoport from stations left join profitcenter on stations.pc = profitcenter.id where long='"+request.getParameter("element")+"' group by stations.csoport";
-//		final String sqlFieldName = "csoport";
-//		
-//			for (Map<String, String> row : postgreSql.sqlQuery(command, sqlFieldName)) {
-//	    		view += "<div class='tmts_stationBtnDivCont col-12 px-0' value='"+row.get(sqlFieldName)+"' OnClick='StationItemSelect(this)'><input disabled class='si1'value='"+row.get(sqlFieldName)+"'></div>";
-//	    	}
-//
-//    	return view;
-//    }
-//    
-//    protected String getStationItem(PostgreSql postgreSql, HttpServletRequest request, Locale locale) throws SQLException
-//    {
-//    	String view = "";
-//   	    final String groupSqlFieldName = "csoport";
-//   	    final String numberSqlFieldName = "sorszam";
-//   	    final String nameSqlFieldName = "nev_" + locale.getLanguage();
-//   	    String command = "select * from stations where csoport='"+request.getParameter("element")+"' ORDER BY sorszam ASC";
-//   	    
-//			for (Map<String, String> row : postgreSql.sqlQuery(command, groupSqlFieldName, numberSqlFieldName, nameSqlFieldName)) {
-//				final String name = row.get(nameSqlFieldName);
-//				view += "<div class='tmts_stationBtnDivCont col-12 px-0' value='" + row.get(groupSqlFieldName) + "!" + row.get(numberSqlFieldName) + "!" + name + "' OnClick='clickOnStation(this)'><input disabled class='si1'value='" + name +"'></div>";
-//			}
-//    	return view;
-//    }
 	
 }

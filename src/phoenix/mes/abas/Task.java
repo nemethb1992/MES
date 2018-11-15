@@ -36,6 +36,11 @@ public interface Task extends Serializable {
 		AbasDate getStartDate();
 
 		/**
+		 * @return A gyártási feladat fel van függesztve?
+		 */
+		boolean isSuspendedTask();
+
+		/**
 		 * @return A termék cikkszáma.
 		 */
 		String getProductIdNo();
@@ -135,6 +140,11 @@ public interface Task extends Serializable {
 		 */
 		List<BomElement> getBom();
 
+		/**
+		 * Az adatokat tartalmazó gyorsítótár kiürítése.
+		 */
+		void clearCache();
+
 	}
 
 	/**
@@ -182,20 +192,16 @@ public interface Task extends Serializable {
 
 	/**
 	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A gyártási feladat részleteit leíró objektum.
+	 * @return A gyártási feladat részleteit leíró (gyorsítótárazott) objektum.
 	 * @throws IllegalArgumentException Ha az Abas-kapcsolat nem megfelelő típusú.
 	 */
 	Details getDetails(AbasConnection<?> abasConnection);
 
 	/**
-	 * @return A gyártási feladat fel van függesztve?
-	 */
-	boolean isSuspendedTask();
-
-	/**
+	 * @param abasConnection Az Abas-kapcsolat.
 	 * @return A gyártási feladat végrehajtása folyamatban van?
 	 */
-	boolean isInProgress();
+	boolean isInProgress(AbasConnection<?> abasConnection);
 
 	/**
 	 * A gyártási feladat beütemezése egy konkrét munkaállomásra.
@@ -226,10 +232,5 @@ Feladat indítása
 Lejelentés
  Bemenet: mennyiség, dolgozó (null is lehet), munkamenet
  Ha nincs ysts időbélyeg: nincs elindítva, hiba
- ysts = ""
-
-Feladat megszakítása
- Bemenet: munkamenet
- ysts = "", yszeich = G|bzeichen
 */
 }

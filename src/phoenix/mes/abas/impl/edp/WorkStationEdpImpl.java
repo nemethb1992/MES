@@ -205,10 +205,10 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.WorkStation#getFirstScheduledTask(phoenix.mes.abas.AbasConnection)
+	 * @see phoenix.mes.abas.WorkStation#startFirstScheduledTask(phoenix.mes.abas.AbasConnection)
 	 */
 	@Override
-	public Task getFirstScheduledTask(AbasConnection<?> abasConnection) {
+	public Task startFirstScheduledTask(AbasConnection<?> abasConnection) {
 		return WorkSlipQuery.EXECUTOR.getFirstScheduledTask(workCenterId, number, EdpConnection.getEdpSession(abasConnection));
 	}
 

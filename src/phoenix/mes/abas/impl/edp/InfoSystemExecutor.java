@@ -55,7 +55,7 @@ public class InfoSystemExecutor {
 		 * @return A megadott mező tartalma AbasDate típusú dátumként.
 		 */
 		public AbasDate getAbasDate(String fieldName) {
-			return AbasDate.valueOf(getString(fieldName));
+			return EdpQueryExecutor.parseAbasDate(getString(fieldName));
 		}
 
 		/**
@@ -63,7 +63,7 @@ public class InfoSystemExecutor {
 		 * @return A megadott mező tartalma AbasUnit típusú mértékegységként.
 		 */
 		public AbasUnit getAbasUnit(String fieldName) {
-			return AbasUnit.UNITS.valueOf(getString(fieldName));
+			return EdpQueryExecutor.parseAbasUnit(getString(fieldName));
 		}
 
 		/**
@@ -71,7 +71,7 @@ public class InfoSystemExecutor {
 		 * @return A megadott mező tartalma BigDecimal típusú tizedestörtként.
 		 */
 		public BigDecimal getBigDecimal(String fieldName) {
-			return (new BigDecimal(getString(fieldName)));
+			return EdpQueryExecutor.parseBigDecimal(getString(fieldName));
 		}
 
 		/**
@@ -79,7 +79,7 @@ public class InfoSystemExecutor {
 		 * @return A megadott mező tartalma logikai értékként.
 		 */
 		public boolean getBoolean(String fieldName) {
-			return "1".equals(getString(fieldName));
+			return EdpQueryExecutor.parseBoolean(getString(fieldName));
 		}
 
 		/**
@@ -87,7 +87,7 @@ public class InfoSystemExecutor {
 		 * @return A megadott mező tartalma egész számként.
 		 */
 		public int getInt(String fieldName) {
-			return Integer.parseInt(getString(fieldName));
+			return EdpQueryExecutor.parseInt(getString(fieldName));
 		}
 
 	}

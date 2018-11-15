@@ -48,10 +48,16 @@ var getUrlParameter = function getUrlParameter(sParam) {
 	}
 };
 
-function loadingAnimation(element)
+function loadingAnimation(element, name)
 {
-	$(element).append("<div class='loaderCycle mx-auto mt-5  abas-cycle'></div>");	
+	$(element).append("<div class='"+name+" loaderCycle mx-auto mt-5  abas-cycle'></div>");	
 }
+
+function loadingAnimationStop(name)
+{
+	$("."+name).remove();
+}
+
 
 function DisplayTime(){
 

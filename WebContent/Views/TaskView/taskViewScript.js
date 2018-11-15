@@ -28,19 +28,32 @@ $(document).keypress(function(e) {
 function getView(tab = 1)
 {
 	$( "#SwitchPanel" ).empty();
-	loadingAnimation("#SwitchPanel");
+	loadingAnimation("#SwitchPanel", "operator");
 	$.ajax({
 		url:  '/'+path+'/DataSheet',
 		data:{
 			tabNo: tab
 		},
 		success: function (response) {
+			loadingAnimationStop("operator");
 			$( "#SwitchPanel" ).empty();
 			$( "#SwitchPanel" ).append(response);
-			setTimer();
+			if(response != "")
+			{
+				setTimer();
+			}
+			else
+			{
+
+			}
+
 		}
 	});
+}
 
+function setPageDefault()
+{
+	$(".timer-holder").append("");
 }
 
 function setTimer()
@@ -74,6 +87,7 @@ function timerStart(time)
 		}
 	}
 };
+
 var upcounter = null;
 function timeUp()
 {
@@ -106,6 +120,7 @@ function openAsset(item)
 
 function TabControlEventHolder()
 {
+
 	$('.btn_logout').click(function(){
 
 		$.ajax({url:  '/'+path+'/Home'});
@@ -173,6 +188,7 @@ function openInterupt(item)
 	$('#btn_megszakitas .my-nav-container').css({'display':'block'});
 	$('#btn_megszakitas').css({'background':'white'});
 }
+
 function openSubmit(item)
 {
 	closeNavButtons();
@@ -188,6 +204,7 @@ function closeSubmit()
 	$('#btn_lejelentes .my-nav-container').css({'display':'none'});
 	$('#btn_lejelentes p').css({'display':''});
 }
+
 function closeInterupt()
 {
 	$('#btn_megszakitas').css({'background':'', 'color':'','width':'','border':''});
@@ -201,8 +218,6 @@ function closeNavButtons()
 	$('.btn_navHeader .my-nav-container').css({'display':'none'});
 	$('.btn_navHeader p').css({'display':''});
 }
-
-
 
 String.prototype.toHHMMSS = function () {
 	var sec_num = parseInt(this, 10); // don't forget the second parm
@@ -222,5 +237,35 @@ String.prototype.toHHMMSS = function () {
 	var time = hours + ':' + minutes + ':' + seconds;
 	return time;
 }
+
+function StartTask(item)
+{
+	$.ajax({
+		url:  '/'+path+'/StartActualTask',
+		success: function (response) {
+			if(response != null)
+			{
+				getView();
+			}
+		}
+	});
+}
+
+function InterruptTask()
+{
+	value = 1;
+	
+	$.ajax({
+		url:  '/'+path+'/Suspend',
+		data:{
+			SuspendType: value
+		},
+		success: function (response) {
+
+			getView();
+		}
+	});
+}
+
 
 

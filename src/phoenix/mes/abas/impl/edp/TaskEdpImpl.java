@@ -440,6 +440,26 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	}
 
 	/**
+	 * Segédosztály a gyártási feladat végrehajtási állapotának lekérdezéséhez.
+	 * @author szizo
+	 */
+	protected static final class InProgressQuery extends EdpQueryExecutor {
+
+		/**
+		 * Egyke objektum.
+		 */
+		public static final InProgressQuery EXECUTOR = new InProgressQuery();
+
+		/**
+		 * Konstruktor.
+		 */
+		private InProgressQuery() {
+			super(new String[] {WorkOrders.META.ysts.getName()});
+		}
+
+	}
+
+	/**
 	 * Segédosztály a gyártási feladathoz kapcsolódó műveletek elvégzéséhez.
 	 * @author szizo
 	 */
@@ -533,59 +553,66 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.impl.TaskDetails#loadBasicData()
+		 * @see phoenix.mes.abas.impl.TaskDetails#newBasicData()
 		 */
 		@Override
-		protected void loadBasicData() {
+		protected BasicData newBasicData() {
 			final InfoSystemExecutor.FieldValues result = BasicDataQuery.EXECUTOR.getResultFields(workSlipId, abasConnectionObject);
-			workSlipNo = result.getString(BasicDataQuery.Field.ID_NO);
-			startDate = result.getAbasDate(BasicDataQuery.Field.START_DATE);
-			productIdNo = result.getString(BasicDataQuery.Field.PRODUCT_ID_NO);
-			productSwd = result.getString(BasicDataQuery.Field.PRODUCT_SWD);
-			productDescription = result.getString(BasicDataQuery.Field.PRODUCT_DESCRIPTION);
-			productDescription2 = result.getString(BasicDataQuery.Field.PRODUCT_DESCRIPTION2);
-			usage = result.getString(BasicDataQuery.Field.USAGE);
-			setupTime = calculateGrossTime(result.getBigDecimal(BasicDataQuery.Field.SETUP_TIME),
+			final BasicData basicData = new BasicData();
+			basicData.workSlipNo = result.getString(BasicDataQuery.Field.ID_NO);
+			basicData.startDate = result.getAbasDate(BasicDataQuery.Field.START_DATE);
+			basicData.suspendedTask = result.getBoolean(BasicDataQuery.Field.SUSPENDED_TASK);
+			basicData.productIdNo = result.getString(BasicDataQuery.Field.PRODUCT_ID_NO);
+			basicData.productSwd = result.getString(BasicDataQuery.Field.PRODUCT_SWD);
+			basicData.productDescription = result.getString(BasicDataQuery.Field.PRODUCT_DESCRIPTION);
+			basicData.productDescription2 = result.getString(BasicDataQuery.Field.PRODUCT_DESCRIPTION2);
+			basicData.usage = result.getString(BasicDataQuery.Field.USAGE);
+			basicData.setupTime = calculateGrossTime(result.getBigDecimal(BasicDataQuery.Field.SETUP_TIME),
 					result.getAbasUnit(BasicDataQuery.Field.SETUP_TIME_UNIT),
 					result.getBigDecimal(BasicDataQuery.Field.SETUP_TIME_SEC));
-			setupTimeUnit = result.getString(BasicDataQuery.Field.SETUP_TIME_UNIT_NAME);
-			unitTime = calculateGrossTime(result.getBigDecimal(BasicDataQuery.Field.UNIT_TIME),
+			basicData.setupTimeUnit = result.getString(BasicDataQuery.Field.SETUP_TIME_UNIT_NAME);
+			basicData.unitTime = calculateGrossTime(result.getBigDecimal(BasicDataQuery.Field.UNIT_TIME),
 					result.getAbasUnit(BasicDataQuery.Field.UNIT_TIME_UNIT),
 					result.getBigDecimal(BasicDataQuery.Field.UNIT_TIME_SEC));
-			unitTimeUnit = result.getString(BasicDataQuery.Field.UNIT_TIME_UNIT_NAME);
-			numberOfExecutions = result.getBigDecimal(BasicDataQuery.Field.NUMBER_OF_EXECUTIONS);
-			outstandingQuantity = result.getBigDecimal(BasicDataQuery.Field.OUTSTANDING_QUANTITY);
-			stockUnit = result.getString(BasicDataQuery.Field.STOCK_UNIT_NAME);
-			calculatedProductionTime = result.getBigDecimal(BasicDataQuery.Field.CALCULATED_PRODUCTION_TIME);
+			basicData.unitTimeUnit = result.getString(BasicDataQuery.Field.UNIT_TIME_UNIT_NAME);
+			basicData.numberOfExecutions = result.getBigDecimal(BasicDataQuery.Field.NUMBER_OF_EXECUTIONS);
+			basicData.outstandingQuantity = result.getBigDecimal(BasicDataQuery.Field.OUTSTANDING_QUANTITY);
+			basicData.stockUnit = result.getString(BasicDataQuery.Field.STOCK_UNIT_NAME);
+			basicData.calculatedProductionTime = result.getBigDecimal(BasicDataQuery.Field.CALCULATED_PRODUCTION_TIME);
+			return basicData;
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.impl.TaskDetails#loadOperationData()
+		 * @see phoenix.mes.abas.impl.TaskDetails#newOperationData()
 		 */
 		@Override
-		protected void loadOperationData() {
+		protected OperationData newOperationData() {
 			final InfoSystemExecutor.FieldValues result = OperationQuery.EXECUTOR.getResultFields(workSlipId, abasConnectionObject);
-			operationIdNo = result.getString(OperationQuery.Field.ID_NO);
-			operationSwd = result.getString(OperationQuery.Field.SWD);
-			operationDescription = result.getString(OperationQuery.Field.DESCRIPTION);
-			operationReservationText = result.getString(OperationQuery.Field.ITEM_TEXT);
+			final OperationData operationData = new OperationData();
+			operationData.operationIdNo = result.getString(OperationQuery.Field.ID_NO);
+			operationData.operationSwd = result.getString(OperationQuery.Field.SWD);
+			operationData.operationDescription = result.getString(OperationQuery.Field.DESCRIPTION);
+			operationData.operationReservationText = result.getString(OperationQuery.Field.ITEM_TEXT);
+			return operationData;
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.impl.TaskDetails#loadSalesOrderData()
+		 * @see phoenix.mes.abas.impl.TaskDetails#newSalesOrderData()
 		 */
 		@Override
-		protected void loadSalesOrderData() {
+		protected SalesOrderData newSalesOrderData() {
 			final InfoSystemExecutor.FieldValues result = SalesOrderQuery.EXECUTOR.getResultFields(workSlipId, abasConnectionObject);
-			salesOrderItemText = result.getString(SalesOrderQuery.Field.ITEM_TEXT);
-			salesOrderItemText2 = result.getString(SalesOrderQuery.Field.ITEM_TEXT2);
+			final SalesOrderData salesOrderData = new SalesOrderData();
+			salesOrderData.salesOrderItemText = result.getString(SalesOrderQuery.Field.ITEM_TEXT);
+			salesOrderData.salesOrderItemText2 = result.getString(SalesOrderQuery.Field.ITEM_TEXT2);
+			return salesOrderData;
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.impl.TaskDetails#getBillOfMaterials()
+		 * @see phoenix.mes.abas.impl.TaskDetails#newBom()
 		 */
 		@Override
-		protected List<BomElement> getBillOfMaterials() {
+		protected List<BomElement> newBom() {
 			return BomQuery.EXECUTOR.getRows(workSlipId, abasConnectionObject);
 		}
 
@@ -646,6 +673,15 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	}
 
 	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task#isInProgress(phoenix.mes.abas.AbasConnection)
+	 */
+	@Override
+	public boolean isInProgress(AbasConnection<?> abasConnection) {
+		final EDPQuery edpQuery = InProgressQuery.EXECUTOR.readRecord(workSlipId, EdpConnection.getEdpSession(abasConnection));
+		return (null == edpQuery ? false : !edpQuery.getField(1).isEmpty());
+	}
+
+	/* (non-Javadoc)
 	 * @see phoenix.mes.abas.Task#schedule(phoenix.mes.abas.WorkStation, de.abas.erp.common.type.Id, phoenix.mes.abas.AbasConnection)
 	 */
 	@Override
@@ -667,6 +703,9 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	@Override
 	public void suspend(AbasConnection<?> abasConnection) {
 		TaskManager.INSTANCE.suspendTask(workSlipId, EdpConnection.getEdpSession(abasConnection));
+		if (null != details) {
+			details.clearBasicDataCache();
+		}
 	}
 
 }
