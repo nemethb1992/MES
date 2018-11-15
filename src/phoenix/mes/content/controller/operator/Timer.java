@@ -29,6 +29,12 @@ public class Timer extends HttpServlet {
 	 * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+
 		HttpSession session = request.getSession();
 		BigDecimal inSecondTime = BigDecimal.ZERO;
 		Task task = (Task)session.getAttribute("Task");
@@ -40,12 +46,12 @@ public class Timer extends HttpServlet {
 			try {
 				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, true);
 				Task.Details taskDetails = task.getDetails(abasConnection);
-				
+
 				BigDecimal rawTime = taskDetails.getCalculatedProductionTime();
-				
+
 				inSecondTime = rawTime.multiply(OutputFormatter.BIG_DECIMAL_3600);
 			} catch (LoginException e) {
-				
+
 			} finally {
 				if (null != abasConnection) {
 					try {
@@ -58,10 +64,6 @@ public class Timer extends HttpServlet {
 		response.setContentType("text/plain"); 
 		response.setCharacterEncoding("UTF-8"); 
 		response.getWriter().write(inSecondTime.toPlainString());
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 

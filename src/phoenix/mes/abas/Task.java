@@ -223,12 +223,9 @@ public interface Task extends Serializable {
 	 */
 	void suspend(AbasConnection<?> abasConnection);
 
-/*
-Feladat indítása
- Bemenet: munkamenet
- Ha van ysts időbélyeg: már fut, hiba
- ysts = G|sekundenz, yszeich = G|bzeichen
+	void postCompletionConfirmation(BigDecimal yield, BigDecimal scrapQuantity, AbasConnection<?> abasConnection);
 
+/*
 Lejelentés
  Bemenet: mennyiség, dolgozó (null is lehet), munkamenet
  Ha nincs ysts időbélyeg: nincs elindítva, hiba

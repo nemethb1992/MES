@@ -1,7 +1,7 @@
 <%@include file="/Views/Header.jsp"%>
 <script>
 	
-<%@ include file="/Views/TaskManage/Todo/Todo.js"%>
+<%@ include file="/Views/Manager/Todo/Todo.js"%>
 	
 </script>
 <div class='container-fluid h-100'>

@@ -20,7 +20,12 @@ public class WorkstationControl extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
 		
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 	    OutputFormatter outputFormatter = (OutputFormatter)(request.getSession()).getAttribute("OutputFormatter");
 		
 		String level, htmlView = "";
@@ -75,10 +80,6 @@ public class WorkstationControl extends HttpServlet {
 		response.setContentType("text/plain"); 
 		response.setCharacterEncoding("UTF-8"); 
 		response.getWriter().write(htmlView);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 	
 }

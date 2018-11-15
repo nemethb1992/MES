@@ -15,9 +15,12 @@ public class Logout extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		
  	    HttpSession session = request.getSession();
+ 	    String layout = (String)session.getAttribute("Layout");
  	    session.invalidate();
-  		getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
+ 	    
+  		getServletContext().getRequestDispatcher((layout == "manager" ? "/Manager" : "/Operator")).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

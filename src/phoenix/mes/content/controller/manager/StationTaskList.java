@@ -25,16 +25,7 @@ public class StationTaskList extends HttpServlet {
 	protected static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		HttpSession session = request.getSession();
- 	   	String username=(String)session.getAttribute("username");
- 	   	String pass=(String)session.getAttribute("pass");
- 	   	String station = (String)session.getAttribute("selectedStation");
- 	   	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
- 	    
-	    response.setContentType("text/plain"); 
-	    response.setCharacterEncoding("UTF-8"); 
-	    response.getWriter().write(StationList(username,pass,station, of, request));
+		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
 	}
 	
     protected String StationList(String username, String pass, String station, OutputFormatter of, HttpServletRequest request)
@@ -82,7 +73,16 @@ public class StationTaskList extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		
+		HttpSession session = request.getSession();
+ 	   	String username=(String)session.getAttribute("username");
+ 	   	String pass=(String)session.getAttribute("pass");
+ 	   	String station = (String)session.getAttribute("selectedStation");
+ 	   	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
+ 	    
+	    response.setContentType("text/plain"); 
+	    response.setCharacterEncoding("UTF-8"); 
+	    response.getWriter().write(StationList(username,pass,station, of, request));
 	}
 
 }

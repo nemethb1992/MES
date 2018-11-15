@@ -96,7 +96,7 @@ function ListLoader()
 			}
 			$( ".dndf1" ).empty();
 			loadingAnimation('.abas-list-holder', 'proba');
-			$.ajax({
+			$.post({
 				url:  '/'+path+'/AbasTaskList',
 				data: {
 					date: date
@@ -122,7 +122,7 @@ function workstationListLoader()
 	if(level > 1)
 	{
 		$( ".dndf2" ).empty();
-		$.ajax({
+		$.post({
 			url:  '/'+path+'/StationTaskList',
 			success: function (respond) {
 
@@ -140,7 +140,7 @@ function workstationListLoader()
 function SessionStoreStation(station)
 {
 	// Tárolja a kiválasztott állomás nevét egy session változóban.
-	$.ajax({
+	$.post({
 		url:  '/'+path+'/StoreSelectedStation',
 		data: {
 			station: station,
@@ -183,7 +183,7 @@ function WorkStationItemCollect()
 
 function FirstStationList()
 {
-	$.ajax({
+	$.post({
 		url:  '/'+path+'/WorkstationControl',
 		success: function (view) {
 //			$( ".dndf1" ).empty();
@@ -202,7 +202,7 @@ function StationItemSelect(item)
 	if(level < 3)
 		level++;
 	var value = $(item).attr("value");
-	$.ajax({
+	$.post({
 		url:  '/'+path+'/WorkstationControl',
 		data: {
 			element: value,
@@ -272,14 +272,14 @@ function MoveTaskDown(item)
 
 function MoveTask(current,targeted){
 	
-	$.ajax({
+	$.post({
 		url:  '/'+path+'/ScheduleTask',
 		data: {
 			currentId: current,
 			targetId: targeted
 		},
 		success: function () {
-			ListLoader();
+			workstationListLoader();
 		}
 	});
 }
@@ -288,7 +288,7 @@ function RemoveFromStation(item)
 {
 	var value = $(item).parents('.dnd-container').children('.workSlipId').val();
 	
-	$.ajax({
+	$.post({
 		url:  '/'+path+'/UnScheduleTask',
 		data: {
 			workSlipId: value,

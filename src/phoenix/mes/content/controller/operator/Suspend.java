@@ -24,7 +24,11 @@ public class Suspend extends HttpServlet {
        
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+  		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		// TODO split
 		String workstation = (String)session.getAttribute("operatorWorkstation");
@@ -33,7 +37,6 @@ public class Suspend extends HttpServlet {
 		// TODO
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 //		workstation="234PG!1";
-		String view = "";
 		
 		boolean testSystem = new AppBuild(request).isTest();
 		        	
@@ -64,14 +67,6 @@ public class Suspend extends HttpServlet {
 				}
 			}
 		}
-		response.setContentType("text/plain"); 
-		response.setCharacterEncoding("UTF-8"); 
-		response.getWriter().write(view); 
-		
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }

@@ -17,6 +17,7 @@ import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESTASKADMIN;
 import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESTASKDATA;
 import de.abas.erp.db.schema.workorder.WorkOrders;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
@@ -703,9 +704,25 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	@Override
 	public void suspend(AbasConnection<?> abasConnection) {
 		TaskManager.INSTANCE.suspendTask(workSlipId, EdpConnection.getEdpSession(abasConnection));
+		clearDetailsBasicDataCache();
+	}
+
+	/**
+	 * A gyártási feladat alapadatait tartalmazó gyorsítótár kiürítése.
+	 */
+	protected void clearDetailsBasicDataCache() {
 		if (null != details) {
 			details.clearBasicDataCache();
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task#postCompletionConfirmation(java.math.BigDecimal, java.math.BigDecimal, phoenix.mes.abas.AbasConnection)
+	 */
+	@Override
+	public void postCompletionConfirmation(BigDecimal yield, BigDecimal scrapQuantity, AbasConnection<?> abasConnection) {
+		// TODO
+		clearDetailsBasicDataCache();
 	}
 
 }

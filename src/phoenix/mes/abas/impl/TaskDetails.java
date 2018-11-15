@@ -25,6 +25,11 @@ import phoenix.mes.abas.Task.BomElement;
 public abstract class TaskDetails<C> implements Task.Details {
 
 	/**
+	 * Konstans, hatékonysági okból gyorsítótárazva.
+	 */
+	public static final BigDecimal BIG_DECIMAL_60 = new BigDecimal(60);
+
+	/**
 	 * Segédosztály a gyártási feladat alapadatainak tárolásához.
 	 * @author szizo
 	 */
@@ -235,7 +240,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	protected BigDecimal convertToSeconds(AbasUnit timeUnit) {
 		if (UnitTime.MIN == timeUnit) {
-			return (new BigDecimal(60));
+			return BIG_DECIMAL_60;
 		}
 		if (UnitTime.SEC == timeUnit) {
 			return BigDecimal.ONE;

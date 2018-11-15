@@ -82,6 +82,14 @@ function DisplayTime(){
 	},1000);
 }
 
+function BackToTaskStart()
+{
+//	$.ajax({ url:  '/'+path+'/OpenTask'});
+	var link = '/OpenTask';
+	console.log(path);
+	console.log(link);
+//	location.assign(path + link);
+}
 //
 //var distance = IDLE_TIMEOUT - _idleSecondsCounter;
 //var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

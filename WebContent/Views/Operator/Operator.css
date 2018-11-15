@@ -17,6 +17,16 @@
 .flex-fill {
     flex:1;
 }
+
+.enter-btn
+{
+	font-family: lightFont;
+	font-size: 22px;
+	background: white;
+    border-radius: 15px;
+    height: 150px;;
+    
+}
 #contentFrame
 {
 	height: 100%;
@@ -79,7 +89,7 @@
 	background-size: 20%;
 	background-repeat: no-repeat;
 	background-position: center;
-	    background-position-x: 42%;
+	    background-position-x: 50%;
 }
 .my-nav-btn
 {
@@ -105,29 +115,38 @@
 {
 	min-width: 100px;
     background: #f5f5f5;
-}
-#btn_lejelentes
-{
-		min-width: 150px; 
-			background-image: url(Public/icons/upload.svg);
-	background-size: 40px;
+    cursor: pointer;
 	background-repeat: no-repeat;
 	background-position: center;
+}
+.btn_navHeader-left
+{
+	min-width: 150px;
+	background-size: 40px;
     border-right: 1px solid #dedede;
+}
+.btn_navHeader-left-submit
+{
+	background-image: url(Public/icons/upload.svg);
+}
+.btn-navHeader-left-refresh-btn
+{
+    border-right: 1px solid #dedede;
+	background-image: url(Public/icons/reloadGray.svg);
+	background-size: 30px;
+	cursor: pointer;
 }
 #btn_megszakitas
 {
-	min-width: 150px; 
-			background-image: url(Public/icons/warning.svg);
-	background-size: 40px;
-	background-repeat: no-repeat;
-	background-position: center;
     border-left: 1px solid #dedede;
+	min-width: 150px; 
+	background-image: url(Public/icons/warning.svg);
+	background-size: 40px;
 }
 .submit-action-btn
 {
 	background:#f0f0f0;
-	    color: #4f4f4f;
+	color: #4f4f4f;
 }
 .btn_navHeader p
 {
@@ -254,6 +273,7 @@
 .bord-radius-nav
 {
 	border-bottom-right-radius: 25px;
+    background: #f5f5f5;
 }
 #tab3_table
 {

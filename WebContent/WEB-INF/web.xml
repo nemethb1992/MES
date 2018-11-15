@@ -5,22 +5,22 @@
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
-    <servlet-name>Dashboard</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.Dashboard</servlet-class>
+    <servlet-name>Enter</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.Enter</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Dashboard</servlet-name>
-    <url-pattern>/Dashboard</url-pattern>
+    <servlet-name>Enter</servlet-name>
+    <url-pattern>/Enter</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>DataSheet</display-name>
-    <servlet-name>DataSheet</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.operator.DataSheet</servlet-class>
+    <display-name>DataSheetLoader</display-name>
+    <servlet-name>DataSheetLoader</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.operator.DataSheetLoader</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>DataSheet</servlet-name>
-    <url-pattern>/DataSheet</url-pattern>
+    <servlet-name>DataSheetLoader</servlet-name>
+    <url-pattern>/DataSheetLoader</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -204,13 +204,23 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>StartActualTask</display-name>
-    <servlet-name>StartActualTask</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.operator.StartActualTask</servlet-class>
+    <display-name>RefreshDatas</display-name>
+    <servlet-name>RefreshDatas</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.operator.RefreshDatas</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>StartActualTask</servlet-name>
-    <url-pattern>/StartActualTask</url-pattern>
+    <servlet-name>RefreshDatas</servlet-name>
+    <url-pattern>/RefreshDatas</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DataSheet</display-name>
+    <servlet-name>DataSheet</servlet-name>
+    <servlet-class>phoenix.mes.content.navigation.DataSheet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DataSheet</servlet-name>
+    <url-pattern>/DataSheet</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

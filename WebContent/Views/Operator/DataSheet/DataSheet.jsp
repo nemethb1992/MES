@@ -1,7 +1,7 @@
 <%@include file="/Views/Header.jsp"%>
 <script>
 	
-<%@ include file="/Views/TaskView/taskViewScript.js"%>
+<%@ include file="/Views/Operator/Operator.js"%>
 
 <%-- <%task = (Task.Details)session.getAttribute("Task");%> --%>
 
@@ -25,8 +25,14 @@
 						<div class='container-fluid px-0 h-100'>
 							<div class='nav-contianer h-100'>
 
+								<div class='btn_navHeader-left btn-navHeader-left-refresh-btn refresh-click btn_navHeader h-100 float-left px-0'>
+									<p class='h6 text-center h-100'><%=outputFormatter.getWord(DictionaryEntry.REFRESH)%></p>
+									<form method='POST' class='h-100 d-none refresh-form'
+										action='${pageContext.request.contextPath}/OpenTask'>
+									</form>
+								</div>
 								<div id='btn_lejelentes'
-									class='submit-form btn_navHeader h-100 float-left light-shadow'>
+									class='btn_navHeader-left-submit btn_navHeader-left submit-form btn_navHeader h-100 float-left'>
 									<p class='h6 text-center h-100 ' id='p_lejelentes'><%=outputFormatter.getWord(DictionaryEntry.SUBMIT)%></p>
 									<div class='container-fluid my-nav-container h-100'>
 										<div class='row h-100'>
@@ -58,10 +64,11 @@
 									</form>
 								</div>
 								<div id='btn_megszakitas'
-									class='btn_navHeader h-100 float-right light-shadow'>
+									class='btn_navHeader h-100 float-right '>
 									<p class='h6 text-center h-100'><%=outputFormatter.getWord(DictionaryEntry.INTERRUPT)%></p>
 									<div class='container-fluid my-nav-container h-100'>
 										<div class='row h-100'>
+											<form method='Post' action='${pageContext.request.contextPath}/OpenTask' class='d-none interrupt-form'></form>
 											<div class='col-1 px-0'>
 												<input type='button'
 													class='w-100 h-100 my-nav-btn megszak-btn' />

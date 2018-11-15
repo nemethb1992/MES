@@ -23,12 +23,11 @@ import phoenix.mes.content.PostgreSql;
 import phoenix.mes.content.OutputFormatter.DictionaryEntry;
 
 
-public class DataSheet extends HttpServlet {
+public class DataSheetLoader extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		// TODO split
 		String workstation = (String)session.getAttribute("operatorWorkstation");
@@ -55,9 +54,12 @@ public class DataSheet extends HttpServlet {
 			try {
 				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), testSystem);
 				Task task = (Task)session.getAttribute("Task");
-				
-				if(task != null)
+				if(task == null)
 				{
+				task = AbasObjectFactory.INSTANCE.createWorkStation(workstation.split("!")[0],Integer.parseInt(workstation.split("!")[1]), abasConnection).startFirstScheduledTask(abasConnection);
+				session.setAttribute("Task", task);
+
+				}
 					Task.Details taskDetails = task.getDetails(abasConnection);				    	
 					switch (request.getParameter("tabNo")) {
 					case "1":
@@ -75,9 +77,7 @@ public class DataSheet extends HttpServlet {
 					default:
 						break;
 					}
-					task = AbasObjectFactory.INSTANCE.createWorkStation(workstation.split("!")[0],Integer.parseInt(workstation.split("!")[1]), abasConnection).getFirstScheduledTask(abasConnection);
-					session.setAttribute("Task", task);
-				}
+
 
 
 				
@@ -97,6 +97,11 @@ public class DataSheet extends HttpServlet {
 		response.setContentType("text/plain"); 
 		response.setCharacterEncoding("UTF-8"); 
 		response.getWriter().write(view); 
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
+	
 	}
 	
 	protected String getDataSheet(Task.Details taskDetails, String workstation, String wsName, OutputFormatter of, HttpServletRequest request)

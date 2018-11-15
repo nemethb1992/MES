@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import phoenix.mes.content.OutputFormatter;
 import phoenix.mes.content.OutputFormatter.DictionaryEntry;
 
-public class Dashboard extends HttpServlet {
+public class Enter extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
@@ -55,11 +55,11 @@ public class Dashboard extends HttpServlet {
 					}
 				}
 				if (null != workStation) {
-					nextPage = "/Views/TaskView/taskViewPage.jsp";
+					nextPage = "/Views/Operator/OpenTask/OpenTask.jsp";
 				}
 			}
 			else if("manager".equals(layout)) {
-				nextPage = "/Views/TaskManage/Main/Main.jsp";
+				nextPage = "/Views/Manager/Main/Main.jsp";
 			}
 			getServletContext().getRequestDispatcher(null == nextPage ? "/Views/WelcomePage/WelcomePage.jsp" : nextPage).forward(request, response);
 		} catch (Throwable t) {

@@ -27,26 +27,27 @@ public class UnScheduleTask extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		
- 	   	String username=(String)session.getAttribute("username");
- 	   	String pass=(String)session.getAttribute("pass");
-		String workSlipId = request.getParameter("workSlipId");
- 	   	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-		
-		AbasConnection<EDPSession> abasConnection = null;
-		
-    	try {        	
-    		abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), new AppBuild(request).isTest());
-        	Task task = AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(workSlipId), abasConnection);
-        	task.unSchedule(abasConnection);
-		} catch (LoginException e) {
-			
-		}
+		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
+
 	}
-	
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		HttpSession session = request.getSession();
+
+		String username=(String)session.getAttribute("username");
+		String pass=(String)session.getAttribute("pass");
+		String workSlipId = request.getParameter("workSlipId");
+		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
+
+		AbasConnection<EDPSession> abasConnection = null;
+
+		try {        	
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), new AppBuild(request).isTest());
+			Task task = AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(workSlipId), abasConnection);
+			task.unSchedule(abasConnection);
+		} catch (LoginException e) {
+
+		}
 	}
 
 }

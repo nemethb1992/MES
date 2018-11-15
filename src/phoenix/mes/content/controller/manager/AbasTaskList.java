@@ -26,7 +26,10 @@ public class AbasTaskList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String station = (String)session.getAttribute("selectedStation");
 		if(station != null)
@@ -39,10 +42,6 @@ public class AbasTaskList extends HttpServlet {
 			response.setCharacterEncoding("UTF-8"); 
 			response.getWriter().write(abasList(station, date, username, pass, of, request));
 		}
-	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 	
 	protected String abasList(String station, String date, String username, String pass, OutputFormatter of, HttpServletRequest request)
