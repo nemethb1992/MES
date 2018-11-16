@@ -25,12 +25,17 @@ public class DataSheet extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/Logout").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
+		
+		if(!(new AppBuild(null)).isStable(request)){
+			doGet(request,response);
+			return;
+		}
 		
 		String workstation = (String)session.getAttribute("operatorWorkstation");
 		

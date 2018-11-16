@@ -27,11 +27,17 @@ public class UnScheduleTask extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/Logout").forward(request, response);
 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		if(!(new AppBuild(null)).isStable(request)){
+			doGet(request,response);
+			return;
+		}
+		
 		HttpSession session = request.getSession();
 
 		String username=(String)session.getAttribute("username");

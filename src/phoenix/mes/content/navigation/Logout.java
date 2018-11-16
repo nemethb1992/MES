@@ -19,8 +19,7 @@ public class Logout extends HttpServlet {
  	    HttpSession session = request.getSession();
  	    String layout = (String)session.getAttribute("Layout");
  	    session.invalidate();
- 	    
-  		getServletContext().getRequestDispatcher((layout == "manager" ? "/Manager" : "/Operator")).forward(request, response);
+  		getServletContext().getRequestDispatcher((layout == null || "".equals(layout) ? "/" : (layout == "manager" ? "/Manager" : "/Operator"))).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

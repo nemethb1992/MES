@@ -1,6 +1,7 @@
 package phoenix.mes.content;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class AppBuild {
 	
@@ -9,12 +10,15 @@ public class AppBuild {
 	
 	public AppBuild(HttpServletRequest request)
 	{
-		String url = request.getRequestURI();
-		name = url.split("/")[1];
-		if((name.toLowerCase()).equals("mes"))
-			test = false;
-		else{
-			test = true;
+		if(request != null)
+		{
+			String url = request.getRequestURI();
+			name = url.split("/")[1];
+			if((name.toLowerCase()).equals("mes"))
+				test = false;
+			else{
+				test = true;
+			}
 		}
 	}
 	
@@ -28,4 +32,15 @@ public class AppBuild {
 		return test;
 	}
 	
+	public boolean isStable(HttpServletRequest request)
+	{
+		HttpSession session = request.getSession();
+		return (session.getAttribute("OutputFormatter") != null ? true : false);
+	}
+	
+	public void setSessionListener(HttpServletRequest request)
+	{
+		HttpSession session = request.getSession();
+		session.setAttribute("ping", true);
+	}
 }

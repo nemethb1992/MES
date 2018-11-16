@@ -14,7 +14,6 @@ import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
-import phoenix.mes.abas.impl.TaskDetails;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.OutputFormatter;
 
@@ -25,11 +24,17 @@ public class Submit extends HttpServlet {
     protected String quantity;
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-  		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
+  		getServletContext().getRequestDispatcher("/").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		if(!(new AppBuild(null)).isStable(request)){
+			response.setContentType("text/plain"); 
+			response.setCharacterEncoding("UTF-8"); 
+			response.getWriter().write("finished");
+			return;
+		}
 		BigDecimal finishedQty = new BigDecimal(request.getParameter("finishedQty"));
 		BigDecimal scrapQty = new BigDecimal(request.getParameter("scrapQty"));
 
@@ -43,8 +48,6 @@ public class Submit extends HttpServlet {
 		String pass=(String)session.getAttribute("pass");
 
 		AbasConnection<EDPSession> abasConnection = null;
-		
-		boolean reload = false;
 		
 		try {
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), new AppBuild(request).isTest());
@@ -64,6 +67,8 @@ public class Submit extends HttpServlet {
 			}
 		}catch(LoginException e)
 		{
+			session.removeAttribute("Task");
+			responseStr = "finished";
 			System.out.println(e);
 		}finally
 		{

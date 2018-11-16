@@ -24,12 +24,17 @@ public class ScheduleTask extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-  		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/Logout").forward(request, response);
 		
 		
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		if(!(new AppBuild(null)).isStable(request)){
+			doGet(request,response);
+			return;
+		}
+		
 		String targetId = request.getParameter("targetId");
 		
 		HttpSession session = request.getSession();

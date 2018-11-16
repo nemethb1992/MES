@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import de.abas.ceks.jedp.EDPSession;
-import de.abas.erp.common.type.IdImpl;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
@@ -25,11 +24,18 @@ public class RefreshDatas extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		if(!(new AppBuild(null)).isStable(request)){
+			response.setContentType("text/plain"); 
+			response.setCharacterEncoding("UTF-8"); 
+			response.getWriter().write("null"); 
+			return;
+		}
+		
 		HttpSession session = request.getSession();
 		
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
@@ -37,8 +43,6 @@ public class RefreshDatas extends HttpServlet {
 		String responseStr = "null";
 
 		AbasConnection<EDPSession> abasConnection = null;
-		
-		String workstation = (String)session.getAttribute("operatorWorkstation");
 
 		try {				
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), new AppBuild(request).isTest());

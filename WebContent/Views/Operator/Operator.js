@@ -52,8 +52,9 @@ function setTimer()
 var counter = null;
 function timerStart(time)
 {
-	if(counter == null)
-	{
+	console.log(time);
+	clearInterval(counter);
+
 		var count = time.split('.')[0];
 		counter = setInterval(timer, 1000);
 		function timer() {
@@ -61,13 +62,12 @@ function timerStart(time)
 				clearInterval(counter);
 				timeUp();
 				return;
-
 			}
 			var temp = count.toHHMMSS();
 			count = (parseInt(count) - 1).toString();
 			$('.timerPanel').html(temp);
+			console.log(temp);
 		}
-	}
 };
 
 var upcounter = null;
@@ -239,14 +239,14 @@ function RefreshTask()
 	url:  '/'+path+'/RefreshDatas',
 	success: function (response) {
 		if( response == "null")
-			{
+		{
 			$('.refresh-form').submit();
-			}else
-				{
-					getView();
-				}
+		}else
+		{
+			getView();
+		}
 	}
-});
+	});
 }
 
 function SubmitTask()
@@ -260,6 +260,8 @@ function SubmitTask()
 	{
 		return;
 	}
+	opened = false;
+	closeSubmit();
 	$.post({
 		url:  '/'+path+'/Submit',
 		data:{
@@ -270,6 +272,7 @@ function SubmitTask()
 			if(response == "null")
 			{
 				getView();
+				setTimer();
 			}else{
 				$(".refresh-form").submit();
 			}

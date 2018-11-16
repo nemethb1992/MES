@@ -46,7 +46,7 @@ public class Timer extends HttpServlet {
 			try {
 				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, true);
 				Task.Details taskDetails = task.getDetails(abasConnection);
-
+				taskDetails.clearCache();
 				BigDecimal rawTime = taskDetails.getCalculatedProductionTime();
 
 				inSecondTime = rawTime.multiply(OutputFormatter.BIG_DECIMAL_3600);

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.OutputFormatter;
 import phoenix.mes.content.OutputFormatter.DictionaryEntry;
 
@@ -16,12 +17,15 @@ public class Enter extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
+		
+		AppBuild app = new AppBuild(null);
+		app.setSessionListener(request);
 		
 		String username = request.getParameter("username");
 		String paramStation = request.getParameter("workstation");
@@ -55,7 +59,7 @@ public class Enter extends HttpServlet {
 					}
 				}
 				if (null != workStation) {
-					nextPage = "/Views/Operator/OpenTask/OpenTask.jsp";
+					nextPage = "/OpenTask";
 				}
 			}
 			else if("manager".equals(layout)) {
