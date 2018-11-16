@@ -54,26 +54,28 @@ public class DataSheetLoader extends HttpServlet {
 			try {
 				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), testSystem);
 				Task task = (Task)session.getAttribute("Task");
-				
-				if(task != null)
+
+				if(task == null)
 				{
-					Task.Details taskDetails = task.getDetails(abasConnection);				    	
-					switch (request.getParameter("tabNo")) {
-					case "1":
-						view = getDataSheet(taskDetails,workstation,wsName,of,request);
-						break;
-					case "2":
-						view = getDocuments(taskDetails, of);
-						break;
-					case "3":
-						view = getBom(taskDetails, of, request);
-						break;
-					case "4":
-						view = getItemTexts(taskDetails, of);
-						break;
-					default:
-						break;
-					}
+					doGet(request,response);
+					return;
+				}
+				Task.Details taskDetails = task.getDetails(abasConnection);				    	
+				switch (request.getParameter("tabNo")) {
+				case "1":
+					view = getDataSheet(taskDetails,workstation,wsName,of,request);
+					break;
+				case "2":
+					view = getDocuments(taskDetails, of);
+					break;
+				case "3":
+					view = getBom(taskDetails, of, request);
+					break;
+				case "4":
+					view = getItemTexts(taskDetails, of);
+					break;
+				default:
+					break;
 				}
 			}catch(LoginException e)
 			{

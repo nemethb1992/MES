@@ -38,15 +38,19 @@
 										<div class='row h-100'>
 											<div class='col-11 px-5'>
 												<h4 class='h4 mt-5 mb-2'><%=outputFormatter.getWord(DictionaryEntry.SUBMIT)%></h4>
-												<div class="input-group mb-3 w-75 h-25">
-													<input type="number" class="form-control h-100"
+												<div class="input-group mb-3 w-100 h-25">
+													<input type="number" class="form-control input-finished h-100"
 														placeholder="<%=outputFormatter.getWord(DictionaryEntry.FINISHED_QUANTITY)%>"
 														aria-label="<%=outputFormatter.getWord(DictionaryEntry.FINISHED_QUANTITY)%>"
+														aria-describedby="button-addon2">													
+													<input type="number" class="form-control input-scrap h-100"
+														placeholder="<%=outputFormatter.getWord(DictionaryEntry.SCRAP_QUANTITY)%>"
+														aria-label="<%=outputFormatter.getWord(DictionaryEntry.SCRAP_QUANTITY)%>"
 														aria-describedby="button-addon2">
 													<div class="input-group-append w-25">
 														<button
 															class="btn btn-outline-secondary w-100 submit-action-btn"
-															type="button" id="button-addon2"><%=outputFormatter.getWord(DictionaryEntry.SEND)%></button>
+															type="button" onclick='SubmitTask()' id="button-addon2"><%=outputFormatter.getWord(DictionaryEntry.SEND)%></button>
 													</div>
 												</div>
 											</div>

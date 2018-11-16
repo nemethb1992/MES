@@ -39,6 +39,7 @@ function ButtonScriptElements()
 	});
 
 	$('.refresh_btn').click(function(){
+		$( ".ts_sumTime" ).val("0:00:00");
 		setToday(".datepicker_own");
 		$(".station_label").val("");
 		SessionStoreStation();
@@ -119,13 +120,14 @@ function workstationListLoader()
 	if(level > 1)
 	{
 		$( ".dndf2" ).empty();
+		$( ".ts_sumTime" ).val("0:00:00");
 		$.post({
 			url:  '/'+path+'/StationTaskList',
 			success: function (response) {
 
 				$( ".dndf2" ).empty();
 				$( ".dndf2" ).append(response[0]);
-				$( ".ts_sumTime" ).append(response[1]);
+				$( ".ts_sumTime" ).val(response[1]);
 			},
 			error: function() {
 				$( ".dndf2" ).empty();
@@ -225,13 +227,13 @@ function PushToStation(item)
 {
 	var currentItemValue = $(item).parents('.dnd-container').children('.workSlipId').val();
 	var lastItemValue = $('.dnd-container').last().children('.workSlipId').val();
-	MoveTask(currentItemValue, lastItemValue);
+	AddTask(currentItemValue, lastItemValue);
 }
 
 function MoveTaskUp(item)
 {	
 	var task = $(item).parents('.dnd-container');
-	var targeted, current;
+	var targeted, current, next;
 	var index = task.index();
 	
 	if(index == 0)
@@ -247,8 +249,9 @@ function MoveTaskUp(item)
 		{
 			targeted = task.prev().prev().children('.workSlipId').val();
 		}
+		next = task.prev().children('.workSlipId').val();
 		current = task.children('.workSlipId').val();
-		MoveTask(current,targeted);
+		MoveTask(current,targeted,next);
 	}
 }
 
@@ -267,7 +270,22 @@ function MoveTaskDown(item)
 	MoveTask(currentItemValue,nextListItem);
 }
 
-function MoveTask(current,targeted){
+function MoveTask(current,targeted,next = null){
+	
+	$.post({
+		url:  '/'+path+'/ScheduleTask',
+		data: {
+			currentId: current,
+			targetId: targeted,
+			nextId: next
+		},
+		success: function () {
+			workstationListLoader();
+		}
+	});
+}
+
+function AddTask(current,targeted){
 	
 	$.post({
 		url:  '/'+path+'/ScheduleTask',

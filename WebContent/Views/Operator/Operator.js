@@ -247,6 +247,28 @@ function RefreshTask()
 				}
 	}
 });
-	
+}
+
+function SubmitTask()
+{
+	var finished = $(".input-finished").val();
+	var scrap = $(".input-scrap").val();
+
+	var finishedQt = (finished == "" || finished == null ? 0 : finished);
+	var scrapQt = (scrap == "" || scrap == null ? 0 : scrap);
+	if(finishedQt == 0 && scrapQt == 0)
+	{
+		return;
+	}
+	$.post({
+		url:  '/'+path+'/Submit',
+		data:{
+			finishedQty: finishedQt,
+			scrapQty: scrapQt
+		},
+		success: function () {
+			location.reload();
+		}
+	});
 }
 

@@ -38,7 +38,7 @@ public class StationTaskList extends HttpServlet {
 		int stationNo;
 		AbasConnection<EDPSession> abasConnection = null;        	
 
-		BigDecimal summedProductionTime = new BigDecimal(0);
+		BigDecimal summedProductionTime = BigDecimal.ZERO;
 
 		try {
 			String[] stationSplit = station.split("!");
@@ -50,7 +50,7 @@ public class StationTaskList extends HttpServlet {
 			for (Task task: list) {
 				final Task.Details taskDetails = task.getDetails(abasConnection);
 
-				summedProductionTime.add(taskDetails.getCalculatedProductionTime());
+				summedProductionTime = summedProductionTime.add(taskDetails.getCalculatedProductionTime());
 
 				layout.append("<div class='dnd-container "+(taskDetails.isSuspendedTask() ? "dnd-container-suspended" : "")+" "+(task.isInProgress(abasConnection) ? "dnd-container-inprogress" : "")+" col-12 px-0' value='3'><input class='d-none workSlipId' value='"+task.getWorkSlipId()+"'><div class='container px-0'><div class='row w-100 mx-auto'><div class='col-4 pr-0 py-2 dnd-input-div'>");
 				layout.append("<p>"+of.getWord(DictionaryEntry.WORKSHEET_NO)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getWorkSlipNo()+"</textarea>");
@@ -83,8 +83,6 @@ public class StationTaskList extends HttpServlet {
 
 		responseArr[0] = layout.toString();
 		responseArr[1] = of.formatTime(summedProductionTime);
-
-		System.out.println(responseArr[1]);
 		
 		return responseArr;
 	}

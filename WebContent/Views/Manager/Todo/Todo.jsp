@@ -83,10 +83,8 @@
 							</div>
 							<div class='input-icon-holderDiv h-100 col-4   sum-holderDiv'>
 								<div class='row h-100 '>
-									<input class='ts_sumTime h-100 col-6 float-right py-3'
-										value='0:00:00'> <img
-										class='icon-form col-4 h-100 float-right p-4'
-										src='${pageContext.request.contextPath}/Public/icons/sumSignGray.svg'>
+									<input class='ts_sumTime h-100 col-12 text-right float-right pr-4 py-3'
+										value='0:00:00'>
 								</div>
 							</div>
 						</div>

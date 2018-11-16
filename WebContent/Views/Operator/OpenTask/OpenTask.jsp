@@ -30,7 +30,7 @@
 		<div class='col-4 offset-4 h-100'>
 					<form method='POST' class='h-100 '
 						action='${pageContext.request.contextPath}/DataSheet'>
-						<input class='enter-btn w-100' type='submit' value='<%=outputFormatter.getWord(DictionaryEntry.TASK_START)%>' />
+						<input class='enter-btn w-100 light-shadow' type='submit' value='<%=outputFormatter.getWord(DictionaryEntry.TASK_START)%>' />
 					</form>
 		</div>
 	</div>

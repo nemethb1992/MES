@@ -37,16 +37,6 @@ public class ScheduleTask extends HttpServlet {
 		AbasConnection<EDPSession> abasConnection = null;
 		
 		IdImpl id = (null != targetId && !"".equals(targetId) ? (IdImpl) IdImpl.valueOf(targetId) : (IdImpl) IdImpl.NULLREF);
-		
-//		String asd = 
-//		if(null != targetId && !"".equals(targetId))
-//		{
-//			id = ;
-//		}
-//		else
-//		{
-//			id = ;
-//		}
 
  	   	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
  	   	String station = (String)session.getAttribute("selectedStation");
@@ -57,7 +47,11 @@ public class ScheduleTask extends HttpServlet {
     		int stationNo = Integer.parseInt(stationSplit[1]);
     		abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), new AppBuild(request).isTest());
         	Task task = AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(currentId), abasConnection);
-        	task.schedule(AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0], stationNo, abasConnection), id, abasConnection);
+    		String nextId = request.getParameter("nextId");
+        	boolean nextIsInProgress = ("".equals(nextId) || nextId == null ? false : AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(nextId), abasConnection).isInProgress(abasConnection));
+        	if(!task.isInProgress(abasConnection) && !nextIsInProgress) {
+            	task.schedule(AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0], stationNo, abasConnection), id, abasConnection);
+        	}
 		}catch(LoginException e)
     	{
     		System.out.println(e);
@@ -71,5 +65,4 @@ public class ScheduleTask extends HttpServlet {
     		{}
     	}
 	}
-
 }

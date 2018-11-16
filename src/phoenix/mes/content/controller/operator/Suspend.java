@@ -30,24 +30,15 @@ public class Suspend extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		// TODO split
-		String workstation = (String)session.getAttribute("operatorWorkstation");
-		
-		System.out.println(workstation);
-		// TODO
+
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-//		workstation="234PG!1";
-		
-		boolean testSystem = new AppBuild(request).isTest();
 		        	
-		if(workstation != null)
-		{
 			String username=(String)session.getAttribute("username");
 			String pass=(String)session.getAttribute("pass");
 			AbasConnection<EDPSession> abasConnection = null;
 			
 			try {
-				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), testSystem);
+				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), new AppBuild(request).isTest());
 				Task task = (Task)session.getAttribute("Task");
 				if(task != null)
 				{
@@ -66,7 +57,7 @@ public class Suspend extends HttpServlet {
 				} catch (Throwable t) {
 				}
 			}
-		}
+	
 	}
 
 }

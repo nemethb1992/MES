@@ -41,11 +41,12 @@ public class RefreshDatas extends HttpServlet {
 		String workstation = (String)session.getAttribute("operatorWorkstation");
 
 		try {				
-			session.removeAttribute("Task");
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), new AppBuild(request).isTest());
 			Task task = AbasObjectFactory.INSTANCE.createWorkStation(workstation.split("!")[0],Integer.parseInt(workstation.split("!")[1]), abasConnection).startFirstScheduledTask(abasConnection);
 
 			IdImpl oldId = (IdImpl) ((Task)session.getAttribute("Task")).getWorkSlipId();
+			
+			session.removeAttribute("Task");
 			
 			if(task.getWorkSlipId().equals(oldId) && task.isInProgress(abasConnection))
 			{

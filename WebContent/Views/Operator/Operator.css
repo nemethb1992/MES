@@ -20,12 +20,18 @@
 
 .enter-btn
 {
+    cursor: pointer;
 	font-family: lightFont;
 	font-size: 22px;
 	background: white;
     border-radius: 15px;
-    height: 150px;;
-    
+    height: 150px;
+    transition: 0.3s;
+}
+.enter-btn:hover
+{
+	background: #ff7676;
+    color: white;
 }
 #contentFrame
 {

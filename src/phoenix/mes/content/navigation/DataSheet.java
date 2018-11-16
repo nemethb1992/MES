@@ -31,10 +31,6 @@ public class DataSheet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		HttpSession session = request.getSession();
-
-		String username = (String)session.getAttribute("username");
-		String pass = (String)session.getAttribute("pass");
-		AbasConnection<EDPSession> abasConnection = null;
 		
 		String workstation = (String)session.getAttribute("operatorWorkstation");
 		
@@ -42,32 +38,37 @@ public class DataSheet extends HttpServlet {
 
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 		
-		if(workstation != null)
+		if(workstation == null)
+		{
+			doGet(request,response);
+			return;
+		}
+		
+		AbasConnection<EDPSession> abasConnection = null;
+		Task task = (Task)session.getAttribute("Task");
+		try {
+			String username = (String)session.getAttribute("username");
+			String pass = (String)session.getAttribute("pass");
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), testSystem);
+			if(task == null)
+			{
+				task = AbasObjectFactory.INSTANCE.createWorkStation(workstation.split("!")[0],Integer.parseInt(workstation.split("!")[1]), abasConnection).startFirstScheduledTask(abasConnection);
+				session.setAttribute("Task", task);
+			}
+			else {
+				task.getDetails(abasConnection).clearCache();
+			}
+		}catch(LoginException e)
+		{
+		}finally
 		{
 			try {
-				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), testSystem);
-				Task task = (Task)session.getAttribute("Task");
-				if(task == null)
-				{
-					task = AbasObjectFactory.INSTANCE.createWorkStation(workstation.split("!")[0],Integer.parseInt(workstation.split("!")[1]), abasConnection).startFirstScheduledTask(abasConnection);
-					session.setAttribute("Task", task);
-
+				if (null != abasConnection) {
+					abasConnection.close();
 				}
-			}catch(LoginException e)
-			{
-				System.out.println(e);
-			}finally
-			{
-				try {
-					if (null != abasConnection) {
-						abasConnection.close();
-					}
-				} catch (Throwable t) {
-				}
+			} catch (Throwable t) {
 			}
 		}
-
-
 		getServletContext().getRequestDispatcher("/Views/Operator/DataSheet/DataSheet.jsp").forward(request, response);
 
 	}
