@@ -121,10 +121,11 @@ function workstationListLoader()
 		$( ".dndf2" ).empty();
 		$.post({
 			url:  '/'+path+'/StationTaskList',
-			success: function (respond) {
+			success: function (response) {
 
 				$( ".dndf2" ).empty();
-				$( ".dndf2" ).append(respond);
+				$( ".dndf2" ).append(response[0]);
+				$( ".ts_sumTime" ).append(response[1]);
 			},
 			error: function() {
 				$( ".dndf2" ).empty();
