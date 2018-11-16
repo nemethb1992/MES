@@ -35,6 +35,8 @@ public class Submit extends HttpServlet {
 
 		HttpSession session = request.getSession();
 
+		String responseStr = "null";
+		
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 
 		String username=(String)session.getAttribute("username");
@@ -53,7 +55,7 @@ public class Submit extends HttpServlet {
 				task.postCompletionConfirmation(finishedQty, scrapQty, abasConnection);
 				if(finishedQty.intValue() >= taskDetails.getOutstandingQuantity().intValue()){
 					session.removeAttribute("Task");
-					reload = true;
+					responseStr = "finished";
 				}else {
 					taskDetails.clearCache();
 					session.setAttribute("Task", task);
@@ -72,10 +74,9 @@ public class Submit extends HttpServlet {
 			} catch (Throwable t) {
 			}
 		}
-		if(reload)
-		{
-			getServletContext().getRequestDispatcher("/OpenTask").forward(request, response);
-		}
+		response.setContentType("text/plain"); 
+		response.setCharacterEncoding("UTF-8"); 
+		response.getWriter().write(responseStr); 
 	}
 
 }

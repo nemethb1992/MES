@@ -266,8 +266,13 @@ function SubmitTask()
 			finishedQty: finishedQt,
 			scrapQty: scrapQt
 		},
-		success: function () {
-			location.reload();
+		success: function (response) {
+			if(response == "null")
+			{
+				getView();
+			}else{
+				$(".refresh-form").submit();
+			}
 		}
 	});
 }

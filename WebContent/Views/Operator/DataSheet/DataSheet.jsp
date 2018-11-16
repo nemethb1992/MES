@@ -99,7 +99,7 @@
 								<div class='col-12' id='btn_leftNav_1'>
 									<img class='d-block mx-auto mt-4 h-50'
 										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav1.svg'>
-									<p class='my-4 h5 nav-btn-1'><%=outputFormatter.getWord(DictionaryEntry.IDS)%></p>
+									<p class='my-4 h5 nav-btn-1'><%=outputFormatter.getWord(DictionaryEntry.GENERAL)%></p>
 								</div>
 							</div>
 							<div class='btn_leftNavigation big-nav-button row'>

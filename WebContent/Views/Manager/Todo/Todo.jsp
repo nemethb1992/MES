@@ -78,12 +78,12 @@
 						<div class='row h-100 mx-0'>
 							<div
 								class='input-icon-holderDiv stationName-holderDiv col-8 h-100'>
-								<input class='ts_wsNameInp station_label h-100  p-3'
+								<input disabled class='ts_wsNameInp station_label h-100  p-3'
 									value='<%=outputFormatter.getWord(DictionaryEntry.SELECT_A_WORKSTATION)%>'>
 							</div>
 							<div class='input-icon-holderDiv h-100 col-4   sum-holderDiv'>
 								<div class='row h-100 '>
-									<input class='ts_sumTime h-100 col-12 text-right float-right pr-4 py-3'
+									<input disabled class='ts_sumTime h-100 disabled col-12 text-right float-right pr-4 py-3'
 										value='0:00:00'>
 								</div>
 							</div>

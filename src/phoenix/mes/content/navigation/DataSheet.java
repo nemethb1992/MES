@@ -45,19 +45,13 @@ public class DataSheet extends HttpServlet {
 		}
 		
 		AbasConnection<EDPSession> abasConnection = null;
-		Task task = (Task)session.getAttribute("Task");
 		try {
 			String username = (String)session.getAttribute("username");
 			String pass = (String)session.getAttribute("pass");
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), testSystem);
-			if(task == null)
-			{
-				task = AbasObjectFactory.INSTANCE.createWorkStation(workstation.split("!")[0],Integer.parseInt(workstation.split("!")[1]), abasConnection).startFirstScheduledTask(abasConnection);
-				session.setAttribute("Task", task);
-			}
-			else {
-				task.getDetails(abasConnection).clearCache();
-			}
+			Task task = AbasObjectFactory.INSTANCE.createWorkStation(workstation.split("!")[0],Integer.parseInt(workstation.split("!")[1]), abasConnection).startFirstScheduledTask(abasConnection);
+			session.setAttribute("Task", task);
+
 		}catch(LoginException e)
 		{
 		}finally
@@ -67,6 +61,7 @@ public class DataSheet extends HttpServlet {
 					abasConnection.close();
 				}
 			} catch (Throwable t) {
+				
 			}
 		}
 		getServletContext().getRequestDispatcher("/Views/Operator/DataSheet/DataSheet.jsp").forward(request, response);

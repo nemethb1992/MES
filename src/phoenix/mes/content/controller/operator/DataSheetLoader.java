@@ -109,7 +109,7 @@ public class DataSheetLoader extends HttpServlet {
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+of.getWord(DictionaryEntry.WORKSTATION)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled value='"+workstation.split("!")[0]+" - "+workstation.split("!")[1]+" - "+wsName+"'>\r\n" + 
+		 		"										<input class='px-2 w-100 h6' type='text' disabled value='"+workstation.split("!")[0]+" - "+workstation.split("!")[1]+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+of.getWord(DictionaryEntry.WORKSHEET_NO)+"</p>\r\n" + 
@@ -262,7 +262,7 @@ public class DataSheetLoader extends HttpServlet {
 		String[] stationSplit = wsCode.split("!");
 		String command, field;
 		
-		switch (language.getDisplayLanguage()) {
+		switch (language.getLanguage()) {
 		case "en":
 			command = "SELECT nev_en FROM stations WHERE csoport = '"+stationSplit[0]+"' AND sorszam = "+stationSplit[1];
 			field = "nev_en";

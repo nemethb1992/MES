@@ -268,6 +268,7 @@ TM_content_layer {
 
 .stationName-holderDiv input {
 	width: 80%;
+	background: white;
 }
 .actual-time-tm
 {
@@ -327,6 +328,7 @@ TM_content_layer {
 
 .ts_sumTime {
 	width: 85px;
+	background: white;
 }
 
 .sum-holderDiv {
