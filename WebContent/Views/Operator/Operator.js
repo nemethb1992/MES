@@ -7,24 +7,6 @@ $(document).ready(function(){
 	 DisplayTime();
 });
 
-//$(document).keypress(function(e) {
-//	if(e.which == 13) {
-//		if($("#submit_input").is(":focus"))
-//			$.post({
-//				url:  '/'+path+'/Submit',
-//				data:{
-//					quantity: $('#submit_input').val()
-//				},
-//				success: function (response) {
-//					$("#submit_input").val("");
-//					DataSheet_Clear();
-//					DataSheet_Load();
-//					headerNavBtnDeafult();
-//				}
-//			});
-//	}
-//});
-
 function getView(tab = 1)
 {
 	$( "#SwitchPanel" ).empty();

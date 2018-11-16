@@ -54,12 +54,9 @@ public class DataSheetLoader extends HttpServlet {
 			try {
 				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), testSystem);
 				Task task = (Task)session.getAttribute("Task");
-				if(task == null)
+				
+				if(task != null)
 				{
-				task = AbasObjectFactory.INSTANCE.createWorkStation(workstation.split("!")[0],Integer.parseInt(workstation.split("!")[1]), abasConnection).startFirstScheduledTask(abasConnection);
-				session.setAttribute("Task", task);
-
-				}
 					Task.Details taskDetails = task.getDetails(abasConnection);				    	
 					switch (request.getParameter("tabNo")) {
 					case "1":
@@ -77,10 +74,7 @@ public class DataSheetLoader extends HttpServlet {
 					default:
 						break;
 					}
-
-
-
-				
+				}
 			}catch(LoginException e)
 			{
 				System.out.println(e);

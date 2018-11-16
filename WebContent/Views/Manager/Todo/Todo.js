@@ -39,9 +39,8 @@ function ButtonScriptElements()
 	});
 
 	$('.refresh_btn').click(function(){
-		$(".dndf1").empty();
-		$(".dndf2").empty();
 		setToday(".datepicker_own");
+		$(".station_label").val("");
 		SessionStoreStation();
 		FirstStationList();
 	});
@@ -83,8 +82,7 @@ function ListLoader()
 
 	if(level > 1)
 	{
-		if(workstationListLoader() == true)
-		{
+			workstationListLoader();
 			var date = $(".datepicker_own").val();
 			if(date != null && date != "" && date != "undefinied")
 			{
@@ -111,7 +109,6 @@ function ListLoader()
 					$( ".dndf1" ).empty();
 				}  
 			});
-		}
 	}
 }
 
@@ -186,9 +183,8 @@ function FirstStationList()
 	$.post({
 		url:  '/'+path+'/WorkstationControl',
 		success: function (view) {
-//			$( ".dndf1" ).empty();
+			$( ".dndf1" ).empty();
 			$( ".dndf2" ).empty();
-			$(".station_label").val("");
 			$( ".station-container" ).empty();
 			$( ".station-container" ).append(view);
 			level = 0;
@@ -279,7 +275,7 @@ function MoveTask(current,targeted){
 			targetId: targeted
 		},
 		success: function () {
-			workstationListLoader();
+			ListLoader();
 		}
 	});
 }
@@ -287,7 +283,6 @@ function MoveTask(current,targeted){
 function RemoveFromStation(item)
 {
 	var value = $(item).parents('.dnd-container').children('.workSlipId').val();
-	
 	$.post({
 		url:  '/'+path+'/UnScheduleTask',
 		data: {

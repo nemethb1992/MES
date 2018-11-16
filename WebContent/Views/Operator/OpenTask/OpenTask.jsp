@@ -1,7 +1,7 @@
 <%@include file="/Views/Header.jsp"%>
 <script>
 	
-<%@ include file="/Views/Operator/Operator.js"%>
+<%-- <%@ include file="/Views/Operator/Operator.js"%> --%>
 
 
 </script>

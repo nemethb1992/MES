@@ -337,12 +337,21 @@ TM_content_layer {
 	margin-left: 0px;
 }
 
-
+.computer-icon{
+	display:none;
+}
 
 .dnd-container {
-	border: 1px solid #bbbbbb;
+	border: 1px solid #8d8d8d;
 	border-top: none;
 	background: white;
+}
+.dnd-container-suspended {
+	background: #fcd769;
+}
+
+.dnd-container-inprogress {
+	background: #8fd7c9;
 }
 
 /* .dnd-container:hover { */
@@ -393,7 +402,7 @@ TM_content_layer {
 .dnd-input-div p {
 	font-size: 11px;
 	margin-bottom: 0px;
-	color: #a7a7a7;
+	color: #575757;
 }
 
 .task-panel-button {

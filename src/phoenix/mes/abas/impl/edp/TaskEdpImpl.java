@@ -476,6 +476,11 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 */
 		protected static final String[] unScheduleInputFieldNames = {InfosysOw1MESTASKADMIN.META.yas.getName(), InfosysOw1MESTASKADMIN.META.ymegszak.getName(), InfosysOw1MESTASKADMIN.META.yvisszavon.getName()};
 
+		/**
+		 * A gyártási feladat lejelentésekor beállítandó mezők nevei.
+		 */
+		protected static final String[] completionConfirmationFieldNames = {InfosysOw1MESTASKADMIN.META.yas.getName(), InfosysOw1MESTASKADMIN.META.ygutmge.getName(), InfosysOw1MESTASKADMIN.META.yverlust.getName(), InfosysOw1MESTASKADMIN.META.ylejel.getName()};
+
 		protected static final String resultFieldName = InfosysOw1MESTASKADMIN.META.yeredmeny.getName();
 
 		/**
@@ -495,11 +500,22 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 		 * @param workStation A munkaállomás.
 		 * @param precedingWorkSlipId A munkaállomáson közvetlenül a beütemezendő gyártási feladat előtt végrehajtandó munkalap azonosítója (üres (vagy üres azonosító), ha a beütemezendő gyártási feladat az első a végrehajtási listában).
-		 * @param edpSession Az EDP-munkamenet.
+		 * @param abasConnection Az Abas-kapcsolat.
 		 */
-		public void scheduleTask(String workSlipId, WorkStation workStation, String precedingWorkSlipId, EDPSession edpSession) {
+		public void scheduleTask(String workSlipId, WorkStation workStation, String precedingWorkSlipId, AbasConnection<?> abasConnection) {
+			getResultHeaderFields(scheduleInputFieldNames, new String[] {workSlipId, workStation.getWorkCenterId().toString(), Integer.toString(workStation.getNumber()), precedingWorkSlipId, " "}, abasConnection);
+		}
+
+		/**
+		 * Funkcióhívás (lekérdezés) végrehajtása.
+		 * @param inputFieldNames Az eredmény lekérdezése előtt beállítandó mezők nevei.
+		 * @param inputFieldValues Az eredmény lekérdezése előtt beállítandó mezők értékei.
+		 * @param abasConnection Az Abas-kapcsolat.
+		 * @return A lekérdezendő fejrészmezők értékei az infosystem lefuttatása után.
+		 */
+		protected FieldValues getResultHeaderFields(String[] inputFieldNames, String[] inputFieldValues, AbasConnection<?> abasConnection) {
 			try {
-				getResultHeaderFields(new EDPEditFieldList(scheduleInputFieldNames, new String[] {workSlipId, workStation.getWorkCenterId().toString(), Integer.toString(workStation.getNumber()), precedingWorkSlipId, " "}), edpSession);
+				return getResultHeaderFields(new EDPEditFieldList(inputFieldNames, inputFieldValues), EdpConnection.getEdpSession(abasConnection));
 			} catch (CantChangeFieldValException e) {
 				throw new EDPRuntimeException(e);
 			}
@@ -508,33 +524,40 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		/**
 		 * A megadott gyártási feladat beütemezésének visszavonása.
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
-		 * @param edpSession Az EDP-munkamenet.
+		 * @param abasConnection Az Abas-kapcsolat.
 		 */
-		public void unScheduleTask(String workSlipId, EDPSession edpSession) {
-			unScheduleTask(workSlipId, false, edpSession);
+		public void unScheduleTask(String workSlipId, AbasConnection<?> abasConnection) {
+			unScheduleTask(workSlipId, false, abasConnection);
 		}
 
 		/**
 		 * A megadott gyártási feladat beütemezésének visszavonása ill. felfüggesztése.
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 		 * @param suspend A gyártási feladat felfüggesztésre kerül?
-		 * @param edpSession Az EDP-munkamenet.
+		 * @param abasConnection Az Abas-kapcsolat.
 		 */
-		protected void unScheduleTask(String workSlipId, boolean suspend, EDPSession edpSession) {
-			try {
-				getResultHeaderFields(new EDPEditFieldList(unScheduleInputFieldNames, new String[] {workSlipId, suspend ? "1" : "0", " "}), edpSession);
-			} catch (CantChangeFieldValException e) {
-				throw new EDPRuntimeException(e);
-			}
+		protected void unScheduleTask(String workSlipId, boolean suspend, AbasConnection<?> abasConnection) {
+			getResultHeaderFields(unScheduleInputFieldNames, new String[] {workSlipId, suspend ? "1" : "0", " "}, abasConnection);
 		}
 
 		/**
 		 * A megadott gyártási feladat felfüggesztése.
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
-		 * @param edpSession Az EDP-munkamenet.
+		 * @param abasConnection Az Abas-kapcsolat.
 		 */
-		public void suspendTask(String workSlipId, EDPSession edpSession) {
-			unScheduleTask(workSlipId, true, edpSession);
+		public void suspendTask(String workSlipId, AbasConnection<?> abasConnection) {
+			unScheduleTask(workSlipId, true, abasConnection);
+		}
+
+		/**
+		 * A megadott gyártási feladat lejelentése.
+		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
+		 * @param yield Az elkészült jó mennyiség.
+		 * @param scrapQuantity A keletkezett selejt mennyisége.
+		 * @param abasConnection Az Abas-kapcsolat.
+		 */
+		public void postCompletionConfirmation(String workSlipId, BigDecimal yield, BigDecimal scrapQuantity, AbasConnection<?> abasConnection) {
+			getResultHeaderFields(completionConfirmationFieldNames, new String[] {workSlipId, yield.toPlainString(), scrapQuantity.toPlainString(), " "}, abasConnection);
 		}
 
 	}
@@ -687,7 +710,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 */
 	@Override
 	public void schedule(WorkStation workStation, Id precedingWorkSlipId, AbasConnection<?> abasConnection) {
-		TaskManager.INSTANCE.scheduleTask(workSlipId, workStation, precedingWorkSlipId.toString(), EdpConnection.getEdpSession(abasConnection));
+		TaskManager.INSTANCE.scheduleTask(workSlipId, workStation, precedingWorkSlipId.toString(), abasConnection);
 	}
 
 	/* (non-Javadoc)
@@ -695,7 +718,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 */
 	@Override
 	public void unSchedule(AbasConnection<?> abasConnection) {
-		TaskManager.INSTANCE.unScheduleTask(workSlipId, EdpConnection.getEdpSession(abasConnection));
+		TaskManager.INSTANCE.unScheduleTask(workSlipId, abasConnection);
 	}
 
 	/* (non-Javadoc)
@@ -703,7 +726,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 */
 	@Override
 	public void suspend(AbasConnection<?> abasConnection) {
-		TaskManager.INSTANCE.suspendTask(workSlipId, EdpConnection.getEdpSession(abasConnection));
+		TaskManager.INSTANCE.suspendTask(workSlipId, abasConnection);
 		clearDetailsBasicDataCache();
 	}
 
@@ -721,7 +744,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 */
 	@Override
 	public void postCompletionConfirmation(BigDecimal yield, BigDecimal scrapQuantity, AbasConnection<?> abasConnection) {
-		// TODO
+		TaskManager.INSTANCE.postCompletionConfirmation(workSlipId, yield, scrapQuantity, abasConnection);
 		clearDetailsBasicDataCache();
 	}
 

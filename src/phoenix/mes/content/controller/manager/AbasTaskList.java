@@ -59,8 +59,8 @@ public class AbasTaskList extends HttpServlet {
 				final Task.Details taskDetails = task.getDetails(abasConnection);
 				String startDate = taskDetails.getStartDate().toString();
 				String startDateFormated = startDate.substring(0,4) + "." + startDate.substring(4,6) + "." + startDate.substring(6,8) + ".";
-
-				layout.append("<div class='dnd-container col-12 px-0' value='3' style='max-height: 80px;'><input class='d-none workSlipId' value='"+task.getWorkSlipId()+"'><div class='container-fluid h-100'><div class='row h-100'><div class='col abas-listitem-data-col px-0'>");
+				
+				layout.append("<div class='dnd-container "+(taskDetails.isSuspendedTask() ? "dnd-container-suspended" : "")+" col-12 px-0' value='3'><input class='d-none workSlipId' value='"+task.getWorkSlipId()+"'><div class='container-fluid h-100'><div class='row h-100'><div class='col abas-listitem-data-col px-0'>");
 				layout.append("<div class='container-fluid'><div class='row'><div class='col my-col-1 article-col px-1 pl-2 py-2 dnd-input-div'><p>");
 				layout.append(of.getWord(DictionaryEntry.WORKSHEET_NO));
 				layout.append("</p><textarea disabled class='dnd-input dnd-in1'>");

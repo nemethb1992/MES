@@ -223,6 +223,12 @@ public interface Task extends Serializable {
 	 */
 	void suspend(AbasConnection<?> abasConnection);
 
+	/**
+	 * A gyártási feladat lejelentése.
+	 * @param yield Az elkészült jó mennyiség.
+	 * @param scrapQuantity A keletkezett selejt mennyisége.
+	 * @param abasConnection Az Abas-kapcsolat.
+	 */
 	void postCompletionConfirmation(BigDecimal yield, BigDecimal scrapQuantity, AbasConnection<?> abasConnection);
 
 /*

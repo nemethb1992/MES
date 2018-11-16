@@ -77,13 +77,11 @@
 					<div class='ws-list-head sort-list-head sort-list col-7 px-0 h-100'>
 						<div class='row h-100 mx-0'>
 							<div
-								class='input-icon-holderDiv stationName-holderDiv col-9 h-100'>
-								<img class='h-100 float-left p-3'
-									src='${pageContext.request.contextPath}/Public/icons/computerSignGray.svg'>
+								class='input-icon-holderDiv stationName-holderDiv col-8 h-100'>
 								<input class='ts_wsNameInp station_label h-100  p-3'
 									value='<%=outputFormatter.getWord(DictionaryEntry.SELECT_A_WORKSTATION)%>'>
 							</div>
-							<div class='input-icon-holderDiv h-100 col-3   sum-holderDiv'>
+							<div class='input-icon-holderDiv h-100 col-4   sum-holderDiv'>
 								<div class='row h-100 '>
 									<input class='ts_sumTime h-100 col-6 float-right py-3'
 										value='0:00:00'> <img

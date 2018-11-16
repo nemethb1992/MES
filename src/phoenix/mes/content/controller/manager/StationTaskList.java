@@ -42,15 +42,16 @@ public class StationTaskList extends HttpServlet {
 
           	for (Task task: list) {
           		final Task.Details taskDetails = task.getDetails(abasConnection);
-
           		
-          		layout.append("<div class='dnd-container col-12 px-0' value='3'><input class='d-none workSlipId' value='"+task.getWorkSlipId()+"'><div class='container px-0'><div class='row w-100 mx-auto'><div class='col-4 pr-0 py-2 dnd-input-div'>");
+          		
+          		layout.append("<div class='dnd-container "+(taskDetails.isSuspendedTask() ? "dnd-container-suspended" : "")+" "+(task.isInProgress(abasConnection) ? "dnd-container-inprogress" : "")+" col-12 px-0' value='3'><input class='d-none workSlipId' value='"+task.getWorkSlipId()+"'><div class='container px-0'><div class='row w-100 mx-auto'><div class='col-4 pr-0 py-2 dnd-input-div'>");
           		layout.append("<p>"+of.getWord(DictionaryEntry.WORKSHEET_NO)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getWorkSlipNo()+"</textarea>");
           		layout.append("<p>"+of.getWord(DictionaryEntry.ARTICLE)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductIdNo()+"</textarea>");
           		layout.append("<p>"+of.getWord(DictionaryEntry.SEARCH_WORD)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductSwd()+"</textarea>");
           		layout.append("</div><div class='col-6 pr-0 py-2 dnd-input-div'>");
           		layout.append("<p>"+of.getWord(DictionaryEntry.PLACE_OF_USE)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getUsage()+"</textarea>");
           		layout.append("<p>"+of.getWord(DictionaryEntry.NAME)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductDescription()+"</textarea>");
+          		layout.append("<p>"+of.getWord(DictionaryEntry.CALCULATED_PROD_TIME)+"</p><textarea disabled class='dnd-input dnd-in1'>"+of.formatTime(taskDetails.getCalculatedProductionTime())+"</textarea>");
           		layout.append("</div><div class='col-2 dnd-input-div px-0'><div class='row w-100 mx-auto h-100 d-flex'><div class='col-12 px-0'>");
           		layout.append("<input class='h-100 w-100 task-panel-button mini-button up-task-button' onclick='MoveTaskUp(this)' type='button'></div><div class='col-12 my-1 px-0'>");
           		layout.append("<input class='h-100 w-100 task-panel-button mini-button remove-task-button' onclick='RemoveFromStation(this)' type='button'></div><div class='col-12 px-0'>");

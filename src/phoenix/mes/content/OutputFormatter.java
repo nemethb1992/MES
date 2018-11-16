@@ -3,10 +3,13 @@ package phoenix.mes.content;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+
+import de.abas.erp.common.type.AbasDate;
 
 public class OutputFormatter {
 
@@ -15,13 +18,13 @@ public class OutputFormatter {
 		USER_NAME("Felhasználónév","Benutzername","Username"),
 		PASSWORD("Jelszó","Kennwort","Password"),
 		NEXT("Tovább","Weiter","Next"),
-		LOGIN("Bejelentkezés","Login","Login"),
+		LOGIN("Bejelentkezés","Anmeldung","Login"),
 		WORKSTATION("Munkaállomás","Arbeitsplatz","Workstation"),
 		WORKSTATION_NAME("Munkaállomás neve","Arbeitsplatz Name","Workstation name"),
 		WORKSHEET_NO("Munkalapszám","Arbeitsschein-Nr.","Worksheet No."),
 		ARTICLE("Cikkszám","Artikel-Nr.","Article"),
 		SEARCH_WORD("Keresőszó","Suchwort","Search word"),
-		NAME("Megnevezés","Bezeichung","Name"),
+		NAME("Megnevezés","Bezeichnung","Name"),
 		PLACE_OF_USE("Felhasználás","Verwendung","Place of use"),
 		REMAINING_TIME("Hátralévő idő","Restlaufzeit","Remaining time"),
 		TASK_START("Feladat indítása","Arbeit starten","Task start"),
@@ -30,7 +33,7 @@ public class OutputFormatter {
 		INTERRUPT("Megszakítás","Abbrechen","Interrupt"),
 		SUBMIT("Lejelentés","Rückmeldung","Submit"),
 		EXECUTION_NO("Végrehajtás száma","Implementierungsnummer","Implementation number"),
-		GET_STARTED("Tervezett kezdés","Geplanter Start","Planned start"),
+		GET_STARTED("Tervezett kezdés","geplanter Start","Planned start"),
 		CALCULATED_PROD_TIME("Gyártási idő","Produktionszeit","Production time"),
 		OPEN_QUANTITY("Nyitott mennyiség","offene Menge","Open quantity"),
 		FINISHED_QUANTITY("Kész mennyiség","Fertigmenge","Finished quantity"),
@@ -66,7 +69,7 @@ public class OutputFormatter {
 		QUANTITY("Mennyiség","Menge","Quantity"),
 		SAVE("Mentés","Speichern","Save"),
 		AREA("Terület","Bereich","Area"),
-		GROUP("Csoport","Gruppe","Group"),
+		GROUP("Gépsoport","Maschinengruppe","Group"),
 		STATION("Állomás:","Arbeitsplatz:","Station:"),
 		TASKS("Feladatok","Aufgaben","Tasks"),
 		TASK("Feladat","Aufgabe","Task"),
@@ -202,6 +205,24 @@ public class OutputFormatter {
 	public String formatTime(BigDecimal timeInHours) {
 		return formatTime(timeInHours.multiply(BIG_DECIMAL_3600).intValue());
 	}
+	
+	public String formatDate(AbasDate date) {
+		SimpleDateFormat sdf;
+		
+		switch (locale.getLanguage()) {
+		case "de":
+			sdf= new SimpleDateFormat("dd-mm-yyyyy");
+			return sdf.format(date);
+		case "en":
+			sdf= new SimpleDateFormat("dd-mm-yyyyy");
+			return sdf.format(date);
+		case "hu":
+		default:
+			sdf= new SimpleDateFormat("yyyyy-mm-dd");
+			return sdf.format(date);
+		}
+	}
+	
 
 	public String formatTime(int timeInSeconds) {
 	    int hours = timeInSeconds / 3600;

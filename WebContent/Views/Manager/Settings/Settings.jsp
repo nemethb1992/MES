@@ -51,7 +51,7 @@
 				<div class='row'>
 					<div class='col'>
 						<div class="form-group">
-							<label for="exampleFormControlSelect1">Profit Center</label> 
+							<label for="exampleFormControlSelect1">ProfitCenter</label> 
 							<select class="form-control" id="exampleFormControlSelect1">
 								<%
 									for (Map<String, String> map : (List<Map<String, String>>) request.getAttribute("pcList")) {
