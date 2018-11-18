@@ -181,11 +181,10 @@ html {
 	z-index: 9999;
 	position: absolute;
 	background: white;
-	float: left;
 	min-width: 35px;
 	height: 35px;
-	bottom: 20px;
-	left: 20px;
+    bottom: 10px;
+    right: 10px;
 	/*border: 1px solid gray;*/
 	border-radius: 10px;
 	box-shadow: 0px 0px 10px #979797;
@@ -193,9 +192,9 @@ html {
 
 
 .lang_icon {
-	width: 25px;
-	height: 25px;
-	margin: 5px 0 0 5px;
+	width: 100%;
+	height: 100%;
+	padding: 5px;
 }
 
 .lang_bub {
@@ -208,7 +207,11 @@ html {
 }
 .actual-time
 {
-	color: #9f9f9f;
+	z-index: 2;
+	color: #606060;
+    position: absolute;
+    right: 70px;
+    bottom: 5px;
 }
 .lang_bub:hover {
 	background: #f3f3f3;
@@ -221,10 +224,13 @@ html {
 
 .countDownSpan
 {
-	position: absolute;
-		bottom:0px;
-		right: 10px;
-		width: 110px;
+	display: none;
+	z-index: 2;
+    position: absolute;
+    bottom: 15px;
+    right: 300px;
+    width: 110px;
+    height: 20px;
 }
 
 .logged-name {

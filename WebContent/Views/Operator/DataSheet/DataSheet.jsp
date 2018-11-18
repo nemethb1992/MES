@@ -8,10 +8,9 @@
 </script>
 <div class='container-fluid h-100'>
 
-	<p class='actual-time actual-time-tv fixed-bottom my-0 py-4 h5'></p>
-	<div class='row'>
-		<div class='col-12 h-100'>
-			<div class='container-fluid px-0'>
+	<p class='actual-time h5'></p>
+		
+		
 				<div class='row station-upper-row timer-holder'>
 					<div id='timerContainer'
 						class='big-nav-button col-3 col-md-3 col-lg-2 col-xl-2'
@@ -21,19 +20,19 @@
 						<p class='timerPanel h2 text-center pt-3'></p>
 					</div>
 					<div
-						class='button-container light-shadow col-9 col-md-9 col-lg-10 col-xl-10 px-0'>
+						class='button-container light-shadow col-10 col-md-10 col-lg-10 col-xl-10 px-0'>
 						<div class='container-fluid px-0 h-100'>
 							<div class='nav-contianer h-100'>
 
 								<div class='btn_navHeader-left btn-navHeader-left-refresh-btn refresh-click btn_navHeader h-100 float-left px-0'>
-									<p class='h6 text-center h-100'><%=outputFormatter.getWord(DictionaryEntry.REFRESH)%></p>
+									<p class='h6 text-center'><%=outputFormatter.getWord(DictionaryEntry.REFRESH)%></p>
 									<form method='POST' class='h-100 d-none refresh-form'
 										action='${pageContext.request.contextPath}/OpenTask'>
 									</form>
 								</div>
 								<div id='btn_lejelentes'
 									class='btn_navHeader-left-submit btn_navHeader-left submit-form btn_navHeader h-100 float-left'>
-									<p class='h6 text-center h-100 ' id='p_lejelentes'><%=outputFormatter.getWord(DictionaryEntry.SUBMIT)%></p>
+									<p class='h6 text-center ' id='p_lejelentes'><%=outputFormatter.getWord(DictionaryEntry.SUBMIT)%></p>
 									<div class='container-fluid my-nav-container h-100'>
 										<div class='row h-100'>
 											<div class='col-11 px-5'>
@@ -69,7 +68,7 @@
 								</div>
 								<div id='btn_megszakitas'
 									class='btn_navHeader h-100 float-right '>
-									<p class='h6 text-center h-100'><%=outputFormatter.getWord(DictionaryEntry.INTERRUPT)%></p>
+									<p class='h6 text-center'><%=outputFormatter.getWord(DictionaryEntry.INTERRUPT)%></p>
 									<div class='container-fluid my-nav-container h-100'>
 										<div class='row h-100'>
 											<form method='Post' action='${pageContext.request.contextPath}/OpenTask' class='d-none interrupt-form'></form>
@@ -89,36 +88,35 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			
 			<div class='row task-details-row'>
-				<div id=''
-					class='left-buttons col-3 col-md-3 col-lg-2 col-xl-2'>
-					<div class='row'>
+				<div class='left-buttons col-2 col-md-2 col-lg-2 col-xl-2'>
+					<div class='row h-100'>
 						<div class='col light-shadow bord-radius-nav'>
-							<div class='btn_leftNavigation big-nav-button row'>
+							<div class='btn_leftNavigation big-nav-button h-25 row'>
 								<div class='col-12' id='btn_leftNav_1'>
-									<img class='d-block mx-auto mt-4 h-50'
+									<img class='d-block mx-auto mt-5 h-50'
 										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav1.svg'>
 									<p class='my-4 h5 nav-btn-1'><%=outputFormatter.getWord(DictionaryEntry.GENERAL)%></p>
 								</div>
 							</div>
-							<div class='btn_leftNavigation big-nav-button row'>
+							<div class='btn_leftNavigation big-nav-button h-25 row'>
 								<div class='col-12' id='btn_leftNav_2'>
-									<img class='d-block mx-auto mt-4 h-50'
+									<img class='d-block mx-auto mt-5 h-50'
 										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav2.svg'>
 									<p class='my-4 h5 nav-btn-2'><%=outputFormatter.getWord(DictionaryEntry.DOCUMENTS)%></p>
 								</div>
 							</div>
-							<div class='btn_leftNavigation big-nav-button row'>
+							<div class='btn_leftNavigation big-nav-button h-25 row'>
 								<div class='col-12' id='btn_leftNav_3'>
-									<img class='d-block mx-auto mt-4 h-50'
+									<img class='d-block mx-auto mt-5 h-50'
 										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav3.svg'>
 									<p class='my-4 h5 nav-btn-3'><%=outputFormatter.getWord(DictionaryEntry.BILL_OF_MATERIAL)%></p>
 								</div>
 							</div>
-							<div class='btn_leftNavigation bord-radius-nav big-nav-button row'>
+							<div class='btn_leftNavigation bord-radius-nav h-25 big-nav-button row'>
 								<div class='col-12 ' id='btn_leftNav_4'>
-									<img class='d-block mx-auto mt-4 h-50'
+									<img class='d-block mx-auto mt-5 h-50'
 										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav4.svg'>
 									<p class='my-4 h5 nav-btn-4'><%=outputFormatter.getWord(DictionaryEntry.ORDER_INFO)%></p>
 								</div>
@@ -127,7 +125,7 @@
 					</div>
 				</div>
 				<div
-					class='operator-switch-grid col-9 col-md-9 col-lg-10 col-xl-10 px-0'>
+					class='operator-switch-grid col-9 col-md-9 col-lg-10 col-xl-10 px-0 p-3'>
 					<div id='SwitchPanel' class='rightCont'>
 
 
@@ -135,7 +133,7 @@
 					</div>
 				</div>
 			</div>
+			
+			
 		</div>
-	</div>
-	</div>
 <%@include file="/Views/Footer.jsp"%>

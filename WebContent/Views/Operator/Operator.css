@@ -17,6 +17,15 @@
 .flex-fill {
     flex:1;
 }
+.task-details-row
+{
+	height: 82% !important;
+}
+.station-upper-row
+{
+	max-height: 180px;
+	height: 18% !important;
+}
 
 .enter-btn
 {
@@ -124,6 +133,7 @@
     cursor: pointer;
 	background-repeat: no-repeat;
 	background-position: center;
+	position: relative;
 }
 .btn_navHeader-left
 {
@@ -156,7 +166,9 @@
 }
 .btn_navHeader p
 {
-	padding-top: 140px;
+	position: absolute;
+	bottom: 10px;
+	width: 100%;
 }
 
 .inputContainer p
@@ -184,6 +196,10 @@
 	font-family: lightFont;
 	resize: none;
 	
+}
+.my-lower-row
+{
+	height: 85% !important;
 }
 .big-nav-button
 {
@@ -226,13 +242,18 @@
 	height: 100%;
 	display: none;
 }
+.my-white-container
+{
+	
+	background: white;
+	border-radius: 5px;
+}
 #SwitchPanel
 {
 	display: block;
 }
 .data-row
 {
-	background: white;
 	border-radius: 15px;
 }
 #documentContainer
@@ -278,6 +299,7 @@
 }
 .bord-radius-nav
 {
+	    max-height: 920px;
 	border-bottom-right-radius: 25px;
     background: #f5f5f5;
 }
@@ -311,10 +333,7 @@
 	display: none;
 	background: white;
 }
-.actual-time-tv
-{
-	margin-left: 75px;
-}
+
 .my-nav-container p,.my-nav-container h4
 {
 	color: #4f4f4f;

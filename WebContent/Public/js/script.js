@@ -2,6 +2,7 @@ var path = location.pathname.split('/')[1];
 
 function ApplicationCountDown()
 {
+	$(".countDownSpan").show();
 	var IDLE_TIMEOUT = 1800; //seconds
 	var _idleSecondsTimer = null;
 	var _idleSecondsCounter = 0;
@@ -27,7 +28,7 @@ function ApplicationCountDown()
 	    	 panel.innerHTML = (IDLE_TIMEOUT - _idleSecondsCounter) + "";
 	    if (_idleSecondsCounter >= IDLE_TIMEOUT) {
 	        window.clearInterval(_idleSecondsTimer);
-	        document.location.href = "Home";
+	        BackToTaskStart();
 	    }
 	}
 }
@@ -84,10 +85,12 @@ function DisplayTime(){
 
 function BackToTaskStart()
 {
+
+    document.location.href = "Logout";
 //	$.ajax({ url:  '/'+path+'/OpenTask'});
-	var link = '/OpenTask';
-	console.log(path);
-	console.log(link);
+//	var link = '/OpenTask';
+//	console.log(path);
+//	console.log(link);
 //	location.assign(path + link);
 }
 //

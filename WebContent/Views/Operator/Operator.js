@@ -104,6 +104,7 @@ function TabControlEventHolder()
 {
 	
 	$('.refresh-click').click(function(){
+//		BackToTaskStart();
 		RefreshTask();
 	});
 	$('.btn_leftNavigation').click(function(){
@@ -228,7 +229,6 @@ function InterruptTask()
 		},
 		success: function () {
 			$('.interrupt-form').submit();
-//			getView();
 		}
 	});
 }

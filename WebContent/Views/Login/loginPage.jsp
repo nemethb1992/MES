@@ -8,11 +8,10 @@ if(info == null)
 <%@include file="/Views/Header.jsp"%>
 <script><%@ include file="/Views/Login/loginScript.js"%></script>
 <script src="${pageContext.request.contextPath}/Public/js/script.js"></script>
-<div class="container">
+<div class="container login-container">
 	<div class="login-row row w-100 align-self-center">
 		<!--        		<div id='loginFrame' class='mycontainer'> -->
-		<div id='loginLeftSide'
-			class='col-md-1 col-lg-5 d-none d-md-block h-100'>
+		<div id='loginLeftSide' class='col-md-1 col-lg-5 d-none d-md-block h-100'>
 
 			<div id='loginPicture' class='m-3 d-md-none d-lg-block'></div>
 

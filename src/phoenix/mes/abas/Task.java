@@ -231,9 +231,4 @@ public interface Task extends Serializable {
 	 */
 	void postCompletionConfirmation(BigDecimal yield, BigDecimal scrapQuantity, AbasConnection<?> abasConnection);
 
-/*
-Lejelentés
- Bemenet: mennyiség, dolgozó (null is lehet), munkamenet
- Ha nincs ysts időbélyeg: nincs elindítva, hiba
-*/
 }

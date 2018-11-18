@@ -74,6 +74,6 @@ $(document).ready(function () {
 	</div>
 </div>
 <div class='countDownSpan'>
-<p class='w-50 float-left'>Time:</p>
+<p class='w-50 my-0 float-left'>Time:</p>
 <span class='w-50 float-right' id="counterSpan"></span>
 </div>

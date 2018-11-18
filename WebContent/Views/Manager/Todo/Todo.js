@@ -41,7 +41,7 @@ function ButtonScriptElements()
 	$('.refresh_btn').click(function(){
 		$( ".ts_sumTime" ).val("0:00:00");
 		setToday(".datepicker_own");
-		$(".station_label").val("");
+		$(".station_label").val("<%=outputFormatter.getWord(DictionaryEntry.SELECT_A_WORKSTATION)%>");
 		SessionStoreStation();
 		FirstStationList();
 	});

@@ -5,7 +5,7 @@
 	
 </script>
 <div class='container-fluid h-100'>
-	<p class='actual-time w-25 actual-time-tm fixed-top my-0 py-4 h5'></p>
+	<p class='actual-time h5'></p>
 	<div class='row'>
 		<div class='col-12  px-0 topNav'>
 			<div class='h-100 w-100 mx-0 row'>
@@ -37,7 +37,7 @@
 		<!-- 				<input class='btn_logout' type='submit' value='' /> -->
 		<!-- 			</form> -->
 	</div>
-	<div class='row h-75'>
+	<div class='row my-lower-row'>
 		<div class=' col-2 px-0'>
 			<div class='container-fluid'>
 				<div class='row light-shadow'>

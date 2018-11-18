@@ -104,8 +104,7 @@ public class DataSheetLoader extends HttpServlet {
 	{
 
 		// TODO StringBuilder
-		 String view = "				<div class='container-fluid px-0'>\r\n" + 
-		 		"							<div class='row data-row mx-3 mt-3'>\r\n" + 
+		 String view = "				<div class='container-fluid my-white-container'><div class='row data-row mx-3 mt-0'>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+of.getWord(DictionaryEntry.WORKSTATION)+"</p>\r\n" + 
@@ -131,7 +130,7 @@ public class DataSheetLoader extends HttpServlet {
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"							</div>\r\n" + 
-		 		"							<div class='row data-row m-3'>\r\n" + 
+		 		"							<div class='row data-row mx-3 my-0'>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+of.getWord(DictionaryEntry.ARTICLE)+"</p>\r\n" + 
@@ -157,7 +156,7 @@ public class DataSheetLoader extends HttpServlet {
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"							</div>\r\n" + 
-		 		"							<div class='row data-row m-3'>\r\n" + 
+		 		"							<div class='row data-row mx-3 my-0'>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3 px-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+of.getWord(DictionaryEntry.OPERATION_NUMEBER)+"</p>\r\n" + 
@@ -192,8 +191,7 @@ public class DataSheetLoader extends HttpServlet {
 		 		"										<textarea class='px-2 w-100 h6'  disabled >"+taskDetails.getOperationReservationText()+"</textarea>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
-		 		"							</div>\r\n" + 
-		 		"						</div>";
+		 		"							</div></div>";
 		 
 		return view;
 	}
@@ -240,7 +238,7 @@ public class DataSheetLoader extends HttpServlet {
 	protected String getItemTexts(Task.Details taskDetails, OutputFormatter of)
 	{
 		String view ="					<div class='conteiner-fluid h-100'>\r\n" + 
-				"							<div class='row h-100 m-3'>\r\n" + 
+				"							<div class='row h-100 m-0'>\r\n" + 
 				"								<div class='mx-3 col col-textarea light-shadow'>\r\n" + 
 				"									<p class='h5 p-2'>"+of.getWord(DictionaryEntry.INFO_ARTICLE)+" 1</p>\r\n" + 
 				"									<textarea disabled class='p-3 BigTextInput'>"+taskDetails.getSalesOrderItemText()+"</textarea>\r\n" + 
