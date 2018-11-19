@@ -52,7 +52,7 @@ function setTimer()
 var counter = null;
 function timerStart(time)
 {
-	console.log(time);
+	time = "10";
 	clearInterval(counter);
 
 		var count = time.split('.')[0];
@@ -66,7 +66,6 @@ function timerStart(time)
 			var temp = count.toHHMMSS();
 			count = (parseInt(count) - 1).toString();
 			$('.timerPanel').html(temp);
-			console.log(temp);
 		}
 };
 
@@ -75,7 +74,15 @@ function timeUp()
 {
 	if(upcounter == null)
 	{
-		$("#timerContainer").css("background", "#dc3545");
+		$("#timerContainer").css({
+			"background": "#dc3545",
+			"background-image" : "url(Public/icons/timer.svg)",
+			"background-size" : "20%",
+			"background-repeat" : "no-repeat",
+			"background-position" : "center",
+			"background-position-y" : "25%"
+		});
+
 		var count = "0";
 		upcounter = setInterval(uptimer, 1000);
 		function uptimer() {
@@ -104,7 +111,6 @@ function TabControlEventHolder()
 {
 	
 	$('.refresh-click').click(function(){
-//		BackToTaskStart();
 		RefreshTask();
 	});
 	$('.btn_leftNavigation').click(function(){
@@ -256,6 +262,7 @@ function SubmitTask()
 
 	var finishedQt = (finished == "" || finished == null ? 0 : finished);
 	var scrapQt = (scrap == "" || scrap == null ? 0 : scrap);
+	console.log(finishedQt + "   " + scrapQt);
 	if(finishedQt == 0 && scrapQt == 0)
 	{
 		return;

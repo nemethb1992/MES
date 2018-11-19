@@ -212,6 +212,7 @@ html {
     position: absolute;
     right: 70px;
     bottom: 5px;
+    font-size: large;
 }
 .lang_bub:hover {
 	background: #f3f3f3;
@@ -224,6 +225,7 @@ html {
 
 .countDownSpan
 {
+	    font-size: large;
 	display: none;
 	z-index: 2;
     position: absolute;
@@ -231,6 +233,10 @@ html {
     right: 300px;
     width: 110px;
     height: 20px;
+}
+.countDownSpan p, .countDownSpan span
+{
+	color: #606060; 
 }
 
 .logged-name {

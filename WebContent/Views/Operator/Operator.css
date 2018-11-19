@@ -19,12 +19,13 @@
 }
 .task-details-row
 {
-	height: 82% !important;
+	height: 83% !important;
 }
 .station-upper-row
 {
 	max-height: 180px;
-	height: 18% !important;
+	min-height: 135px;
+	height: 17% !important;
 }
 
 .enter-btn
@@ -70,8 +71,13 @@
      height: 140px;
 }
 #timerContainer
-{
+{	
 	background: #00e68a;
+	background-image: url(Public/icons/timer.svg);
+	background-size: 20%;
+	background-repeat: no-repeat;
+	background-position: center;
+    background-position-y: 25%;
 	transition: background 1s;
 	z-index: 9;
 }
@@ -95,6 +101,9 @@
 }
 .timerPanel
 {
+		position: absolute;
+	bottom: 10px;
+	width: 100%;
 	color: white;
 }
 
@@ -109,10 +118,46 @@
 .my-nav-btn
 {
 	background-color: white;
-	background-image: url(Public/icons/cross-mark.svg);
 	background-size: 28px;
 	background-repeat: no-repeat;
 	background-position: center;
+}
+.nav-label
+{
+position: absolute;
+    bottom: 0px;
+    width: 100%;
+    color: #888888;
+    font-size: large;
+}
+
+#btn_leftNav_1, #btn_leftNav_2, #btn_leftNav_3, #btn_leftNav_4{
+    background-size: 20%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-position-x: 50%;
+    background-position-y: 40%;
+}
+#btn_leftNav_1{
+	
+	background-image: url(Public/icons/TV_btn_nav1.svg);
+}
+#btn_leftNav_2{
+	background-image: url(Public/icons/TV_btn_nav2.svg);
+}
+#btn_leftNav_3{
+	background-image: url(Public/icons/TV_btn_nav3.svg);
+}
+#btn_leftNav_4{
+	background-image: url(Public/icons/TV_btn_nav4.svg);
+}
+.lejelent-btn
+{
+	background-image: url(Public/icons/left-arrow-operator.svg);
+}
+.megszak-btn
+{
+	background-image: url(Public/icons/right-arrow-operator.svg);
 }
 #btn_lejelentes .my-nav-btn
 {
@@ -242,11 +287,11 @@
 	height: 100%;
 	display: none;
 }
+
 .my-white-container
 {
-	
 	background: white;
-	border-radius: 5px;
+	border-radius: 10px;
 }
 #SwitchPanel
 {
@@ -296,6 +341,7 @@
 {
 	border-radius: 15px;
     background: white; 
+    margin-bottom: 35px;
 }
 .bord-radius-nav
 {

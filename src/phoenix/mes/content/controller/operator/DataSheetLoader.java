@@ -104,8 +104,8 @@ public class DataSheetLoader extends HttpServlet {
 	{
 
 		// TODO StringBuilder
-		 String view = "				<div class='container-fluid my-white-container'><div class='row data-row mx-3 mt-0'>\r\n" + 
-		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
+		 String view = "				<div class='container-fluid my-white-container px-0'><div class='row data-row mx-3 mt-0'>\r\n" + 
+		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+of.getWord(DictionaryEntry.WORKSTATION)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 h6' type='text' disabled value='"+workstation.split("!")[0]+" - "+workstation.split("!")[1]+"'>\r\n" + 
@@ -119,7 +119,7 @@ public class DataSheetLoader extends HttpServlet {
 		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getStartDate()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
-		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
+		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+of.getWord(DictionaryEntry.WORKSTATION_NAME)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+wsName+"'>\r\n" +
@@ -131,7 +131,7 @@ public class DataSheetLoader extends HttpServlet {
 		 		"								</div>\r\n" + 
 		 		"							</div>\r\n" + 
 		 		"							<div class='row data-row mx-3 my-0'>\r\n" + 
-		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
+		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+of.getWord(DictionaryEntry.ARTICLE)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
@@ -145,7 +145,7 @@ public class DataSheetLoader extends HttpServlet {
 		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity())+" "+taskDetails.getStockUnit()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
-		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 p-3'>\r\n" + 
+		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p>"+of.getWord(DictionaryEntry.NAME)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getProductDescription()+"'>\r\n" + 

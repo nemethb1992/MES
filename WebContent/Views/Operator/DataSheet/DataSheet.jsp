@@ -12,12 +12,10 @@
 		
 		
 				<div class='row station-upper-row timer-holder'>
-					<div id='timerContainer'
-						class='big-nav-button col-3 col-md-3 col-lg-2 col-xl-2'
-						class='col-3 col-md-3 col-lg-2 col-xl-2 px-0'>
-						<img class='d-block mx-auto mt-3'
-							src='${pageContext.request.contextPath}/Public/icons/timer.svg'>
-						<p class='timerPanel h2 text-center pt-3'></p>
+					<div id='timerContainer' class='big-nav-button col-3 col-md-3 col-lg-2 col-xl-2 px-0' >
+<!-- 						<img class='d-block mx-auto mt-3' -->
+<%-- 							src='${pageContext.request.contextPath}/Public/icons/timer.svg'> --%>
+						<p class='timerPanel h2 text-center'></p>
 					</div>
 					<div
 						class='button-container light-shadow col-10 col-md-10 col-lg-10 col-xl-10 px-0'>
@@ -88,37 +86,28 @@
 						</div>
 					</div>
 				</div>
-			
 			<div class='row task-details-row'>
 				<div class='left-buttons col-2 col-md-2 col-lg-2 col-xl-2'>
 					<div class='row h-100'>
 						<div class='col light-shadow bord-radius-nav'>
 							<div class='btn_leftNavigation big-nav-button h-25 row'>
-								<div class='col-12' id='btn_leftNav_1'>
-									<img class='d-block mx-auto mt-5 h-50'
-										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav1.svg'>
-									<p class='my-4 h5 nav-btn-1'><%=outputFormatter.getWord(DictionaryEntry.GENERAL)%></p>
+								<div class='col-12 px-0' id='btn_leftNav_1'>
+									<p class='nav-btn-1 nav-label'><%=outputFormatter.getWord(DictionaryEntry.GENERAL)%></p>
 								</div>
 							</div>
 							<div class='btn_leftNavigation big-nav-button h-25 row'>
-								<div class='col-12' id='btn_leftNav_2'>
-									<img class='d-block mx-auto mt-5 h-50'
-										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav2.svg'>
-									<p class='my-4 h5 nav-btn-2'><%=outputFormatter.getWord(DictionaryEntry.DOCUMENTS)%></p>
+								<div class='col-12 px-0' id='btn_leftNav_2'>
+									<p class='nav-btn-2 nav-label'><%=outputFormatter.getWord(DictionaryEntry.DOCUMENTS)%></p>
 								</div>
 							</div>
 							<div class='btn_leftNavigation big-nav-button h-25 row'>
-								<div class='col-12' id='btn_leftNav_3'>
-									<img class='d-block mx-auto mt-5 h-50'
-										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav3.svg'>
-									<p class='my-4 h5 nav-btn-3'><%=outputFormatter.getWord(DictionaryEntry.BILL_OF_MATERIAL)%></p>
+								<div class='col-12 px-0' id='btn_leftNav_3'>
+									<p class='nav-btn-3 nav-label'><%=outputFormatter.getWord(DictionaryEntry.BILL_OF_MATERIAL)%></p>
 								</div>
 							</div>
 							<div class='btn_leftNavigation bord-radius-nav h-25 big-nav-button row'>
-								<div class='col-12 ' id='btn_leftNav_4'>
-									<img class='d-block mx-auto mt-5 h-50'
-										src='${pageContext.request.contextPath}/Public/icons/TV_btn_nav4.svg'>
-									<p class='my-4 h5 nav-btn-4'><%=outputFormatter.getWord(DictionaryEntry.ORDER_INFO)%></p>
+								<div class='col-12 px-0' id='btn_leftNav_4'>
+									<p class='nav-btn-4 nav-label'><%=outputFormatter.getWord(DictionaryEntry.ORDER_INFO)%></p>
 								</div>
 							</div>
 						</div>
