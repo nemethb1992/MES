@@ -4,6 +4,7 @@ $(document).ready(function(){
 	TabControlEventHolder();
 	ApplicationCountDown();
 	getView();
+	setTimer();
 	 DisplayTime();
 });
 
@@ -22,7 +23,7 @@ function getView(tab = 1)
 			$( "#SwitchPanel" ).append(response);
 			if(response != "")
 			{
-				setTimer();
+//				setTimer();
 			}
 			else
 			{
@@ -50,45 +51,66 @@ function setTimer()
 }
 
 var counter = null;
+var upcounter = null;
+var way = true;
+var isInRun = false;
 function timerStart(time)
 {
+	way = true;
+	$("#timerContainer").css({
+		"background": "#00e68a",
+		"background-image" : "url(Public/icons/timer.svg)",
+		"background-size" : "20%",
+		"background-repeat" : "no-repeat",
+		"background-position" : "center",
+		"background-position-y" : "25%"
+	});
 	time = "10";
+	var original = time.split('.')[0];
+	var count = time.split('.')[0];
 	clearInterval(counter);
+	counter = setInterval(timer, 1000);
+	function timer() {
 
-		var count = time.split('.')[0];
-		counter = setInterval(timer, 1000);
-		function timer() {
-			if (parseInt(count) <= 0) {
-				clearInterval(counter);
-				timeUp();
-				return;
-			}
-			var temp = count.toHHMMSS();
-			count = (parseInt(count) - 1).toString();
-			$('.timerPanel').html(temp);
+		if (parseInt(count) <= 0) {
+			way = false;
+			clearInterval(counter);
+			timeUp();
+			return;
+		}				
+		if(way == true)
+		{
+				var temp = count.toHHMMSS();
+				count = (parseInt(count) - 1).toString();
+				$('.timerPanel').html(temp);
 		}
+	}
 };
 
-var upcounter = null;
 function timeUp()
 {
-	if(upcounter == null)
-	{
-		$("#timerContainer").css({
-			"background": "#dc3545",
-			"background-image" : "url(Public/icons/timer.svg)",
-			"background-size" : "20%",
-			"background-repeat" : "no-repeat",
-			"background-position" : "center",
-			"background-position-y" : "25%"
-		});
+	way = false;
+	$("#timerContainer").css({
+		"background": "#dc3545",
+		"background-image" : "url(Public/icons/timer.svg)",
+		"background-size" : "20%",
+		"background-repeat" : "no-repeat",
+		"background-position" : "center",
+		"background-position-y" : "25%"
+	});
 
-		var count = "0";
-		upcounter = setInterval(uptimer, 1000);
-		function uptimer() {
+	var count = "0";
+	clearInterval(upcounter);
+	upcounter = setInterval(uptimer, 1000);
+	function uptimer() {
+		if(way == false)
+		{
 			var temp = count.toHHMMSS();
 			count = (parseInt(count) + 1).toString();
 			$('.timerPanel').html(temp);
+		}
+		else{
+			clearInterval(upcounter);
 		}
 	}
 }

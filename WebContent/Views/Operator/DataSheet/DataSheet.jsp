@@ -15,7 +15,7 @@
 					<div id='timerContainer' class='big-nav-button col-3 col-md-3 col-lg-2 col-xl-2 px-0' >
 <!-- 						<img class='d-block mx-auto mt-3' -->
 <%-- 							src='${pageContext.request.contextPath}/Public/icons/timer.svg'> --%>
-						<p class='timerPanel h2 text-center'></p>
+						<p class='timerPanel h2 text-center upcounter'></p>
 					</div>
 					<div
 						class='button-container light-shadow col-10 col-md-10 col-lg-10 col-xl-10 px-0'>
