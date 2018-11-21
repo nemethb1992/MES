@@ -43,6 +43,11 @@
 	background: #ff7676;
     color: white;
 }
+.big-nav-button
+{
+	height: 20%;
+	
+}
 #contentFrame
 {
 	height: 100%;
@@ -113,14 +118,7 @@
 	background-size: 20%;
 	background-repeat: no-repeat;
 	background-position: center;
-	    background-position-x: 50%;
-}
-.my-nav-btn
-{
-	background-color: white;
-	background-size: 28px;
-	background-repeat: no-repeat;
-	background-position: center;
+	    background-position-x: 55%;
 }
 .nav-label
 {
@@ -131,49 +129,46 @@ position: absolute;
     font-size: large;
 }
 
-#btn_leftNav_1, #btn_leftNav_2, #btn_leftNav_3, #btn_leftNav_4{
+.navigation-button{
     background-size: 20%;
     background-repeat: no-repeat;
     background-position: center;
     background-position-x: 50%;
     background-position-y: 40%;
 }
-#btn_leftNav_1{
-	
+#navigation-button-1{
 	background-image: url(Public/icons/TV_btn_nav1.svg);
 }
-#btn_leftNav_2{
+#navigation-button-2{
 	background-image: url(Public/icons/TV_btn_nav2.svg);
 }
-#btn_leftNav_3{
+#navigation-button-3{
 	background-image: url(Public/icons/TV_btn_nav3.svg);
 }
-#btn_leftNav_4{
+#navigation-button-4{
 	background-image: url(Public/icons/TV_btn_nav4.svg);
 }
-.lejelent-btn
+.close-nav-btn
 {
+	background-color: white;
+	background-size: 28px;
+	background-repeat: no-repeat;
+	background-position: center;
 	background-image: url(Public/icons/left-arrow-operator.svg);
+	transition: 0,3s;
 }
-.megszak-btn
+.close-nav-btn:hover
 {
-	background-image: url(Public/icons/right-arrow-operator.svg);
-}
-#btn_lejelentes .my-nav-btn
-{
-    border-left: 1px solid #dedede;
+	background-color:  whitesmoke;
 }
 #btn_megszakitas .my-nav-btn
 {
     border-right: 1px solid #dedede;
 }
-.my-nav-btn:hover
-{
-}
 
 .btn_navHeader
 {
-	min-width: 100px;
+	min-width: 80px;
     background: #f5f5f5;
     cursor: pointer;
 	background-repeat: no-repeat;
@@ -182,12 +177,27 @@ position: absolute;
 }
 .btn_navHeader-left
 {
-	min-width: 150px;
-	background-size: 40px;
+	width: 10%;
+	min-width: 110px;
+	background-size: 30px;
     border-right: 1px solid #dedede;
+}
+.nav-language-box
+{
+	border-radius: 0 0 0 5px;
+    background: #f5f5f5;
+    border-left: 1px solid #dedede;
+    border-bottom: 1px solid #dedede;
+}
+.personal-data-display
+{
+	min-width: 200px;
+    background: #f5f5f5;
+    border-left: 1px solid #dedede;
 }
 .btn_navHeader-left-submit
 {
+	min-width: 15%;
 	background-image: url(Public/icons/upload.svg);
 }
 .btn-navHeader-left-refresh-btn
@@ -199,10 +209,21 @@ position: absolute;
 }
 #btn_megszakitas
 {
-    border-left: 1px solid #dedede;
-	min-width: 150px; 
 	background-image: url(Public/icons/warning.svg);
-	background-size: 40px;
+}
+.personal-data-display .form-group
+{
+	margin-bottom: 0;
+	height: 20%
+}
+.personal-form-control:disabled
+{
+	background: transparent;
+	border: none;
+}
+.personal-form-name
+{
+	font-family: mediumFont;
 }
 .submit-action-btn
 {
@@ -240,7 +261,6 @@ position: absolute;
 	text-align: left;
 	font-family: lightFont;
 	resize: none;
-	
 }
 .my-lower-row
 {
@@ -257,10 +277,14 @@ position: absolute;
     text-align: center;
     cursor: pointer;
 }
+.btn_navHeader-left:hover
+{
+	background-color: #e6e6e6;
+}
 .btn_leftNavigation:hover
 {
 	background-color: #e6e6e6;
-	border-left: 3px solid #dc3545;
+/* 	border-right: 3px solid #dc3545; */
 	transition: 0.2s
 }
 .btn_leftNavigation img
@@ -292,6 +316,7 @@ position: absolute;
 {
 	background: white;
 	border-radius: 10px;
+	height: 100%;
 }
 #SwitchPanel
 {
@@ -398,4 +423,8 @@ position: absolute;
 {
 	font-size: 16px;
 	background: white;
+}
+.task-data-value, .task-data-label
+{
+	font-size: 14px;
 }

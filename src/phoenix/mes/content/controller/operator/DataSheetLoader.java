@@ -104,96 +104,96 @@ public class DataSheetLoader extends HttpServlet {
 	{
 
 		// TODO StringBuilder
-		 String view = "				<div class='container-fluid my-white-container px-0'><div class='row data-row mx-3 mt-0'>\r\n" + 
+		 String layout = "				<div class='container-fluid my-white-container h-100 px-0'><div class='row data-row mx-3 mt-0'>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+of.getWord(DictionaryEntry.WORKSTATION)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled value='"+workstation.split("!")[0]+" - "+workstation.split("!")[1]+"'>\r\n" + 
+		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.WORKSTATION)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled value='"+workstation.split("!")[0]+" - "+workstation.split("!")[1]+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+of.getWord(DictionaryEntry.WORKSHEET_NO)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getWorkSlipNo()+"'>\r\n" + 
+		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.WORKSHEET_NO)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getWorkSlipNo()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+of.getWord(DictionaryEntry.GET_STARTED)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getStartDate()+"'>\r\n" + 
+		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.GET_STARTED)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getStartDate()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+of.getWord(DictionaryEntry.WORKSTATION_NAME)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+wsName+"'>\r\n" +
+		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.WORKSTATION_NAME)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+wsName+"'>\r\n" +
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+of.getWord(DictionaryEntry.PLACE_OF_USE)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getUsage()+"'>\r\n" + 
+		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.PLACE_OF_USE)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getUsage()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"							</div>\r\n" + 
 		 		"							<div class='row data-row mx-3 my-0'>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+of.getWord(DictionaryEntry.ARTICLE)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
+		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.ARTICLE)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+of.getWord(DictionaryEntry.SEARCH_WORD)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getProductSwd()+"'>\r\n" + 
+		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.SEARCH_WORD)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getProductSwd()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+of.getWord(DictionaryEntry.OPEN_QUANTITY)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity())+" "+taskDetails.getStockUnit()+"'>\r\n" + 
+		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.OPEN_QUANTITY)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity())+" "+taskDetails.getStockUnit()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+of.getWord(DictionaryEntry.NAME)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getProductDescription()+"'>\r\n" + 
+		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.NAME)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getProductDescription()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+of.getWord(DictionaryEntry.NAME)+" 2</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getProductDescription2()+"'>\r\n" + 
+		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.NAME)+" 2</p>\r\n" + 
+		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getProductDescription2()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"							</div>\r\n" + 
 		 		"							<div class='row data-row mx-3 my-0'>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3 px-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+of.getWord(DictionaryEntry.OPERATION_NUMEBER)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getOperationIdNo()+"'>\r\n" + 
+		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.OPERATION_NUMEBER)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getOperationIdNo()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+of.getWord(DictionaryEntry.SEARCH_WORD)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getOperationSwd()+"'>\r\n" + 
+		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.SEARCH_WORD)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getOperationSwd()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+of.getWord(DictionaryEntry.NAME)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+taskDetails.getOperationDescription()+"'>\r\n" + 
+		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.NAME)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getOperationDescription()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3 px-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+of.getWord(DictionaryEntry.EXECUTION_NO)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getNumberOfExecutions())+"'>\r\n" + 
+		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.EXECUTION_NO)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getNumberOfExecutions())+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+of.getWord(DictionaryEntry.SETTING_TIME)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text' disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getSetupTime())+" "+taskDetails.getSetupTimeUnit()+"'>\r\n" + 
+		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.SETTING_TIME)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getSetupTime())+" "+taskDetails.getSetupTimeUnit()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p>"+of.getWord(DictionaryEntry.TIME_FOR_PCS)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 h6' type='text disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getUnitTime())+" "+taskDetails.getUnitTimeUnit()+"'>\r\n" + 
-		 		"									</div>\r\n" + 
-		 		"								</div>\r\n" + 
-		 		"								<div class='col-12  px-3'>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='mb-0'>"+of.getWord(DictionaryEntry.PRODUCTION_INFO)+"</p>\r\n" + 
-		 		"										<textarea class='px-2 w-100 h6'  disabled >"+taskDetails.getOperationReservationText()+"</textarea>\r\n" + 
+		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.TIME_FOR_PCS)+"</p>\r\n" + 
+		 		"										<input class='px-2 w-100 task-data-value' type='text disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getUnitTime())+" "+taskDetails.getUnitTimeUnit()+"'>\r\n" + 
+		 		"									</div>" + 
+		 		"								</div>" + 
+		 		"								<div class='col-12 px-3'>" + 
+		 		"									<div class='inputContainer'>" + 
+		 		"										<p class='mb-0 task-data-label'>"+of.getWord(DictionaryEntry.PRODUCTION_INFO)+"</p>\r\n" + 
+		 		"										<textarea class='px-2 w-100 task-data-value'  disabled >"+taskDetails.getOperationReservationText()+"</textarea>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
 		 		"							</div></div>";
 		 
-		return view;
+		return layout;
 	}
 	
 	protected String getDocuments(Task.Details data, OutputFormatter of)
@@ -253,7 +253,7 @@ public class DataSheetLoader extends HttpServlet {
 		return view;
 	}
 	
-	protected String getWorkStationName(String wsCode, OutputFormatter of, boolean testSystem) throws SQLException
+	public String getWorkStationName(String wsCode, OutputFormatter of, boolean testSystem) throws SQLException
 	{
 		PostgreSql postgreSql = new PostgreSql(testSystem); 
 		Locale language = of.getLocale();

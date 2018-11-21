@@ -3,29 +3,30 @@ var path = location.pathname.split('/')[1];
 function ApplicationCountDown()
 {
 	$(".countDownSpan").show();
-	var IDLE_TIMEOUT = 1800; //seconds
+	var IDLE_TIMEOUT = 1300; //seconds
 	var _idleSecondsTimer = null;
 	var _idleSecondsCounter = 0;
 
-	document.onclick = function() {
-	    _idleSecondsCounter = 0;
-	};
-
-	document.onmousemove = function() {
-	    _idleSecondsCounter = 0;
-	};
-
-	document.onkeypress = function() {
-	    _idleSecondsCounter = 0;
-	};
+//	document.onclick = function() {
+//	    _idleSecondsCounter = 0;
+//	};
+//
+//	document.onmousemove = function() {
+//	    _idleSecondsCounter = 0;
+//	};
+//
+//	document.onkeypress = function() {
+//	    _idleSecondsCounter = 0;
+//	};
 
 	_idleSecondsTimer = window.setInterval(CheckIdleTime, 1000);
 
 	function CheckIdleTime() {
 	     _idleSecondsCounter++;
-	     var panel = document.getElementById("counterSpan");
-	     if (panel)
-	    	 panel.innerHTML = (IDLE_TIMEOUT - _idleSecondsCounter) + "";
+//	     var panel = document.getElementById("counterSpan");
+	    	 var timeLeft = IDLE_TIMEOUT - _idleSecondsCounter;
+	     	showProgress(IDLE_TIMEOUT,timeLeft,".app-time-progress");
+//	    	 panel.innerHTML = timeLeft + "";
 	    if (_idleSecondsCounter >= IDLE_TIMEOUT) {
 	        window.clearInterval(_idleSecondsTimer);
 	        BackToTaskStart();
@@ -33,6 +34,11 @@ function ApplicationCountDown()
 	}
 }
 
+function showProgress(max, actual, progressbar)
+{
+	var percent = (actual / max) * 1000;
+ 	$(progressbar).css("width", percent/10 + "%").attr("aria-valuenow", percent);
+}
 
 var getUrlParameter = function getUrlParameter(sParam) {
 	var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -60,38 +66,42 @@ function loadingAnimationStop(name)
 }
 
 
-function DisplayTime(){
-
+function setDateNow(element)
+{
 	setInterval(function(){
 
 	    var currentTime = new Date();
 	    var year = currentTime.getFullYear();
 	    var month = currentTime.getMonth() + 1;
 	    var day = currentTime.getDate();
+	    var currentDate = year +"."+ month +"."+ day + ".";
+	    $(element).val(currentDate);
+
+	},1000);
+}
+
+function setTimeNow(element){
+
+	setInterval(function(){
+
+	    var currentTime = new Date();
 	    var hours = currentTime.getHours();
 	    var minutes = currentTime.getMinutes();
 	    var seconds = currentTime.getSeconds();
-	    // Add leading zeros
+	    
 	    minutes = (minutes < 10 ? "0" : "") + minutes;
 	    seconds = (seconds < 10 ? "0" : "") + seconds;
 	    hours = (hours < 10 ? "0" : "") + hours;
 
-	    // Compose the string for display
-	    var currentTimeString = year +"."+ month +"."+ day + " -   " + hours + ":" + minutes + ":" + seconds;
-	    $(".actual-time").text(currentTimeString);
+	    var currentTimeString = hours + ":" + minutes + ":" + seconds;
+	    $(element).val(currentTimeString);
 
 	},1000);
 }
 
 function BackToTaskStart()
 {
-
     document.location.href = "Logout";
-//	$.ajax({ url:  '/'+path+'/OpenTask'});
-//	var link = '/OpenTask';
-//	console.log(path);
-//	console.log(link);
-//	location.assign(path + link);
 }
 //
 //var distance = IDLE_TIMEOUT - _idleSecondsCounter;

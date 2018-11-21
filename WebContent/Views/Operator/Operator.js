@@ -1,15 +1,19 @@
 var path = location.pathname.split('/')[1];
+var layoutState = 1;
 
 $(document).ready(function(){
 	TabControlEventHolder();
 	ApplicationCountDown();
 	getView();
 	setTimer();
-	 DisplayTime();
+	setDateNow('.personal-date');
+	setTimeNow('.personal-time');
+	
 });
 
 function getView(tab = 1)
 {
+	closeNavButtons();
 	$( "#SwitchPanel" ).empty();
 	loadingAnimation("#SwitchPanel", "operator");
 	$.post({
@@ -32,6 +36,18 @@ function getView(tab = 1)
 
 		}
 	});
+}
+function NavigationButtonClick(item)
+{
+	$(item).show();
+	var tab = $(item).attr("id").split('-')[2];
+	if(tab != layoutState){
+		layoutState = tab;
+		getView(tab);
+	}
+	else{
+		return;
+	}
 }
 
 function setPageDefault()
@@ -137,25 +153,25 @@ function TabControlEventHolder()
 	});
 	$('.btn_leftNavigation').click(function(){
 		$('.btn_leftNavigation').css({'background-color':'', 'color':'','border':''});
-		$(this).css({'background-color':'#f5f5f5','background-size':'24%','border-left':'3px solid #ff6666'});
+		$(this).css({'background-color':'#e6e6e6','background-size':'24%','border-right':'3px solid #ff6666'});
 	});
 	$('#navigationContainer').click(closeNavButtons());
 
 	$('#btn_leftNav_1').click(function(){
-		closeNavButtons();
-		getView(1);
+		layoutState = 1;
+		getView(layoutState);
 	})
 	$('#btn_leftNav_2').click(function(){
-		closeNavButtons();
-		getView(2);
+		layoutState = 2;
+		getView(layoutState);
 	})
 	$('#btn_leftNav_3').click(function(){
-		closeNavButtons();
-		getView(3);
+		layoutState = 3;
+		getView(layoutState);
 	})
 	$('#btn_leftNav_4').click(function(){
-		closeNavButtons();
-		getView(4);
+		layoutState = 4;
+		getView(layoutState);
 	})
 
 	$('#btn_lejelentes').click(function(){
@@ -189,6 +205,8 @@ var opened = true;
 
 function openInterupt(item)
 {
+	$(".btn_navHeader-left").hide();
+	$(item).show();
 	closeNavButtons();
 	$(item).css({'width':'50%'});
 	$('#btn_megszakitas p').css({'display':'none'});
@@ -198,6 +216,8 @@ function openInterupt(item)
 
 function openSubmit(item)
 {
+	$(".btn_navHeader-left").hide();
+	$(item).show();
 	closeNavButtons();
 	$(item).css({'width':'50%'});
 	$('#btn_lejelentes p').css({'display':'none'});
@@ -207,6 +227,7 @@ function openSubmit(item)
 
 function closeSubmit()
 {
+	$(".btn_navHeader-left").show();
 	$('#btn_lejelentes').css({'background':'', 'color':'','width':'','border':''});
 	$('#btn_lejelentes .my-nav-container').css({'display':'none'});
 	$('#btn_lejelentes p').css({'display':''});
@@ -214,6 +235,7 @@ function closeSubmit()
 
 function closeInterupt()
 {
+	$(".btn_navHeader-left").show();
 	$('#btn_megszakitas').css({'background':'', 'color':'','width':'','border':''});
 	$('#btn_megszakitas .my-nav-container').css({'display':'none'});
 	$('#btn_megszakitas p').css({'display':''});
@@ -271,7 +293,7 @@ function RefreshTask()
 			$('.refresh-form').submit();
 		}else
 		{
-			getView();
+			getView(layoutState);
 		}
 	}
 	});
