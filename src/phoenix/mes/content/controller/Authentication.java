@@ -16,21 +16,20 @@ import phoenix.mes.content.OutputFormatter.DictionaryEntry;
 
 public class Authentication {
 	
-    public static void login(String user, String pwd, HttpServletRequest request) throws NamingException, LoginException {
+    public static void bind(String user, String pwd, HttpServletRequest request) throws NamingException, LoginException {
 
     	HttpSession session = request.getSession();
     	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
         if (user.isEmpty() || pwd.isEmpty()) {
         	throw new AuthenticationException(of.getWord(DictionaryEntry.LOGIN_FAILED_EMPTY_CREDENTIALS));
         }
-
-    	AbasConnection<EDPSession> abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user, pwd, of.getLocale(), new AppBuild(request).isTest());
-    	if(abasConnection.getConnectionObject().isConnected())
-    	{
-        	session.setAttribute("displayname", abasConnection.getUserDisplayName()); 
-    	}
+        AbasConnection<EDPSession> abasConnection = null;
     	try {
-    		
+        	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user, pwd, of.getLocale(), new AppBuild(request).isTest());
+        	if(abasConnection.getConnectionObject().isConnected())
+        	{
+            	session.setAttribute("displayname", abasConnection.getUserDisplayName()); 
+        	}
     	} catch (Throwable t) {
     		
     	}finally

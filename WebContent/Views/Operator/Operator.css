@@ -205,6 +205,10 @@ position: absolute;
 {
 	background-image: url(Public/icons/warning.svg);
 }
+.opentask-row
+{
+	height: 10%;
+}
 .personal-data-display .form-group
 {
 	margin-bottom: 0;
@@ -247,10 +251,6 @@ position: absolute;
 	text-align: left;
 	font-family: lightFont;
 	resize: none;
-}
-.my-lower-row
-{
-	height: 85% !important;
 }
 .big-nav-button
 {
@@ -337,7 +337,7 @@ position: absolute;
 }
 .BigTextInput
 {
-	font-size:x-large;
+	font-size: medium;
 	width: 100%;
 	height: 91%;
     text-align: left;

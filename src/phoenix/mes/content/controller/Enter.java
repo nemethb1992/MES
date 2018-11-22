@@ -33,12 +33,12 @@ public class Enter extends HttpServlet {
 		String paramStation = request.getParameter("workstation");
 		String pass = request.getParameter("password");
 		String layout = (String)session.getAttribute("Layout");
-		
-		session.setAttribute("pass",pass);
+
 		session.setAttribute("username",username);
+		session.setAttribute("pass",pass);
 		
 		try {
-			Authentication.login(username, pass, request);
+			Authentication.bind(username, pass, request);
 			String nextPage = null;
 			if("operator".equals(layout)) {
 				String workStation = (String)session.getAttribute("operatorWorkstation");

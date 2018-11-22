@@ -3,7 +3,6 @@ package phoenix.mes.content.controller.operator;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -50,13 +49,13 @@ public class Timer extends HttpServlet {
 				BigDecimal rawTime = taskDetails.getCalculatedProductionTime();
 
 				inSecondTime = rawTime.multiply(OutputFormatter.BIG_DECIMAL_3600);
-			} catch (LoginException e) {
+			} catch (Throwable t) {
 
 			} finally {
 				if (null != abasConnection) {
 					try {
 						abasConnection.close();
-					} catch (Throwable t) {
+					} catch (Throwable t2) {
 					}
 				}
 			}

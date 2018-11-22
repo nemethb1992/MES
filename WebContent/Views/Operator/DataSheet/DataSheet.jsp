@@ -19,12 +19,9 @@
 			<%-- 							src='${pageContext.request.contextPath}/Public/icons/timer.svg'> --%>
 			<p class='timerPanel h2 text-center upcounter'></p>
 		</div>
-		<div
-			class='button-container h-100 light-shadow col-10 col-md-10 col-lg-10 col-xl-10 px-0'>
+		<div class='button-container h-100 light-shadow col-10 col-md-10 col-lg-10 col-xl-10 px-0'>
 			<div class='container-fluid px-0 h-100'>
 				<div class='nav-contianer h-100'>
-
-
 					<div id='btn_lejelentes'
 						class='btn_navHeader-left-submit btn_navHeader-left submit-form btn_navHeader h-100 float-left'>
 						<p class='h6 text-center nav-label' id='p_lejelentes'><%=outputFormatter.getWord(DictionaryEntry.SUBMIT)%></p>
@@ -88,15 +85,17 @@
 							<input class='btn_logout-gray' type='submit' value='' />
 						</form>
 					</div>
-					
+
 					<div class='personal-data-display h-100 float-right px-0'>
 						<div class='form-group'>
-							<input class='form-control personal-form-control personal-form-name' disabled
+							<input
+								class='form-control personal-form-control personal-form-name'
+								disabled
 								value='<%=(String) session.getAttribute("displayname")%>'>
 						</div>
 						<div class='form-group'>
 							<input class='form-control personal-form-control' disabled
-								value='<%=((String) session.getAttribute("operatorWorkstation")).replace('!','-')%>'>
+								value='<%=((String) session.getAttribute("operatorWorkstation")).replace('!', '-')%>'>
 						</div>
 						<div class='form-group personal-secondery'>
 							<input class='form-control personal-form-control personal-date'
@@ -159,7 +158,5 @@
 			<div id='SwitchPanel' class='rightCont'></div>
 		</div>
 	</div>
-
-
 </div>
 <%@include file="/Views/Footer.jsp"%>

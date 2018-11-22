@@ -6,13 +6,11 @@
 </script>
 <div class='container-fluid h-100'>
 	<p class='actual-time h5'></p>
-	<div class='row'>
+	<div class='row manager-top-nav'>
 		<div class='col-12  px-0 topNav'>
 			<div class='h-100 w-100 mx-0 row'>
 				<div class='h-100 col col-nav-logo float-left'>
-					<img
-						src="${pageContext.request.contextPath}/Public/icons/pm_logo_normal.svg"
-						class='d-block m-3 img-fluid LogoMiniPM' />
+
 				</div>
 				<div
 					class='top-nav-button px-0 d-block col col-nav-logout h-100 float-right'>

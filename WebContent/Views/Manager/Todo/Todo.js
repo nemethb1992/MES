@@ -13,6 +13,8 @@ function TaskManagerStartUp()
 	ApplicationCountDown();
 	ButtonScriptElements();
 	WorkStationItemCollect();
+	setDateNow('.personal-date');
+	setTimeNow('.personal-time');
 	datepicker();
 }
 

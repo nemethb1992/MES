@@ -20,6 +20,15 @@
     -webkit-animation: spin 2s linear infinite;
     animation: spin 2s linear infinite;    
 }
+.manager-personal-data .form-group{
+    height: 33%;
+}
+.personal-data-display
+{
+    border-bottom: 1px solid #dedede;
+}
+
+
 .pass-item {
 	float: right;
 	cursor: pointer;
@@ -206,17 +215,6 @@ TM_content_layer {
 }
 
 
-.sortContDivCont {
-	width: 102%;
-	height: 94%;
-	/* 	background: black; */
-}
-
-.sortContDiv {
-	height: 98%;
-	/*     background: #f3f3f3; */
-}
-
 .sortContDivLeft {
 	float: left;
 	width: 16%;
@@ -234,6 +232,7 @@ TM_content_layer {
 	overflow-y: visible;
 	overflow-x: hidden;
 	max-height: 582px;
+	    border: 1px solid #d6d6d6;
 }
 
 .tmts_stationBtnDivCont input {
@@ -255,16 +254,23 @@ TM_content_layer {
 	padding: 15px;
 	float: left;
 }
-
+.station-select-row{
+/* 	border: 1px solid #d6d6d6; */
+}
 .cont_header 
 {
 	background: white;
-	border: 1px solid #d6d6d6;
+	    border: 1px solid #d6d6d6;
+	border-bottom: none;
 	width: 100%;
 	z-index: 4;
-	height: 65px;
+	height: 8%;
+	min-height: 55px;
 }
-
+.cont_content
+{
+	height: 92%;
+}
 
 .stationName-holderDiv input {
 	width: 80%;
@@ -298,10 +304,14 @@ TM_content_layer {
 }
 
 .sortContDiv_nav {
-	height: 65px;
+	height: 8%;
+	min-height: 55px;
 	border: 1px solid #d6d6d6;
 	z-index: 10;
 	background: white;
+}
+.sortContDiv_ListHolder{
+	height: 92%;
 }
 
 .abas-list-head, .abas-list-holder {
@@ -314,10 +324,6 @@ TM_content_layer {
 	height: 50px;
 }
 
-
-.sort-list-holder {
-	max-height: 730px;
-}
 
 .search-icon-form {
 	cursor: pointer;
@@ -341,12 +347,12 @@ TM_content_layer {
 }
 
 .dnd-container {
-	border: 1px solid #8d8d8d;
+	border: 1px solid #d6d6d6;
 	border-top: none;
 	background: white;
 }
 .dnd-container-suspended {
-	background: #fcd769;
+	background: #ffce3d;
 }
 
 .dnd-container-inprogress {
@@ -460,7 +466,6 @@ TM_content_layer {
 
 .topNav
 {
-	height: 70px !important;
     background: transparent;
     text-align: center;
     color: white;
@@ -531,4 +536,17 @@ TM_content_layer {
 {
 	-ms-flex: 0 0 40px;
     flex: 0 0 40px;
+}
+
+.manager-top-nav{
+	height: 9%;
+}
+.my-lower-row{
+	height: 90%;
+}
+@media only screen and (max-width: 1300px) {
+	.tmts_stationBtnDivCont 
+	{
+		background-image: none;
+	}
 }

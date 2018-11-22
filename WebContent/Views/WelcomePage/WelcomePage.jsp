@@ -18,12 +18,8 @@
 						<div class='col-12 px-0'>
 							<div class='container'>
 								<div class='row'>
-									<div class='col-12 upper-stripe light-shadow'>
-										<img
-											src="${pageContext.request.contextPath}/Public/icons/pm_logo_mini_white.svg"
-											class='row h-100 float-left ml-1 d-block img-fluid py-2'
-											style="width: 50px;" />
-										<p class='name-title' id='p_loginName'></p>
+									<div class='col-12 upper-stripe col-nav-logo light-shadow'>
+
 									</div>
 								</div>
 							</div>

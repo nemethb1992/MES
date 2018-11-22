@@ -62,7 +62,14 @@ html,body{
 	transition: 0.1s;
 	border-left: 1px solid #dedede;
 }
-
+.col-nav-logo
+{
+    background-image: url(Public/icons/pm_logo_normal.svg);
+    background-size: 200px;
+    background-repeat: no-repeat;
+    background-position: left;
+    background-position-x: 15px;
+}
 .btn_back-gray:hover {
 	background: #e1e1e1;
 	background-image: url(Public/icons/backArrowgray.svg);
