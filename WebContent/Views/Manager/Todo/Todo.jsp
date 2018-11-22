@@ -14,6 +14,9 @@
 						src="${pageContext.request.contextPath}/Public/icons/pm_logo_normal.svg"
 						class='d-block m-3 img-fluid LogoMiniPM' />
 				</div>
+				<div class='language-top-nav h-100 px-0'>
+					<%@include file="/Views/Partial/LanguageSelector.jsp"%>
+				</div>
 				<div class='top-nav-button h-100 px-0 col-nav-back float-right'>
 					<form method='POST' class='h-100'
 						action='${pageContext.request.contextPath}/Main'>

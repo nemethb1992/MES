@@ -57,6 +57,11 @@ public interface AbasConnection<C> {
 	String getOperatingLanguageCode();
 
 	/**
+	 * @return A bejelentkezett felhasználó neve az aktuális kezelőnyelvnek megfelelő formában.
+	 */
+	String getUserDisplayName();
+
+	/**
 	 * Az Abas-kapcsolat lezárása.
 	 */
 	void close();

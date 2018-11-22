@@ -29,9 +29,9 @@
     box-shadow: 0 22px 100px #999999;
     background: #f5f5f5;
 }
-.login-container{
+.distance-row{
 	
-	padding-top: calc(10% - 1px) !important;
+	height: calc(50% - 310px) !important;
 }
 #loginRightSide
 {
@@ -59,6 +59,10 @@
 #LR_1
 {
 	width: 100%;
+}
+.top-row #lang_div
+{
+	float: right;
 }
 #LR_1 p
 {

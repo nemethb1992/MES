@@ -179,9 +179,14 @@ public interface Task extends Serializable {
 		BigDecimal getQuantityPerProduct();
 
 		/**
-		 * @return A mennyiségi egység (raktáregység).
+		 * @return A beépülési mennyiség egységének (raktáregység) neve.
 		 */
 		String getStockUnit();
+
+		/**
+		 * @return A tételszöveg.
+		 */
+		String getItemText();
 
 	}
 

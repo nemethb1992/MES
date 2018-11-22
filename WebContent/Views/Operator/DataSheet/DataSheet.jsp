@@ -14,20 +14,20 @@
 
 	<div class='row station-upper-row timer-holder'>
 		<div id='timerContainer'
-			class=' col-3 col-md-3 col-lg-2 col-xl-2 px-0'>
+			class='h-100 col-2 col-md-2 col-lg-2 col-xl-2 px-0'>
 			<!-- 						<img class='d-block mx-auto mt-3' -->
 			<%-- 							src='${pageContext.request.contextPath}/Public/icons/timer.svg'> --%>
 			<p class='timerPanel h2 text-center upcounter'></p>
 		</div>
 		<div
-			class='button-container light-shadow col-10 col-md-10 col-lg-10 col-xl-10 px-0'>
+			class='button-container h-100 light-shadow col-10 col-md-10 col-lg-10 col-xl-10 px-0'>
 			<div class='container-fluid px-0 h-100'>
 				<div class='nav-contianer h-100'>
 
 
 					<div id='btn_lejelentes'
 						class='btn_navHeader-left-submit btn_navHeader-left submit-form btn_navHeader h-100 float-left'>
-						<p class='h6 text-center ' id='p_lejelentes'><%=outputFormatter.getWord(DictionaryEntry.SUBMIT)%></p>
+						<p class='h6 text-center nav-label' id='p_lejelentes'><%=outputFormatter.getWord(DictionaryEntry.SUBMIT)%></p>
 						<div class='container-fluid my-nav-container h-100'>
 							<div class='row h-100'>
 								<div class='col-11 px-5'>
@@ -57,13 +57,13 @@
 					</div>
 					<div
 						class='btn_navHeader-left btn-navHeader-left-refresh-btn refresh-click btn_navHeader h-100 float-left px-0'>
-						<p class='h6 text-center'><%=outputFormatter.getWord(DictionaryEntry.REFRESH)%></p>
+						<p class='h6 text-center nav-label'><%=outputFormatter.getWord(DictionaryEntry.REFRESH)%></p>
 						<form method='POST' class='h-100 d-none refresh-form'
 							action='${pageContext.request.contextPath}/OpenTask'></form>
 					</div>
 					<div id='btn_megszakitas'
 						class='btn_navHeader h-100 float-left btn_navHeader-left'>
-						<p class='h6 text-center'><%=outputFormatter.getWord(DictionaryEntry.INTERRUPT)%></p>
+						<p class='h6 text-center nav-label'><%=outputFormatter.getWord(DictionaryEntry.INTERRUPT)%></p>
 						<div class='container-fluid my-nav-container h-100'>
 							<div class='row h-100'>
 								<form method='Post'
@@ -92,17 +92,17 @@
 					<div class='personal-data-display h-100 float-right px-0'>
 						<div class='form-group'>
 							<input class='form-control personal-form-control personal-form-name' disabled
-								value='<%=(String) session.getAttribute("username")%>'>
+								value='<%=(String) session.getAttribute("displayname")%>'>
 						</div>
 						<div class='form-group'>
 							<input class='form-control personal-form-control' disabled
 								value='<%=((String) session.getAttribute("operatorWorkstation")).replace('!','-')%>'>
 						</div>
-						<div class='form-group'>
+						<div class='form-group personal-secondery'>
 							<input class='form-control personal-form-control personal-date'
 								disabled>
 						</div>
-						<div class='form-group'>
+						<div class='form-group personal-secondery'>
 							<input class='form-control personal-form-control personal-time'
 								disabled>
 						</div>
@@ -155,7 +155,7 @@
 			</div>
 		</div>
 		<div
-			class='operator-switch-grid col-9 col-md-9 col-lg-10 col-xl-10 px-0 p-3'>
+			class='operator-switch-grid col-10 col-md-10 col-lg-10 col-xl-10 px-0'>
 			<div id='SwitchPanel' class='rightCont'></div>
 		</div>
 	</div>

@@ -2,14 +2,18 @@ var path = location.pathname.split('/')[1];
 var layoutState = 1;
 
 $(document).ready(function(){
+	pagesetup();
+});
+
+function pagesetup()
+{
 	TabControlEventHolder();
 	ApplicationCountDown();
 	getView();
 	setTimer();
 	setDateNow('.personal-date');
 	setTimeNow('.personal-time');
-	
-});
+}
 
 function getView(tab = 1)
 {
@@ -37,6 +41,7 @@ function getView(tab = 1)
 		}
 	});
 }
+
 function NavigationButtonClick(item)
 {
 	$(item).show();
@@ -208,7 +213,7 @@ function openInterupt(item)
 	$(".btn_navHeader-left").hide();
 	$(item).show();
 	closeNavButtons();
-	$(item).css({'width':'50%'});
+	$(item).css({'width':'55%'});
 	$('#btn_megszakitas p').css({'display':'none'});
 	$('#btn_megszakitas .my-nav-container').css({'display':'block'});
 	$('#btn_megszakitas').css({'background':'white'});
@@ -219,7 +224,7 @@ function openSubmit(item)
 	$(".btn_navHeader-left").hide();
 	$(item).show();
 	closeNavButtons();
-	$(item).css({'width':'50%'});
+	$(item).css({'width':'55%'});
 	$('#btn_lejelentes p').css({'display':'none'});
 	$('#btn_lejelentes .my-nav-container').css({'display':'block'});
 	$('#btn_lejelentes').css({'background':'white'});

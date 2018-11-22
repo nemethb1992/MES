@@ -13,7 +13,6 @@ function TaskManagerStartUp()
 	ApplicationCountDown();
 	ButtonScriptElements();
 	WorkStationItemCollect();
-	DisplayTime();
 	datepicker();
 }
 

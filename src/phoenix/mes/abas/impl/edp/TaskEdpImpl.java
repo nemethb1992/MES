@@ -391,6 +391,11 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			public static final String STOCK_UNIT_NAME = InfosysOw1MESTASKDATA.Row.META.ytlebspr.getName();
 
 			/**
+			 * A tételszöveg.
+			 */
+			public static final String ITEM_TEXT = InfosysOw1MESTASKDATA.Row.META.ytptext.getName();
+
+			/**
 			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
 			 */
 			private Field() {
@@ -435,7 +440,8 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 					rowData.getString(Field.DESCRIPTION),
 					rowData.getString(Field.DESCRIPTION2),
 					rowData.getBigDecimal(Field.QUANTITY_PER_PRODUCT),
-					rowData.getString(Field.STOCK_UNIT_NAME));
+					rowData.getString(Field.STOCK_UNIT_NAME),
+					rowData.getString(Field.ITEM_TEXT));
 		}
 
 	}

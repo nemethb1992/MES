@@ -24,7 +24,7 @@
 .station-upper-row
 {
 	max-height: 180px;
-	min-height: 135px;
+	min-height: 80px;
 	height: 17% !important;
 }
 
@@ -168,7 +168,7 @@ position: absolute;
 
 .btn_navHeader
 {
-	min-width: 80px;
+	min-width: 5%;
     background: #f5f5f5;
     cursor: pointer;
 	background-repeat: no-repeat;
@@ -182,13 +182,7 @@ position: absolute;
 	background-size: 30px;
     border-right: 1px solid #dedede;
 }
-.nav-language-box
-{
-	border-radius: 0 0 0 5px;
-    background: #f5f5f5;
-    border-left: 1px solid #dedede;
-    border-bottom: 1px solid #dedede;
-}
+
 .personal-data-display
 {
 	min-width: 200px;
@@ -243,15 +237,7 @@ position: absolute;
 	margin-bottom: 0px !important;
     
 }
-.inputContainer input
-{
-	font-size: larger;
-    color: #4f4f4f;
-	background: transparent;
-	border:none;
-	text-align: left;
-	font-family: lightFont;
-}
+
 .inputContainer textarea
 {
 	font-size: larger;
@@ -324,7 +310,7 @@ position: absolute;
 }
 .data-row
 {
-	border-radius: 15px;
+	height: 25%;
 }
 #documentContainer
 {
@@ -427,4 +413,73 @@ position: absolute;
 .task-data-value, .task-data-label
 {
 	font-size: 14px;
+}
+.task-data-label
+{
+	
+}
+.task-data-value
+{
+	font-size: large;
+    color: #4f4f4f;
+	background: transparent;
+	border:none;
+	text-align: left;
+}
+
+@media only screen and (max-width: 1370px) {
+	.timerPanel 
+	{
+		font-size: x-large;
+	}
+	.nav-label
+	{
+		font-size: medium;
+	}
+	 .personal-form-control:disabled
+	 {
+		font-size: 14px;
+	 }
+	 	.task-data-value {
+		font-size: 16px;
+	}
+	.task-data-label {
+		font-size: 14px;
+	}
+}
+@media only screen and (max-width: 1100px) {
+	.timerPanel 
+	{
+		font-size: 24px;
+	}
+}
+
+@media only screen and (max-height: 750px) {
+	.task-data-value {
+		font-size: small;
+	}
+	.task-data-label {
+		font-size: small;
+	}
+
+}
+@media only screen and (max-height: 650px) {
+	.btn_navHeader, #btn_megszakitas, #navigation-button-1,#navigation-button-2,#navigation-button-3,#navigation-button-4,#navigation-button-5
+	{
+		background-image: none;
+	}
+	 .nav-label
+	 {
+	 	    bottom: calc(50% - 30px);
+	 }
+	#timerContainer{
+		background-image: none !important;
+	}	
+	.personal-secondery{
+		display: none;
+	}
+	.personal-data-display .form-group
+	{
+		height: 32%;
+	}
 }

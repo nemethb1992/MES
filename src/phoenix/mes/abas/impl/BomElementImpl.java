@@ -47,9 +47,14 @@ public class BomElementImpl implements BomElement {
 	protected final BigDecimal quantityPerProduct;
 
 	/**
-	 * A mennyiségi egység (raktáregység).
+	 * A beépülési mennyiség egységének (raktáregység) neve.
 	 */
 	protected final String stockUnit;
+
+	/**
+	 * A tételszöveg.
+	 */
+	protected final String itemText;
 
 	/**
 	 * Konstruktor.
@@ -59,56 +64,65 @@ public class BomElementImpl implements BomElement {
 	 * @param description2 A beépülő cikk második megnevezése.
 	 * @param quantityPerProduct A beépülési mennyiség (egy késztermékre vonatkozóan).
 	 * @param stockUnit A mennyiségi egység (raktáregység).
+	 * @param itemText A tételszöveg.
 	 */
-	public BomElementImpl(String idNo, String swd, String description, String description2, BigDecimal quantityPerProduct, String stockUnit) {
+	public BomElementImpl(String idNo, String swd, String description, String description2, BigDecimal quantityPerProduct, String stockUnit, String itemText) {
 		this.idNo = idNo;
 		this.swd = swd;
 		this.description = description;
 		this.description2 = description2;
 		this.quantityPerProduct = quantityPerProduct;
 		this.stockUnit = stockUnit;
+		this.itemText = itemText;
 	}
 
-	/**
-	 * @return A beépülő cikk hivatkozási száma.
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task.BomElement#getIdNo()
 	 */
 	public String getIdNo() {
 		return idNo;
 	}
 
-	/**
-	 * @return A beépülő cikk keresőszava.
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task.BomElement#getSwd()
 	 */
 	public String getSwd() {
 		return swd;
 	}
 
-	/**
-	 * @return A beépülő cikk megnevezése az aktuálisan beállított kezelőnyelven.
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task.BomElement#getDescription()
 	 */
 	public String getDescription() {
 		return description;
 	}
 
-	/**
-	 * @return A beépülő cikk második megnevezése.
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task.BomElement#getDescription2()
 	 */
 	public String getDescription2() {
 		return description2;
 	}
 
-	/**
-	 * @return A beépülési mennyiség (egy késztermékre vonatkozóan).
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task.BomElement#getQuantityPerProduct()
 	 */
 	public BigDecimal getQuantityPerProduct() {
 		return quantityPerProduct;
 	}
 
-	/**
-	 * @return A mennyiségi egység (raktáregység).
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task.BomElement#getStockUnit()
 	 */
 	public String getStockUnit() {
 		return stockUnit;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task.BomElement#getItemText()
+	 */
+	public String getItemText() {
+		return itemText;
 	}
 
 }

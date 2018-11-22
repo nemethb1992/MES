@@ -8,10 +8,12 @@ if(info == null)
 <%@include file="/Views/Header.jsp"%>
 <script><%@ include file="/Views/Login/loginScript.js"%></script>
 <script src="${pageContext.request.contextPath}/Public/js/script.js"></script>
-<div class="container login-container">
+<div class="container h-100 login-container">
+	<div class='row distance-row'></div>
 	<div class="login-row row w-100 align-self-center">
 		<!--        		<div id='loginFrame' class='mycontainer'> -->
-		<div id='loginLeftSide' class='col-md-1 col-lg-5 d-none d-md-block h-100'>
+		<div id='loginLeftSide'
+			class='col-md-1 col-lg-5 d-none d-md-block h-100'>
 
 			<div id='loginPicture' class='m-3 d-md-none d-lg-block'></div>
 
@@ -20,7 +22,8 @@ if(info == null)
 			</div>
 		</div>
 		<div id='loginRightSide' class='col-md-11 col-lg-7 px-4 h-100'>
-			<div class="form-group my-4 ">
+			<div class="form-group my-4 top-row">
+				<%@include file="/Views/Partial/LanguageSelector.jsp"%>
 				<div id='LR_1'>
 					<p id='p_loginName'></p>
 				</div>
@@ -31,18 +34,22 @@ if(info == null)
 			</div>
 			<form id='LR_form' method='POST'
 				action='${pageContext.request.contextPath}/Enter'>
-				<input type='hidden' name='workstation' class='workstation' value='<%=request.getParameter("workstation")%>'/>
-				<input name='infoTitle' class='w-100 mt-5' value='<%=info%>'/>
+				<input type='hidden' name='workstation' class='workstation'
+					value='<%=request.getParameter("workstation")%>' /> <input
+					name='infoTitle' class='w-100 mt-5' value='<%=info%>' />
+
 				<div class="form-group">
-				<p id='login_title' class='w-100 w-100 h5 mt-3'><%=outputFormatter.getWord(DictionaryEntry.LOGIN)%></p>
+					<p id='login_title' class='w-100 w-100 h5 mt-3'><%=outputFormatter.getWord(DictionaryEntry.LOGIN)%></p>
 				</div>
 				<div class="form-group mb-0">
-					<input name='username' class='inp_login px-3 w-100' placeholder='<%=outputFormatter.getWord(DictionaryEntry.USER_NAME)%>'
+					<input name='username' class='inp_login px-3 w-100'
+						placeholder='<%=outputFormatter.getWord(DictionaryEntry.USER_NAME)%>'
 						id='inp_username' type='text' value=''>
 				</div>
 				<div class="form-group">
-					<input class='inp_login px-3 w-100' placeholder='<%=outputFormatter.getWord(DictionaryEntry.PASSWORD)%>' name='password' id='inp_pass'
-						type='password' value=''>
+					<input class='inp_login px-3 w-100'
+						placeholder='<%=outputFormatter.getWord(DictionaryEntry.PASSWORD)%>'
+						name='password' id='inp_pass' type='password' value=''>
 				</div>
 				<div class="form-group">
 					<input class='inp_login w-100' id='inp_enterbutton' type='submit'

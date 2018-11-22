@@ -22,9 +22,12 @@ $(document).ready(function(){
 function selectLanguage(button)
 {
 	var language = $(button).attr("id");
-	$.cookie('language', language, { expires: 365 });
-	LanguageSetOnServlet(language);
-	location.reload();
+	if($.cookie("language") != language)
+	{
+		$.cookie('language', language, { expires: 365 });
+		LanguageSetOnServlet(language);
+		location.reload();
+	}
 }
 
 function LanguageSetOnServlet(lng)
@@ -37,7 +40,7 @@ function LanguageSetOnServlet(lng)
 	    }
 	});	
 }
-
+var openstate = false;
 function languageSwitchButton()
 {
     switch ($.cookie("language")) {
@@ -53,16 +56,18 @@ function languageSwitchButton()
         $(".lang_bub").css('z-index','0');
         $("#de").css('z-index','9999');
         break;
-      }
-    
-    $(".lang_bub").hover(function () {
-        $(".lang_bub").css('position', 'relative');
-    });
-    $(".lang_bub").mouseleave(function () {
-        $(".lang_bub").css('position', 'absolute');
-    });
+    }
     $(".lang_bub").click(function () {
-        $(".lang_bub").css('z-index', '0');
-        $(this).css('z-index', '9999');
+    	if(!openstate)
+    	{
+    		$(".lang_bub").css('position', 'relative');
+    		openstate = true;
+    	}
+    	else{
+    		$(".lang_bub").css('z-index', '0');
+    		$(this).css('z-index', '9999');
+    		$(".lang_bub").css('position', 'absolute');
+    		openstate = false;
+    	}
     });
 }

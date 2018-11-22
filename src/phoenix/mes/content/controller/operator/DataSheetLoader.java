@@ -63,7 +63,7 @@ public class DataSheetLoader extends HttpServlet {
 				Task.Details taskDetails = task.getDetails(abasConnection);				    	
 				switch (request.getParameter("tabNo")) {
 				case "1":
-					view = getDataSheet(taskDetails,workstation,wsName,of,request);
+					view = getSheet(taskDetails,workstation,wsName,of,request);
 					break;
 				case "2":
 					view = getDocuments(taskDetails, of);
@@ -100,12 +100,12 @@ public class DataSheetLoader extends HttpServlet {
 	
 	}
 	
-	protected String getDataSheet(Task.Details taskDetails, String workstation, String wsName, OutputFormatter of, HttpServletRequest request)
+	protected String getSheet(Task.Details taskDetails, String workstation, String wsName, OutputFormatter of, HttpServletRequest request)
 	{
-
 		// TODO StringBuilder
-		 String layout = "				<div class='container-fluid my-white-container h-100 px-0'><div class='row data-row mx-3 mt-0'>\r\n" + 
-		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3'>\r\n" + 
+		 String view = "				<div class='container-fluid h-100 p-3'><div class=' my-white-container h-100 px-0'>"
+		 		+ "							<div class='row data-row mx-3 mt-0'>\r\n" + 
+		 		"								<div class='col-6 pt-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.WORKSTATION)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled value='"+workstation.split("!")[0]+" - "+workstation.split("!")[1]+"'>\r\n" + 
@@ -119,7 +119,7 @@ public class DataSheetLoader extends HttpServlet {
 		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getStartDate()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
-		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3'>\r\n" + 
+		 		"								<div class='col-6 pt-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.WORKSTATION_NAME)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+wsName+"'>\r\n" +
@@ -131,7 +131,7 @@ public class DataSheetLoader extends HttpServlet {
 		 		"								</div>\r\n" + 
 		 		"							</div>\r\n" + 
 		 		"							<div class='row data-row mx-3 my-0'>\r\n" + 
-		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3'>\r\n" + 
+		 		"								<div class='col-6 pt-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.ARTICLE)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
@@ -145,7 +145,7 @@ public class DataSheetLoader extends HttpServlet {
 		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity())+" "+taskDetails.getStockUnit()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
-		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3'>\r\n" + 
+		 		"								<div class='col-6 pt-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.NAME)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getProductDescription()+"'>\r\n" + 
@@ -157,7 +157,7 @@ public class DataSheetLoader extends HttpServlet {
 		 		"								</div>\r\n" + 
 		 		"							</div>\r\n" + 
 		 		"							<div class='row data-row mx-3 my-0'>\r\n" + 
-		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3 px-3'>\r\n" + 
+		 		"								<div class='col-6 pt-3 px-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.OPERATION_NUMEBER)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getOperationIdNo()+"'>\r\n" + 
@@ -171,7 +171,7 @@ public class DataSheetLoader extends HttpServlet {
 		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getOperationDescription()+"'>\r\n" + 
 		 		"									</div>\r\n" + 
 		 		"								</div>\r\n" + 
-		 		"								<div class='col-12 col-md-12 col-lg-12 col-xl-6 pt-3 px-3'>\r\n" + 
+		 		"								<div class='col-6 pt-3 px-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
 		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.EXECUTION_NO)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getNumberOfExecutions())+"'>\r\n" + 
@@ -184,16 +184,17 @@ public class DataSheetLoader extends HttpServlet {
 		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.TIME_FOR_PCS)+"</p>\r\n" + 
 		 		"										<input class='px-2 w-100 task-data-value' type='text disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getUnitTime())+" "+taskDetails.getUnitTimeUnit()+"'>\r\n" + 
 		 		"									</div>" + 
-		 		"								</div>" + 
-		 		"								<div class='col-12 px-3'>" + 
-		 		"									<div class='inputContainer'>" + 
-		 		"										<p class='mb-0 task-data-label'>"+of.getWord(DictionaryEntry.PRODUCTION_INFO)+"</p>\r\n" + 
+		 		"								</div>" +
+		 		"							</div>" + 
+		 		"							<div class='row data-row px-3'>" + 
+		 		"									<div class='col-12'><div class='inputContainer px-3'>" + 
+		 		"										<p class='mb-0 pt-1 task-data-label'>"+of.getWord(DictionaryEntry.PRODUCTION_INFO)+"</p>\r\n" + 
 		 		"										<textarea class='px-2 w-100 task-data-value'  disabled >"+taskDetails.getOperationReservationText()+"</textarea>\r\n" + 
 		 		"									</div>\r\n" + 
-		 		"								</div>\r\n" + 
+		 		"								</div></div>\r\n" + 
 		 		"							</div></div>";
 		 
-		return layout;
+		return view;
 	}
 	
 	protected String getDocuments(Task.Details data, OutputFormatter of)
@@ -237,13 +238,13 @@ public class DataSheetLoader extends HttpServlet {
 	
 	protected String getItemTexts(Task.Details taskDetails, OutputFormatter of)
 	{
-		String view ="					<div class='conteiner-fluid h-100'>\r\n" + 
+		String view ="					<div class='conteiner-fluid h-100 p-3'>\r\n" + 
 				"							<div class='row h-100 m-0'>\r\n" + 
-				"								<div class='mx-3 col col-textarea light-shadow'>\r\n" + 
+				"								<div class='mr-2 mb-0 col col-textarea light-shadow'>\r\n" + 
 				"									<p class='h5 p-2'>"+of.getWord(DictionaryEntry.INFO_ARTICLE)+" 1</p>\r\n" + 
 				"									<textarea disabled class='p-3 BigTextInput'>"+taskDetails.getSalesOrderItemText()+"</textarea>\r\n" + 
 				"								</div>\r\n" + 
-				"								<div class='mx-3 col col-textarea light-shadow'>\r\n" + 
+				"								<div class='ml-2 mb-0 col col-textarea light-shadow'>\r\n" + 
 				"									<p class='h5 p-2'>"+of.getWord(DictionaryEntry.INFO_ARTICLE)+" 2</p>\r\n" + 
 				"									<textarea disabled class='p-3 BigTextInput'>"+taskDetails.getSalesOrderItemText2()+"</textarea>\r\n" + 
 				"								</div>\r\n" + 

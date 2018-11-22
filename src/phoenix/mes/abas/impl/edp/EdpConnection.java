@@ -7,12 +7,15 @@
 package phoenix.mes.abas.impl.edp;
 
 import de.abas.ceks.jedp.CantChangeSettingException;
+import de.abas.ceks.jedp.CantReadSettingException;
 import de.abas.ceks.jedp.EDPCredentialsProvider;
 import de.abas.ceks.jedp.EDPFTextMode;
 import de.abas.ceks.jedp.EDPLockBehavior;
+import de.abas.ceks.jedp.EDPRuntimeException;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.ceks.jedp.EDPSessionOptions;
 import de.abas.ceks.jedp.EDPVariableLanguage;
+import de.abas.erp.db.schema.company.Password;
 
 import java.util.Locale;
 
@@ -26,6 +29,26 @@ import phoenix.mes.abas.impl.EdpBasedAbasConnection;
  * @author szizo
  */
 public class EdpConnection extends EdpBasedAbasConnection<EDPSession> {
+
+	/**
+	 * Segédosztály a bejelentkezett felhasználó nevének lekérdezéséhez.
+	 * @author szizo
+	 */
+	protected static final class UserDisplayNameQuery extends EdpQueryExecutor {
+
+		/**
+		 * Egyke objektum.
+		 */
+		public static final UserDisplayNameQuery EXECUTOR = new UserDisplayNameQuery();
+
+		/**
+		 * Konstruktor.
+		 */
+		private UserDisplayNameQuery() {
+			super(new String[] {Password.META.descrOperLang.getName()});
+		}
+
+	}
 
 	/**
 	 * Az EDP-munkamenet.
@@ -115,6 +138,18 @@ public class EdpConnection extends EdpBasedAbasConnection<EDPSession> {
 	@Override
 	public EDPSession getConnectionObject() {
 		return edpSession;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.AbasConnection#getUserDisplayName()
+	 */
+	@Override
+	public String getUserDisplayName() {
+		try {
+			return UserDisplayNameQuery.EXECUTOR.readRecord(edpSession.getPasswordRef(), edpSession).getField(1);
+		} catch (CantReadSettingException e) {
+			throw new EDPRuntimeException(e);
+		}
 	}
 
 	/* (non-Javadoc)

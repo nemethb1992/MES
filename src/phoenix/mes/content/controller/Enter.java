@@ -1,6 +1,8 @@
 package phoenix.mes.content.controller;
 import java.io.IOException;
 
+import javax.naming.NamingException;
+import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
@@ -36,7 +38,7 @@ public class Enter extends HttpServlet {
 		session.setAttribute("username",username);
 		
 		try {
-			ActiveDirectory.login(username, pass, request);
+			Authentication.login(username, pass, request);
 			String nextPage = null;
 			if("operator".equals(layout)) {
 				String workStation = (String)session.getAttribute("operatorWorkstation");
@@ -66,10 +68,14 @@ public class Enter extends HttpServlet {
 				nextPage = "/Views/Manager/Main/Main.jsp";
 			}
 			getServletContext().getRequestDispatcher(null == nextPage ? "/Views/WelcomePage/WelcomePage.jsp" : nextPage).forward(request, response);
-		} catch (Throwable t) {
+		} catch (NamingException | LoginException t) {
 			request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.LOGIN_FAILED));
 			getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
 		}
 	}
 
 }
+//catch (Throwable t) {
+//	request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.LOGIN_FAILED));
+//	getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
+//}
