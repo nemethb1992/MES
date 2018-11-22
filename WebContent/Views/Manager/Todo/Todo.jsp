@@ -7,7 +7,7 @@
 <div class='container-fluid h-100'>
 	<p class='actual-time h5'></p>
 	<div class='row manager-top-nav'>
-		<div class='col-12  px-0 topNav'>
+		<div class='col-12 h-100 px-0 topNav'>
 			<div class='h-100 w-100 mx-0 row'>
 				<div class='h-100 col col-nav-logo float-left'>
 <!-- 					<img -->
