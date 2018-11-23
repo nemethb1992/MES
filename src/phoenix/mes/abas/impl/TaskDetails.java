@@ -17,6 +17,8 @@ import java.util.List;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.BomElement;
+import phoenix.mes.abas.Task.Operation;
+import phoenix.mes.abas.Task.Status;
 
 /**
  * Alaposztály gyártási feladatok részleteit leíró osztályok implementálásához.
@@ -46,9 +48,9 @@ public abstract class TaskDetails<C> implements Task.Details {
 		public AbasDate startDate;
 
 		/**
-		 * A gyártási feladat fel van függesztve?
+		 * A gyártási feladat végrehajtási állapota.
 		 */
-		public boolean suspendedTask;
+		public Status status;
 
 		/**
 		 * A termék cikkszáma.
@@ -194,6 +196,11 @@ public abstract class TaskDetails<C> implements Task.Details {
 	protected List<BomElement> bom = null;
 
 	/**
+	 * A gyártási feladatot követő műveletek listáját gyorsítótárazó objektum.
+	 */
+	protected List<Operation> followingOperations = null;
+
+	/**
 	 * Konstruktor.
 	 * @param abasConnection Az Abas-kapcsolat.
 	 * @param abasConnectionType Az Abas-kapcsolat osztálya.
@@ -208,17 +215,29 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	protected void setAbasConnectionObject(AbasConnection<C> abasConnection, Class<C> abasConnectionType) {
 		final String newOperatingLanguageCode = abasConnection.getOperatingLanguageCode();
-		if (!newOperatingLanguageCode.equals(operatingLanguageCode)) {
+		if (newOperatingLanguageCode.equals(operatingLanguageCode)) {
+			clearStatusCache();
+		} else {
 			if (null != operatingLanguageCode) {
 				clearBasicDataCache();
 				clearOperationDataCache();
 				clearBomCache();
+				clearFollowingOperationsCache();
 			}
 			operatingLanguageCode = newOperatingLanguageCode;
 		}
 		final C newAbasConnectionObject = AbasConnection.getConnectionObject(abasConnection, abasConnectionType);
 		if (!newAbasConnectionObject.equals(abasConnectionObject)) {
 			abasConnectionObject = newAbasConnectionObject;
+		}
+	}
+
+	/**
+	 * A gyártási feladat végrehajtási állapotát tartalmazó gyorsítótár kiürítése.
+	 */
+	public void clearStatusCache() {
+		if (null != basicData) {
+			basicData.status = null;
 		}
 	}
 
@@ -337,11 +356,16 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#isSuspendedTask()
+	 * @see phoenix.mes.abas.Task.Details#getStatus()
 	 */
 	@Override
-	public boolean isSuspendedTask() {
-		return getBasicData().suspendedTask;
+	public Status getStatus() {
+		Status status = getBasicData().status;
+		if (null == status) {
+			clearBasicDataCache();
+			status = getBasicData().status;
+		}
+		return status;
 	}
 
 	/* (non-Javadoc)
@@ -520,6 +544,29 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task.Details#getFollowingOperations()
+	 */
+	@Override
+	public List<Operation> getFollowingOperations() {
+		if (null == followingOperations) {
+			followingOperations = newFollowingOperations();
+		}
+		return followingOperations;
+	}
+
+	/**
+	 * @return A gyártási feladatot követő műveletek listáját gyorsítótárazó, újonnan létrehozott objektum.
+	 */
+	protected abstract List<Operation> newFollowingOperations();
+
+	/**
+	 * A gyártási feladatot követő műveletek listáját tartalmazó gyorsítótár kiürítése.
+	 */
+	public void clearFollowingOperationsCache() {
+		followingOperations = null;
+	}
+
+	/* (non-Javadoc)
 	 * @see phoenix.mes.abas.Task.Details#clearCache()
 	 */
 	@Override
@@ -528,6 +575,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 		clearOperationDataCache();
 		clearSalesOrderDataCache();
 		clearBomCache();
+		clearFollowingOperationsCache();
 	}
 
 }

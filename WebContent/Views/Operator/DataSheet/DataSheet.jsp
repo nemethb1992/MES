@@ -89,23 +89,23 @@
 					<div class='personal-data-display h-100 float-right px-0'>
 						<div class='form-group'>
 							<input
-								class='form-control personal-form-control personal-form-name'
+								class='form-control h-100 personal-form-control personal-form-name'
 								disabled
 								value='<%=(String) session.getAttribute("displayname")%>'>
 						</div>
 						<div class='form-group'>
-							<input class='form-control personal-form-control' disabled
+							<input class='form-control h-100 personal-form-control' disabled
 								value='<%=((String) session.getAttribute("operatorWorkstation")).replace('!', '-')%>'>
 						</div>
 						<div class='form-group personal-secondery'>
-							<input class='form-control personal-form-control personal-date'
+							<input class='form-control h-100 personal-form-control personal-date'
 								disabled>
 						</div>
-						<div class='form-group personal-secondery'>
-							<input class='form-control personal-form-control personal-time'
+						<div class='form-group'>
+							<input class='form-control h-100 personal-form-control personal-time'
 								disabled>
 						</div>
-						<div class='form-group py-2'>
+						<div class='form-group d-none py-2'>
 							<%@include file="/Views/Partial/ApplicationCountDown.jsp"%>
 						</div>
 					</div>
@@ -138,16 +138,16 @@
 							<p class='nav-btn-3 nav-label'><%=outputFormatter.getWord(DictionaryEntry.BILL_OF_MATERIAL)%></p>
 						</div>
 					</div>
-					<div class='btn_leftNavigation big-nav-button row'>
+					<div class='btn_leftNavigation  big-nav-button row'>
 						<div class='col-12 px-0 navigation-button'
-							id='navigation-button-3' onclick='NavigationButtonClick(this)'>
-							<p class='nav-btn-3 nav-label'><%=outputFormatter.getWord(DictionaryEntry.BILL_OF_MATERIAL)%></p>
+							id='navigation-button-4' onclick='NavigationButtonClick(this)'>
+							<p class='nav-btn-4 nav-label'><%=outputFormatter.getWord(DictionaryEntry.ORDER_INFO)%></p>
 						</div>
 					</div>
 					<div class='btn_leftNavigation bord-radius-nav big-nav-button row'>
 						<div class='col-12 px-0 navigation-button'
-							id='navigation-button-4' onclick='NavigationButtonClick(this)'>
-							<p class='nav-btn-4 nav-label'><%=outputFormatter.getWord(DictionaryEntry.ORDER_INFO)%></p>
+							id='navigation-button-5' onclick='NavigationButtonClick(this)'>
+							<p class='nav-btn-5 nav-label'><%=outputFormatter.getWord(DictionaryEntry.FOLLOWING_OPERATIONS)%></p>
 						</div>
 					</div>
 				</div>
@@ -155,7 +155,57 @@
 		</div>
 		<div
 			class='operator-switch-grid col-10 col-md-10 col-lg-10 col-xl-10 px-0'>
-			<div id='SwitchPanel' class='rightCont'></div>
+			<div id='SwitchPanel' class='rightCont container-fluid'>
+			
+							<div class='row bom-header-row p-2'>
+								<div class='col-2'>
+									<input class='w-100' disabled value='Teszt szöveg'>
+								</div>
+								<div class='col-3'>
+									<input class='w-100' disabled value='Teszt szöveg'>
+								</div>
+								<div class='col-3'>
+									<input class='w-100' disabled value='Teszt szöveg'>
+								</div>
+								<div class='col-2'>
+									<input class='w-100' disabled value='Teszt szöveg'>
+								</div>
+								<div class='col-2'>
+									<input class='w-100' disabled value='Teszt szöveg'>
+								</div>
+							</div>
+					<div class='row bom-item-row p-2' onclick='bomListDropDown(this)'>
+						<div class='col-12'>
+							<div class='row item-data-row py-2'>
+								<div class='col-2'>
+									<input class='w-100' disabled value='Teszt szöveg'>
+								</div>
+								<div class='col-3'>
+									<input class='w-100' disabled value='Teszt szöveg'>
+								</div>
+								<div class='col-3'>
+									<input class='w-100' disabled value='Teszt szöveg'>
+								</div>
+								<div class='col-2'>
+									<input class='w-100' disabled value='Teszt szöveg'>
+								</div>
+								<div class='col-2'>
+									<input class='w-100' disabled value='Teszt szöveg'>
+								</div>
+							</div>
+							<div class='row bom-item-text-row' style="display: none;">
+								<div class='col-12'>
+									<label class='my-0 h-25'>Leírás:</label>
+									<textarea class='w-100 h-75 item-text-textarea'>
+dassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aadassasd  a dqwe  jfjewewjfekffejwfew s s a a aa
+									</textarea>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+
+			</div>
 		</div>
 	</div>
 </div>

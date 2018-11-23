@@ -148,6 +148,21 @@ position: absolute;
 #navigation-button-4{
 	background-image: url(Public/icons/TV_btn_nav4.svg);
 }
+#navigation-button-5{
+	background-image: url(Public/icons/list.svg);
+}
+
+.bom-item-text-row textarea
+{
+	background: white;
+	padding: 3px;
+	border-radius: 10px;
+	border: 1px solid #dedede;
+}
+.bom-item-text-row
+{
+	min-height: 150px;
+}
 .close-nav-btn
 {
 	background-color: white;
@@ -156,6 +171,23 @@ position: absolute;
 	background-position: center;
 	background-image: url(Public/icons/left-arrow-operator.svg);
 	transition: 0,3s;
+}
+.bom-item-row{
+	background: white;
+	border-bottom: 1px solid #dedede;
+}
+.bom-item-row input, .bom-item-row label{
+	background: transparent;
+}
+.bom-header-row
+{
+	background: #e0e0e0;
+	border-bottom: 1px solid #dedede;
+}
+.bom-header-row input
+{
+	background: transparent;
+	    color: #424242;
 }
 .close-nav-btn:hover
 {
@@ -212,7 +244,7 @@ position: absolute;
 .personal-data-display .form-group
 {
 	margin-bottom: 0;
-	height: 20%
+	height: 25%
 }
 .personal-form-control:disabled
 {

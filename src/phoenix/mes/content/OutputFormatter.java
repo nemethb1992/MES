@@ -18,6 +18,7 @@ public class OutputFormatter {
 		USER_NAME("Felhasználónév","Benutzername","Username"),
 		PASSWORD("Jelszó","Kennwort","Password"),
 		NEXT("Tovább","Weiter","Next"),
+		FOLLOWING_OPERATIONS("Következő műveletek","folgende Operationen","Following operations"),
 		LOGIN("Bejelentkezés","Anmeldung","Login"),
 		WORKSTATION("Munkaállomás","Arbeitsplatz","Workstation"),
 		WORKSTATION_NAME("Munkaállomás neve","Name Arbeitsplatz","Workstation name"),

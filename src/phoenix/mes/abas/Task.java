@@ -36,9 +36,9 @@ public interface Task extends Serializable {
 		AbasDate getStartDate();
 
 		/**
-		 * @return A gyártási feladat fel van függesztve?
+		 * @return A gyártási feladat végrehajtási állapota.
 		 */
-		boolean isSuspendedTask();
+		Status getStatus();
 
 		/**
 		 * @return A termék cikkszáma.
@@ -141,9 +141,27 @@ public interface Task extends Serializable {
 		List<BomElement> getBom();
 
 		/**
+		 * @return A gyártási feladatot követő műveletek listája.
+		 */
+		List<Operation> getFollowingOperations();
+
+		/**
 		 * Az adatokat tartalmazó gyorsítótár kiürítése.
 		 */
 		void clearCache();
+
+	}
+
+	/**
+	 * Gyártási feladat végrehajtási állapota.
+	 * @author szizo
+	 */
+	enum Status {
+
+		WAITING,
+		IN_PROGRESS,
+		INTERRUPTED,
+		SUSPENDED;
 
 	}
 
@@ -191,6 +209,44 @@ public interface Task extends Serializable {
 	}
 
 	/**
+	 * Gyártási tevékenységet (műveletet) leíró típus.
+	 * @author szizo
+	 */
+	interface Operation extends Serializable {
+
+		/**
+		 * @return A művelet hivatkozási száma.
+		 */
+		String getIdNo();
+
+		/**
+		 * @return A művelet keresőszava.
+		 */
+		String getSwd();
+
+		/**
+		 * @return A művelet megnevezése az aktuálisan beállított kezelőnyelven.
+		 */
+		String getDescription();
+
+		/**
+		 * @return A művelethez rendelt gépcsoport hivatkozási száma.
+		 */
+		String getWorkCenterIdNo();
+
+		/**
+		 * @return A művelethez rendelt gépcsoport megnevezése az aktuálisan beállított kezelőnyelven.
+		 */
+		String getWorkCenterDescription();
+
+		/**
+		 * @return A műveletsor tételszövege a gyártási listában.
+		 */
+		String getItemText();
+
+	}
+
+	/**
 	 * @return A gyártási feladathoz tartozó munkalap azonosítója.
 	 */
 	Id getWorkSlipId();
@@ -201,12 +257,6 @@ public interface Task extends Serializable {
 	 * @throws IllegalArgumentException Ha az Abas-kapcsolat nem megfelelő típusú.
 	 */
 	Details getDetails(AbasConnection<?> abasConnection);
-
-	/**
-	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A gyártási feladat végrehajtása folyamatban van?
-	 */
-	boolean isInProgress(AbasConnection<?> abasConnection);
 
 	/**
 	 * A gyártási feladat beütemezése egy konkrét munkaállomásra.
@@ -223,10 +273,16 @@ public interface Task extends Serializable {
 	void unSchedule(AbasConnection<?> abasConnection);
 
 	/**
-	 * A gyártási feladat felfüggesztése.
+	 * A gyártási feladat végrehajtásának félbeszakítása.
+	 * @param abasConnection
+	 */
+	void interrupt(AbasConnection<?> abasConnection);
+
+	/**
+	 * A gyártási feladat végrehajtásának folytatása.
 	 * @param abasConnection Az Abas-kapcsolat.
 	 */
-	void suspend(AbasConnection<?> abasConnection);
+	void resume(AbasConnection<?> abasConnection);
 
 	/**
 	 * A gyártási feladat lejelentése.
@@ -235,5 +291,11 @@ public interface Task extends Serializable {
 	 * @param abasConnection Az Abas-kapcsolat.
 	 */
 	void postCompletionConfirmation(BigDecimal yield, BigDecimal scrapQuantity, AbasConnection<?> abasConnection);
+
+	/**
+	 * A gyártási feladat felfüggesztése.
+	 * @param abasConnection Az Abas-kapcsolat.
+	 */
+	void suspend(AbasConnection<?> abasConnection);
 
 }

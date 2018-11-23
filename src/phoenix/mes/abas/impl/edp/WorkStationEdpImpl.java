@@ -45,12 +45,12 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 		/**
 		 * A szűrőmezők nevei a munkaállomásra beütemezett és végrehajtható gyártási feladatok lekérdezéséhez.
 		 */
-		protected static final String[] scheduledTasksFilterCriteria = {InfosysOw1MESWORKSTATION.META.ymgr.getName(), InfosysOw1MESWORKSTATION.META.ymnum.getName(), InfosysOw1MESWORKSTATION.META.start.getName()};
+		protected static final String[] scheduledTasksFilterCriteria = {InfosysOw1MESWORKSTATION.META.ymgr.getName(), InfosysOw1MESWORKSTATION.META.ygepszam.getName(), InfosysOw1MESWORKSTATION.META.start.getName()};
 
 		/**
 		 * A szűrőmezők nevei a munkaállomás első beütemezett és végrehajtható gyártási feladatának lekérdezéséhez.
 		 */
-		protected static final String[] firstScheduledTaskFilterCriteria = {InfosysOw1MESWORKSTATION.META.ymgr.getName(), InfosysOw1MESWORKSTATION.META.ymnum.getName(), InfosysOw1MESWORKSTATION.META.ycsakelso.getName(), InfosysOw1MESWORKSTATION.META.start.getName()};
+		protected static final String[] firstScheduledTaskFilterCriteria = {InfosysOw1MESWORKSTATION.META.ymgr.getName(), InfosysOw1MESWORKSTATION.META.ygepszam.getName(), InfosysOw1MESWORKSTATION.META.ycsakelso.getName(), InfosysOw1MESWORKSTATION.META.start.getName()};
 
 		/**
 		 * Egyke objektum.

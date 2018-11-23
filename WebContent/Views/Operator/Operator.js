@@ -9,7 +9,7 @@ function pagesetup()
 {
 	TabControlEventHolder();
 	ApplicationCountDown();
-	getView();
+//	getView();
 	setTimer();
 	setDateNow('.personal-date');
 	setTimeNow('.personal-time');
@@ -152,6 +152,7 @@ function openAsset(item)
 
 function TabControlEventHolder()
 {
+
 	
 	$('.refresh-click').click(function(){
 		RefreshTask();
@@ -253,6 +254,13 @@ function closeNavButtons()
 	$('.btn_navHeader p').css({'display':''});
 }
 
+function bomListDropDown(item)
+{
+//	$(item).css("background","#efefef");
+	var actualItem = $(item).children().children('.bom-item-text-row');
+	actualItem.is(':hidden') ? actualItem.show() : actualItem.hide();
+}
+
 String.prototype.toHHMMSS = function () {
 	var sec_num = parseInt(this, 10); // don't forget the second parm
 	var hours = Math.floor(sec_num / 3600);
@@ -271,7 +279,10 @@ String.prototype.toHHMMSS = function () {
 	var time = hours + ':' + minutes + ':' + seconds;
 	return time;
 }
-
+function textAreaAdjust(o) {
+	  o.style.height = "1px";
+	  o.style.height = (25+o.scrollHeight)+"px";
+	}
 
 function InterruptTask()
 {

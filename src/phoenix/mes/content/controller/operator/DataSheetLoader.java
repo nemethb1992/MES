@@ -103,7 +103,7 @@ public class DataSheetLoader extends HttpServlet {
 	protected String getSheet(Task.Details taskDetails, String workstation, String wsName, OutputFormatter of, HttpServletRequest request)
 	{
 		// TODO StringBuilder
-		 String view = "				<div class='container-fluid h-100 p-3'><div class=' my-white-container h-100 px-0'>"
+		 String view = "				<div class='container-fluid h-100 px-0 py-3'><div class=' my-white-container h-100 px-0'>"
 		 		+ "							<div class='row data-row mx-3 mt-0'>\r\n" + 
 		 		"								<div class='col-6 pt-3'>\r\n" + 
 		 		"									<div class='inputContainer'>\r\n" + 
@@ -199,7 +199,7 @@ public class DataSheetLoader extends HttpServlet {
 	
 	protected String getDocuments(Task.Details data, OutputFormatter of)
 	{
-    	String view = "<div class='list-group dokumentum-list'><button type='button' class='list-group-item list-group-item-action active disabled'>"+of.getWord(DictionaryEntry.DOCUMENTS)+"</button>";
+    	String view = "<div class='list-group row dokumentum-list'><button type='button' class='list-group-item list-group-item-action active disabled'>"+of.getWord(DictionaryEntry.DOCUMENTS)+"</button>";
     	for (int i = 0; i < 8; i++) {
     		view +="<button type='button' onclick='openAsset(this)' class='document-button list-group-item list-group-item-action'>Dokumentum "+i+"</button>";
 		}
@@ -212,7 +212,7 @@ public class DataSheetLoader extends HttpServlet {
 
     	List<BomElement> li = taskDetails.getBom();
 		
-    	String view = "				<table class=\"table table-striped mytable\">\r\n" + 
+    	String view = "				<div class='row'><div class='col px-0'><table class=\"table table-striped mytable\">\r\n" + 
     			"  								<thead>\r\n" + 
     			"  								  <tr>\r\n" + 
     			"     								 <th scope=\"col\">"+of.getWord(DictionaryEntry.ARTICLE)+"</th>\r\n" + 
@@ -232,14 +232,13 @@ public class DataSheetLoader extends HttpServlet {
     				"<td>"+of.formatWithoutTrailingZeroes(bomItem.getQuantityPerProduct())+" "+bomItem.getStockUnit()+"</td>" + 
     				"</tr>";
 		}		
-    	view += "</tbody></table>";
+    	view += "</tbody></table></div></div>";
 		return view;
 	}
 	
 	protected String getItemTexts(Task.Details taskDetails, OutputFormatter of)
 	{
-		String view ="					<div class='conteiner-fluid h-100 p-3'>\r\n" + 
-				"							<div class='row h-100 m-0'>\r\n" + 
+		String view ="					<div class='row h-100 m-0 px-0 py-3'>\r\n" + 
 				"								<div class='mr-2 mb-0 col col-textarea light-shadow'>\r\n" + 
 				"									<p class='h5 p-2'>"+of.getWord(DictionaryEntry.INFO_ARTICLE)+" 1</p>\r\n" + 
 				"									<textarea disabled class='p-3 BigTextInput'>"+taskDetails.getSalesOrderItemText()+"</textarea>\r\n" + 
@@ -248,8 +247,7 @@ public class DataSheetLoader extends HttpServlet {
 				"									<p class='h5 p-2'>"+of.getWord(DictionaryEntry.INFO_ARTICLE)+" 2</p>\r\n" + 
 				"									<textarea disabled class='p-3 BigTextInput'>"+taskDetails.getSalesOrderItemText2()+"</textarea>\r\n" + 
 				"								</div>\r\n" + 
-				"							</div>\r\n" + 
-				"						</div>";
+				"							</div>\r\n";
 		
 		return view;
 	}

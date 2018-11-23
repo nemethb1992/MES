@@ -25,6 +25,7 @@ import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.WorkStation;
 import phoenix.mes.abas.impl.TaskImpl;
 import phoenix.mes.abas.impl.BomElementImpl;
+import phoenix.mes.abas.impl.OperationImpl;
 import phoenix.mes.abas.impl.TaskDetails;
 
 /**
@@ -98,6 +99,16 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			 * A gyártási feladat elkezdésének (tervezett) napja.
 			 */
 			public static final String START_DATE = InfosysOw1MESTASKDATA.META.ytsterm.getName();
+
+			/**
+			 * A gyártási feladat tényleges elkezdésének időpontja.
+			 */
+			public static final String START_TIME = InfosysOw1MESTASKDATA.META.yysts.getName();
+
+			/**
+			 * A gyártási feladat végrehajtása valamilyen zavar miatt félbe lett szakítva?
+			 */
+			public static final String INTERRUPTED_TASK = InfosysOw1MESTASKDATA.META.yzavar.getName();
 
 			/**
 			 * A gyártási feladat fel van függesztve?
@@ -349,10 +360,44 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	}
 
 	/**
+	 * Alaposztály gyártásilista-sorok lekérdezéséhez.
+	 * @param <R> A táblázatsorokból készített objektumok típusa.
+	 * @author szizo
+	 */
+	protected static abstract class ProductionListQuery<R> extends InfoSystemTableConverter<R> {
+
+		/**
+		 * A szűrőmezők nevei.
+		 */
+		protected final String[] criteriaFieldNames;
+
+		/**
+		 * Konstruktor.
+		 * @param criteriaFieldNames A szűrőmezők nevei.
+		 * @param tableFieldNamesClass A lekérdezendő táblázati mezők neveit konstansokként tartalmazó osztály.
+		 */
+		public ProductionListQuery(String[] criteriaFieldNames, Class<?> tableFieldNamesClass) {
+			super("MESTASKDATA", tableFieldNamesClass);
+			this.criteriaFieldNames = criteriaFieldNames;
+		}
+
+		/**
+		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
+		 * @param edpSession Az EDP-munkamenet.
+		 * @return A szűrésnek megfelelő gyártásilista-sorok adatait tartalmazó objektumok listája.
+		 */
+		public List<R> getRows(String workSlipId, EDPSession edpSession) {
+			final List<R> rows = getRows(TaskDataQuery.getFilterCriteria(criteriaFieldNames, workSlipId), edpSession);
+			return (1 < rows.size() ? Collections.unmodifiableList(rows) : rows);
+		}
+
+	}
+
+	/**
 	 * Segédosztály a gyártási feladathoz kapcsolódó darabjegyzék adatainak lekérdezéséhez.
 	 * @author szizo
 	 */
-	protected static final class BomQuery extends InfoSystemTableConverter<BomElement> {
+	protected static final class BomQuery extends ProductionListQuery<BomElement> {
 
 		/**
 		 * A lekérdezendő (táblázati) mezők nevei.
@@ -404,11 +449,6 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		}
 
 		/**
-		 * A szűrőmezők nevei.
-		 */
-		protected static final String[] criteriaFieldNames = {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.ydbj.getName(), InfosysOw1MESTASKDATA.META.start.getName()};
-
-		/**
 		 * Egyke objektum.
 		 */
 		public static final BomQuery EXECUTOR = new BomQuery();
@@ -417,17 +457,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 * Konstruktor.
 		 */
 		private BomQuery() {
-			super("MESTASKDATA", Field.class);
-		}
-
-		/**
-		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
-		 * @param edpSession Az EDP-munkamenet.
-		 * @return A darabjegyzék sorainak adatait tartalmazó objektumok listája.
-		 */
-		public List<BomElement> getRows(String workSlipId, EDPSession edpSession) {
-			final List<BomElement> rows = getRows(TaskDataQuery.getFilterCriteria(criteriaFieldNames, workSlipId), edpSession);
-			return (1 < rows.size() ? Collections.unmodifiableList(rows) : rows);
+			super(new String[] {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.ydbj.getName(), InfosysOw1MESTASKDATA.META.start.getName()}, Field.class);
 		}
 
 		/* (non-Javadoc)
@@ -441,6 +471,83 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 					rowData.getString(Field.DESCRIPTION2),
 					rowData.getBigDecimal(Field.QUANTITY_PER_PRODUCT),
 					rowData.getString(Field.STOCK_UNIT_NAME),
+					rowData.getString(Field.ITEM_TEXT));
+		}
+
+	}
+
+	/**
+	 * Segédosztály a gyártási feladatot követő műveletek listájának lekérdezéséhez.
+	 * @author szizo
+	 */
+	protected static final class FollowingOperationsQuery extends ProductionListQuery<Operation> {
+
+		/**
+		 * A lekérdezendő (táblázati) mezők nevei.
+		 * @author szizo
+		 */
+		public static final class Field {
+
+			/**
+			 * A művelet hivatkozási száma.
+			 */
+			public static final String ID_NO = InfosysOw1MESTASKDATA.Row.META.ytelemnum.getName();
+
+			/**
+			 * A művelet keresőszava.
+			 */
+			public static final String SWD = InfosysOw1MESTASKDATA.Row.META.ytelemsuch.getName();
+
+			/**
+			 * A művelet megnevezése az aktuálisan beállított kezelőnyelven.
+			 */
+			public static final String DESCRIPTION = InfosysOw1MESTASKDATA.Row.META.ytnamebspr.getName();
+
+			/**
+			 * A művelethez rendelt gépcsoport hivatkozási száma.
+			 */
+			public static final String WORK_CENTER_ID_NO = InfosysOw1MESTASKDATA.Row.META.ytmgrnum.getName();
+
+			/**
+			 * A művelethez rendelt gépcsoport megnevezése az aktuálisan beállított kezelőnyelven.
+			 */
+			public static final String WORK_CENTER_DESCRIPTION = InfosysOw1MESTASKDATA.Row.META.ytmgrbspr.getName();
+
+			/**
+			 * A műveletsor tételszövege a gyártási listában.
+			 */
+			public static final String ITEM_TEXT = InfosysOw1MESTASKDATA.Row.META.ytptext.getName();
+
+			/**
+			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
+			 */
+			private Field() {
+			}
+
+		}
+
+		/**
+		 * Egyke objektum.
+		 */
+		public static final FollowingOperationsQuery EXECUTOR = new FollowingOperationsQuery();
+
+		/**
+		 * Konstruktor.
+		 */
+		private FollowingOperationsQuery() {
+			super(new String[] {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.ykovmuv.getName(), InfosysOw1MESTASKDATA.META.start.getName()}, Field.class);
+		}
+
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.edp.InfoSystemTableConverter#createRowObject(phoenix.mes.abas.impl.edp.InfoSystemExecutor.FieldValues)
+		 */
+		@Override
+		protected Operation createRowObject(FieldValues rowData) {
+			return new OperationImpl(rowData.getString(Field.ID_NO),
+					rowData.getString(Field.SWD),
+					rowData.getString(Field.DESCRIPTION),
+					rowData.getString(Field.WORK_CENTER_ID_NO),
+					rowData.getString(Field.WORK_CENTER_DESCRIPTION),
 					rowData.getString(Field.ITEM_TEXT));
 		}
 
@@ -475,12 +582,17 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		/**
 		 * A gyártási feladat beütemezésekor beállítandó mezők nevei.
 		 */
-		protected static final String[] scheduleInputFieldNames = {InfosysOw1MESTASKADMIN.META.yas.getName(), InfosysOw1MESTASKADMIN.META.ymgr.getName(), InfosysOw1MESTASKADMIN.META.ymnum.getName(), InfosysOw1MESTASKADMIN.META.yas0.getName(), InfosysOw1MESTASKADMIN.META.ybeterv.getName()};
+		protected static final String[] scheduleInputFieldNames = {InfosysOw1MESTASKADMIN.META.yas.getName(), InfosysOw1MESTASKADMIN.META.ymgr.getName(), InfosysOw1MESTASKADMIN.META.ygepszam.getName(), InfosysOw1MESTASKADMIN.META.yas0.getName(), InfosysOw1MESTASKADMIN.META.ybeterv.getName()};
 
 		/**
 		 * A gyártási feladat beütemezésének visszavonásakor ill. felfüggesztésekor beállítandó mezők nevei.
 		 */
 		protected static final String[] unScheduleInputFieldNames = {InfosysOw1MESTASKADMIN.META.yas.getName(), InfosysOw1MESTASKADMIN.META.ymegszak.getName(), InfosysOw1MESTASKADMIN.META.yvisszavon.getName()};
+
+		/**
+		 * A gyártási feladat végrehajtásának félbeszakításakor ill. a félbeszakítás visszavonásakor beállítandó mezők nevei.
+		 */
+		protected static final String[] interruptInputFieldNames = {InfosysOw1MESTASKADMIN.META.yas.getName(), InfosysOw1MESTASKADMIN.META.yzavar.getName(), InfosysOw1MESTASKADMIN.META.yzavarjel.getName()};
 
 		/**
 		 * A gyártási feladat lejelentésekor beállítandó mezők nevei.
@@ -547,12 +659,31 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		}
 
 		/**
-		 * A megadott gyártási feladat felfüggesztése.
+		 * A megadott gyártási feladat végrehajtásának félbeszakítása.
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 		 * @param abasConnection Az Abas-kapcsolat.
 		 */
-		public void suspendTask(String workSlipId, AbasConnection<?> abasConnection) {
-			unScheduleTask(workSlipId, true, abasConnection);
+		public void interruptTask(String workSlipId, AbasConnection<?> abasConnection) {
+			interruptTask(workSlipId, true, abasConnection);
+		}
+
+		/**
+		 * A megadott gyártási feladat végrehajtásának félbeszakítása ill. a félbeszakítás visszavonása.
+		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
+		 * @param interrupt A gyártás feladat végrehajtása félbeszakításra kerül?
+		 * @param abasConnection Az Abas-kapcsolat.
+		 */
+		protected void interruptTask(String workSlipId, boolean interrupt, AbasConnection<?> abasConnection) {
+			getResultHeaderFields(interruptInputFieldNames, new String[] {workSlipId, interrupt ? "1" : "0", " "}, abasConnection);
+		}
+
+		/**
+		 * A megadott gyártási feladat végrehajtásának folytatása.
+		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
+		 * @param abasConnection Az Abas-kapcsolat.
+		 */
+		public void resumeTask(String workSlipId, AbasConnection<?> abasConnection) {
+			interruptTask(workSlipId, false, abasConnection);
 		}
 
 		/**
@@ -564,6 +695,15 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 */
 		public void postCompletionConfirmation(String workSlipId, BigDecimal yield, BigDecimal scrapQuantity, AbasConnection<?> abasConnection) {
 			getResultHeaderFields(completionConfirmationFieldNames, new String[] {workSlipId, yield.toPlainString(), scrapQuantity.toPlainString(), " "}, abasConnection);
+		}
+
+		/**
+		 * A megadott gyártási feladat felfüggesztése.
+		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
+		 * @param abasConnection Az Abas-kapcsolat.
+		 */
+		public void suspendTask(String workSlipId, AbasConnection<?> abasConnection) {
+			unScheduleTask(workSlipId, true, abasConnection);
 		}
 
 	}
@@ -591,7 +731,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			final BasicData basicData = new BasicData();
 			basicData.workSlipNo = result.getString(BasicDataQuery.Field.ID_NO);
 			basicData.startDate = result.getAbasDate(BasicDataQuery.Field.START_DATE);
-			basicData.suspendedTask = result.getBoolean(BasicDataQuery.Field.SUSPENDED_TASK);
+			basicData.status = getStatus(result);
 			basicData.productIdNo = result.getString(BasicDataQuery.Field.PRODUCT_ID_NO);
 			basicData.productSwd = result.getString(BasicDataQuery.Field.PRODUCT_SWD);
 			basicData.productDescription = result.getString(BasicDataQuery.Field.PRODUCT_DESCRIPTION);
@@ -610,6 +750,23 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			basicData.stockUnit = result.getString(BasicDataQuery.Field.STOCK_UNIT_NAME);
 			basicData.calculatedProductionTime = result.getBigDecimal(BasicDataQuery.Field.CALCULATED_PRODUCTION_TIME);
 			return basicData;
+		}
+
+		/**
+		 * @param basicDataQueryResult A gyártási feladat alapadatai lekérdezésének eredménye.
+		 * @return A gyártási feladat végrehajtási állapota.
+		 */
+		protected Status getStatus(InfoSystemExecutor.FieldValues basicDataQueryResult) {
+			if (basicDataQueryResult.getBoolean(BasicDataQuery.Field.INTERRUPTED_TASK)) {
+				return Status.INTERRUPTED;
+			}
+			if (!basicDataQueryResult.getString(BasicDataQuery.Field.START_TIME).isEmpty()) {
+				return Status.IN_PROGRESS;
+			}
+			if (basicDataQueryResult.getBoolean(BasicDataQuery.Field.SUSPENDED_TASK)) {
+				return Status.SUSPENDED;
+			}
+			return Status.WAITING;
 		}
 
 		/* (non-Javadoc)
@@ -644,6 +801,14 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		@Override
 		protected List<BomElement> newBom() {
 			return BomQuery.EXECUTOR.getRows(workSlipId, abasConnectionObject);
+		}
+
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.TaskDetails#newFollowingOperations()
+		 */
+		@Override
+		protected List<Operation> newFollowingOperations() {
+			return FollowingOperationsQuery.EXECUTOR.getRows(workSlipId, abasConnectionObject);
 		}
 
 	}
@@ -703,15 +868,6 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task#isInProgress(phoenix.mes.abas.AbasConnection)
-	 */
-	@Override
-	public boolean isInProgress(AbasConnection<?> abasConnection) {
-		final EDPQuery edpQuery = InProgressQuery.EXECUTOR.readRecord(workSlipId, EdpConnection.getEdpSession(abasConnection));
-		return (null == edpQuery ? false : !edpQuery.getField(1).isEmpty());
-	}
-
-	/* (non-Javadoc)
 	 * @see phoenix.mes.abas.Task#schedule(phoenix.mes.abas.WorkStation, de.abas.erp.common.type.Id, phoenix.mes.abas.AbasConnection)
 	 */
 	@Override
@@ -728,21 +884,30 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task#suspend(phoenix.mes.abas.AbasConnection)
+	 * @see phoenix.mes.abas.Task#interrupt(phoenix.mes.abas.AbasConnection)
 	 */
 	@Override
-	public void suspend(AbasConnection<?> abasConnection) {
-		TaskManager.INSTANCE.suspendTask(workSlipId, abasConnection);
-		clearDetailsBasicDataCache();
+	public void interrupt(AbasConnection<?> abasConnection) {
+		TaskManager.INSTANCE.interruptTask(workSlipId, abasConnection);
+		clearDetailsStatusCache();
 	}
 
 	/**
-	 * A gyártási feladat alapadatait tartalmazó gyorsítótár kiürítése.
+	 * A gyártási feladat végrehajtási állapotát tartalmazó gyorsítótár kiürítése.
 	 */
-	protected void clearDetailsBasicDataCache() {
+	protected void clearDetailsStatusCache() {
 		if (null != details) {
-			details.clearBasicDataCache();
+			details.clearStatusCache();
 		}
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task#resume(phoenix.mes.abas.AbasConnection)
+	 */
+	@Override
+	public void resume(AbasConnection<?> abasConnection) {
+		TaskManager.INSTANCE.resumeTask(workSlipId, abasConnection);
+		clearDetailsStatusCache();
 	}
 
 	/* (non-Javadoc)
@@ -751,7 +916,18 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	@Override
 	public void postCompletionConfirmation(BigDecimal yield, BigDecimal scrapQuantity, AbasConnection<?> abasConnection) {
 		TaskManager.INSTANCE.postCompletionConfirmation(workSlipId, yield, scrapQuantity, abasConnection);
-		clearDetailsBasicDataCache();
+		if (null != details) {
+			details.clearBasicDataCache();
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task#suspend(phoenix.mes.abas.AbasConnection)
+	 */
+	@Override
+	public void suspend(AbasConnection<?> abasConnection) {
+		TaskManager.INSTANCE.suspendTask(workSlipId, abasConnection);
+		clearDetailsStatusCache();
 	}
 
 }
