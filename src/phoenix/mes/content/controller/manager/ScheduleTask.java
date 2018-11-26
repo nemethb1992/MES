@@ -14,6 +14,7 @@ import de.abas.erp.common.type.IdImpl;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.OutputFormatter;
 
@@ -53,8 +54,8 @@ public class ScheduleTask extends HttpServlet {
     		abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), new AppBuild(request).isTest());
         	Task task = AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(currentId), abasConnection);
     		String nextId = request.getParameter("nextId");
-        	boolean nextIsInProgress = ("".equals(nextId) || nextId == null ? false : AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(nextId), abasConnection).isInProgress(abasConnection));
-        	if(!task.isInProgress(abasConnection) && !nextIsInProgress) {
+        	boolean nextIsInProgress = ("".equals(nextId) || nextId == null ? false : ((AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(nextId), abasConnection)).getDetails(abasConnection).getStatus() == Status.IN_PROGRESS ? true : false));
+        	if(task.getDetails(abasConnection).getStatus() != Status.IN_PROGRESS && !nextIsInProgress) {
             	task.schedule(AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0], stationNo, abasConnection), id, abasConnection);
         	}
 		}catch(LoginException e)

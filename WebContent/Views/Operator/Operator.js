@@ -9,7 +9,7 @@ function pagesetup()
 {
 	TabControlEventHolder();
 	ApplicationCountDown();
-//	getView();
+	getView();
 	setTimer();
 	setDateNow('.personal-date');
 	setTimeNow('.personal-time');
@@ -256,9 +256,9 @@ function closeNavButtons()
 
 function bomListDropDown(item)
 {
-//	$(item).css("background","#efefef");
-	var actualItem = $(item).children().children('.bom-item-text-row');
-	actualItem.is(':hidden') ? actualItem.show() : actualItem.hide();
+	var itemHeight = $(item).css("height").match(/\d+/);
+	$(item).css({'height' : (itemHeight == 75 ? 'auto' : '75px'), 'background' : (itemHeight == 75 ? '#e4e4e4' : '#efefef')});
+
 }
 
 String.prototype.toHHMMSS = function () {

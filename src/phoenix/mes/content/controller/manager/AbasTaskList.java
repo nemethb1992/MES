@@ -16,6 +16,7 @@ import de.abas.erp.common.type.AbasDate;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.OutputFormatter;
 import phoenix.mes.content.OutputFormatter.DictionaryEntry;
@@ -60,7 +61,7 @@ public class AbasTaskList extends HttpServlet {
 				String startDate = taskDetails.getStartDate().toString();
 				String startDateFormated = startDate.substring(0,4) + "." + startDate.substring(4,6) + "." + startDate.substring(6,8) + ".";
 				
-				layout.append("<div class='dnd-container "+(taskDetails.isSuspendedTask() ? "dnd-container-suspended" : "")+" col-12 px-0' value='3'><input class='d-none workSlipId' value='"+task.getWorkSlipId()+"'><div class='container-fluid h-100'><div class='row h-100'><div class='col abas-listitem-data-col px-0'>");
+				layout.append("<div class='dnd-container "+(taskDetails.getStatus() == Status.SUSPENDED ? "dnd-container-suspended" : "")+" col-12 px-0' value='3'><input class='d-none workSlipId' value='"+task.getWorkSlipId()+"'><div class='container-fluid h-100'><div class='row h-100'><div class='col abas-listitem-data-col px-0'>");
 				layout.append("<div class='container-fluid'><div class='row'><div class='col my-col-1 article-col px-1 pl-2 py-2 dnd-input-div'><p>");
 				layout.append(of.getWord(DictionaryEntry.WORKSHEET_NO));
 				layout.append("</p><textarea disabled class='dnd-input dnd-in1'>");

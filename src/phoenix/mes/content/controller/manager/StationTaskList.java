@@ -18,6 +18,7 @@ import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.OutputFormatter;
 import phoenix.mes.content.OutputFormatter.DictionaryEntry;
@@ -49,9 +50,10 @@ public class StationTaskList extends HttpServlet {
 
 			for (Task task: list) {
 				final Task.Details taskDetails = task.getDetails(abasConnection);
-				boolean progress = task.isInProgress(abasConnection);
+				boolean progress = (task.getDetails(abasConnection).getStatus() == Status.IN_PROGRESS ? true : false);
+				boolean suspended = (task.getDetails(abasConnection).getStatus() == Status.SUSPENDED ? true : false);
 				summedProductionTime = summedProductionTime.add(taskDetails.getCalculatedProductionTime());
-				layout.append("<div class='dnd-container "+(taskDetails.isSuspendedTask() ? "dnd-container-suspended" : "")+" "+(task.isInProgress(abasConnection) ? "dnd-container-inprogress" : "")+" col-12 px-0' value='3'><input class='d-none workSlipId' value='"+task.getWorkSlipId()+"'><div class='container px-0'><div class='row w-100 mx-auto'><div class='"+(progress ? "col-6" : "col-4")+" pr-0 py-2 dnd-input-div'>");
+				layout.append("<div class='dnd-container "+(suspended ? "dnd-container-suspended" : "")+" "+(progress ? "dnd-container-inprogress" : "")+" col-12 px-0' value='3'><input class='d-none workSlipId' value='"+task.getWorkSlipId()+"'><div class='container px-0'><div class='row w-100 mx-auto'><div class='"+(progress ? "col-6" : "col-4")+" pr-0 py-2 dnd-input-div'>");
 				layout.append("<p>"+of.getWord(DictionaryEntry.WORKSHEET_NO)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getWorkSlipNo()+"</textarea>");
 				layout.append("<p>"+of.getWord(DictionaryEntry.ARTICLE)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductIdNo()+"</textarea>");
 				layout.append("<p>"+of.getWord(DictionaryEntry.SEARCH_WORD)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductSwd()+"</textarea>");
@@ -76,13 +78,9 @@ public class StationTaskList extends HttpServlet {
 			catch(Exception e)
 			{}
 		}
-
-
 		String[] responseArr = new String[2];
-
 		responseArr[0] = layout.toString();
 		responseArr[1] = of.formatTime(summedProductionTime);
-		
 		return responseArr;
 	}
 

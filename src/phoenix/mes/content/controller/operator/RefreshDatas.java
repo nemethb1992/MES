@@ -13,6 +13,7 @@ import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.OutputFormatter;
 
@@ -48,10 +49,12 @@ public class RefreshDatas extends HttpServlet {
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), new AppBuild(request).isTest());
 			
 			Task task = (Task)session.getAttribute("Task");
+			
+			Task.Details taskDetails = task.getDetails(abasConnection);
 			//FIXME
-			if(task.isInProgress(abasConnection))
+			if(taskDetails.getStatus() == Status.IN_PROGRESS)
 			{
-				task.getDetails(abasConnection).clearCache();
+				taskDetails.clearCache();
 				responseStr = "inProgress";
 			}
 		}catch(LoginException e)

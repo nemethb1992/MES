@@ -20,13 +20,18 @@ import phoenix.mes.abas.Task.BomElement;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.OutputFormatter;
 import phoenix.mes.content.PostgreSql;
-import phoenix.mes.content.OutputFormatter.DictionaryEntry;
+import phoenix.mes.content.controller.RenderView;
 
 
 public class DataSheetLoader extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
+	
+	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		// TODO split
@@ -60,23 +65,30 @@ public class DataSheetLoader extends HttpServlet {
 					doGet(request,response);
 					return;
 				}
-				Task.Details taskDetails = task.getDetails(abasConnection);				    	
+				Task.Details taskDetails = task.getDetails(abasConnection);		
+				request.setAttribute("taskDetails", taskDetails);	
+				String partialUrl = null;
 				switch (request.getParameter("tabNo")) {
 				case "1":
-					view = getSheet(taskDetails,workstation,wsName,of,request);
+					request.setAttribute("ws", workstation);
+					request.setAttribute("wsName", wsName);
+					partialUrl = "/Views/Operator/DataSheet/Partial/Sheet.jsp";
 					break;
 				case "2":
-					view = getDocuments(taskDetails, of);
+					partialUrl = "/Views/Operator/DataSheet/Partial/Documents.jsp";
 					break;
 				case "3":
-					view = getBom(taskDetails, of, request);
+			    	List<BomElement> li = taskDetails.getBom();
+			    	request.setAttribute("bomdata", li);
+			    	partialUrl = "/Views/Operator/DataSheet/Partial/BomList.jsp";
 					break;
 				case "4":
-					view = getItemTexts(taskDetails, of);
+					partialUrl = "/Views/Operator/DataSheet/Partial/ItemText.jsp";;
 					break;
 				default:
 					break;
 				}
+				view = (null != partialUrl ? RenderView.render(partialUrl, request, response) : "");
 			}catch(LoginException e)
 			{
 				System.out.println(e);
@@ -95,163 +107,6 @@ public class DataSheetLoader extends HttpServlet {
 		response.getWriter().write(view); 
 	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-  		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
-	
-	}
-	
-	protected String getSheet(Task.Details taskDetails, String workstation, String wsName, OutputFormatter of, HttpServletRequest request)
-	{
-		// TODO StringBuilder
-		 String view = "				<div class='container-fluid h-100 px-0 py-3'><div class=' my-white-container h-100 px-0'>"
-		 		+ "							<div class='row data-row mx-3 mt-0'>\r\n" + 
-		 		"								<div class='col-6 pt-3'>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.WORKSTATION)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled value='"+workstation.split("!")[0]+" - "+workstation.split("!")[1]+"'>\r\n" + 
-		 		"									</div>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.WORKSHEET_NO)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getWorkSlipNo()+"'>\r\n" + 
-		 		"									</div>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.GET_STARTED)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getStartDate()+"'>\r\n" + 
-		 		"									</div>\r\n" + 
-		 		"								</div>\r\n" + 
-		 		"								<div class='col-6 pt-3'>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.WORKSTATION_NAME)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+wsName+"'>\r\n" +
-		 		"									</div>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.PLACE_OF_USE)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getUsage()+"'>\r\n" + 
-		 		"									</div>\r\n" + 
-		 		"								</div>\r\n" + 
-		 		"							</div>\r\n" + 
-		 		"							<div class='row data-row mx-3 my-0'>\r\n" + 
-		 		"								<div class='col-6 pt-3'>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.ARTICLE)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getProductIdNo()+"'>\r\n" + 
-		 		"									</div>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.SEARCH_WORD)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getProductSwd()+"'>\r\n" + 
-		 		"									</div>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.OPEN_QUANTITY)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity())+" "+taskDetails.getStockUnit()+"'>\r\n" + 
-		 		"									</div>\r\n" + 
-		 		"								</div>\r\n" + 
-		 		"								<div class='col-6 pt-3'>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.NAME)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getProductDescription()+"'>\r\n" + 
-		 		"									</div>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.NAME)+" 2</p>\r\n" + 
-		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getProductDescription2()+"'>\r\n" + 
-		 		"									</div>\r\n" + 
-		 		"								</div>\r\n" + 
-		 		"							</div>\r\n" + 
-		 		"							<div class='row data-row mx-3 my-0'>\r\n" + 
-		 		"								<div class='col-6 pt-3 px-3'>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.OPERATION_NUMEBER)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getOperationIdNo()+"'>\r\n" + 
-		 		"									</div>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.SEARCH_WORD)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getOperationSwd()+"'>\r\n" + 
-		 		"									</div>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.NAME)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+taskDetails.getOperationDescription()+"'>\r\n" + 
-		 		"									</div>\r\n" + 
-		 		"								</div>\r\n" + 
-		 		"								<div class='col-6 pt-3 px-3'>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.EXECUTION_NO)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getNumberOfExecutions())+"'>\r\n" + 
-		 		"									</div>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.SETTING_TIME)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 task-data-value' type='text' disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getSetupTime())+" "+taskDetails.getSetupTimeUnit()+"'>\r\n" + 
-		 		"									</div>\r\n" + 
-		 		"									<div class='inputContainer'>\r\n" + 
-		 		"										<p class='task-data-label'>"+of.getWord(DictionaryEntry.TIME_FOR_PCS)+"</p>\r\n" + 
-		 		"										<input class='px-2 w-100 task-data-value' type='text disabled  value='"+of.formatWithoutTrailingZeroes(taskDetails.getUnitTime())+" "+taskDetails.getUnitTimeUnit()+"'>\r\n" + 
-		 		"									</div>" + 
-		 		"								</div>" +
-		 		"							</div>" + 
-		 		"							<div class='row data-row px-3'>" + 
-		 		"									<div class='col-12'><div class='inputContainer px-3'>" + 
-		 		"										<p class='mb-0 pt-1 task-data-label'>"+of.getWord(DictionaryEntry.PRODUCTION_INFO)+"</p>\r\n" + 
-		 		"										<textarea class='px-2 w-100 task-data-value'  disabled >"+taskDetails.getOperationReservationText()+"</textarea>\r\n" + 
-		 		"									</div>\r\n" + 
-		 		"								</div></div>\r\n" + 
-		 		"							</div></div>";
-		 
-		return view;
-	}
-	
-	protected String getDocuments(Task.Details data, OutputFormatter of)
-	{
-    	String view = "<div class='list-group row dokumentum-list'><button type='button' class='list-group-item list-group-item-action active disabled'>"+of.getWord(DictionaryEntry.DOCUMENTS)+"</button>";
-    	for (int i = 0; i < 8; i++) {
-    		view +="<button type='button' onclick='openAsset(this)' class='document-button list-group-item list-group-item-action'>Dokumentum "+i+"</button>";
-		}
-    	view += "</div>";
-		return view;
-	}
-	
-	protected String getBom(Task.Details taskDetails,OutputFormatter of, HttpServletRequest request)
-	{
-
-    	List<BomElement> li = taskDetails.getBom();
-		
-    	String view = "				<div class='row'><div class='col px-0'><table class=\"table table-striped mytable\">\r\n" + 
-    			"  								<thead>\r\n" + 
-    			"  								  <tr>\r\n" + 
-    			"     								 <th scope=\"col\">"+of.getWord(DictionaryEntry.ARTICLE)+"</th>\r\n" + 
-    			"     								 <th scope=\"col\">"+of.getWord(DictionaryEntry.SEARCH_WORD)+"</th>\r\n" +  
-    			"   									 <th scope=\"col\">"+of.getWord(DictionaryEntry.NAME)+" 1</th>\r\n" +  
-    			"  									 <th scope=\"col\">"+of.getWord(DictionaryEntry.NAME)+" 2</th>\r\n" +   
-    			"  									 <th scope=\"col\">"+of.getWord(DictionaryEntry.PLUG_IN_QUANTITY)+"</th>\r\n" + 
-    			"   								  </tr>\r\n" + 
-    			"  								</thead>\r\n" + 
-    			"  								<tbody class='darabjegyz-tbody'>";
-    	for (BomElement bomItem: li) {
-    		view += "<tr>"+ 
-    				"<th scope='row'>"+bomItem.getIdNo()+"</th>" +
-    				"<td>"+bomItem.getSwd()+"</td>" + 
-    				"<td>"+bomItem.getDescription()+"</td>" + 
-    				"<td>"+bomItem.getDescription2()+"</td>" + 
-    				"<td>"+of.formatWithoutTrailingZeroes(bomItem.getQuantityPerProduct())+" "+bomItem.getStockUnit()+"</td>" + 
-    				"</tr>";
-		}		
-    	view += "</tbody></table></div></div>";
-		return view;
-	}
-	
-	protected String getItemTexts(Task.Details taskDetails, OutputFormatter of)
-	{
-		String view ="					<div class='row h-100 m-0 px-0 py-3'>\r\n" + 
-				"								<div class='mr-2 mb-0 col col-textarea light-shadow'>\r\n" + 
-				"									<p class='h5 p-2'>"+of.getWord(DictionaryEntry.INFO_ARTICLE)+" 1</p>\r\n" + 
-				"									<textarea disabled class='p-3 BigTextInput'>"+taskDetails.getSalesOrderItemText()+"</textarea>\r\n" + 
-				"								</div>\r\n" + 
-				"								<div class='ml-2 mb-0 col col-textarea light-shadow'>\r\n" + 
-				"									<p class='h5 p-2'>"+of.getWord(DictionaryEntry.INFO_ARTICLE)+" 2</p>\r\n" + 
-				"									<textarea disabled class='p-3 BigTextInput'>"+taskDetails.getSalesOrderItemText2()+"</textarea>\r\n" + 
-				"								</div>\r\n" + 
-				"							</div>\r\n";
-		
-		return view;
-	}
-	
 	public String getWorkStationName(String wsCode, OutputFormatter of, boolean testSystem) throws SQLException
 	{
 		PostgreSql postgreSql = new PostgreSql(testSystem); 
