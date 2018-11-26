@@ -7,7 +7,7 @@
 <%@page import="de.abas.ceks.jedp.EDPSession"%>
 <%
 	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-	List<Task> li = (List<Task>)request.getAttribute("TaskList");
+	List<Task> li = (List<Task>)request.getAttribute("AbasList");
 	AbasConnection abasConnection = (AbasConnection<EDPSession>)request.getAttribute("abasConnection");
 	String startDate, startDateFormated;
 	for (Task task: li) {
