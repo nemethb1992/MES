@@ -22,7 +22,6 @@ import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.OutputFormatter;
 import phoenix.mes.content.OutputFormatter.DictionaryEntry;
-import phoenix.mes.content.controller.RenderView;
 
 
 public class StationTaskList extends HttpServlet {
@@ -33,9 +32,9 @@ public class StationTaskList extends HttpServlet {
 		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
 	}
 	
-	protected String[] StationList(String username, String pass, String station, OutputFormatter of, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	protected String[] StationList(String username, String pass, String station, OutputFormatter of, HttpServletRequest request)
 	{ 
-		String layout = "";
+		StringBuilder layout = new StringBuilder();
 		List<Task> list = new ArrayList<Task>();
 		int stationNo;
 		AbasConnection<EDPSession> abasConnection = null;        	
@@ -48,11 +47,25 @@ public class StationTaskList extends HttpServlet {
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), new AppBuild(request).isTest());
 			list = AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0], stationNo, abasConnection).getScheduledTasks(abasConnection);
 
-				request.setAttribute("StationList", list);
-				request.setAttribute("abasConnection", abasConnection);
-				layout = RenderView.render("/Views/Manager/Todo/Partial/StationList.jsp", request, response);
-			
-			
+
+			for (Task task: list) {
+				final Task.Details taskDetails = task.getDetails(abasConnection);
+				boolean progress = (task.getDetails(abasConnection).getStatus() == Status.IN_PROGRESS ? true : false);
+				boolean suspended = (task.getDetails(abasConnection).getStatus() == Status.SUSPENDED ? true : false);
+				summedProductionTime = summedProductionTime.add(taskDetails.getCalculatedProductionTime());
+				layout.append("<div class='dnd-container "+(suspended ? "dnd-container-suspended" : "")+" "+(progress ? "dnd-container-inprogress" : "")+" col-12 px-0' value='3'><input class='d-none workSlipId' value='"+task.getWorkSlipId()+"'><div class='container px-0'><div class='row w-100 mx-auto'><div class='"+(progress ? "col-6" : "col-4")+" pr-0 py-2 dnd-input-div'>");
+				layout.append("<p>"+of.getWord(DictionaryEntry.WORKSHEET_NO)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getWorkSlipNo()+"</textarea>");
+				layout.append("<p>"+of.getWord(DictionaryEntry.ARTICLE)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductIdNo()+"</textarea>");
+				layout.append("<p>"+of.getWord(DictionaryEntry.SEARCH_WORD)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductSwd()+"</textarea>");
+				layout.append("</div><div class='col-6 pr-0 py-2 dnd-input-div'>");
+				layout.append("<p>"+of.getWord(DictionaryEntry.PLACE_OF_USE)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getUsage()+"</textarea>");
+				layout.append("<p>"+of.getWord(DictionaryEntry.NAME)+"</p><textarea disabled class='dnd-input dnd-in1'>"+taskDetails.getProductDescription()+"</textarea>");
+				layout.append("<p>"+of.getWord(DictionaryEntry.CALCULATED_PROD_TIME)+"</p><textarea disabled class='dnd-input dnd-in1'>"+of.formatTime(taskDetails.getCalculatedProductionTime())+"</textarea>");
+				layout.append("</div><div  class='col-2 "+(progress ? "d-none" : "")+" dnd-input-div px-0'><div class='row w-100 mx-auto h-100 d-flex'><div class='col-12 px-0'>");
+				layout.append("<input class='h-100 w-100 task-panel-button mini-button up-task-button' onclick='MoveTaskUp(this)' type='button'></div><div class='col-12 my-1 px-0'>");
+				layout.append("<input class='h-100 w-100 task-panel-button mini-button remove-task-button' onclick='RemoveFromStation(this)' type='button'></div><div class='col-12 px-0'>");
+				layout.append("<input class='h-100 w-100 task-panel-button mini-button down-task-button' onclick='MoveTaskDown(this)' type='button'></div></div></div></div></div></div>");
+			}
 		}catch(LoginException e)
 		{
 			System.out.println(e);
@@ -83,7 +96,7 @@ public class StationTaskList extends HttpServlet {
  	   	
 	    response.setContentType("application/json");
 	    response.setCharacterEncoding("UTF-8"); 
-	    response.getWriter().write(new Gson().toJson(StationList(username,pass,station, of, request,response)));
+	    response.getWriter().write(new Gson().toJson(StationList(username,pass,station, of, request)));
 	}
 
 }

@@ -56,7 +56,7 @@ public class AbasTaskList extends HttpServlet {
 			int stationNo = Integer.parseInt(Station[1]);
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), new AppBuild(request).isTest());
 			List<Task> li = AbasObjectFactory.INSTANCE.createWorkStation(Station[0], stationNo, abasConnection).getUnassignedTasks(abasDate, abasConnection);
-			request.setAttribute("AbasList", li);
+			request.setAttribute("TaskList", li);
 			request.setAttribute("abasConnection", abasConnection);
 			view = RenderView.render("/Views/Manager/Todo/Partial/AbasList.jsp", request, response);
 
