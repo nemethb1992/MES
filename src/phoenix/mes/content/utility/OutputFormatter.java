@@ -3,7 +3,6 @@ package phoenix.mes.content.utility;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import javax.servlet.http.Cookie;
@@ -209,20 +208,20 @@ public class OutputFormatter {
 		return formatTime(timeInHours.multiply(BIG_DECIMAL_3600).intValue());
 	}
 
-	public String formatDate(AbasDate date) {
-		SimpleDateFormat sdf;
+	public String formatDate(AbasDate date) {		
+		String dateStr = date.toString();
+		String year = dateStr.substring(0,4);
+		String month = dateStr.substring(4,6);
+		String day = dateStr.substring(6,8);
 		
 		switch (locale.getLanguage()) {
 		case "de":
-			sdf= new SimpleDateFormat("dd-mm-yyyyy");
-			return sdf.format(date);
+			return day+". "+month+". "+year;
 		case "en":
-			sdf= new SimpleDateFormat("dd-mm-yyyyy");
-			return sdf.format(date);
+			return day+". "+month+". "+year;
 		case "hu":
 		default:
-			sdf= new SimpleDateFormat("yyyyy-mm-dd");
-			return sdf.format(date);
+			return year+". "+month+". "+day+".";
 		}
 	}
 	

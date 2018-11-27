@@ -37,16 +37,18 @@ public class StationTaskList extends HttpServlet {
 		BigDecimal summedProductionTime = BigDecimal.ZERO;
 
 		String view = "";
-
 		try {
 			String station = (String)session.getAttribute("selectedStation");
 			String[] stationSplit = station.split("!");
 			int stationNo = Integer.parseInt(stationSplit[1]);
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), new AppBuild(request).isTest());
 			List<Task> list = AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0], stationNo, abasConnection).getScheduledTasks(abasConnection);
+			
 			request.setAttribute("StationList", list);
 			request.setAttribute("abasConnection", abasConnection);
 			view = RenderView.render("/Views/Manager/Todo/Partial/StationList.jsp", request, response);
+			
+			summedProductionTime = (BigDecimal)request.getAttribute("summedProductionTime");
 		}catch(LoginException e)
 		{
 			System.out.println(e);

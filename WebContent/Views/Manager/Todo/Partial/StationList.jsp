@@ -29,11 +29,11 @@
 			<div
 				class='<%=(progress ? "col-6" : "col-4")%> pr-0 py-2 dnd-input-div'>
 				<p><%=of.getWord(DictionaryEntry.WORKSHEET_NO)%></p>
-				<input disabled class='dnd-input dnd-in1' value='<%=taskDetails.getWorkSlipNo()%>'>
+				<textarea disabled class='dnd-input dnd-in1'><%=taskDetails.getWorkSlipNo()%></textarea>
 				<p><%=of.getWord(DictionaryEntry.ARTICLE)%></p>
-				<input disabled class='dnd-input dnd-in1' value='<%=taskDetails.getProductIdNo()%>'>
+				<textarea disabled class='dnd-input dnd-in1'><%=taskDetails.getProductIdNo()%></textarea>
 				<p><%=of.getWord(DictionaryEntry.OPEN_QUANTITY)%></p>
-				<input disabled class='dnd-input dnd-in1'value='<%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity()) +" "+ taskDetails.getStockUnit()%>'>
+				<textarea disabled class='dnd-input dnd-in1'><%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity()) +" "+ taskDetails.getStockUnit()%></textarea>
 			</div>
 			<div class='col-6 pr-0 py-2 dnd-input-div'>
 				<p><%=of.getWord(DictionaryEntry.SEARCH_WORD)%></p>
@@ -66,4 +66,6 @@
 	</div>
 </div>
 
-<%}%>
+<%}
+request.setAttribute("summedProductionTime", summedProductionTime);
+%>

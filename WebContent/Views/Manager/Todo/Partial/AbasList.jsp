@@ -14,6 +14,7 @@
 		final Task.Details taskDetails = task.getDetails(abasConnection);
 				startDate = taskDetails.getStartDate().toString();
 				startDateFormated = startDate.substring(0,4) + "." + startDate.substring(4,6) + "." + startDate.substring(6,8) + ".";
+				
 				%>
 <div
 	class='dnd-container abas-list-item <%=(taskDetails.getStatus() == Status.SUSPENDED ? "dnd-container-suspended" : "")%> col-12 px-0'
