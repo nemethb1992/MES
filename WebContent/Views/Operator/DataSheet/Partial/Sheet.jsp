@@ -26,7 +26,7 @@
 				<div class='inputContainer'>
 					<p class='task-data-label'> <%=of.getWord(DictionaryEntry.GET_STARTED)%> </p>
 					<input class='px-2 w-100 task-data-value' type='text' disabled
-						value='<%=taskDetails.getStartDate()%>'/>
+						value='<%=of.formatDate(taskDetails.getStartDate())%>'/>
 				</div>
 			</div>
 			<div class='col-6 pt-3'>

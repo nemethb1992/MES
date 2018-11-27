@@ -208,12 +208,7 @@ public class OutputFormatter {
 	public String formatTime(BigDecimal timeInHours) {
 		return formatTime(timeInHours.multiply(BIG_DECIMAL_3600).intValue());
 	}
-	//TODO
-	public String formatAbasDate(AbasDate date)
-	{
-		return "";
-	}
-	
+
 	public String formatDate(AbasDate date) {
 		SimpleDateFormat sdf;
 		
@@ -231,7 +226,6 @@ public class OutputFormatter {
 		}
 	}
 	
-
 	public String formatTime(int timeInSeconds) {
 	    int hours = timeInSeconds / 3600;
 	    int secondsLeft = timeInSeconds - hours * 3600;
