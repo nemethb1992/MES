@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import phoenix.mes.content.OutputFormatter;
-import phoenix.mes.content.OutputFormatter.OperatingLanguage;
+import phoenix.mes.content.utility.OutputFormatter;
+import phoenix.mes.content.utility.OutputFormatter.OperatingLanguage;
 
 public class LanguageSetter extends HttpServlet {
 

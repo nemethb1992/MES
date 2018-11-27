@@ -15,7 +15,7 @@ import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
-import phoenix.mes.content.OutputFormatter;
+import phoenix.mes.content.utility.OutputFormatter;
 
 /**
  * Servlet implementation class UnScheduleTask

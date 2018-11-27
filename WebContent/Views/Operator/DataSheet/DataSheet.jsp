@@ -59,26 +59,26 @@
 						<form method='POST' class='h-100 d-none refresh-form'
 							action='${pageContext.request.contextPath}/OpenTask'></form>
 					</div>
-					<div id='btn_megszakitas'
+					<div id='btn_megszakitas' data-toggle="modal" data-target="#interrupt-level1"
 						class='btn_navHeader h-100 float-left btn_navHeader-left'>
 						<p class='h6 text-center nav-label'><%=outputFormatter.getWord(DictionaryEntry.INTERRUPT)%></p>
-						<div class='container-fluid my-nav-container h-100'>
-							<div class='row h-100'>
-								<form method='Post'
-									action='${pageContext.request.contextPath}/OpenTask'
-									class='d-none interrupt-form'></form>
-								<div class='col-11'>
-									<button
-										class="btn btn-outline-secondary mt-5 w-100 submit-action-btn"
-										type="button" onclick='InterruptTask()' id="interrupt-btn"><%=outputFormatter.getWord(DictionaryEntry.INTERRUPT)%></button>
-								</div>
-								<div class='col-1 px-0'>
-									<input type='button'
-										class='w-100 h-100 close-nav-btn megszak-btn' />
-								</div>
+<!-- 						<div class='container-fluid my-nav-container h-100'> -->
+<!-- 							<div class='row h-100'> -->
+<!-- 								<form method='Post' -->
+<%-- 									action='${pageContext.request.contextPath}/OpenTask' --%>
+<!-- 									class='d-none interrupt-form'></form> -->
+<!-- 								<div class='col-11'> -->
+<!-- 									<button -->
+<!-- 										class="btn btn-outline-secondary mt-5 w-100 submit-action-btn" -->
+<%-- 										type="button" onclick='InterruptTask()' id="interrupt-btn"><%=outputFormatter.getWord(DictionaryEntry.INTERRUPT)%></button> --%>
+<!-- 								</div> -->
+<!-- 								<div class='col-1 px-0'> -->
+<!-- 									<input type='button' -->
+<!-- 										class='w-100 h-100 close-nav-btn megszak-btn' /> -->
+<!-- 								</div> -->
 
-							</div>
-						</div>
+<!-- 							</div> -->
+<!-- 						</div> -->
 					</div>
 					<div class='btn_navHeader h-100 float-right px-0'>
 						<form method='POST' class='h-100'
@@ -159,10 +159,12 @@
 		<div
 			class='operator-switch-grid col-10 col-md-10 col-lg-10 col-xl-10 px-0'>
 			<div id='SwitchPanel' class='rightCont container-fluid'>
-
-			
 			</div>
 		</div>
 	</div>
 </div>
 <%@include file="/Views/Footer.jsp"%>
+
+<%@include file="/Views/Partial/Modals.jsp"%>
+
+

@@ -6,9 +6,9 @@
 
 
 
-<%@page import="phoenix.mes.content.OutputFormatter"%>
+<%@page import="phoenix.mes.content.utility.OutputFormatter"%>
 <%@page import="phoenix.mes.content.controller.LanguageSetter"%>
-<%@page import="phoenix.mes.content.OutputFormatter.DictionaryEntry"%>
+<%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Collection"%>

@@ -1,6 +1,6 @@
 <%@page import="phoenix.mes.abas.AbasConnection"%>
-<%@page import="phoenix.mes.content.OutputFormatter"%>
-<%@page import="phoenix.mes.content.OutputFormatter.DictionaryEntry"%>
+<%@page import="phoenix.mes.content.utility.OutputFormatter"%>
+<%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
 <%@page import="phoenix.mes.abas.Task"%>
 <%@page import="java.util.List"%>
 <%@page import="java.math.BigDecimal"%>
@@ -9,7 +9,7 @@
 <%
 	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 	List<Task> li = (List<Task>)request.getAttribute("StationList");
-	AbasConnection abasConnection = (AbasConnection<EDPSession>)request.getAttribute("abasConnection");
+	AbasConnection<EDPSession> abasConnection = (AbasConnection<EDPSession>)request.getAttribute("abasConnection");
 	String startDate, startDateFormated;
 
 	BigDecimal summedProductionTime = BigDecimal.ZERO;
@@ -29,15 +29,15 @@
 			<div
 				class='<%=(progress ? "col-6" : "col-4")%> pr-0 py-2 dnd-input-div'>
 				<p><%=of.getWord(DictionaryEntry.WORKSHEET_NO)%></p>
-				<textarea disabled class='dnd-input dnd-in1'><%=taskDetails.getWorkSlipNo()%></textarea>
+				<input disabled class='dnd-input dnd-in1' value='<%=taskDetails.getWorkSlipNo()%>'>
 				<p><%=of.getWord(DictionaryEntry.ARTICLE)%></p>
-				<textarea disabled class='dnd-input dnd-in1'><%=taskDetails.getProductIdNo()%></textarea>
-				<p><%=of.getWord(DictionaryEntry.SEARCH_WORD)%></p>
-				<textarea disabled class='dnd-input dnd-in1'><%=taskDetails.getProductSwd()%></textarea>
+				<input disabled class='dnd-input dnd-in1' value='<%=taskDetails.getProductIdNo()%>'>
+				<p><%=of.getWord(DictionaryEntry.OPEN_QUANTITY)%></p>
+				<input disabled class='dnd-input dnd-in1'value='<%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity()) +" "+ taskDetails.getStockUnit()%>'>
 			</div>
 			<div class='col-6 pr-0 py-2 dnd-input-div'>
-				<p><%=of.getWord(DictionaryEntry.PLACE_OF_USE)%></p>
-				<textarea disabled class='dnd-input dnd-in1'><%=taskDetails.getUsage()%></textarea>
+				<p><%=of.getWord(DictionaryEntry.SEARCH_WORD)%></p>
+				<textarea disabled class='dnd-input dnd-in1'><%=taskDetails.getProductSwd()%></textarea>
 				<p><%=of.getWord(DictionaryEntry.NAME)%></p>
 				<textarea disabled class='dnd-input dnd-in1'><%=taskDetails.getProductDescription()%></textarea>
 				<p><%=of.getWord(DictionaryEntry.CALCULATED_PROD_TIME)%></p>

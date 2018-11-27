@@ -3,7 +3,7 @@ var path = location.pathname.split('/')[1];
 function ApplicationCountDown()
 {
 	$(".countDownSpan").show();
-	var IDLE_TIMEOUT = 1300; //seconds
+	var IDLE_TIMEOUT = 28800; //seconds
 	var _idleSecondsTimer = null;
 	var _idleSecondsCounter = 0;
 
@@ -57,7 +57,9 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 function loadingAnimation(element, name)
 {
-	$(element).append("<div class='"+name+" loaderCycle mx-auto mt-5  abas-cycle'></div>");	
+//$(element).append("<div class='"+name+" loaderCycle position-absolute'></div>");
+$(element).append("<div class='"+name+" position-absolute' id='circle'><div class='loader'><div class='loader'><div class='loader'><div class='loader'></div></div></div></div></div>");	
+
 }
 
 function loadingAnimationStop(name)
@@ -103,6 +105,9 @@ function BackToTaskStart()
 {
     document.location.href = "Logout";
 }
+
+
+
 //
 //var distance = IDLE_TIMEOUT - _idleSecondsCounter;
 //var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

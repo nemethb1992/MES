@@ -1,4 +1,4 @@
-package phoenix.mes.content;
+package phoenix.mes.content.utility;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -22,6 +22,7 @@ public class OutputFormatter {
 		LOGIN("Bejelentkezés","Anmeldung","Login"),
 		WORKSTATION("Munkaállomás","Arbeitsplatz","Workstation"),
 		WORKSTATION_NAME("Munkaállomás neve","Name Arbeitsplatz","Workstation name"),
+		WORKSTATION_GROUP("Gépcsoport","der Regelsatz","Compound"),
 		WORKSHEET_NO("Munkalapszám","Arbeitsschein-Nr.","Worksheet No."),
 		ARTICLE("Cikkszám","Artikel-Nr.","Article"),
 		SEARCH_WORD("Keresőszó","Suchwort","Search word"),

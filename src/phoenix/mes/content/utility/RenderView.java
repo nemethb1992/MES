@@ -1,4 +1,4 @@
-package phoenix.mes.content.controller;
+package phoenix.mes.content.utility;
 
 import java.io.IOException;
 import java.io.PrintWriter;

@@ -86,7 +86,6 @@ function timerStart(time)
 		"background-position" : "center",
 		"background-position-y" : "25%"
 	});
-	time = "10";
 	var original = time.split('.')[0];
 	var count = time.split('.')[0];
 	clearInterval(counter);
@@ -211,13 +210,7 @@ var opened = true;
 
 function openInterupt(item)
 {
-	$(".btn_navHeader-left").hide();
-	$(item).show();
 	closeNavButtons();
-	$(item).css({'width':'55%'});
-	$('#btn_megszakitas p').css({'display':'none'});
-	$('#btn_megszakitas .my-nav-container').css({'display':'block'});
-	$('#btn_megszakitas').css({'background':'white'});
 }
 
 function openSubmit(item)
@@ -242,13 +235,11 @@ function closeSubmit()
 function closeInterupt()
 {
 	$(".btn_navHeader-left").show();
-	$('#btn_megszakitas').css({'background':'', 'color':'','width':'','border':''});
-	$('#btn_megszakitas .my-nav-container').css({'display':'none'});
-	$('#btn_megszakitas p').css({'display':''});
 }
 
 function closeNavButtons()
 {
+	$(".btn_navHeader-left").show();
 	$('.btn_navHeader').css({'background':'', 'color':'','width':'','border':''});
 	$('.btn_navHeader .my-nav-container').css({'display':'none'});
 	$('.btn_navHeader p').css({'display':''});
@@ -262,7 +253,7 @@ function bomListDropDown(item)
 }
 
 String.prototype.toHHMMSS = function () {
-	var sec_num = parseInt(this, 10); // don't forget the second parm
+	var sec_num = parseInt(this, 10);
 	var hours = Math.floor(sec_num / 3600);
 	var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
 	var seconds = sec_num - (hours * 3600) - (minutes * 60);

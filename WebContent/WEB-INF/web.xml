@@ -106,7 +106,7 @@
     <description></description>
     <display-name>FileHandler</display-name>
     <servlet-name>FileHandler</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.FileHandler</servlet-class>
+    <servlet-class>phoenix.mes.content.utility.FileHandler</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>FileHandler</servlet-name>
@@ -116,7 +116,7 @@
     <description></description>
     <display-name>Timer</display-name>
     <servlet-name>Timer</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.operator.Timer</servlet-class>
+    <servlet-class>phoenix.mes.content.utility.Timer</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Timer</servlet-name>

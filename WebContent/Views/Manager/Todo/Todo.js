@@ -95,7 +95,7 @@ function ListLoader()
 				date = null;
 			}
 			$( ".dndf1" ).empty();
-			loadingAnimation('.abas-list-holder', 'proba');
+			loadingAnimation('.sortContDiv_ListHolder', 'proba');
 			$.post({
 				url:  '/'+path+'/AbasTaskList',
 				data: {

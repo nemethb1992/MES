@@ -1,4 +1,4 @@
-package phoenix.mes.content.controller.operator;
+package phoenix.mes.content.utility;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -13,7 +13,6 @@ import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
-import phoenix.mes.content.OutputFormatter;
 
 /**
  * Servlet implementation class Timer

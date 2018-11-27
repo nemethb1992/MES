@@ -11,8 +11,8 @@ import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.content.AppBuild;
-import phoenix.mes.content.OutputFormatter;
-import phoenix.mes.content.OutputFormatter.DictionaryEntry;
+import phoenix.mes.content.utility.OutputFormatter;
+import phoenix.mes.content.utility.OutputFormatter.DictionaryEntry;
 
 public class Authentication {
 	

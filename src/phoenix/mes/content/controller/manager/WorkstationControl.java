@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import phoenix.mes.content.AppBuild;
-import phoenix.mes.content.OutputFormatter;
 import phoenix.mes.content.PostgreSql;
+import phoenix.mes.content.utility.OutputFormatter;
 
 /**
  * Servlet implementation class StationControl

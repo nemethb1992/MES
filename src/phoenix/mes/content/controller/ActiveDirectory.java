@@ -10,8 +10,8 @@ import javax.naming.directory.InitialDirContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import phoenix.mes.content.OutputFormatter;
-import phoenix.mes.content.OutputFormatter.DictionaryEntry;
+import phoenix.mes.content.utility.OutputFormatter;
+import phoenix.mes.content.utility.OutputFormatter.DictionaryEntry;
 
 public class ActiveDirectory {
 	

@@ -140,8 +140,45 @@ html {
     text-align: center;
     color: white;
 }
+#circle {
+    left: calc(50% - 30px);
+    top: calc(40% - 30px);
+    transform: translate(-50%,-50%);
+	width: 150px;
+    height: 150px;	
+}
 
+@keyframes rotate {
+100% {transform: rotate(360deg);}
+} 
+/* @-webkit-keyframes spin { */
+/*   0% { -webkit-transform: rotate(0deg); } */
+/*   100% { -webkit-transform: rotate(360deg); } */
+/* } */
 
+/* @keyframes spin { */
+/*   0% { transform: rotate(0deg); } */
+/*   100% { transform: rotate(360deg); } */
+/* } */
+.loader {
+    width: calc(100% - 0px);
+	height: calc(100% - 0px);
+	border: 8px solid transparent;
+	border-top: 8px solid #dc3545;
+	border-radius: 50%;
+	animation: rotate 5s linear infinite;
+}
+.loaderCycle {
+    left: calc(50% - 30px);
+    top: calc(40% - 30px);
+    border: 5px solid #ffffff;
+    border-radius: 50%;
+    border-top: 5px solid #dc3545;
+    width: 100px;
+    height: 100px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;  
+}
 
 .LogoMiniPM
 {

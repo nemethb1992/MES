@@ -1,5 +1,5 @@
-<%@page import="phoenix.mes.content.OutputFormatter"%>
-<%@page import="phoenix.mes.content.OutputFormatter.DictionaryEntry"%>
+<%@page import="phoenix.mes.content.utility.OutputFormatter"%>
+<%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
 <%@page import="phoenix.mes.abas.Task"%>
 <%@page import="java.util.List"%>
 <%@page import="phoenix.mes.abas.Task.BomElement"%>

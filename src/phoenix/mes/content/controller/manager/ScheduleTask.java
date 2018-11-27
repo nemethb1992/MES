@@ -16,7 +16,7 @@ import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
-import phoenix.mes.content.OutputFormatter;
+import phoenix.mes.content.utility.OutputFormatter;
 
 /**
  * Servlet implementation class ScheduleTask

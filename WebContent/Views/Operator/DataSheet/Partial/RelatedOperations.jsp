@@ -1,12 +1,13 @@
 <%@page import="phoenix.mes.content.utility.OutputFormatter"%>
 <%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
 <%@page import="java.util.List"%>
-<%@page import="phoenix.mes.abas.Task.BomElement"%>
+<%@page import="phoenix.mes.abas.Task"%>
+<%@page import="phoenix.mes.abas.Task.Operation"%>
 <%
 	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-	List<BomElement> li = (List<BomElement>)request.getAttribute("bomdata");
+	List<Task.Operation> data = (List<Task.Operation>)request.getAttribute("operationdata");
+	
 %>
-
 <div class='row bom-list-full-container h-100'>
 
 	<div class='col-12'>
@@ -19,47 +20,47 @@
 				<input class='w-100' disabled
 					value='<%=of.getWord(DictionaryEntry.SEARCH_WORD)%>'>
 			</div>
-			<div class='col-3'>
+			<div class='col-2'>
 				<input class='w-100' disabled
-					value='<%=of.getWord(DictionaryEntry.NAME)%> 1'>
-			</div>
-			<div class='col-3'>
-				<input class='w-100' disabled
-					value='<%=of.getWord(DictionaryEntry.NAME)%> 2'>
+					value='<%=of.getWord(DictionaryEntry.NAME)%>'>
 			</div>
 			<div class='col-2'>
 				<input class='w-100' disabled
-					value='<%=of.getWord(DictionaryEntry.PLUG_IN_QUANTITY)%>'>
+					value='<%=of.getWord(DictionaryEntry.WORKSTATION_GROUP)%>'>
+			</div>
+			<div class='col-3'>
+				<input class='w-100' disabled
+					value='<%=of.getWord(DictionaryEntry.WORKSTATION_NAME)%>'>
 			</div>
 		</div>
 		<%
-			for (BomElement bomItem : li) {
+			for (Task.Operation item : data) {
 		%>
 		<div class='row bom-item-row p-2' onclick='bomListDropDown(this)'>
 			<div class='col-12'>
 				<div class='row item-data-row py-2'>
 					<div class='col-2'>
-						<input class='w-100' disabled value='<%=bomItem.getIdNo()%>'>
+						<input class='w-100' disabled value='<%=item.getIdNo()%>'>
 					</div>
 					<div class='col-2'>
-						<input class='w-100' disabled value='<%=bomItem.getSwd()%>'>
-					</div>
-					<div class='col-3'>
-						<input class='w-100' disabled
-							value='<%=bomItem.getDescription()%>'>
-					</div>
-					<div class='col-3'>
-						<input class='w-100' disabled
-							value='<%=bomItem.getDescription2()%>'>
+						<input class='w-100' disabled value='<%=item.getSwd()%>'>
 					</div>
 					<div class='col-2'>
 						<input class='w-100' disabled
-							value='<%=of.formatWithoutTrailingZeroes(bomItem.getQuantityPerProduct())%>  <%=bomItem.getStockUnit()%>'>
+							value='<%=item.getDescription()%>'>
+					</div>
+					<div class='col-2'>
+						<input class='w-100' disabled
+							value='<%=item.getWorkCenterIdNo()%>'>
+					</div>
+					<div class='col-3'>
+						<input class='w-100' disabled
+							value='<%=item.getWorkCenterDescription()%>'>
 					</div>
 				</div>
 				<div class='row bom-item-text-row'>
 					<div class='col-12'>
-						<textarea class='w-100 h-100 item-text-textarea' disabled><%=bomItem.getItemText()%></textarea>
+						<textarea class='w-100 h-100 item-text-textarea' disabled><%=item.getItemText()%></textarea>
 					</div>
 				</div>
 			</div>

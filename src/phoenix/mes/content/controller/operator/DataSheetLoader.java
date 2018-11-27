@@ -2,7 +2,6 @@ package phoenix.mes.content.controller.operator;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Locale;
 
 import javax.security.auth.login.LoginException;
@@ -16,11 +15,10 @@ import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
-import phoenix.mes.abas.Task.BomElement;
 import phoenix.mes.content.AppBuild;
-import phoenix.mes.content.OutputFormatter;
 import phoenix.mes.content.PostgreSql;
-import phoenix.mes.content.controller.RenderView;
+import phoenix.mes.content.utility.OutputFormatter;
+import phoenix.mes.content.utility.RenderView;
 
 
 public class DataSheetLoader extends HttpServlet {
@@ -47,7 +45,7 @@ public class DataSheetLoader extends HttpServlet {
 		{
 			String wsName = "";
 			try {
-				wsName = getWorkStationName(workstation, of, testSystem);
+				wsName = getStationName(workstation, request);
 			} catch (SQLException e) {
 				wsName = " - ";
 			}
@@ -78,12 +76,15 @@ public class DataSheetLoader extends HttpServlet {
 					partialUrl = "/Views/Operator/DataSheet/Partial/Documents.jsp";
 					break;
 				case "3":
-			    	List<BomElement> li = taskDetails.getBom();
-			    	request.setAttribute("bomdata", li);
+			    	request.setAttribute("bomdata", taskDetails.getBom());
 			    	partialUrl = "/Views/Operator/DataSheet/Partial/BomList.jsp";
 					break;
 				case "4":
-					partialUrl = "/Views/Operator/DataSheet/Partial/ItemText.jsp";;
+					partialUrl = "/Views/Operator/DataSheet/Partial/ItemText.jsp";
+					break;
+				case "5":
+			    	request.setAttribute("operationdata", taskDetails.getFollowingOperations());
+					partialUrl = "/Views/Operator/DataSheet/Partial/RelatedOperations.jsp";
 					break;
 				default:
 					break;
@@ -106,12 +107,11 @@ public class DataSheetLoader extends HttpServlet {
 		response.setCharacterEncoding("UTF-8"); 
 		response.getWriter().write(view); 
 	}
-
-	public String getWorkStationName(String wsCode, OutputFormatter of, boolean testSystem) throws SQLException
+	public String getStationName(String workstation, HttpServletRequest request) throws SQLException
 	{
-		PostgreSql postgreSql = new PostgreSql(testSystem); 
-		Locale language = of.getLocale();
-		String[] stationSplit = wsCode.split("!");
+		PostgreSql postgreSql = new PostgreSql(new AppBuild(request).isTest()); 
+		Locale language = ((OutputFormatter)request.getSession().getAttribute("OutputFormatter")).getLocale();
+		String[] stationSplit = workstation.split("!");
 		String command, field;
 		
 		switch (language.getLanguage()) {
@@ -132,5 +132,4 @@ public class DataSheetLoader extends HttpServlet {
 		
 		return postgreSql.sqlSingleQuery(command, field);
 	}
-		
 }

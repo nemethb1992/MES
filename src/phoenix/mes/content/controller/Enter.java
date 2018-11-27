@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import phoenix.mes.content.AppBuild;
-import phoenix.mes.content.OutputFormatter;
-import phoenix.mes.content.OutputFormatter.DictionaryEntry;
+import phoenix.mes.content.utility.OutputFormatter;
+import phoenix.mes.content.utility.OutputFormatter.DictionaryEntry;
 
 public class Enter extends HttpServlet {
 
