@@ -223,12 +223,18 @@ function clickOnStation(item)
 	$(".station_label").val(station.split("!")[2] + "  (" + station.split("!")[0] +"-"+ station.split("!")[1]+")");
 	ListLoader();
 }
-
+function isEmpty( el ){
+    return !$.trim(el.html())
+}
 function PushToStation(item)
 {
-	var currentItemValue = $(item).parents('.dnd-container').children('.workSlipId').val();
-	var lastItemValue = $('.dnd-container').last().children('.workSlipId').val();
-	AddTask(currentItemValue, lastItemValue);
+	var current = $(item).parents('.abas-list-item').children('.workSlipId').val();
+	var targeted = null;
+	if(!isEmpty($('.station-list'))){
+		targeted = $('.station-list-item').last().children('.workSlipId').val();
+	}
+	console.log(current + targeted);
+	AddTask(current, targeted);
 }
 
 function MoveTaskUp(item)

@@ -21,7 +21,7 @@
 				summedProductionTime = summedProductionTime.add(taskDetails.getCalculatedProductionTime());
 				%>
 <div
-	class='dnd-container <%=(suspended ? "dnd-container-suspended" : "")%> col-12 <%=(progress ? "dnd-container-inprogress" : "")%> px-0'
+	class='dnd-container station-list-item <%=(suspended ? "dnd-container-suspended" : "")%> col-12 <%=(progress ? "dnd-container-inprogress" : "")%> px-0'
 	value='3'>
 	<input class='d-none workSlipId' value='<%=task.getWorkSlipId()%>'>
 	<div class='container px-0'>

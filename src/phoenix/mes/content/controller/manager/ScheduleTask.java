@@ -36,17 +36,16 @@ public class ScheduleTask extends HttpServlet {
 			return;
 		}
 		
-		String targetId = request.getParameter("targetId");
-		
 		HttpSession session = request.getSession();
 		
 		AbasConnection<EDPSession> abasConnection = null;
 		
-		IdImpl id = (null != targetId && !"".equals(targetId) ? (IdImpl) IdImpl.valueOf(targetId) : (IdImpl) IdImpl.NULLREF);
-
  	   	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
  	   	String station = (String)session.getAttribute("selectedStation");
 		String currentId = request.getParameter("currentId");
+		String targetId = request.getParameter("targetId");
+		
+		IdImpl id = (null != targetId && !"".equals(targetId) ? (IdImpl) IdImpl.valueOf(targetId) : (IdImpl) IdImpl.NULLREF);
 		
     	try {        	
     		String[] stationSplit = station.split("!");

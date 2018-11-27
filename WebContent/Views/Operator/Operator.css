@@ -489,11 +489,17 @@ position: absolute;
 	.task-data-label {
 		font-size: 14px;
 	}
+	.bom-list-full-container input{
+		font-size: 14px;
+	}
 }
 @media only screen and (max-width: 1100px) {
 	.timerPanel 
 	{
 		font-size: 24px;
+	}
+	.bom-list-full-container input{
+		font-size: 12px;
 	}
 }
 

@@ -16,7 +16,7 @@
 				startDateFormated = startDate.substring(0,4) + "." + startDate.substring(4,6) + "." + startDate.substring(6,8) + ".";
 				%>
 <div
-	class='dnd-container <%=(taskDetails.getStatus() == Status.SUSPENDED ? "dnd-container-suspended" : "")%> col-12 px-0'
+	class='dnd-container abas-list-item <%=(taskDetails.getStatus() == Status.SUSPENDED ? "dnd-container-suspended" : "")%> col-12 px-0'
 	value='3'>
 	<input class='d-none workSlipId' value='<%=task.getWorkSlipId()%>'>
 	<div class='container-fluid h-100'>

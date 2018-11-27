@@ -76,7 +76,20 @@ function setDateNow(element)
 	    var year = currentTime.getFullYear();
 	    var month = currentTime.getMonth() + 1;
 	    var day = currentTime.getDate();
-	    var currentDate = year +"."+ month +"."+ day + ".";
+	    var currentDate;
+	    switch ($.cookie("language")) {
+	    case "de":
+	    	currentDate = day +". "+ month +". "+ year;
+	        break;
+	    case "en":
+	    	currentDate = day +". "+ month +". "+ year;
+	        break;
+	    case "hu":
+	    default:
+	    	currentDate = year +". "+ month +". "+ day + ".";
+	        break;
+	    }
+	   
 	    $(element).val(currentDate);
 
 	},1000);
