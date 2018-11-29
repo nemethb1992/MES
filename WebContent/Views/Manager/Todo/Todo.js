@@ -16,6 +16,7 @@ function TaskManagerStartUp()
 	setDateNow('.personal-date');
 	setTimeNow('.personal-time');
 	datepicker();
+	loadingAnimation('.sortContDiv_ListHolder', 'proba');
 }
 
 function ButtonScriptElements()
