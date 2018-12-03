@@ -149,10 +149,9 @@ function openAsset(item)
 	});
 }
 
+
 function TabControlEventHolder()
 {
-
-	
 	$('.refresh-click').click(function(){
 		RefreshTask();
 	});
@@ -188,13 +187,13 @@ function TabControlEventHolder()
 		opened = true;
 	});
 	$('#btn_megszakitas').click(function(){
-		if(opened != false)
-		{
-			console.log("r1");
-			closeSubmit();
-			openInterupt(this);
-		}
-		opened = true;
+//		if(opened != false)
+//		{
+//			console.log("r1");
+//			closeSubmit();
+//			openInterupt(this);
+//		}
+//		opened = true;
 	});
 	$('.btn_navHeader .lejelent-btn').click(function(){
 		opened = false;
@@ -232,10 +231,10 @@ function closeSubmit()
 	$('#btn_lejelentes p').css({'display':''});
 }
 
-function closeInterupt()
-{
-	$(".btn_navHeader-left").show();
-}
+//function closeInterupt()
+//{
+//	$(".btn_navHeader-left").show();
+//}
 
 function closeNavButtons()
 {
@@ -275,20 +274,53 @@ function textAreaAdjust(o) {
 	  o.style.height = (25+o.scrollHeight)+"px";
 	}
 
+function Cancel()
+{
+	$('#interrupt-level1').modal('hide');
+}
+
+function OpenInterruptModal()
+{
+	$('#interrupt-level1').modal('show');
+}
+
 function InterruptTask()
 {
-	value = 1;
-	
-	$.post({
-		url:  '/'+path+'/Suspend',
-		data:{
-			SuspendType: value
-		},
-		success: function () {
-			$('.interrupt-form').submit();
-		}
-	});
+	$('#interrupt-level1').modal('hide');
+	$('#interrupt-level2').modal('show');
+//	$.post({
+//		url:  '/'+path+'/InterruptTask',
+//		success: function () {
+//			$('.interrupt-form').submit();
+//		}
+//	});
 }
+function SuspendTask()
+{
+	$('#interrupt-level2').modal('hide');
+	
+//	$.post({
+//		url:  '/'+path+'/SuspendTask',
+//		data:
+//			username = $(".username-input").val(),
+//			password = $(".password-input").val(),
+//		success: function () {
+//			$('.interrupt-form').submit();
+//		}
+//	});
+}
+
+function ResumeTask()
+{
+	$('#interrupt-level2').modal('hide');
+//	$.post({
+//		url:  '/'+path+'/ResumeTask',
+//		success: function () {
+//			$('.interrupt-form').submit();
+//		}
+//	});
+}
+
 
 function RefreshTask()
 {	

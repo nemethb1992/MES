@@ -29,7 +29,18 @@ html,body{
     border-left: 1px solid #dedede;
     border-bottom: 1px solid #dedede;
 }
-
+.my-fade
+{
+	    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    overflow: hidden;
+    outline: 0;
+}
 .btn_logout-gray{
 	height: 100%;
 	width: 100%;

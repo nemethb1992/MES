@@ -1,6 +1,5 @@
 var SelectedStation = null;
 var path = location.pathname.split('/')[1];
-var level = 0;
 
 $(document).ready(function(){
 	TaskManagerStartUp();
@@ -16,7 +15,6 @@ function TaskManagerStartUp()
 	setDateNow('.personal-date');
 	setTimeNow('.personal-time');
 	datepicker();
-	loadingAnimation('.sortContDiv_ListHolder', 'proba');
 }
 
 function ButtonScriptElements()
@@ -82,45 +80,40 @@ function datepicker()
 function ListLoader()
 {
 	SessionStoreStation(SelectedStation);
-
-	if(level > 1)
+	
+	workstationListLoader();
+	var date = $(".datepicker_own").val();
+	if(date != null && date != "" && date != "undefinied")
 	{
-			workstationListLoader();
-			var date = $(".datepicker_own").val();
-			if(date != null && date != "" && date != "undefinied")
-			{
-				date = date.split('-')[0] + date.split('-')[1] + date.split('-')[2];
-			}
-			else
-			{
-				date = null;
-			}
-			$( ".dndf1" ).empty();
-			loadingAnimation('.sortContDiv_ListHolder', 'proba');
-			$.post({
-				url:  '/'+path+'/AbasTaskList',
-				data: {
-					date: date
-				},
-				success: function (respond) {
-					
-					loadingAnimationStop('proba');
-					$( ".dndf1" ).empty();
-					$( ".dndf1" ).append(respond);
-				},
-				error: function() {
-					$( ".dndf1" ).empty();
-				}  
-			});
+		date = date.split('-')[0] + date.split('-')[1] + date.split('-')[2];
 	}
+	else
+	{
+		date = null;
+	}
+	$( ".dndf1" ).empty();
+	loadingAnimation('.sortContDiv_ListHolder', 'proba');
+	$.post({
+		url:  '/'+path+'/AbasTaskList',
+		data: {
+			date: date
+		},
+		success: function (respond) {
+
+			loadingAnimationStop('proba');
+			$( ".dndf1" ).empty();
+			$( ".dndf1" ).append(respond);
+		},
+		error: function() {
+			$( ".dndf1" ).empty();
+		}  
+	});
 }
 
 
 
 function workstationListLoader()
 {
-	if(level > 1)
-	{
 		$( ".dndf2" ).empty();
 		$( ".ts_sumTime" ).val("0:00:00");
 		$.post({
@@ -136,7 +129,6 @@ function workstationListLoader()
 			}  
 		});
 		return true;
-	}
 }
 
 function SessionStoreStation(station)
@@ -197,12 +189,11 @@ function FirstStationList()
 	});
 }
 
-function StationItemSelect(item)
+function StationItemSelect(item, level)
 {
 	$( ".station-container" ).empty();
-	if(level < 3)
-		level++;
 	var value = $(item).attr("value");
+	console.log(value);
 	$.post({
 		url:  '/'+path+'/WorkstationControl',
 		data: {

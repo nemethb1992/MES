@@ -59,7 +59,7 @@
 						<form method='POST' class='h-100 d-none refresh-form'
 							action='${pageContext.request.contextPath}/OpenTask'></form>
 					</div>
-					<div id='btn_megszakitas' data-toggle="modal" data-target="#interrupt-level1"
+					<div id='btn_megszakitas' onclick='OpenInterruptModal()' 
 						class='btn_navHeader h-100 float-left btn_navHeader-left'>
 						<p class='h6 text-center nav-label'><%=outputFormatter.getWord(DictionaryEntry.INTERRUPT)%></p>
 <!-- 						<div class='container-fluid my-nav-container h-100'> -->
@@ -165,6 +165,6 @@
 </div>
 <%@include file="/Views/Footer.jsp"%>
 
-<%@include file="/Views/Partial/Modals.jsp"%>
+<%@include file="/Views/Partial/TestModal.jsp"%>
 
 

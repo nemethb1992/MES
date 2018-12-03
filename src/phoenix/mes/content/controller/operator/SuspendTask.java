@@ -1,7 +1,9 @@
-package phoenix.mes.content.navigation;
+package phoenix.mes.content.controller.operator;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
+import javax.naming.NamingException;
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,52 +16,63 @@ import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.controller.Authentication;
+import phoenix.mes.content.utility.AccessControl;
 import phoenix.mes.content.utility.OutputFormatter;
 
-
 /**
- * Servlet implementation class OpenTask
+ * Servlet implementation class Suspend
  */
-public class DataSheet extends HttpServlet {
+public class SuspendTask extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		getServletContext().getRequestDispatcher("/Logout").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		HttpSession session = request.getSession();
 		
 		if(!(new AppBuild(null)).isStable(request)){
 			doGet(request,response);
 			return;
 		}
-		
-		String workstation = (String)session.getAttribute("operatorWorkstation");
-		
-		boolean testSystem = new AppBuild(request).isTest();
 
-		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
+		String username = request.getParameter("username");
+		String pass = request.getParameter("password");
 		
-		if(workstation == null)
+		try {
+			if(!new Authentication().bind(username, pass, request) && !new AccessControl(request, username).isModifier())
+			{
+				return;
+			}
+		} catch (SQLException | LoginException | NamingException e1) {
+		}
+
+		HttpSession session = request.getSession();
+
+		Task task = (Task)session.getAttribute("Task");
+		if(null == task)
 		{
-			doGet(request,response);
 			return;
 		}
-		
-		AbasConnection<EDPSession> abasConnection = null;
-		try {
-			String username = (String)session.getAttribute("username");
-			String pass = (String)session.getAttribute("pass");
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), testSystem);
-			Task task = AbasObjectFactory.INSTANCE.createWorkStation(workstation.split("!")[0],Integer.parseInt(workstation.split("!")[1]), abasConnection).startFirstScheduledTask(abasConnection);
-			session.setAttribute("Task", task);
-			
 
+		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
+
+		AbasConnection<EDPSession> abasConnection = null;
+
+		try {
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), new AppBuild(request).isTest());
+
+			if(task != null)
+			{
+				task.suspend(abasConnection);
+				session.removeAttribute("Task");
+			}
 		}catch(LoginException e)
 		{
+			System.out.println(e);
 		}finally
 		{
 			try {
@@ -67,10 +80,8 @@ public class DataSheet extends HttpServlet {
 					abasConnection.close();
 				}
 			} catch (Throwable t) {
-				
 			}
 		}
-		getServletContext().getRequestDispatcher("/Views/Operator/DataSheet/DataSheet.jsp").forward(request, response);
 
 	}
 

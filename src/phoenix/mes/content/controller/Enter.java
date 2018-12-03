@@ -1,5 +1,6 @@
 package phoenix.mes.content.controller;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.naming.NamingException;
 import javax.security.auth.login.LoginException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.utility.AccessControl;
 import phoenix.mes.content.utility.OutputFormatter;
 import phoenix.mes.content.utility.OutputFormatter.DictionaryEntry;
 
@@ -38,7 +40,7 @@ public class Enter extends HttpServlet {
 		session.setAttribute("pass",pass);
 		
 		try {
-			Authentication.bind(username, pass, request);
+			new Authentication().bind(username, pass, request);
 			String nextPage = null;
 			if("operator".equals(layout)) {
 				String workStation = (String)session.getAttribute("operatorWorkstation");
@@ -64,11 +66,13 @@ public class Enter extends HttpServlet {
 					nextPage = "/OpenTask";
 				}
 			}
-			else if("manager".equals(layout)) {
+			else if("manager".equals(layout) && new AccessControl(request, username).isModifier())
+			{
 				nextPage = "/Views/Manager/Main/Main.jsp";
 			}
 			getServletContext().getRequestDispatcher(null == nextPage ? "/Views/WelcomePage/WelcomePage.jsp" : nextPage).forward(request, response);
-		} catch (NamingException | LoginException t) {
+		} catch ( NamingException | LoginException | SQLException t) {
+			System.out.println(t);
 			request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.LOGIN_FAILED));
 			getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
 		}

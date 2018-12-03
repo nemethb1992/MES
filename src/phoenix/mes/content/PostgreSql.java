@@ -35,6 +35,7 @@ public class PostgreSql {
     {
     	if (null == conn) {
     		conn = DriverManager.getConnection("jdbc:postgresql://192.168.145.217/" + (testSystem ? "dmes" : "mes"), "mes", "jGbLv!nh+?zc346J");
+//    		conn = DriverManager.getConnection("jdbc:postgresql://192.168.145.217/" + (testSystem ? "dmes" : "mes"), "balazs.nemeth", "Hxx8kahxx8ka");
     	}
     }
 
@@ -54,7 +55,10 @@ public class PostgreSql {
     	final PreparedStatement preparedStmt = conn.prepareStatement(command);
     	try {
     		preparedStmt.executeUpdate();
-    	} finally {
+    	} catch(SQLException e){
+    		System.out.println(e.toString());
+    	}
+    	finally {
     		try {
     			preparedStmt.close();
     		} catch(SQLException e) {
@@ -98,5 +102,13 @@ public class PostgreSql {
     	final List<Map<String, String>> results = sqlQuery(command, field);
     	return (results.isEmpty() ? "" : results.get(0).get(field));
     }
+    
+    public int count(String command, String field) throws SQLException
+    {
+    	final List<Map<String, String>> results = sqlQuery(command, field);
+    	dbClose();
+    	return results.size();
+    }
+    
 
 }

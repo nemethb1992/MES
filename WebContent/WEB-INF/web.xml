@@ -194,13 +194,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>Suspend</display-name>
-    <servlet-name>Suspend</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.operator.Suspend</servlet-class>
+    <display-name>SuspendTask</display-name>
+    <servlet-name>SuspendTask</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.operator.SuspendTask</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Suspend</servlet-name>
-    <url-pattern>/Suspend</url-pattern>
+    <servlet-name>SuspendTask</servlet-name>
+    <url-pattern>/SuspendTask</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
@@ -231,5 +231,25 @@
   <servlet-mapping>
     <servlet-name>OpenTask</servlet-name>
     <url-pattern>/OpenTask</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ResumeTask</display-name>
+    <servlet-name>ResumeTask</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.operator.ResumeTask</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResumeTask</servlet-name>
+    <url-pattern>/ResumeTask</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>InterruptTask</display-name>
+    <servlet-name>InterruptTask</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.operator.InterruptTask</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InterruptTask</servlet-name>
+    <url-pattern>/InterruptTask</url-pattern>
   </servlet-mapping>
 </web-app>

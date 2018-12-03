@@ -22,7 +22,7 @@
 						<input
 							class='form-control h-100 personal-form-control personal-form-name'
 							disabled
-							value='<%=(String) session.getAttribute("displayname")%>'>
+							value='<%=(String)session.getAttribute("displayname")%>'>
 					</div>
 					<div class='form-group personal-secondery'>
 						<input
