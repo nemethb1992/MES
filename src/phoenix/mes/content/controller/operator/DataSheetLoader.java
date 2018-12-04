@@ -11,10 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.PostgreSql;
 import phoenix.mes.content.utility.OutputFormatter;
@@ -38,9 +41,10 @@ public class DataSheetLoader extends HttpServlet {
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 //		workstation="234PG!1";
 		String view = "";
+		String state = "";
 		
 		boolean testSystem = new AppBuild(request).isTest();
-		        	
+		
 		if(workstation != null)
 		{
 			String wsName = "";
@@ -57,7 +61,6 @@ public class DataSheetLoader extends HttpServlet {
 			try {
 				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), testSystem);
 				Task task = (Task)session.getAttribute("Task");
-
 				if(task == null)
 				{
 					doGet(request,response);
@@ -90,6 +93,8 @@ public class DataSheetLoader extends HttpServlet {
 					break;
 				}
 				view = (null != partialUrl ? RenderView.render(partialUrl, request, response) : "");
+				
+				state = (taskDetails.getStatus() == Status.INTERRUPTED ? "interrupted" : "");
 			}catch(LoginException e)
 			{
 				System.out.println(e);
@@ -103,9 +108,13 @@ public class DataSheetLoader extends HttpServlet {
 				}
 			}
 		}
-		response.setContentType("text/plain"); 
-		response.setCharacterEncoding("UTF-8"); 
-		response.getWriter().write(view); 
+		String[] returnObject = new String[2];
+		returnObject[0] = view;
+		returnObject[1] = state;
+	    String json = new Gson().toJson(returnObject);
+	    response.setContentType("application/json");
+	    response.setCharacterEncoding("UTF-8");
+	    response.getWriter().write(json);
 	}
 	public String getStationName(String workstation, HttpServletRequest request) throws SQLException
 	{

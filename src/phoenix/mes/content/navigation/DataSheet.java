@@ -13,6 +13,7 @@ import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.utility.OutputFormatter;
 
@@ -56,7 +57,8 @@ public class DataSheet extends HttpServlet {
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), testSystem);
 			Task task = AbasObjectFactory.INSTANCE.createWorkStation(workstation.split("!")[0],Integer.parseInt(workstation.split("!")[1]), abasConnection).startFirstScheduledTask(abasConnection);
 			session.setAttribute("Task", task);
-			
+			Task.Details taskDetails = task.getDetails(abasConnection);
+			request.setAttribute("TaskStatus", taskDetails.getStatus());
 
 		}catch(LoginException e)
 		{

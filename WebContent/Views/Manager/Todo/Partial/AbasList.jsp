@@ -10,14 +10,29 @@
 	List<Task> li = (List<Task>)request.getAttribute("AbasList");
 	AbasConnection abasConnection = (AbasConnection<EDPSession>)request.getAttribute("abasConnection");
 	String startDate, startDateFormated;
+	String cssClass = "";
 	for (Task task: li) {
 		final Task.Details taskDetails = task.getDetails(abasConnection);
 				startDate = taskDetails.getStartDate().toString();
 				startDateFormated = startDate.substring(0,4) + "." + startDate.substring(4,6) + "." + startDate.substring(6,8) + ".";
 				
+				switch(taskDetails.getStatus()){
+				case IN_PROGRESS:
+					cssClass = "dnd-container-inprogress";
+					break;
+				case SUSPENDED:
+					cssClass = "dnd-container-suspended";
+					break;
+				case INTERRUPTED:
+					cssClass = "dnd-container-interrupted";
+					break;
+				default:
+					cssClass = "";
+					break;			
+				}
 				%>
 <div
-	class='dnd-container abas-list-item <%=(taskDetails.getStatus() == Status.SUSPENDED ? "dnd-container-suspended" : "")%> col-12 px-0'
+	class='dnd-container abas-list-item <%=cssClass %> col-12 px-0'
 	value='3'>
 	<input class='d-none workSlipId' value='<%=task.getWorkSlipId()%>'>
 	<div class='container-fluid h-100'>

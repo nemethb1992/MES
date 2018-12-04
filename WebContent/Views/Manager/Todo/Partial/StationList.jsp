@@ -13,15 +13,30 @@
 	String startDate, startDateFormated;
 
 	BigDecimal summedProductionTime = BigDecimal.ZERO;
-	
+	String cssClass= "";
 	for (Task task: li) {
 		final Task.Details taskDetails = task.getDetails(abasConnection);
 				boolean progress = (task.getDetails(abasConnection).getStatus() == Status.IN_PROGRESS ? true : false);
 				boolean suspended = (task.getDetails(abasConnection).getStatus() == Status.SUSPENDED ? true : false);
 				summedProductionTime = summedProductionTime.add(taskDetails.getCalculatedProductionTime());
+				
+				switch(taskDetails.getStatus()){
+				case IN_PROGRESS:
+					cssClass = "dnd-container-inprogress";
+					break;
+				case SUSPENDED:
+					cssClass = "dnd-container-suspended";
+					break;
+				case INTERRUPTED:
+					cssClass = "dnd-container-interrupted";
+					break;
+				default:
+					cssClass = "";
+					break;			
+				}
 				%>
 <div
-	class='dnd-container station-list-item <%=(suspended ? "dnd-container-suspended" : "")%> col-12 <%=(progress ? "dnd-container-inprogress" : "")%> px-0'
+	class='dnd-container station-list-item <%=cssClass%> col-12 <%=(progress ? "dnd-container-inprogress" : "")%> px-0'
 	value='3'>
 	<input class='d-none workSlipId' value='<%=task.getWorkSlipId()%>'>
 	<div class='container px-0'>

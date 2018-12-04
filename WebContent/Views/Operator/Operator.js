@@ -28,10 +28,12 @@ function getView(tab = 1)
 		success: function (response) {
 			loadingAnimationStop("operator");
 			$( "#SwitchPanel" ).empty();
-			$( "#SwitchPanel" ).append(response);
+			$( "#SwitchPanel" ).append(response[0]);
 			if(response != "")
 			{
-//				setTimer();
+				if(response[1] == "interrupted"){
+					$('#interrupt-level2').modal('show');
+				}
 			}
 			else
 			{
@@ -181,27 +183,13 @@ function TabControlEventHolder()
 	$('#btn_lejelentes').click(function(){
 		if(opened != false)
 		{
-			closeInterupt();
 			openSubmit(this);
 		}
 		opened = true;
 	});
-	$('#btn_megszakitas').click(function(){
-//		if(opened != false)
-//		{
-//			console.log("r1");
-//			closeSubmit();
-//			openInterupt(this);
-//		}
-//		opened = true;
-	});
 	$('.btn_navHeader .lejelent-btn').click(function(){
 		opened = false;
 		closeSubmit();
-	});
-	$('.btn_navHeader .megszak-btn').click(function(){
-		opened = false;
-		closeInterupt();
 	});
 }
 
@@ -230,11 +218,6 @@ function closeSubmit()
 	$('#btn_lejelentes .my-nav-container').css({'display':'none'});
 	$('#btn_lejelentes p').css({'display':''});
 }
-
-//function closeInterupt()
-//{
-//	$(".btn_navHeader-left").show();
-//}
 
 function closeNavButtons()
 {
@@ -281,44 +264,56 @@ function Cancel()
 
 function OpenInterruptModal()
 {
+	$('#interrupt-level1').modal({backdrop: 'static', keyboard: false});
 	$('#interrupt-level1').modal('show');
 }
 
 function InterruptTask()
 {
-	$('#interrupt-level1').modal('hide');
-	$('#interrupt-level2').modal('show');
-//	$.post({
-//		url:  '/'+path+'/InterruptTask',
-//		success: function () {
+	$.post({
+		url:  '/'+path+'/InterruptTask',
+		success: function () {
 //			$('.interrupt-form').submit();
-//		}
-//	});
+		}
+	});
+	$('#interrupt-level1').modal('hide');
+	$('#interrupt-level2').modal({backdrop: 'static', keyboard: false});
+	$('#interrupt-level2').modal('show');
 }
 function SuspendTask()
 {
-	$('#interrupt-level2').modal('hide');
+	var uname = $(".username-input").val();
+	var pwd = $(".password-input").val();
+	console.log(uname);
+	console.log(pwd);
 	
-//	$.post({
-//		url:  '/'+path+'/SuspendTask',
-//		data:
-//			username = $(".username-input").val(),
-//			password = $(".password-input").val(),
-//		success: function () {
-//			$('.interrupt-form').submit();
-//		}
-//	});
+	if(uname.length > 0 && pwd.length > 0)
+	$.post({
+		url:  '/'+path+'/SuspendTask',
+		data:{
+			username: uname, 
+			password: pwd
+			},
+		success: function (response) {
+			if(response == "true"){
+				$('.interrupt-form').submit();
+			}else
+				{
+				alert(response);
+				}
+		}
+	});
 }
 
 function ResumeTask()
 {
 	$('#interrupt-level2').modal('hide');
-//	$.post({
-//		url:  '/'+path+'/ResumeTask',
-//		success: function () {
+	$.post({
+		url:  '/'+path+'/ResumeTask',
+		success: function () {
 //			$('.interrupt-form').submit();
-//		}
-//	});
+		}
+	});
 }
 
 

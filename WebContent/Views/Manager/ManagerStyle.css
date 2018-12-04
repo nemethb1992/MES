@@ -337,14 +337,12 @@ TM_content_layer {
 .dnd-container-suspended {
 	background: #ffce3d;
 }
-
 .dnd-container-inprogress {
 	background: #8fd7c9;
 }
-
-/* .dnd-container:hover { */
-/* 	background: white; */
-/* } */
+.dnd-container-interrupted{
+	background: #ff7676;
+}
 
 .dnd-container:mousedown {
 	background: red;

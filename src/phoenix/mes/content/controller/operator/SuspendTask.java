@@ -41,10 +41,13 @@ public class SuspendTask extends HttpServlet {
 
 		String username = request.getParameter("username");
 		String pass = request.getParameter("password");
-		
+
+		response.setContentType("text/plain"); 
+		response.setCharacterEncoding("UTF-8"); 
 		try {
 			if(!new Authentication().bind(username, pass, request) && !new AccessControl(request, username).isModifier())
 			{
+				response.getWriter().write("Sikertelen hitelesítés!");
 				return;
 			}
 		} catch (SQLException | LoginException | NamingException e1) {
@@ -67,6 +70,7 @@ public class SuspendTask extends HttpServlet {
 
 			if(task != null)
 			{
+				task.resume(abasConnection);
 				task.suspend(abasConnection);
 				session.removeAttribute("Task");
 			}
@@ -81,6 +85,7 @@ public class SuspendTask extends HttpServlet {
 				}
 			} catch (Throwable t) {
 			}
+			response.getWriter().write("true");
 		}
 
 	}

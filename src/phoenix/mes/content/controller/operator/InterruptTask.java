@@ -55,7 +55,7 @@ public class InterruptTask extends HttpServlet {
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), new AppBuild(request).isTest());
 			task.interrupt(abasConnection);
 		} catch (LoginException e) {
-
+			System.out.println(e);
 		}
 	}
 
