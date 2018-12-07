@@ -2,6 +2,7 @@ package phoenix.mes.content.controller.operator;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
 
 
@@ -44,8 +46,9 @@ public class Submit extends HttpServlet {
 		BigDecimal scrapQty = new BigDecimal(request.getParameter("scrapQty"));
 		
 		try {
+			User user = new User(request); 
 			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), ab.isTest());
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
 			Task task = (Task)session.getAttribute("Task");
 			if(task != null)
 			{
@@ -60,7 +63,7 @@ public class Submit extends HttpServlet {
 				}
 
 			}
-		}catch(LoginException e)
+		}catch(LoginException | SQLException e)
 		{
 			session.removeAttribute("Task");
 			responseStr = "finished";

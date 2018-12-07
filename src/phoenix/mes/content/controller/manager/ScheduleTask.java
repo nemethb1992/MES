@@ -1,6 +1,7 @@
 package phoenix.mes.content.controller.manager;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.controller.User;
 import phoenix.mes.content.controller.Workstation;
 import phoenix.mes.content.utility.OutputFormatter;
 
@@ -44,16 +46,17 @@ public class ScheduleTask extends HttpServlet {
 		AbasConnection<EDPSession> abasConnection = null;
 		
     	try {
+			User user = new User(request);
     		HttpSession session = request.getSession();
      	   	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-    		abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), new AppBuild(request).isTest());
+    		abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
         	Task task = AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(currentId), abasConnection);
     		String nextId = request.getParameter("nextId");
         	boolean nextIsInProgress = ("".equals(nextId) || nextId == null ? false : ((AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(nextId), abasConnection)).getDetails(abasConnection).getStatus() == Status.IN_PROGRESS ? true : false));
         	if(task.getDetails(abasConnection).getStatus() != Status.IN_PROGRESS && !nextIsInProgress) {
             	task.schedule(AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection), id, abasConnection);
         	}
-		}catch(LoginException e)
+		}catch(LoginException | SQLException e)
     	{
     		System.out.println(e);
     	}finally

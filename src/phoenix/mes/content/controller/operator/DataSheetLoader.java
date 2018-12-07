@@ -1,6 +1,7 @@
 package phoenix.mes.content.controller.operator;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
@@ -17,6 +18,7 @@ import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.controller.User;
 import phoenix.mes.content.controller.Workstation;
 import phoenix.mes.content.utility.OutputFormatter;
 import phoenix.mes.content.utility.RenderView;
@@ -40,11 +42,13 @@ public class DataSheetLoader extends HttpServlet {
 			return;
 		}
 		String partialUrl = null;
+		String view = "";
 		String state = "";
 		AbasConnection<EDPSession> abasConnection = null;
 		try {
+			User user = new User(request);
 			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(),  new AppBuild(request).isTest());
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(),  new AppBuild(request).isTest());
 			Task task = (Task)session.getAttribute("Task");
 			if(task == null)
 			{
@@ -76,9 +80,13 @@ public class DataSheetLoader extends HttpServlet {
 			default:
 				break;
 			}
-
-			state = (taskDetails.getStatus() == Status.INTERRUPTED ? "interrupted" : "");
-		}catch(LoginException e)
+			view = (null != partialUrl ? RenderView.render(partialUrl, request, response) : "");
+			if((Status.INTERRUPTED).equals(taskDetails.getStatus()))
+			{
+				state = "interrupted";
+				request.setAttribute("error-text", "Hiba!");
+			}
+		}catch(LoginException | SQLException e)
 		{
 			System.out.println(e);
 		}finally
@@ -90,9 +98,8 @@ public class DataSheetLoader extends HttpServlet {
 			} catch (Throwable t) {
 			}
 		}
-
 		String[] returnObject = new String[2];
-		returnObject[0] = (null != partialUrl ? RenderView.render(partialUrl, request, response) : "");
+		returnObject[0] = view;
 		returnObject[1] = state;
 		String json = new Gson().toJson(returnObject);
 		response.setContentType("application/json");

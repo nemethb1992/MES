@@ -1,6 +1,7 @@
 package phoenix.mes.content.controller.manager;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
 
 /**
@@ -44,11 +46,12 @@ public class UnScheduleTask extends HttpServlet {
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 		AbasConnection<EDPSession> abasConnection = null;
 
-		try {        	
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), ab.isTest());
+		try {   
+			User user = new User(request);     	
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
 			Task task = AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(workSlipId), abasConnection);
 			task.unSchedule(abasConnection);
-		} catch (LoginException e) {
+		} catch (LoginException | SQLException e) {
 
 		}
 	}

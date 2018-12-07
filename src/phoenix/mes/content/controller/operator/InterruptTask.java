@@ -16,6 +16,7 @@ import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.Log;
+import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
 
 /**
@@ -47,9 +48,10 @@ public class InterruptTask extends HttpServlet {
 		}
 
 		AbasConnection<EDPSession> abasConnection = null;
-		try {     
+		try {  
+			User user = new User(request);   
 			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");   	
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), ab.isTest());
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
 			task.interrupt(abasConnection);
 			new Log(request).insert(request.getParameter("errorText"));
 		} catch (LoginException | SQLException e) {

@@ -13,14 +13,14 @@ import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.content.controller.User;
 
 /**
  * Servlet implementation class Timer
  */
 public class Timer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-
+      
 	/*
 	 *
 	 * Másodpercben visszaadja az aktuális gyártási idő mértéként.
@@ -38,11 +38,10 @@ public class Timer extends HttpServlet {
 		Task task = (Task)session.getAttribute("Task");
 		if(null != task)
 		{
-			String username=(String)session.getAttribute("username");
-			String pass=(String)session.getAttribute("pass");
 			AbasConnection<EDPSession> abasConnection = null;
 			try {
-				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, true);
+				User user = new User(request);
+				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), true);
 				Task.Details taskDetails = task.getDetails(abasConnection);
 				taskDetails.clearCache();
 				BigDecimal rawTime = taskDetails.getCalculatedProductionTime();

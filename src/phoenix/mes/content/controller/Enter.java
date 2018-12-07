@@ -34,13 +34,8 @@ public class Enter extends HttpServlet {
 		String paramStation = request.getParameter("workstation");
 		String pass = request.getParameter("password");
 		String layout = (String)session.getAttribute("Layout");
-	
+		System.out.println(paramStation);
 		try {
-			if(null == paramStation || "".equals(paramStation)) {
-				ws = new Workstation(request,ab.isOperator());
-			}else {
-				ws = new Workstation(request,ab.isOperator(),paramStation);
-			}
 			User user = new User(request,username,pass);
 			new AbasAuthentication().bind(username, pass, request);
 			if(!user.hasAccess())
@@ -49,6 +44,7 @@ public class Enter extends HttpServlet {
 			}
 			String nextPage = null;
 			if("operator".equals(layout)) {
+				ws = new Workstation(request,ab.isOperator(),paramStation);
 				String workStation = ws.getOperatingStation();
 				if (null == workStation || !workStation.equals(paramStation)) {
 					Cookie[] cookies = request.getCookies();

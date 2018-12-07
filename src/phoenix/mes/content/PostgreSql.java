@@ -44,6 +44,7 @@ public class PostgreSql {
         try {
             conn.close();
         } catch (SQLException e) {
+        	System.out.println(e);
         } finally {
         	conn = null;
         }

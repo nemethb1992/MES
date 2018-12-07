@@ -1,5 +1,6 @@
 <%@page import="phoenix.mes.abas.AbasConnection"%>
 <%@page import="phoenix.mes.content.utility.OutputFormatter"%>
+<%@page import="phoenix.mes.content.controller.User"%>
 <%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
 <%@page import="phoenix.mes.abas.Task"%>
 <%@page import="java.util.List"%>
@@ -15,9 +16,8 @@ OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 
 AbasConnection<EDPSession> abasConnection = null;
 try {
-	String username = (String)session.getAttribute("username");
-	String pass = (String)session.getAttribute("pass");
-	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), new AppBuild(request).isTest());
+	User user = new User(request);
+	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), new AppBuild(request).isTest());
 	Task task = (Task)session.getAttribute("Task");
 	Task.Details taskDetails = task.getDetails(abasConnection);
 	session.setAttribute("Task", task);
@@ -101,7 +101,13 @@ try {
         <h5 class="modal-title" id="exampleModalLongTitle">Megszakítás véglegesítése</h5>
 
       </div>
-			<div class="modal-body">	
+			<div class="modal-body pt-1">
+				<div class="form-group row">
+					<label for="example-search-input"  class="col-12 col-form-label">Zavarleírás:</label>
+					<div class="col-12">
+						<textarea class="form-control error-text-back" disabled type="search" id="example-search-input" style="height: 150px;"><%=(String)request.getAttribute("error-text") %></textarea>
+					</div>
+				</div>	
 				<div class="form-group row">
 					<label for="example-search-input" class="col-3 col-form-label"><%=of.getWord(DictionaryEntry.USER_NAME)%></label>
 					<div class="col-9">
@@ -128,7 +134,7 @@ try {
   <form method='Post' action='${pageContext.request.contextPath}/OpenTask' class='d-none interrupt-form'></form>
 </div>
 <%
-}catch(LoginException e)
+}catch(LoginException e )
 {
 }finally
 {

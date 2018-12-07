@@ -1,6 +1,7 @@
 package phoenix.mes.content.controller.operator;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
 
 /**
@@ -41,21 +43,16 @@ public class ResumeTask extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		Task task = (Task)session.getAttribute("Task");
-		if(null == task)
-		{
+		if(null == task){
 			return;
 		}
-		
-		String username=(String)session.getAttribute("username");
-		String pass=(String)session.getAttribute("pass");
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-
 		AbasConnection<EDPSession> abasConnection = null;
-
-		try {        	
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), ab.isTest());
+		try { 
+			User user = new User(request);       	
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
 			task.resume(abasConnection);
-		} catch (LoginException e) {
+		} catch (LoginException | SQLException e) {
 		}finally
 		{
 			try {

@@ -58,6 +58,7 @@ public class User {
 			registration();
 			id = pg.sqlSingleQuery("SELECT users.id FROM users WHERE username='"+this.username+"'", "id");
 		}
+		pg.dbClose();
 		return Integer.parseInt(id);
 	}
     

@@ -1,6 +1,7 @@
 package phoenix.mes.content.controller.operator;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
 
 /**
@@ -43,19 +45,17 @@ public class RefreshDatas extends HttpServlet {
 		String responseStr = "null";
 		AbasConnection<EDPSession> abasConnection = null;
 
-		try {				
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), ab.isTest());
-			
-			Task task = (Task)session.getAttribute("Task");
-			
-			Task.Details taskDetails = task.getDetails(abasConnection);
-			
+		try {
+			User user = new User(request); 				
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
+			Task task = (Task)session.getAttribute("Task");			
+			Task.Details taskDetails = task.getDetails(abasConnection);			
 			if(taskDetails.getStatus() == Status.IN_PROGRESS)
 			{
 				taskDetails.clearCache();
 				responseStr = "inProgress";
 			}
-		}catch(LoginException e)
+		}catch(LoginException | SQLException e)
 		{
 			System.out.println(e);
 		}finally

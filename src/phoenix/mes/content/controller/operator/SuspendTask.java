@@ -57,8 +57,7 @@ public class SuspendTask extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		Task task = (Task)session.getAttribute("Task");
-		if(null == task)
-		{
+		if(null == task){
 			return;
 		}
 

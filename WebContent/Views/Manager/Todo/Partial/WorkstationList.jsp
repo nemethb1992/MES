@@ -34,6 +34,7 @@
 		
 		command = "SELECT stations.csoport FROM stations LEFT JOIN profitcenter ON stations.pc = profitcenter.id LEFT JOIN relation ON relation.workstation_group = stations.csoport WHERE "+(null != value ? "long = '"+value+"' AND":"")+" relation.user_id = "+user.getUserid()+" GROUP BY stations.csoport";
 		list = pg.sqlQuery(command, field);
+		pg.dbClose();
 		break;
 	case "2":
 		method = "clickOnStation(this)";
@@ -44,6 +45,7 @@
 		command = "select "+groupSqlFieldName+", "+numberSqlFieldName+", "+nameSqlFieldName+" from stations where csoport='" + request.getParameter("element")
 		+ "' ORDER BY sorszam ASC";
 		list = pg.sqlQuery(command, groupSqlFieldName, numberSqlFieldName, nameSqlFieldName);
+		pg.dbClose();
 		break;
 	case "0":
 	default:
@@ -55,6 +57,7 @@
 		"LEFT JOIN profitcenter ON profitcenter.id = stations.pc " + 
 		"WHERE users.username='"+user.getUsername()+"' GROUP BY profitcenter.id";
 		list = pg.sqlQuery(command, field);
+		pg.dbClose();
 		break;
 	}
 

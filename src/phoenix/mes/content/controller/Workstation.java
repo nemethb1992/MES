@@ -20,22 +20,44 @@ public class Workstation {
 	public Workstation(HttpServletRequest request,  boolean isOperator, String... station){
 		this.request = request;
 		String[] sp;
-		if(station.length > 0)
+		if(station.length > 0 && isOperator)
 		{
 			sp = station[0].split("!");
 			setOperatingStation(station[0]);
-		}else
-		{
-			sp = (isOperator ? getOperatingStation() : getSelectedStation()).split("!");
-		}
-		try {
-			group = sp[0];
-			no = Integer.parseInt(sp[1]);
-			name = getStationName(request);
+			try {
+				group = (sp[0] != null ? sp[0] : "");
+				no = Integer.parseInt(sp[1]);
+				name = getStationName(request);
 
-		}catch (SQLException e) {
-			name = "";
+			}catch (SQLException e) {
+			}
+		}else if(isOperator) {
+			try {
+			String[] sp2 = getOperatingStation().split("!");
+			if(sp2 != null)
+			{
+				
+					group = (sp2[0] != null ? sp2[0] : "");
+					no = Integer.parseInt(sp2[1]);
+					name = getStationName(request);
+
+				}
+			}catch (SQLException e) {
+			}
+		}else if(!isOperator) {
+			try {
+				String[] sp2 = getSelectedStation().split("!");
+				if(sp2 != null)
+				{
+
+					group = (sp2[0] != null ? sp2[0] : "");
+					no = Integer.parseInt(sp2[1]);
+					name = getStationName(request);
+
+				}}catch (SQLException e) {
+				}
 		}
+
 
 	}
 	
@@ -81,8 +103,9 @@ public class Workstation {
 			field = "nev_hu";
 			break;
 		}
-		
-		return postgreSql.sqlSingleQuery(command, field);
+		String name = postgreSql.sqlSingleQuery(command, field);
+		postgreSql.dbClose();
+		return name;
 	}
 	
 	public void setOperatingStation(String obj)
