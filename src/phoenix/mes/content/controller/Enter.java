@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import phoenix.mes.content.AppBuild;
-import phoenix.mes.content.utility.AccessControl;
 import phoenix.mes.content.utility.OutputFormatter;
 import phoenix.mes.content.utility.OutputFormatter.DictionaryEntry;
 
@@ -28,22 +27,29 @@ public class Enter extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		
-		AppBuild app = new AppBuild(null);
-		app.setSessionListener(request);
-		
+		AppBuild ab = new AppBuild(request);
+		ab.setSessionListener();
+		Workstation ws;
 		String username = request.getParameter("username");
 		String paramStation = request.getParameter("workstation");
 		String pass = request.getParameter("password");
 		String layout = (String)session.getAttribute("Layout");
-
-		session.setAttribute("username",username);
-		session.setAttribute("pass",pass);
-		
+	
 		try {
-			new Authentication().bind(username, pass, request);
+			if(null == paramStation || "".equals(paramStation)) {
+				ws = new Workstation(request,ab.isOperator());
+			}else {
+				ws = new Workstation(request,ab.isOperator(),paramStation);
+			}
+			User user = new User(request,username,pass);
+			new AbasAuthentication().bind(username, pass, request);
+			if(!user.hasAccess())
+			{
+				throw new LoginException();
+			}
 			String nextPage = null;
 			if("operator".equals(layout)) {
-				String workStation = (String)session.getAttribute("operatorWorkstation");
+				String workStation = ws.getOperatingStation();
 				if (null == workStation || !workStation.equals(paramStation)) {
 					Cookie[] cookies = request.getCookies();
 					if (cookies != null) {
@@ -51,10 +57,7 @@ public class Enter extends HttpServlet {
 							if (cookie.getName().equals("workstation")) {
 								
 								workStation = OutputFormatter.isStation(cookie.getValue());
-								if (null != workStation) {
-									session.setAttribute("operatorWorkstation", workStation);
-								}
-								else {
+								if (null == workStation) {
 									nextPage = "/Views/Login/loginPage.jsp";
 									break;
 								}
@@ -66,7 +69,7 @@ public class Enter extends HttpServlet {
 					nextPage = "/OpenTask";
 				}
 			}
-			else if("manager".equals(layout) && new AccessControl(request, username).isModifier())
+			else if("manager".equals(layout) && user.isModifier())
 			{
 				nextPage = "/Views/Manager/Main/Main.jsp";
 			}
@@ -79,7 +82,3 @@ public class Enter extends HttpServlet {
 	}
 
 }
-//catch (Throwable t) {
-//	request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.LOGIN_FAILED));
-//	getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
-//}

@@ -30,7 +30,8 @@ public class RefreshDatas extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		if(!(new AppBuild(null)).isStable(request)){
+		AppBuild ab = new AppBuild(request);
+		if(!ab.isStable()){
 			response.setContentType("text/plain"); 
 			response.setCharacterEncoding("UTF-8"); 
 			response.getWriter().write("null"); 
@@ -38,20 +39,17 @@ public class RefreshDatas extends HttpServlet {
 		}
 		
 		HttpSession session = request.getSession();
-		
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-
 		String responseStr = "null";
-
 		AbasConnection<EDPSession> abasConnection = null;
 
 		try {				
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), new AppBuild(request).isTest());
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), ab.isTest());
 			
 			Task task = (Task)session.getAttribute("Task");
 			
 			Task.Details taskDetails = task.getDetails(abasConnection);
-			//FIXME
+			
 			if(taskDetails.getStatus() == Status.IN_PROGRESS)
 			{
 				taskDetails.clearCache();

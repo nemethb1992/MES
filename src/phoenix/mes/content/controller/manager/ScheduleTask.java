@@ -16,6 +16,7 @@ import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.controller.Workstation;
 import phoenix.mes.content.utility.OutputFormatter;
 
 /**
@@ -31,31 +32,26 @@ public class ScheduleTask extends HttpServlet {
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		if(!(new AppBuild(null)).isStable(request)){
+		AppBuild ab = new  AppBuild(request);
+		if(!ab.isStable()){
 			doGet(request,response);
 			return;
 		}
-		
-		HttpSession session = request.getSession();
-		
-		AbasConnection<EDPSession> abasConnection = null;
-		
- 	   	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
- 	   	String station = (String)session.getAttribute("selectedStation");
+		Workstation ws = new Workstation(request,ab.isOperator());
 		String currentId = request.getParameter("currentId");
 		String targetId = request.getParameter("targetId");
-		
 		IdImpl id = (null != targetId && !"".equals(targetId) ? (IdImpl) IdImpl.valueOf(targetId) : (IdImpl) IdImpl.NULLREF);
+		AbasConnection<EDPSession> abasConnection = null;
 		
-    	try {        	
-    		String[] stationSplit = station.split("!");
-    		int stationNo = Integer.parseInt(stationSplit[1]);
+    	try {
+    		HttpSession session = request.getSession();
+     	   	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
     		abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), new AppBuild(request).isTest());
         	Task task = AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(currentId), abasConnection);
     		String nextId = request.getParameter("nextId");
         	boolean nextIsInProgress = ("".equals(nextId) || nextId == null ? false : ((AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(nextId), abasConnection)).getDetails(abasConnection).getStatus() == Status.IN_PROGRESS ? true : false));
         	if(task.getDetails(abasConnection).getStatus() != Status.IN_PROGRESS && !nextIsInProgress) {
-            	task.schedule(AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0], stationNo, abasConnection), id, abasConnection);
+            	task.schedule(AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection), id, abasConnection);
         	}
 		}catch(LoginException e)
     	{

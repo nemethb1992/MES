@@ -270,10 +270,15 @@ function OpenInterruptModal()
 
 function InterruptTask()
 {
+	var text = $(".error-text").val();
+	if(text.length == 0)
+		{
+		return;
+		}
 	$.post({
 		url:  '/'+path+'/InterruptTask',
-		success: function () {
-//			$('.interrupt-form').submit();
+		data:{
+			errorText: text
 		}
 	});
 	$('#interrupt-level1').modal('hide');
@@ -284,8 +289,6 @@ function SuspendTask()
 {
 	var uname = $(".username-input").val();
 	var pwd = $(".password-input").val();
-	console.log(uname);
-	console.log(pwd);
 	
 	if(uname.length > 0 && pwd.length > 0)
 	$.post({

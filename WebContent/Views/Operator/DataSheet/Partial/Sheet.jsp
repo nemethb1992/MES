@@ -1,4 +1,5 @@
 <%@page import="phoenix.mes.content.utility.OutputFormatter"%>
+<%@page import="phoenix.mes.content.controller.Workstation"%>
 <%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
 <%@page import="phoenix.mes.abas.Task"%>
 <%@page import="java.util.List"%>
@@ -6,8 +7,7 @@
 <%
 	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 	Task.Details taskDetails = (Task.Details)request.getAttribute("taskDetails");
-	String workstation = (String)request.getAttribute("ws");
-	String wsName = (String)request.getAttribute("wsName");
+	Workstation ws = (Workstation)request.getAttribute("Workstation");
 %>
 <div class='container-fluid h-100 px-0 py-3'>
 	<div class=' my-white-container h-100 px-0'>
@@ -16,7 +16,7 @@
 				<div class='inputContainer'>
 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.WORKSTATION)%></p>
 					<input class='px-2 w-100 task-data-value' type='text' disabled
-						value='<%=workstation.split("!")[0]%> - <%=workstation.split("!")[1]%>'/>
+						value='<%=ws.getGroup()%> - <%=ws.getNumber()%>'/>
 				</div>
 				<div class='inputContainer'>
 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.WORKSHEET_NO)%></p>
@@ -33,7 +33,7 @@
 				<div class='inputContainer'>
 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.WORKSTATION_NAME)%></p>
 					<input class='px-2 w-100 task-data-value' type='text' disabled
-						value='<%=wsName%>'/>
+						value='<%=ws.getName()%>'/>
 				</div>
 				<div class='inputContainer'>
 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.PLACE_OF_USE)%></p>

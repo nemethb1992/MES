@@ -16,8 +16,8 @@ import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
-import phoenix.mes.content.controller.Authentication;
-import phoenix.mes.content.utility.AccessControl;
+import phoenix.mes.content.controller.AbasAuthentication;
+import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
 
 /**
@@ -33,8 +33,9 @@ public class SuspendTask extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		if(!(new AppBuild(null)).isStable(request)){
+
+		AppBuild ab = new AppBuild(request);
+		if(!ab.isStable()){
 			doGet(request,response);
 			return;
 		}
@@ -45,7 +46,7 @@ public class SuspendTask extends HttpServlet {
 		response.setContentType("text/plain"); 
 		response.setCharacterEncoding("UTF-8"); 
 		try {
-			if(!new Authentication().bind(username, pass, request) && !new AccessControl(request, username).isModifier())
+			if(!new AbasAuthentication().bind(username, pass, request) && !new User(request).isModifier(username))
 			{
 				response.getWriter().write("Sikertelen hitelesítés!");
 				return;
@@ -62,11 +63,10 @@ public class SuspendTask extends HttpServlet {
 		}
 
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-
 		AbasConnection<EDPSession> abasConnection = null;
 
 		try {
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), new AppBuild(request).isTest());
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), ab.isTest());
 
 			if(task != null)
 			{

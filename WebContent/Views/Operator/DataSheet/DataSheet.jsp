@@ -1,11 +1,13 @@
 <%@page import="phoenix.mes.content.AppBuild"%>
+<%@page import="phoenix.mes.content.controller.Workstation"%>
 <%@page import="phoenix.mes.content.controller.operator.DataSheetLoader"%>
 <%@include file="/Views/Header.jsp"%>
 <script>
 <%@ include file="/Views/Operator/Operator.js"%>
 
-<%-- <%task = (Task.Details)session.getAttribute("Task");%> --%>
-
+<%
+	Workstation ws = new Workstation(request);
+%>
 </script>
 <div class='container-fluid h-100'>
 
@@ -70,7 +72,7 @@
 <!-- 								<div class='col-11'> -->
 <!-- 									<button -->
 <!-- 										class="btn btn-outline-secondary mt-5 w-100 submit-action-btn" -->
-<%-- 										type="button" onclick='InterruptTask()' id="interrupt-btn"><%=outputFormatter.getWord(DictionaryEntry.INTERRUPT)%></button> --%>
+<%-- 	<%=(String) session.getAttribute("displayname")%>									type="button" onclick='InterruptTask()' id="interrupt-btn"><%=outputFormatter.getWord(DictionaryEntry.INTERRUPT)%></button> --%>
 <!-- 								</div> -->
 <!-- 								<div class='col-1 px-0'> -->
 <!-- 									<input type='button' -->
@@ -96,7 +98,7 @@
 						</div>
 						<div class='form-group'>
 							<input class='form-control h-100 personal-form-control' disabled
-								value='<%=((String) session.getAttribute("operatorWorkstation")).replace('!', '-')%>'>
+								value='<%=(ws.getOperatingStation()).replace('!', '-')%>'>
 						</div>
 						<div class='form-group personal-secondery'>
 							<input

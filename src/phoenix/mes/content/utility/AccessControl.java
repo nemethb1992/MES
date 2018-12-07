@@ -7,13 +7,13 @@ import javax.servlet.http.HttpServletRequest;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.PostgreSql;
 
-public class AccessControl {
+class AccessControl {
 	
 	final protected String username;
 	protected boolean isTest;
 	protected HttpServletRequest request;
 	
-	public AccessControl(HttpServletRequest request, String... username)
+	private AccessControl(HttpServletRequest request, String... username)
 	{
 		this.username = (username.length == 0?(String)request.getSession().getAttribute("username"):username[0]);
 		this.request = request;

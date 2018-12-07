@@ -38,14 +38,16 @@ try {
 					<label for="example-search-input" class="col-3 col-form-label"><%=of.getWord(DictionaryEntry.ARTICLE)%></label>
 					<div class="col-9">
 						<input class="form-control" disabled type="search"
-							value="<%=taskDetails.getProductIdNo()%>" id="example-search-input">
+							value="<%=taskDetails.getProductIdNo()%>"
+							id="example-search-input">
 					</div>
 				</div>
 				<div class="form-group row">
 					<label for="example-search-input" class="col-3 col-form-label"><%=of.getWord(DictionaryEntry.SEARCH_WORD)%></label>
 					<div class="col-9">
 						<input class="form-control" disabled type="search"
-							value="<%=taskDetails.getProductSwd()%>" id="example-search-input">
+							value="<%=taskDetails.getProductSwd()%>"
+							id="example-search-input">
 					</div>
 				</div>
 				<div class="form-group row">
@@ -73,9 +75,17 @@ try {
 							id="example-search-input">
 					</div>
 				</div>
+				<div class="form-group row">
+					<label for="example-search-input" class="col-12 col-form-label">Zavar
+						oka:</label>
+					<div class="col-12">
+						<textarea class="form-control error-text" type="search" id="example-search-input" style="height: 150px;"></textarea>
+					</div>
+				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" onclick='Cancel()' data-dismiss="modal">Mégsem</button>
+				<button type="button" class="btn btn-secondary" onclick='Cancel()'
+					data-dismiss="modal">Mégsem</button>
 				<button type="button" class="btn btn-primary"
 					onclick='InterruptTask()'>Igen</button>
 			</div>

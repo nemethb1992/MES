@@ -31,8 +31,9 @@ public class ResumeTask extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		if(!(new AppBuild(null)).isStable(request)){
+
+		AppBuild ab = new AppBuild(request);
+		if(!ab.isStable()){
 			doGet(request,response);
 			return;
 		}
@@ -52,10 +53,17 @@ public class ResumeTask extends HttpServlet {
 		AbasConnection<EDPSession> abasConnection = null;
 
 		try {        	
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), new AppBuild(request).isTest());
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), ab.isTest());
 			task.resume(abasConnection);
 		} catch (LoginException e) {
-
+		}finally
+		{
+			try {
+				if (null != abasConnection) {
+					abasConnection.close();
+				}
+			} catch (Throwable t) {
+			}
 		}
 	}
 

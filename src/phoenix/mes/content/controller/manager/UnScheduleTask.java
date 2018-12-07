@@ -31,24 +31,21 @@ public class UnScheduleTask extends HttpServlet {
 
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		if(!(new AppBuild(null)).isStable(request)){
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
+
+		AppBuild ab = new AppBuild(request);
+		if(!ab.isStable()){
 			doGet(request,response);
 			return;
 		}
 		
 		HttpSession session = request.getSession();
-
-		String username=(String)session.getAttribute("username");
-		String pass=(String)session.getAttribute("pass");
 		String workSlipId = request.getParameter("workSlipId");
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-
 		AbasConnection<EDPSession> abasConnection = null;
 
 		try {        	
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), new AppBuild(request).isTest());
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), ab.isTest());
 			Task task = AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(workSlipId), abasConnection);
 			task.unSchedule(abasConnection);
 		} catch (LoginException e) {

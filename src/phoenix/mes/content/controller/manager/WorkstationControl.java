@@ -21,13 +21,9 @@ public class WorkstationControl extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String level = "0";
-		if(request.getParameter("level") != null){
-			level = request.getParameter("level");
-		}
-		String value = request.getParameter("element");
-		request.setAttribute("level", level);
-		request.setAttribute("value", value);
+		String data = request.getParameter("level");
+		request.setAttribute("level", (data != null ? request.getParameter("level") : "0"));
+		request.setAttribute("value", request.getParameter("element"));
 
 		response.setContentType("text/plain"); 
 		response.setCharacterEncoding("UTF-8"); 

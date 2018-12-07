@@ -2,11 +2,13 @@
 <%@page import="java.util.Map"%>
 <%@page import="phoenix.mes.content.AppBuild"%>
 <%@page import="phoenix.mes.content.PostgreSql"%>
+<%@page import="phoenix.mes.content.controller.User"%>
 <%@page import="phoenix.mes.content.utility.OutputFormatter"%>
 <%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
 <%
 	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-	PostgreSql pg = new PostgreSql(true);
+	PostgreSql pg = new PostgreSql(new AppBuild(request).isTest());
+	User user = new User(request);
 	String level = (String)request.getAttribute("level");
 	String value = (String)request.getAttribute("value");
 	String method = "";
@@ -20,7 +22,7 @@
 	String countCommand = "SELECT count(stations.pc) as count FROM relation "+
   	    		"LEFT JOIN stations on relation.workstation_group = stations.csoport "+
   	    		"LEFT JOIN users ON relation.user_id = users.id " + 
-  	    		"WHERE users.username='balazs.nemeth' "+
+  	    		"WHERE users.username='"+user.getUsername()+"' "+
   	    		"GROUP BY stations.pc";
 	if(level == "0" && pg.count(countCommand, "count") == 1) {
 		level = "1";
@@ -30,7 +32,7 @@
 		method = "StationItemSelect(this,2)";
 		field = "csoport";
 		
-		command = "SELECT stations.csoport FROM stations LEFT JOIN profitcenter ON stations.pc = profitcenter.id LEFT JOIN relation ON relation.workstation_group = stations.csoport WHERE "+(null != value ? "long = '"+value+"' AND":"")+" relation.user_id = "+session.getAttribute("userid")+" GROUP BY stations.csoport";
+		command = "SELECT stations.csoport FROM stations LEFT JOIN profitcenter ON stations.pc = profitcenter.id LEFT JOIN relation ON relation.workstation_group = stations.csoport WHERE "+(null != value ? "long = '"+value+"' AND":"")+" relation.user_id = "+user.getUserid()+" GROUP BY stations.csoport";
 		list = pg.sqlQuery(command, field);
 		break;
 	case "2":
@@ -51,7 +53,7 @@
 		"LEFT JOIN stations on relation.workstation_group = stations.csoport " + 
 		"LEFT JOIN users ON relation.user_id = users.id " + 
 		"LEFT JOIN profitcenter ON profitcenter.id = stations.pc " + 
-		"WHERE users.username='"+session.getAttribute("username")+"' GROUP BY profitcenter.id";
+		"WHERE users.username='"+user.getUsername()+"' GROUP BY profitcenter.id";
 		list = pg.sqlQuery(command, field);
 		break;
 	}

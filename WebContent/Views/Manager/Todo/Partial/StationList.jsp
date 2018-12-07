@@ -13,11 +13,10 @@
 	String startDate, startDateFormated;
 
 	BigDecimal summedProductionTime = BigDecimal.ZERO;
-	String cssClass= "";
+	String cssClass;
 	for (Task task: li) {
 		final Task.Details taskDetails = task.getDetails(abasConnection);
 				boolean progress = (task.getDetails(abasConnection).getStatus() == Status.IN_PROGRESS ? true : false);
-				boolean suspended = (task.getDetails(abasConnection).getStatus() == Status.SUSPENDED ? true : false);
 				summedProductionTime = summedProductionTime.add(taskDetails.getCalculatedProductionTime());
 				
 				switch(taskDetails.getStatus()){
@@ -35,14 +34,11 @@
 					break;			
 				}
 				%>
-<div
-	class='dnd-container station-list-item <%=cssClass%> col-12 <%=(progress ? "dnd-container-inprogress" : "")%> px-0'
-	value='3'>
+<div class='dnd-container station-list-item <%=cssClass%> col-12 px-0'>
 	<input class='d-none workSlipId' value='<%=task.getWorkSlipId()%>'>
 	<div class='container px-0'>
 		<div class='row w-100 mx-auto'>
-			<div
-				class='<%=(progress ? "col-6" : "col-4")%> pr-0 py-2 dnd-input-div'>
+			<div class='<%=(progress ? "col-6" : "col-4")%> pr-0 py-2 dnd-input-div'>
 				<p><%=of.getWord(DictionaryEntry.WORKSHEET_NO)%></p>
 				<textarea disabled class='dnd-input dnd-in1'><%=taskDetails.getWorkSlipNo()%></textarea>
 				<p><%=of.getWord(DictionaryEntry.ARTICLE)%></p>

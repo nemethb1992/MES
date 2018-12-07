@@ -1,7 +1,6 @@
 package phoenix.mes.content.controller.manager;
 
 import java.io.IOException;
-import java.util.List;
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,8 +11,8 @@ import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.AbasDate;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
-import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.controller.Workstation;
 import phoenix.mes.content.utility.OutputFormatter;
 import phoenix.mes.content.utility.RenderView;
 
@@ -28,42 +27,31 @@ public class AbasTaskList extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		HttpSession session = request.getSession();
-		String station = (String)session.getAttribute("selectedStation");
-
-		if(station == null)
+		AppBuild ab = new AppBuild(request);
+		Workstation ws = new Workstation(request,ab.isTest());
+		if(ws.getSelectedStation() == null)
 		{
 			return;
 		}
-		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-		
-		String date = request.getParameter("date");
-		
 		AbasConnection<EDPSession> abasConnection = null;
-		String[] Station = station.split("!");
+		String date = request.getParameter("date");
 		AbasDate abasDate = ("" == date ? AbasDate.INFINITY : AbasDate.valueOf(date));
-		String view = "";
 		try {
-			int stationNo = Integer.parseInt(Station[1]);
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), new AppBuild(request).isTest());
-			List<Task> li = AbasObjectFactory.INSTANCE.createWorkStation(Station[0], stationNo, abasConnection).getUnassignedTasks(abasDate, abasConnection);
-			request.setAttribute("AbasList", li);
+			HttpSession session = request.getSession();
+    		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), ab.isTest());
+			request.setAttribute("AbasList",  AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection).getUnassignedTasks(abasDate, abasConnection));
 			request.setAttribute("abasConnection", abasConnection);
-			view = RenderView.render("/Views/Manager/Todo/Partial/AbasList.jsp", request, response);
 
 		}catch(LoginException e){
 			System.out.println(e);
 		}finally
 		{			
-			try {
 			abasConnection.close();
-		} catch (Exception e2) {
-			// TODO: handle exception
-		}
 		}
 		
 			response.setContentType("text/plain"); 
 			response.setCharacterEncoding("UTF-8"); 
-			response.getWriter().write(view);
+			response.getWriter().write(RenderView.render("/Views/Manager/Todo/Partial/AbasList.jsp", request, response));
 	}
 }

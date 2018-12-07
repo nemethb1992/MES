@@ -28,29 +28,24 @@ public class Submit extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		if(!(new AppBuild(null)).isStable(request)){
+
+		AppBuild ab = new AppBuild(request);
+		if(!ab.isStable()){
 			response.setContentType("text/plain"); 
 			response.setCharacterEncoding("UTF-8"); 
 			response.getWriter().write("finished");
 			return;
 		}
-		BigDecimal finishedQty = new BigDecimal(request.getParameter("finishedQty"));
-		BigDecimal scrapQty = new BigDecimal(request.getParameter("scrapQty"));
 
 		HttpSession session = request.getSession();
-
-		String responseStr = "null";
-		
-		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-
-		String username=(String)session.getAttribute("username");
-		String pass=(String)session.getAttribute("pass");
-
 		AbasConnection<EDPSession> abasConnection = null;
+		String responseStr = "null";
+		BigDecimal finishedQty = new BigDecimal(request.getParameter("finishedQty"));
+		BigDecimal scrapQty = new BigDecimal(request.getParameter("scrapQty"));
 		
 		try {
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), new AppBuild(request).isTest());
+			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), ab.isTest());
 			Task task = (Task)session.getAttribute("Task");
 			if(task != null)
 			{

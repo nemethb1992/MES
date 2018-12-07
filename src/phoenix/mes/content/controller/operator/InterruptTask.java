@@ -1,6 +1,7 @@
 package phoenix.mes.content.controller.operator;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.Log;
 import phoenix.mes.content.utility.OutputFormatter;
 
 /**
@@ -31,31 +33,35 @@ public class InterruptTask extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		if(!(new AppBuild(null)).isStable(request)){
+		AppBuild ab = new AppBuild(request);
+		if(!ab.isStable()){
 			doGet(request,response);
 			return;
 		}
 
 		HttpSession session = request.getSession();
-
 		Task task = (Task)session.getAttribute("Task");
 		if(null == task)
 		{
 			return;
 		}
-		
-		String username=(String)session.getAttribute("username");
-		String pass=(String)session.getAttribute("pass");
-		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 
 		AbasConnection<EDPSession> abasConnection = null;
-
-		try {        	
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), new AppBuild(request).isTest());
+		try {     
+			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");   	
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), ab.isTest());
 			task.interrupt(abasConnection);
-		} catch (LoginException e) {
+			new Log(request).insert(request.getParameter("errorText"));
+		} catch (LoginException | SQLException e) {
 			System.out.println(e);
+		}finally
+		{
+			try {
+				if (null != abasConnection) {
+					abasConnection.close();
+				}
+			} catch (Throwable t) {
+			}
 		}
 	}
 

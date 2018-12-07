@@ -1,6 +1,7 @@
 package phoenix.mes.content.navigation;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
@@ -13,8 +14,9 @@ import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
-import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.controller.User;
+import phoenix.mes.content.controller.Workstation;
 import phoenix.mes.content.utility.OutputFormatter;
 
 
@@ -31,37 +33,32 @@ public class DataSheet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		HttpSession session = request.getSession();
-		
-		if(!(new AppBuild(null)).isStable(request)){
+		AppBuild ab = new AppBuild(request);
+		if(!ab.isStable()){
 			doGet(request,response);
 			return;
 		}
-		
-		String workstation = (String)session.getAttribute("operatorWorkstation");
-		
-		boolean testSystem = new AppBuild(request).isTest();
-
-		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-		
-		if(workstation == null)
+		Workstation ws = new Workstation(request,ab.isOperator());
+		if(ws.getOperatingStation() == null)
 		{
 			doGet(request,response);
 			return;
 		}
-		
+
 		AbasConnection<EDPSession> abasConnection = null;
 		try {
-			String username = (String)session.getAttribute("username");
-			String pass = (String)session.getAttribute("pass");
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), testSystem);
-			Task task = AbasObjectFactory.INSTANCE.createWorkStation(workstation.split("!")[0],Integer.parseInt(workstation.split("!")[1]), abasConnection).startFirstScheduledTask(abasConnection);
+			HttpSession session = request.getSession();
+			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
+			User user = new User(request);
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(),user.getPassword(), of.getLocale(), ab.isTest());	
+			Task task = AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(),ws.getNumber(), abasConnection).startFirstScheduledTask(abasConnection);
 			session.setAttribute("Task", task);
-			Task.Details taskDetails = task.getDetails(abasConnection);
-			request.setAttribute("TaskStatus", taskDetails.getStatus());
 
 		}catch(LoginException e)
 		{
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}finally
 		{
 			try {

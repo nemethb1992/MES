@@ -8,7 +8,7 @@
 <%
 	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 	List<Task> li = (List<Task>)request.getAttribute("AbasList");
-	AbasConnection abasConnection = (AbasConnection<EDPSession>)request.getAttribute("abasConnection");
+	AbasConnection<EDPSession> abasConnection = (AbasConnection<EDPSession>)request.getAttribute("abasConnection");
 	String startDate, startDateFormated;
 	String cssClass = "";
 	for (Task task: li) {
@@ -31,9 +31,7 @@
 					break;			
 				}
 				%>
-<div
-	class='dnd-container abas-list-item <%=cssClass %> col-12 px-0'
-	value='3'>
+<div class='dnd-container abas-list-item <%=cssClass %> col-12 px-0'>
 	<input class='d-none workSlipId' value='<%=task.getWorkSlipId()%>'>
 	<div class='container-fluid h-100'>
 		<div class='row h-100'>

@@ -2,7 +2,6 @@ package phoenix.mes.content.controller.manager;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.List;
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,8 +12,8 @@ import com.google.gson.Gson;
 import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
-import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.controller.Workstation;
 import phoenix.mes.content.utility.OutputFormatter;
 import phoenix.mes.content.utility.RenderView;
 
@@ -31,25 +30,17 @@ public class StationTaskList extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-
 		AbasConnection<EDPSession> abasConnection = null;  
-
 		BigDecimal summedProductionTime = BigDecimal.ZERO;
-
-		String view = "";
+		
 		try {
-			String station = (String)session.getAttribute("selectedStation");
-			String[] stationSplit = station.split("!");
-			int stationNo = Integer.parseInt(stationSplit[1]);
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), new AppBuild(request).isTest());
-			List<Task> list = AbasObjectFactory.INSTANCE.createWorkStation(stationSplit[0], stationNo, abasConnection).getScheduledTasks(abasConnection);
-			
-			request.setAttribute("StationList", list);
-			request.setAttribute("abasConnection", abasConnection);
-			view = RenderView.render("/Views/Manager/Todo/Partial/StationList.jsp", request, response);
-			
+			AppBuild ab = new AppBuild(request);
+			Workstation ws = new Workstation(request,ab.isOperator());
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), ab.isTest());
+			request.setAttribute("StationList", AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection).getScheduledTasks(abasConnection));
+			request.setAttribute("abasConnection", abasConnection);			
 			summedProductionTime = (BigDecimal)request.getAttribute("summedProductionTime");
-		}catch(LoginException e)
+		}catch(LoginException  e)
 		{
 			System.out.println(e);
 		}finally
@@ -62,7 +53,7 @@ public class StationTaskList extends HttpServlet {
 			{}
 		}
 		String[] responseArr = new String[2];
-		responseArr[0] = view.toString();
+		responseArr[0] = RenderView.render("/Views/Manager/Todo/Partial/StationList.jsp", request, response);
 		responseArr[1] = of.formatTime(summedProductionTime);
 
 		response.setContentType("application/json");
