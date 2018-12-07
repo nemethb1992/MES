@@ -33,7 +33,8 @@ public class Workstation {
 			}
 		}else if(isOperator) {
 			try {
-			String[] sp2 = getOperatingStation().split("!");
+				String stationRaw =  getOperatingStation();
+				String[] sp2 = (stationRaw.isEmpty()? null : stationRaw.split("!"));
 			if(sp2 != null)
 			{
 				
@@ -46,7 +47,8 @@ public class Workstation {
 			}
 		}else if(!isOperator) {
 			try {
-				String[] sp2 = getSelectedStation().split("!");
+				String stationRaw =  getSelectedStation();
+				String[] sp2 = (stationRaw.isEmpty()? null : stationRaw.split("!"));
 				if(sp2 != null)
 				{
 
