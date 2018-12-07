@@ -16,62 +16,6 @@ public class Workstation {
 	protected String group;
 	protected int no;
 	
-	
-	public Workstation(HttpServletRequest request,  boolean isOperator, String... station){
-		this.request = request;
-		String[] sp;
-		if(station.length > 0 && isOperator)
-		{
-			sp = station[0].split("!");
-			setOperatingStation(station[0]);
-			try {
-				group = (sp[0] != null ? sp[0] : "");
-				no = Integer.parseInt(sp[1]);
-				name = getStationName(request);
-
-			}catch (SQLException e) {
-			}
-		}else if(isOperator) {
-			try {
-				String stationRaw =  getOperatingStation();
-				String[] sp2 = (stationRaw.isEmpty()? null : stationRaw.split("!"));
-			if(sp2 != null)
-			{
-				
-					group = (sp2[0] != null ? sp2[0] : "");
-					no = Integer.parseInt(sp2[1]);
-					name = getStationName(request);
-
-				}
-			}catch (SQLException e) {
-			}
-		}else if(!isOperator) {
-			try {
-				String stationRaw =  getSelectedStation();
-				String[] sp2 = (stationRaw.isEmpty()? null : stationRaw.split("!"));
-				if(sp2 != null)
-				{
-
-					group = (sp2[0] != null ? sp2[0] : "");
-					no = Integer.parseInt(sp2[1]);
-					name = getStationName(request);
-
-				}}catch (SQLException e) {
-				}
-		}
-
-
-	}
-	
-	public static void setSelectedStation(HttpServletRequest request, String obj)
-	{
-		request.getSession().setAttribute("selectedWorkstation", obj);
-	}
-	
-	public Workstation( HttpServletRequest request){
-		this.request = request;
-	}
-	
 	public String getGroup() {
 		return group;
 	}
@@ -110,17 +54,9 @@ public class Workstation {
 		return name;
 	}
 	
-	public void setOperatingStation(String obj)
-	{
-		request.getSession().setAttribute("operatingWorkstation", obj);
-	}
-	
-	public String getOperatingStation()
-	{
-		return (String)request.getSession().getAttribute("operatingWorkstation");
-	}
-	public String getSelectedStation()
-	{
-		return (String)request.getSession().getAttribute("selectedWorkstation");
+	protected void loadVariables(String[] rawName, HttpServletRequest request) throws SQLException {
+		group = (rawName[0] != null ? rawName[0] : "");
+		no = Integer.parseInt(rawName[1]);
+		name = getStationName(request);
 	}
 }

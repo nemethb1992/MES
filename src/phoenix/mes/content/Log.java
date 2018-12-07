@@ -6,6 +6,7 @@ import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 
+import phoenix.mes.content.controller.OperatingWorkstation;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.controller.Workstation;
 
@@ -19,7 +20,7 @@ public class Log {
 	{
 		this.request = request;
 		user = new User(request);
-		ws = new Workstation(request,new AppBuild(request).isOperator());
+		ws = new OperatingWorkstation(request);
 	}
 	
 	public void insert(String text, String... username) throws SQLException

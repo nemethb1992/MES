@@ -18,6 +18,7 @@ import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.controller.OperatingWorkstation;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.controller.Workstation;
 import phoenix.mes.content.utility.OutputFormatter;
@@ -36,8 +37,8 @@ public class DataSheetLoader extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		
-		Workstation ws = new Workstation(request,true);
-		if(ws.getOperatingStation() == null)
+		OperatingWorkstation ws = new OperatingWorkstation(request);
+		if(ws.getGroup().equals(null))
 		{
 			return;
 		}

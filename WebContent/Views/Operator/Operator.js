@@ -32,7 +32,7 @@ function getView(tab = 1)
 			if(response != "")
 			{
 				if(response[1] == "interrupted"){
-					$('#interrupt-level2').modal('show');
+					OpenInterruptModal_2();
 				}
 			}
 			else
@@ -266,6 +266,11 @@ function OpenInterruptModal()
 {
 	$('#interrupt-level1').modal({backdrop: 'static', keyboard: false});
 	$('#interrupt-level1').modal('show');
+}
+function OpenInterruptModal_2()
+{
+	$('#interrupt-level2').modal({backdrop: 'static', keyboard: false});
+	$('#interrupt-level2').modal('show');
 }
 
 function InterruptTask()

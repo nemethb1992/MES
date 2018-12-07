@@ -1,12 +1,12 @@
 <%@page import="phoenix.mes.content.AppBuild"%>
-<%@page import="phoenix.mes.content.controller.Workstation"%>
+<%@page import="phoenix.mes.content.controller.OperatingWorkstation"%>
 <%@page import="phoenix.mes.content.controller.operator.DataSheetLoader"%>
 <%@include file="/Views/Header.jsp"%>
 <script>
 <%@ include file="/Views/Operator/Operator.js"%>
 
 <%
-	Workstation ws = new Workstation(request);
+	OperatingWorkstation ws = new OperatingWorkstation(request);
 %>
 </script>
 <div class='container-fluid h-100'>

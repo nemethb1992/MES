@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import phoenix.mes.content.controller.Workstation;
+import phoenix.mes.content.controller.SelectedWorkstation;
 
 
 public class StoreSelectedStation extends HttpServlet {
@@ -19,7 +19,7 @@ public class StoreSelectedStation extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
  	   String station = request.getParameter("station");
- 	   Workstation.setSelectedStation(request,station);
+ 	   new SelectedWorkstation(request, station);
 	}
 
 }

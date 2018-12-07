@@ -3,6 +3,7 @@ package phoenix.mes.content.controller.manager;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
@@ -14,7 +15,9 @@ import com.google.gson.Gson;
 import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
+import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.controller.SelectedWorkstation;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.controller.Workstation;
 import phoenix.mes.content.utility.OutputFormatter;
@@ -39,10 +42,11 @@ public class StationTaskList extends HttpServlet {
 		String time = "";
 		try {
 			AppBuild ab = new AppBuild(request);
-			Workstation ws = new Workstation(request,ab.isOperator());
+			SelectedWorkstation ws = new SelectedWorkstation(request);
 			User user = new User(request);
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
-			request.setAttribute("StationList", AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection).getScheduledTasks(abasConnection));
+			List<Task> task = AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection).getScheduledTasks(abasConnection);
+			request.setAttribute("StationList",task);
 			request.setAttribute("abasConnection", abasConnection);			
 			summedProductionTime = (BigDecimal)request.getAttribute("summedProductionTime");
 			view = RenderView.render("/Views/Manager/Todo/Partial/StationList.jsp", request, response);

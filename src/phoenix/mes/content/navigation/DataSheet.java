@@ -15,6 +15,7 @@ import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.controller.OperatingWorkstation;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.controller.Workstation;
 import phoenix.mes.content.utility.OutputFormatter;
@@ -38,12 +39,12 @@ public class DataSheet extends HttpServlet {
 			doGet(request,response);
 			return;
 		}
-		Workstation ws = new Workstation(request,ab.isOperator());
-		if(ws.getOperatingStation() == null)
+		OperatingWorkstation ws = new OperatingWorkstation(request);
+		if(ws.getGroup().equals(null))
 		{
 			doGet(request,response);
 			return;
-		}
+		}	
 
 		AbasConnection<EDPSession> abasConnection = null;
 		try {

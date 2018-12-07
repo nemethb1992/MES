@@ -29,12 +29,11 @@ public class Enter extends HttpServlet {
 		
 		AppBuild ab = new AppBuild(request);
 		ab.setSessionListener();
-		Workstation ws;
+		
 		String username = request.getParameter("username");
 		String paramStation = request.getParameter("workstation");
 		String pass = request.getParameter("password");
 		String layout = (String)session.getAttribute("Layout");
-		System.out.println(paramStation);
 		try {
 			User user = new User(request,username,pass);
 			new AbasAuthentication().bind(username, pass, request);
@@ -44,16 +43,17 @@ public class Enter extends HttpServlet {
 			}
 			String nextPage = null;
 			if("operator".equals(layout)) {
-				ws = new Workstation(request,ab.isOperator(),paramStation);
-				String workStation = ws.getOperatingStation();
-				if (null == workStation || !workStation.equals(paramStation)) {
+				String workstation = "";
+				OperatingWorkstation ws = new OperatingWorkstation(request);
+				workstation = ws.getOperatingStation();
+				if ("".equals(workstation) || !workstation.equals(paramStation)) {
 					Cookie[] cookies = request.getCookies();
 					if (cookies != null) {
 						for (Cookie cookie : cookies) {
 							if (cookie.getName().equals("workstation")) {
 								
-								workStation = OutputFormatter.isStation(cookie.getValue());
-								if (null == workStation) {
+								OperatingWorkstation.setOperatingStation(request,OutputFormatter.isStation(cookie.getValue()));
+								if (null == ws.getOperatingStation()) {
 									nextPage = "/Views/Login/loginPage.jsp";
 									break;
 								}
@@ -61,7 +61,7 @@ public class Enter extends HttpServlet {
 						}
 					}
 				}
-				if (null != workStation) {
+				if (null != ws.getOperatingStation()) {
 					nextPage = "/OpenTask";
 				}
 			}

@@ -17,6 +17,7 @@ import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.controller.SelectedWorkstation;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.controller.Workstation;
 import phoenix.mes.content.utility.OutputFormatter;
@@ -39,7 +40,7 @@ public class ScheduleTask extends HttpServlet {
 			doGet(request,response);
 			return;
 		}
-		Workstation ws = new Workstation(request,ab.isOperator());
+		SelectedWorkstation ws = new SelectedWorkstation(request);
 		String currentId = request.getParameter("currentId");
 		String targetId = request.getParameter("targetId");
 		IdImpl id = (null != targetId && !"".equals(targetId) ? (IdImpl) IdImpl.valueOf(targetId) : (IdImpl) IdImpl.NULLREF);
