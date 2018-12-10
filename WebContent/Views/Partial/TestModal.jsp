@@ -1,5 +1,6 @@
 <%@page import="phoenix.mes.abas.AbasConnection"%>
 <%@page import="phoenix.mes.content.utility.OutputFormatter"%>
+<%@page import="phoenix.mes.content.Log"%>
 <%@page import="phoenix.mes.content.controller.User"%>
 <%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
 <%@page import="phoenix.mes.abas.Task"%>
@@ -21,7 +22,11 @@ try {
 	Task task = (Task)session.getAttribute("Task");
 	Task.Details taskDetails = task.getDetails(abasConnection);
 	session.setAttribute("Task", task);
-
+	String errorText = "";
+	if(taskDetails.getStatus() == Status.INTERRUPTED){
+		Log log = new Log(request);
+		errorText = log.get(taskDetails.getWorkSlipNo());
+	}
 	%>
 	<div class="modal fade my-fade" id="interrupt-level1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -105,7 +110,7 @@ try {
 				<div class="form-group row">
 					<label for="example-search-input"  class="col-12 col-form-label">Zavarleírás:</label>
 					<div class="col-12">
-						<textarea class="form-control error-text-back" disabled type="search" id="example-search-input" style="height: 150px;"><%=(String)request.getAttribute("error-text") %></textarea>
+						<textarea class="form-control error-text-back" disabled type="search" id="example-search-input" style="height: 150px;"><%=errorText %></textarea>
 					</div>
 				</div>	
 				<div class="form-group row">

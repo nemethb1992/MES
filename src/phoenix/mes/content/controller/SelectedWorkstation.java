@@ -43,7 +43,7 @@ public class SelectedWorkstation extends Workstation {
 	public String getSelectedStation() throws SQLException
 	{
 		String station = (String)request.getSession().getAttribute("selectedWorkstation");
-		if(station == null) {
+		if(station != null) {
 			loadVariables(station.split("!"), request);
 		}
 		return (station == null ? "" : station);

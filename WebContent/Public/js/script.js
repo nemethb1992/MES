@@ -75,7 +75,8 @@ function setDateNow(element)
 	    var currentTime = new Date();
 	    var year = currentTime.getFullYear();
 	    var month = currentTime.getMonth() + 1;
-	    var day = currentTime.getDate();
+	    var rawDay = currentTime.getDate();
+	    var day = (rawDay < 10 ? "0"+rawDay : rawDay);
 	    var currentDate;
 	    switch ($.cookie("language")) {
 	    case "de":
