@@ -19,9 +19,9 @@
 	String numberSqlFieldName = "";
 	String nameSqlFieldName = "";
 	
-	String countCommand = "SELECT count(stations.pc) as count FROM relation "+
-  	    		"LEFT JOIN stations on relation.workstation_group = stations.csoport "+
-  	    		"LEFT JOIN users ON relation.user_id = users.id " + 
+	String countCommand = "SELECT count(stations.pc) as count FROM group_relation "+
+  	    		"LEFT JOIN stations on group_relation.workstation_group = stations.csoport "+
+  	    		"LEFT JOIN users ON group_relation.user_id = users.id " + 
   	    		"WHERE users.username='"+user.getUsername()+"' "+
   	    		"GROUP BY stations.pc";
 	if(level == "0" && pg.count(countCommand, "count") == 1) {
@@ -32,7 +32,7 @@
 		method = "StationItemSelect(this,2)";
 		field = "csoport";
 		
-		command = "SELECT stations.csoport FROM stations LEFT JOIN profitcenter ON stations.pc = profitcenter.id LEFT JOIN relation ON relation.workstation_group = stations.csoport WHERE "+(null != value ? "long = '"+value+"' AND":"")+" relation.user_id = "+user.getUserid()+" GROUP BY stations.csoport";
+		command = "SELECT stations.csoport FROM stations LEFT JOIN profitcenter ON stations.pc = profitcenter.id LEFT JOIN group_relation ON group_relation.workstation_group = stations.csoport WHERE "+(null != value ? "long = '"+value+"' AND":"")+" group_relation.user_id = "+user.getUserid()+" GROUP BY stations.csoport";
 		list = pg.sqlQuery(command, field);
 		pg.dbClose();
 		break;
@@ -51,9 +51,9 @@
 	default:
 		method = "StationItemSelect(this,1)";
 		field = "long";
-		command = "SELECT profitcenter.long FROM relation " + 
-		"LEFT JOIN stations on relation.workstation_group = stations.csoport " + 
-		"LEFT JOIN users ON relation.user_id = users.id " + 
+		command = "SELECT profitcenter.long FROM group_relation " + 
+		"LEFT JOIN stations on group_relation.workstation_group = stations.csoport " + 
+		"LEFT JOIN users ON group_relation.user_id = users.id " + 
 		"LEFT JOIN profitcenter ON profitcenter.id = stations.pc " + 
 		"WHERE users.username='"+user.getUsername()+"' GROUP BY profitcenter.id";
 		list = pg.sqlQuery(command, field);

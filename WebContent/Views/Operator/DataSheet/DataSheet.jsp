@@ -63,7 +63,7 @@
 					</div>
 					<div id='btn_megszakitas' onclick='OpenInterruptModal()' 
 						class='btn_navHeader h-100 float-left btn_navHeader-left'>
-						<p class='h6 text-center nav-label'><%=outputFormatter.getWord(DictionaryEntry.INTERRUPT)%></p>
+						<p class='h6 text-center nav-label'><%=outputFormatter.getWord(DictionaryEntry.DISRUPTION)%></p>
 <!-- 						<div class='container-fluid my-nav-container h-100'> -->
 <!-- 							<div class='row h-100'> -->
 <!-- 								<form method='Post' -->

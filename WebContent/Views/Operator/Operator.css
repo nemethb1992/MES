@@ -179,7 +179,7 @@ position: absolute;
 	background: #efefef;
     border-bottom: 1px solid #cccccc;
 	overflow: hidden;
-    height: 75px;
+    height: 70px;
 }
 .bom-list-full-container{
 	overflow: auto;
@@ -287,7 +287,6 @@ position: absolute;
 
 .inputContainer textarea
 {
-	font-size: larger;
     color: #4f4f4f;
 	background: transparent;
 	border:none;

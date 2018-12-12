@@ -32,6 +32,7 @@ public class OutputFormatter {
 		START_TIME("Indítás ideje","Startzeit","Start time"),
 		END_TIME("Várható befejezés","Erwarteter Abschluss","Expected completion"),
 		INTERRUPT("Megszakítás","Abbrechen","Interrupt"),
+		DISRUPTION("Zavar","Störung","Disruption"),
 		SUBMIT("Lejelentés","Rückmelden","Submit"),
 		EXECUTION_NO("Végrehajtás száma","Ausführungsanzahl","Implementation number"),
 		GET_STARTED("Tervezett kezdés","geplantes Startdatum","Planned start"),

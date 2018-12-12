@@ -229,9 +229,9 @@ function closeNavButtons()
 
 function bomListDropDown(item)
 {
-	var itemHeight = $(item).css("height").match(/\d+/);
-	$(item).css({'height' : (itemHeight == 75 ? 'auto' : '75px'), 'background' : (itemHeight == 75 ? '#e4e4e4' : '#efefef')});
-
+	var parentitem = $(item).parents('.bom-item-row');
+	var itemHeight = parentitem.css("height").match(/\d+/);
+	parentitem.css({'height' : (itemHeight == 70 ? 'auto' : '70px'), 'background' : (itemHeight == 70 ? '#e4e4e4' : '#efefef')});
 }
 
 String.prototype.toHHMMSS = function () {
@@ -284,6 +284,9 @@ function InterruptTask()
 		url:  '/'+path+'/InterruptTask',
 		data:{
 			errorText: text
+		},
+		success: function () {
+			$(".error-text-back").html(text);
 		}
 	});
 	$('#interrupt-level1').modal('hide');
@@ -348,7 +351,6 @@ function SubmitTask()
 
 	var finishedQt = (finished == "" || finished == null ? 0 : finished);
 	var scrapQt = (scrap == "" || scrap == null ? 0 : scrap);
-	console.log(finishedQt + "   " + scrapQt);
 	if(finishedQt == 0 && scrapQt == 0)
 	{
 		return;
