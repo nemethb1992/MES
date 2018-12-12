@@ -168,7 +168,7 @@ position: absolute;
 }
 .close-nav-btn
 {
-	background-color: white;
+	background-color: transparent;
 	background-size: 28px;
 	background-repeat: no-repeat;
 	background-position: center;

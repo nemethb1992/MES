@@ -29,6 +29,10 @@
 .refresh_btn {
 	cursor: pointer;
 }
+.refresh_btn img 
+{
+	width: 55px;
+}
 .datepicker_own {
 font-size: 14px;
     background: #efefef;

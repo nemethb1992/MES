@@ -202,10 +202,10 @@ function openInterupt(item)
 
 function openSubmit(item)
 {
-	$(".btn_navHeader-left").hide();
 	$(item).show();
 	closeNavButtons();
-	$(item).css({'width':'55%'});
+		$(".btn_navHeader-left").hide();
+	$(item).css({'display':'block','width':'55%'});
 	$('#btn_lejelentes p').css({'display':'none'});
 	$('#btn_lejelentes .my-nav-container').css({'display':'block'});
 	$('#btn_lejelentes').css({'background':'white'});

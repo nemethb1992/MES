@@ -17,7 +17,6 @@ import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.controller.OperatingWorkstation;
 import phoenix.mes.content.controller.User;
-import phoenix.mes.content.controller.Workstation;
 import phoenix.mes.content.utility.OutputFormatter;
 
 
@@ -54,7 +53,6 @@ public class DataSheet extends HttpServlet {
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(),user.getPassword(), of.getLocale(), ab.isTest());	
 			Task task = AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(),ws.getNumber(), abasConnection).startFirstScheduledTask(abasConnection);
 			session.setAttribute("Task", task);
-
 		}catch(LoginException e)
 		{
 		} catch (SQLException e) {

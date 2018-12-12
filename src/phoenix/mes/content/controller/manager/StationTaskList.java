@@ -19,7 +19,6 @@ import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.controller.SelectedWorkstation;
 import phoenix.mes.content.controller.User;
-import phoenix.mes.content.controller.Workstation;
 import phoenix.mes.content.utility.OutputFormatter;
 import phoenix.mes.content.utility.RenderView;
 
@@ -48,9 +47,8 @@ public class StationTaskList extends HttpServlet {
 			List<Task> task = AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection).getScheduledTasks(abasConnection);
 			request.setAttribute("StationList",task);
 			request.setAttribute("abasConnection", abasConnection);			
-			summedProductionTime = (BigDecimal)request.getAttribute("summedProductionTime");
 			view = RenderView.render("/Views/Manager/Todo/Partial/StationList.jsp", request, response);
-//			time = of.formatTime(summedProductionTime);
+			summedProductionTime = (BigDecimal)request.getAttribute("summedProductionTime");
 		}catch(LoginException | SQLException  e)
 		{
 			System.out.println(e);
@@ -65,7 +63,7 @@ public class StationTaskList extends HttpServlet {
 		}
 		String[] responseArr = new String[2];
 		responseArr[0] = view;
-		responseArr[1] = time;
+		responseArr[1] = of.formatTime(summedProductionTime);
 
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8"); 
