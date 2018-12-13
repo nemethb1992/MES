@@ -73,7 +73,12 @@ public class WorkstationControl extends HttpServlet {
 			for(String item : user.getStationAccess().getSuggestedGroups())
 			{
 				final Map<String, String> row = new HashMap<>((int)Math.ceil((1) / 0.75));
-				row.put("divValue", pg.sqlSingleQuery("SELECT stations.csoport FROM stations LEFT JOIN profitcenter ON stations.pc = profitcenter.id WHERE "+(null != value ? "long = '"+value+"' AND":"")+" csoport='"+item+"'", field));
+				String segedValue = pg.sqlSingleQuery("SELECT stations.csoport FROM stations LEFT JOIN profitcenter ON stations.pc = profitcenter.id WHERE "+(null != value ? "long = '"+value+"' AND":"")+" csoport='"+item+"'", field);
+				if("".equals(segedValue))
+				{
+					break;
+				}
+				row.put("divValue", segedValue);
 				dataList.add(row);
 			}
 //			command = "SELECT stations.csoport FROM stations LEFT JOIN profitcenter ON stations.pc = profitcenter.id LEFT JOIN group_relation ON group_relation.workstation_group = stations.csoport WHERE "+(null != value ? "long = '"+value+"' AND":"")+" group_relation.user_id = "+user.getUserid()+" GROUP BY stations.csoport";
@@ -82,9 +87,9 @@ public class WorkstationControl extends HttpServlet {
 			
 			for (Map<String, String> row : (List<Map<String,String>>)dataList) {
 				final Map<String, String> valueRow = new HashMap<>((int)Math.ceil((3) / 0.75));
-				valueRow.put("divValue", row.get(field));
+				valueRow.put("divValue", row.get("divValue"));
 				valueRow.put("method", method);
-				valueRow.put("inputValue", row.get(field));
+				valueRow.put("inputValue", row.get("divValue"));
 				finalDataList.add(valueRow);
 			}
 			break;
@@ -110,18 +115,16 @@ public class WorkstationControl extends HttpServlet {
 		case "0":
 		default:
 			method = "StationItemSelect(this,1)";
-			field = "long";
+			field = "divValue";
 			for(String item : pcList)
 			{
 				final Map<String, String> row = new HashMap<>((int)Math.ceil((1) / 0.75));
-				if(!OutputFormatter.isExistsInMap(dataList, field, item))
+				if(!OutputFormatter.isExistsInMap(dataList, "divValue", item))
 				{
 					row.put("divValue", item);
 					dataList.add(row);
 				}
 			}
-			
-			pg.dbClose();
 			
 			for (Map<String, String> row : (List<Map<String,String>>)dataList) {
 				final Map<String, String> valueRow = new HashMap<>((int)Math.ceil((3) / 0.75));

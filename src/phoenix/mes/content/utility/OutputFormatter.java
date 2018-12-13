@@ -185,6 +185,7 @@ public class OutputFormatter {
 	public static boolean isExistsInMap(List<Map<String,String>> list, String field, String searched)
     {
 		for (Map<String, String> row : (List<Map<String,String>>)list) {
+			System.out.println(row.get(field));
 			if(row.get(field).equals(searched))
 			{
 				return true;
