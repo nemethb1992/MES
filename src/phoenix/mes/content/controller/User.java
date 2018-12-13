@@ -1,7 +1,6 @@
 package phoenix.mes.content.controller;
 
 import java.sql.SQLException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -11,47 +10,84 @@ import phoenix.mes.content.PostgreSql;
 public class User {
 
 	HttpServletRequest request;
+	protected Integer userid;
 	protected final String username;
 	protected final String password;
-	protected Integer userid;
+	protected boolean modifier;
+	protected boolean access;
+	protected StationAccess workstationAccess;
 	
 	public User(HttpServletRequest request) throws SQLException
 	{
-		this.request = request;
 		HttpSession session = request.getSession();
+		this.request = request;
 		this.username = (String) session.getAttribute("username");
 		this.password = (String) session.getAttribute("password");
-		this.userid = getUserid();
+		this.userid = setUserId();
+		this.modifier = setModifier();
+		this.access = setAccessValue();
+		this.workstationAccess = setWorkstationAccess();
 	}
 	
 	public User(HttpServletRequest request, String username, String password) throws SQLException
 	{
+		HttpSession session = request.getSession();
 		this.request = request;
 		this.username = username;
 		this.password = password;
-		this.userid = getUserid();
-		HttpSession session = request.getSession();
+		this.userid = setUserId();
+		this.modifier = setModifier();
+		this.access = setAccessValue();
+		this.workstationAccess = setWorkstationAccess();
 		session.setAttribute("username", username);
 		session.setAttribute("password", password);
 		session.setAttribute("userid", userid);
 	}
-
-    public boolean isExists(String... username) throws SQLException
-    {
-    	return sqlEngine("SELECT users.username FROM users WHERE username='"+(username.length != 0 ? username[0] : this.username)+"'", "username");
-    }
     
     public boolean hasAccess(String... username) throws SQLException
     { 
-    	return sqlEngine("SELECT users.username FROM users WHERE username='"+(username.length != 0 ? username[0] : this.username)+"' AND access = 1", "username");
+    	return access;
     }
 
-    public boolean isModifier(String... username) throws SQLException
+	public int getUserid(){
+		return userid;
+	}
+    
+	public String getUsername() {
+		return username;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public StationAccess getStationAccess() {
+		return workstationAccess;
+	}
+	
+    public boolean isModifier()
     {
-    	return sqlEngine("SELECT users.username FROM users WHERE username='"+(username.length != 0 ? username[0] : this.username)+"' AND modifier = 1", "username");
+    	return modifier;
     }
-
-	public int getUserid() throws SQLException {
+    
+    public boolean isModifier(String username) throws SQLException
+    {
+    	return sqlBindEngine("SELECT users.username FROM users WHERE username='"+username+"' AND modifier = 1", "username");
+    }
+    
+    public boolean isExists(String... username) throws SQLException
+    {
+    	return sqlBindEngine("SELECT users.username FROM users WHERE username='"+(username.length != 0 ? username[0] : this.username)+"'", "username");
+    }
+    
+	protected void registration(String... username) throws SQLException 
+	{
+		PostgreSql pg = new PostgreSql(new AppBuild(request).isTest());
+		pg.sqlUpdate("INSERT INTO users (username) VALUES('"+(username.length != 0 ? username[0] : this.username)+"')");
+		pg.dbClose();
+	}
+	
+	protected int setUserId() throws SQLException {
 		PostgreSql pg = new PostgreSql(new AppBuild(request).isTest());
 		String id = pg.sqlSingleQuery("SELECT users.id FROM users WHERE username='"+this.username+"'", "id");
 		if(id == "") {
@@ -62,22 +98,21 @@ public class User {
 		return Integer.parseInt(id);
 	}
     
-	public String getUsername() {
-		return (username != null ? username : (String)request.getSession().getAttribute("username"));
-	}
+    protected boolean setAccessValue(String... username) throws SQLException
+    { 
+    	return sqlBindEngine("SELECT users.username FROM users WHERE username='"+(username.length != 0 ? username[0] : this.username)+"' AND access = 1", "username");
+    }
+    
+    protected boolean setModifier() throws SQLException
+    {
+    	return sqlBindEngine("SELECT users.username FROM users WHERE username='"+username+"' AND modifier = 1", "username");
+    }
+    
+    protected StationAccess setWorkstationAccess() throws SQLException{
+    	return new StationAccess(request, userid);
+    }
 	
-	public String getPassword() {
-		return (password != null ? password : (String)request.getSession().getAttribute("password"));
-	}
-
-	public void registration(String... username) throws SQLException 
-	{
-		PostgreSql pg = new PostgreSql(new AppBuild(request).isTest());
-		pg.sqlUpdate("INSERT INTO users (username) VALUES('"+(username.length != 0 ? username[0] : this.username)+"')");
-		pg.dbClose();
-	}
-	
-    protected boolean sqlEngine(String command, String field) throws SQLException
+    protected boolean sqlBindEngine(String command, String field) throws SQLException
     {
 		PostgreSql pg = new PostgreSql(new AppBuild(request).isTest());
 		String result = pg.sqlSingleQuery(command,field);

@@ -74,7 +74,7 @@ font-size: 14px;
     background-size: 27px;
 	background-image: url(Public/icons/delete-sign.svg);
 }
-.tmts_stationBtnDivCont {
+.workstation-container {
 	height: 50px;
 	background: white;
 	border-bottom: 1px solid #d6d6d6;
@@ -86,7 +86,7 @@ font-size: 14px;
 	cursor: pointer;
 	z-index: 0;
 }
-.tmts_stationBtnDivCont:hover {
+.workstation-container:hover {
 	/*     border: 1px solid #dc3545; */
 	background-color: #efefef;
 	z-index: 1;
@@ -222,7 +222,7 @@ TM_content_layer {
 	    border: 1px solid #d6d6d6;
 }
 
-.tmts_stationBtnDivCont input {
+.workstation-container input {
 	pointer-events: none;
 	background: transparent;
 	border: none;
@@ -530,7 +530,7 @@ TM_content_layer {
 	height: 90%;
 }
 @media only screen and (max-width: 1300px) {
-	.tmts_stationBtnDivCont 
+	.workstation-container 
 	{
 		background-image: none;
 	}

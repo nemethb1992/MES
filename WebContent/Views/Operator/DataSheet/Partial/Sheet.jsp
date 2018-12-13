@@ -24,7 +24,7 @@
 						value='<%=taskDetails.getWorkSlipNo()%>'/>
 				</div>
 				<div class='inputContainer'>
-					<p class='task-data-label'> <%=of.getWord(DictionaryEntry.GET_STARTED)%> </p>
+					<p class='task-data-label'><%=of.getWord(DictionaryEntry.GET_STARTED)%> </p>
 					<input class='px-2 w-100 task-data-value' type='text' disabled
 						value='<%=of.formatDate(taskDetails.getStartDate())%>'/>
 				</div>
@@ -57,7 +57,7 @@
 				<div class='inputContainer'>
 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.OPEN_QUANTITY)%></p>
 					<input class='px-2 w-100 task-data-value' type='text' disabled
-						value='<%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity())%>  <%=taskDetails.getStockUnit()%>'>
+						value='<%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity())%> <%=taskDetails.getStockUnit()%>'>
 				</div>
 			</div>
 			<div class='col-6 pt-3'>
@@ -100,12 +100,12 @@
 				<div class='inputContainer'>
 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.SETTING_TIME)%></p>
 					<input class='px-2 w-100 task-data-value' type='text' disabled
-						value='<%=of.formatWithoutTrailingZeroes(taskDetails.getSetupTime())%>  <%=taskDetails.getSetupTimeUnit()%>'>
+						value='<%=of.formatWithoutTrailingZeroes(taskDetails.getSetupTime())%> <%=taskDetails.getSetupTimeUnit()%>'>
 				</div>
 				<div class='inputContainer'>
 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.TIME_FOR_PCS)%></p>
 					<input class='px-2 w-100 task-data-value'
-						type='text' disabled  value='<%=of.formatWithoutTrailingZeroes(taskDetails.getUnitTime())%>  <%=taskDetails.getUnitTimeUnit()%>'/>
+						type='text' disabled  value='<%=of.formatWithoutTrailingZeroes(taskDetails.getUnitTime())%> <%=taskDetails.getUnitTimeUnit()%>'/>
 				</div>
 			</div>
 		</div>

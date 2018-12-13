@@ -55,7 +55,7 @@
 					</div>
 					<div class='col-2'>
 						<input class='w-100' disabled
-							value='<%=of.formatWithoutTrailingZeroes(bomItem.getQuantityPerProduct())%>  <%=bomItem.getStockUnit()%>'>
+							value='<%=of.formatWithoutTrailingZeroes(bomItem.getQuantityPerProduct())%> <%=bomItem.getStockUnit()%>'>
 					</div>
 				</div>
 				<div class='row bom-item-text-row'>

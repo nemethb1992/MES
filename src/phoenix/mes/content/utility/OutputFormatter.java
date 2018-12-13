@@ -3,7 +3,10 @@ package phoenix.mes.content.utility;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -143,7 +146,6 @@ public class OutputFormatter {
 		public Locale getLocale() {
 			return locale;
 		}
-
 	}
 
 	public static final BigDecimal BIG_DECIMAL_3600 = new BigDecimal(3600);
@@ -168,6 +170,29 @@ public class OutputFormatter {
 		return new OutputFormatter((null == language ? OperatingLanguage.hu : language).getLocale());
 	}
 
+	public static boolean isExists(List<String> list, String searched)
+    {
+    	for(String item: list)
+    	{
+    		if(item.equals(searched))
+    		{
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+	
+	public static boolean isExistsInMap(List<Map<String,String>> list, String field, String searched)
+    {
+		for (Map<String, String> row : (List<Map<String,String>>)list) {
+			if(row.get(field).equals(searched))
+			{
+				return true;
+			}
+		}
+		return false;
+    }
+	
 	public static String isStation(String station)
 	{
 		String[] splitted = station.split("!");
