@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 import phoenix.mes.abas.AbasConnection;
+import phoenix.mes.abas.AbasFunctionException;
 import phoenix.mes.abas.WorkStation;
 import phoenix.mes.abas.impl.TaskImpl;
 import phoenix.mes.abas.impl.BomElementImpl;
@@ -554,26 +555,6 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	}
 
 	/**
-	 * Segédosztály a gyártási feladat végrehajtási állapotának lekérdezéséhez.
-	 * @author szizo
-	 */
-	protected static final class InProgressQuery extends EdpQueryExecutor {
-
-		/**
-		 * Egyke objektum.
-		 */
-		public static final InProgressQuery EXECUTOR = new InProgressQuery();
-
-		/**
-		 * Konstruktor.
-		 */
-		private InProgressQuery() {
-			super(new String[] {WorkOrders.META.ysts.getName()});
-		}
-
-	}
-
-	/**
 	 * Segédosztály a gyártási feladathoz kapcsolódó műveletek elvégzéséhez.
 	 * @author szizo
 	 */
@@ -599,6 +580,9 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 */
 		protected static final String[] completionConfirmationFieldNames = {InfosysOw1MESTASKADMIN.META.yas.getName(), InfosysOw1MESTASKADMIN.META.ygutmge.getName(), InfosysOw1MESTASKADMIN.META.yverlust.getName(), InfosysOw1MESTASKADMIN.META.ylejel.getName()};
 
+		/**
+		 * A funkcióhívás eredményét jelző mező neve.
+		 */
 		protected static final String resultFieldName = InfosysOw1MESTASKADMIN.META.yeredmeny.getName();
 
 		/**
@@ -871,7 +855,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 * @see phoenix.mes.abas.Task#schedule(phoenix.mes.abas.WorkStation, de.abas.erp.common.type.Id, phoenix.mes.abas.AbasConnection)
 	 */
 	@Override
-	public void schedule(WorkStation workStation, Id precedingWorkSlipId, AbasConnection<?> abasConnection) {
+	public void schedule(WorkStation workStation, Id precedingWorkSlipId, AbasConnection<?> abasConnection) throws AbasFunctionException {
 		TaskManager.INSTANCE.scheduleTask(workSlipId, workStation, precedingWorkSlipId.toString(), abasConnection);
 	}
 
@@ -879,7 +863,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 * @see phoenix.mes.abas.Task#unSchedule(phoenix.mes.abas.AbasConnection)
 	 */
 	@Override
-	public void unSchedule(AbasConnection<?> abasConnection) {
+	public void unSchedule(AbasConnection<?> abasConnection) throws AbasFunctionException {
 		TaskManager.INSTANCE.unScheduleTask(workSlipId, abasConnection);
 	}
 
@@ -887,7 +871,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 * @see phoenix.mes.abas.Task#interrupt(phoenix.mes.abas.AbasConnection)
 	 */
 	@Override
-	public void interrupt(AbasConnection<?> abasConnection) {
+	public void interrupt(AbasConnection<?> abasConnection) throws AbasFunctionException {
 		TaskManager.INSTANCE.interruptTask(workSlipId, abasConnection);
 		clearDetailsStatusCache();
 	}
@@ -905,7 +889,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 * @see phoenix.mes.abas.Task#resume(phoenix.mes.abas.AbasConnection)
 	 */
 	@Override
-	public void resume(AbasConnection<?> abasConnection) {
+	public void resume(AbasConnection<?> abasConnection) throws AbasFunctionException {
 		TaskManager.INSTANCE.resumeTask(workSlipId, abasConnection);
 		clearDetailsStatusCache();
 	}
@@ -914,7 +898,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 * @see phoenix.mes.abas.Task#postCompletionConfirmation(java.math.BigDecimal, java.math.BigDecimal, phoenix.mes.abas.AbasConnection)
 	 */
 	@Override
-	public void postCompletionConfirmation(BigDecimal yield, BigDecimal scrapQuantity, AbasConnection<?> abasConnection) {
+	public void postCompletionConfirmation(BigDecimal yield, BigDecimal scrapQuantity, AbasConnection<?> abasConnection) throws AbasFunctionException {
 		TaskManager.INSTANCE.postCompletionConfirmation(workSlipId, yield, scrapQuantity, abasConnection);
 		if (null != details) {
 			details.clearBasicDataCache();
@@ -925,7 +909,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 * @see phoenix.mes.abas.Task#suspend(phoenix.mes.abas.AbasConnection)
 	 */
 	@Override
-	public void suspend(AbasConnection<?> abasConnection) {
+	public void suspend(AbasConnection<?> abasConnection) throws AbasFunctionException {
 		TaskManager.INSTANCE.suspendTask(workSlipId, abasConnection);
 		clearDetailsStatusCache();
 	}

@@ -263,39 +263,45 @@ public interface Task extends Serializable {
 	 * @param workStation A munkaállomás.
 	 * @param precedingWorkSlipId A munkaállomáson közvetlenül ez előtt a gyártási feladat előtt végrehajtandó munkalap azonosítója (Id.NULLREF, ha ez a gyártási feladat az első a végrehajtási listában).
 	 * @param abasConnection Az Abas-kapcsolat.
+	 * @throws AbasFunctionException Ha hiba történt a funkcióhívás végrehajtása során.
 	 */
-	void schedule(WorkStation workStation, Id precedingWorkSlipId, AbasConnection<?> abasConnection);
+	void schedule(WorkStation workStation, Id precedingWorkSlipId, AbasConnection<?> abasConnection) throws AbasFunctionException;
 
 	/**
 	 * A gyártási feladat beütemezésének visszavonása.
 	 * @param abasConnection Az Abas-kapcsolat.
+	 * @throws AbasFunctionException Ha hiba történt a funkcióhívás végrehajtása során.
 	 */
-	void unSchedule(AbasConnection<?> abasConnection);
+	void unSchedule(AbasConnection<?> abasConnection) throws AbasFunctionException;
 
 	/**
 	 * A gyártási feladat végrehajtásának félbeszakítása.
 	 * @param abasConnection
+	 * @throws AbasFunctionException Ha hiba történt a funkcióhívás végrehajtása során.
 	 */
-	void interrupt(AbasConnection<?> abasConnection);
+	void interrupt(AbasConnection<?> abasConnection) throws AbasFunctionException;
 
 	/**
 	 * A gyártási feladat végrehajtásának folytatása.
 	 * @param abasConnection Az Abas-kapcsolat.
+	 * @throws AbasFunctionException Ha hiba történt a funkcióhívás végrehajtása során.
 	 */
-	void resume(AbasConnection<?> abasConnection);
+	void resume(AbasConnection<?> abasConnection) throws AbasFunctionException;
 
 	/**
 	 * A gyártási feladat lejelentése.
 	 * @param yield Az elkészült jó mennyiség.
 	 * @param scrapQuantity A keletkezett selejt mennyisége.
 	 * @param abasConnection Az Abas-kapcsolat.
+	 * @throws AbasFunctionException Ha hiba történt a funkcióhívás végrehajtása során.
 	 */
-	void postCompletionConfirmation(BigDecimal yield, BigDecimal scrapQuantity, AbasConnection<?> abasConnection);
+	void postCompletionConfirmation(BigDecimal yield, BigDecimal scrapQuantity, AbasConnection<?> abasConnection) throws AbasFunctionException;
 
 	/**
 	 * A gyártási feladat felfüggesztése.
 	 * @param abasConnection Az Abas-kapcsolat.
+	 * @throws AbasFunctionException Ha hiba történt a funkcióhívás végrehajtása során.
 	 */
-	void suspend(AbasConnection<?> abasConnection);
+	void suspend(AbasConnection<?> abasConnection) throws AbasFunctionException;
 
 }
