@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
+import phoenix.mes.abas.AbasFunctionException;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
@@ -54,7 +55,7 @@ public class InterruptTask extends HttpServlet {
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
 			task.interrupt(abasConnection);
 			new Log(request).insert(task.getDetails(abasConnection).getWorkSlipNo(),request.getParameter("errorText"));
-		} catch (LoginException | SQLException e) {
+		} catch (LoginException | SQLException | AbasFunctionException e) {
 			System.out.println(e);
 		}finally
 		{

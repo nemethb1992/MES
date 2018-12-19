@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.IdImpl;
 import phoenix.mes.abas.AbasConnection;
+import phoenix.mes.abas.AbasFunctionException;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.Status;
@@ -56,7 +57,7 @@ public class ScheduleTask extends HttpServlet {
         	if(task.getDetails(abasConnection).getStatus() != Status.IN_PROGRESS && !nextIsInProgress) {
             	task.schedule(AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection), id, abasConnection);
         	}
-		}catch(LoginException | SQLException e)
+		}catch(LoginException | SQLException | AbasFunctionException e)
     	{
     		System.out.println(e);
     	}finally

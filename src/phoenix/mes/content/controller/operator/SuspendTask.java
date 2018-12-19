@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
+import phoenix.mes.abas.AbasFunctionException;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
@@ -73,7 +74,7 @@ public class SuspendTask extends HttpServlet {
 				task.suspend(abasConnection);
 				session.removeAttribute("Task");
 			}
-		}catch(LoginException e)
+		}catch(LoginException | AbasFunctionException e)
 		{
 			System.out.println(e);
 		}finally
