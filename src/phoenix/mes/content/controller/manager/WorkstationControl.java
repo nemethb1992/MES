@@ -74,12 +74,11 @@ public class WorkstationControl extends HttpServlet {
 			{
 				final Map<String, String> row = new HashMap<>((int)Math.ceil((1) / 0.75));
 				String segedValue = pg.sqlSingleQuery("SELECT stations.csoport FROM stations LEFT JOIN profitcenter ON stations.pc = profitcenter.id WHERE "+(null != value ? "long = '"+value+"' AND":"")+" csoport='"+item+"'", field);
-				if("".equals(segedValue))
+				if(!"".equals(segedValue))
 				{
-					break;
+					row.put("divValue", segedValue);
+					dataList.add(row);
 				}
-				row.put("divValue", segedValue);
-				dataList.add(row);
 			}
 //			command = "SELECT stations.csoport FROM stations LEFT JOIN profitcenter ON stations.pc = profitcenter.id LEFT JOIN group_relation ON group_relation.workstation_group = stations.csoport WHERE "+(null != value ? "long = '"+value+"' AND":"")+" group_relation.user_id = "+user.getUserid()+" GROUP BY stations.csoport";
 //			list = pg.sqlQuery(command, field);
