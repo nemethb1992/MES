@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
+import phoenix.mes.abas.AbasFunctionException;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
@@ -63,7 +64,7 @@ public class Submit extends HttpServlet {
 				}
 
 			}
-		}catch(LoginException | SQLException e)
+		}catch(LoginException | SQLException | AbasFunctionException e)
 		{
 			session.removeAttribute("Task");
 			responseStr = "finished";

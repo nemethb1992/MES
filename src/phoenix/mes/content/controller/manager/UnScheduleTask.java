@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.IdImpl;
 import phoenix.mes.abas.AbasConnection;
+import phoenix.mes.abas.AbasFunctionException;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
@@ -51,7 +52,7 @@ public class UnScheduleTask extends HttpServlet {
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
 			Task task = AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(workSlipId), abasConnection);
 			task.unSchedule(abasConnection);
-		} catch (LoginException | SQLException e) {
+		} catch (LoginException | SQLException | AbasFunctionException e) {
 
 		}
 	}

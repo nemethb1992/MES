@@ -112,7 +112,7 @@
 					</div>
 				</div>
 				<div class='sortContDiv_ListHolder row'>
-					<div class='abas-list-holder    sort-list-holder  col-9 px-0'>
+					<div class='abas-list-holder h-100   sort-list-holder  col-9 px-0'>
 						<div class='abas-list dnd-frame dndf1 m-0 row'></div>
 					</div>
 					<div class='ws-list-holder sort-list-holder col-3 px-0'>
