@@ -32,102 +32,17 @@
 		<link>
 			<name>WebContent/Public/css/gijgo.min.css</name>
 			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/css/gijgo.min.css</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/DE.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/DE.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/EN.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/EN.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/HU.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/HU.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/backArrowgray.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/backArrowgray.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/btn_settings.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/btn_settings.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/btn_vision.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/btn_vision.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/btn_wscontrol.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/btn_wscontrol.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/computerSign.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/computerSign.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/delete-sign.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/delete-sign.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/letter-x.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/letter-x.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/logoutGry.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/logoutGry.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/padlock.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/padlock.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/pm_logo_normal.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/pm_logo_normal.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/pm_logo_white.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/pm_logo_white.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/up-arrow.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/up-arrow.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/warning.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/warning.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/wrench.svg</name>
-			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/icons/wrench.svg</location>
+			<location>D:/GitData/MES/WebContent/Public/css/gijgo.min.css</location>
 		</link>
 		<link>
 			<name>WebContent/Public/js/bootstrap.js</name>
 			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/js/bootstrap.js</location>
+			<location>D:/GitData/MES/WebContent/Public/js/bootstrap.js</location>
 		</link>
 		<link>
 			<name>WebContent/Public/pdf/proba.pdf</name>
 			<type>1</type>
-			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/pdf/proba.pdf</location>
+			<location>D:/GitData/MES/WebContent/Public/pdf/proba.pdf</location>
 		</link>
 	</linkedResources>
 </projectDescription>

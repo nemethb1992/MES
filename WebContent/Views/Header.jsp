@@ -43,7 +43,7 @@
     <%@ include file="/Public/css/bootstrap.min.css"%>
     <%@ include file="/Public/css/datepicker.css"%>
     <%@ include file="/Public/css/bootstrap-grid.min.css"%>
-    <%@ include file="/Public/css/gijgo.min.css"%>
+<%--     <%@ include file="/Public/css/gijgo.min.css"%> --%>
     <%@ include file="/Public/css/Style.css"%>
     <%@ include file="/Views/Login/loginStyle.css"%>
     <%@ include file="/Views/Operator/Operator.css"%>
