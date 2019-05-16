@@ -32,7 +32,7 @@ try {
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Biztosan megszakítja a feladatot?</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle"><%=of.getWord(DictionaryEntry.DISRUPTION_TITLE)%></h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -81,8 +81,7 @@ try {
 					</div>
 				</div>
 				<div class="form-group row">
-					<label for="example-search-input" class="col-12 col-form-label">Zavar
-						oka:</label>
+					<label for="example-search-input" class="col-12 col-form-label"><%=of.getWord(DictionaryEntry.DISRUPTION_REASON)%></label>
 					<div class="col-12">
 						<textarea class="form-control error-text" type="search" id="example-search-input" style="height: 150px;"></textarea>
 					</div>
@@ -90,9 +89,9 @@ try {
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" onclick='Cancel()'
-					data-dismiss="modal">Mégsem</button>
+					data-dismiss="modal"><%=of.getWord(DictionaryEntry.CANCEL)%></button>
 				<button type="button" class="btn btn-primary"
-					onclick='InterruptTask()'>Igen</button>
+					onclick='InterruptTask()'><%=of.getWord(DictionaryEntry.NEXT)%></button>
 			</div>
 		</div>
   </div>
@@ -103,12 +102,12 @@ try {
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Megszakítás véglegesítése</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle"><%=of.getWord(DictionaryEntry.COMMIT)%></h5>
 
       </div>
 			<div class="modal-body pt-1">
 				<div class="form-group row">
-					<label for="example-search-input"  class="col-12 col-form-label">Zavarleírás:</label>
+					<label for="example-search-input"  class="col-12 col-form-label"><%=of.getWord(DictionaryEntry.DISRUPTION_REASON)%></label>
 					<div class="col-12">
 						<textarea class="form-control error-text-back" disabled type="search" id="example-search-input" style="height: 150px;"><%=errorText %></textarea>
 					</div>
@@ -130,9 +129,9 @@ try {
 
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick='ResumeTask()'>Visszavonás</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick='ResumeTask()'><%=of.getWord(DictionaryEntry.CANCEL)%></button>
 				<button type="button" class="btn btn-primary"
-				onclick='SuspendTask()'>Megszakítás</button>
+				onclick='SuspendTask()'><%=of.getWord(DictionaryEntry.NEXT)%></button>
 			</div>
 		</div>
   </div>

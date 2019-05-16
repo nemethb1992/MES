@@ -21,6 +21,7 @@ $(document).ready(function(){
 
 function selectLanguage(button)
 {
+	console.log("+");
 	var language = $(button).attr("id");
 	if($.cookie("language") != language)
 	{

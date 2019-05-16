@@ -83,7 +83,11 @@ public class OutputFormatter {
 		LOGIN_FAILED("Sikertelen bejelentkezés","Anmeldung fehlgeschlagen","Login failed"),
 		LOGIN_FAILED_MISSING_WS("Nincs regisztrált munkaállomás","Fehlende registrierte Arbeitsstation","Missing registered workstation"),
 		LOGIN_FAILED_EMPTY_CREDENTIALS("A felhasználónév és/vagy jelszó nincs megadva!","Ihr Benutzername und / oder Passwort ist nicht angegeben!","Your username and / or password is not specified!"),
-		GENERAL("Általános","Allgemeines","Generals");
+		GENERAL("Általános","Allgemeines","Generals"),
+		DISRUPTION_REASON("Zavar oka","Grund der Störung","Reason of disruption"),
+		DISRUPTION_TITLE("Feladat megszakítás","Aufgabe störung","Task interruption"),
+		COMMIT("Véglegesítés","Verpflichten","Commit"),
+		CANCEL("Mégsem","Stornieren","Cancel");
 
 		private final String hungarianText;
 

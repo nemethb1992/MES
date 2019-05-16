@@ -4,6 +4,12 @@ if(info == null)
 {
 	info = "";
 }
+
+String workstationName = request.getParameter("workstation");
+if(workstationName != null)
+{
+	workstationName = workstationName.replace("!"," - ");
+}
 %>
 <%@include file="/Views/Header.jsp"%>
 <script><%@ include file="/Views/Login/loginScript.js"%></script>
@@ -25,7 +31,16 @@ if(info == null)
 			<div class="form-group my-4 top-row">
 				<%@include file="/Views/Partial/LanguageSelector.jsp"%>
 				<div id='LR_1'>
-					<p id='p_loginName'></p>
+					<div class='row'>
+						<div class='col'>
+							<p id='p_loginName' class='mb-0'></p>
+						</div>
+					</div>
+					<div class='row'>
+						<div class='col'>
+							<input id='workstation_name' disabled value='<%=(workstationName != null ? workstationName : "")%>'/>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div id='LR_2'>
@@ -36,7 +51,7 @@ if(info == null)
 				action='${pageContext.request.contextPath}/Enter'>
 				<input type='hidden' name='workstation' class='workstation'
 					value='<%=request.getParameter("workstation")%>' /> <input
-					name='infoTitle' class='w-100 mt-5' value='<%=info%>' />
+					name='infoTitle' class='w-100 mt-4' value='<%=info%>' />
 
 				<div class="form-group">
 					<p id='login_title' class='w-100 w-100 h5 mt-3'><%=outputFormatter.getWord(DictionaryEntry.LOGIN)%></p>

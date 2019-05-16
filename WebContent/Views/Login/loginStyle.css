@@ -76,10 +76,9 @@
 }
 #LR_2
 {
-	height: 27%;
+	height: 22%;
 	display: block;
 	width: 100%;
-	padding-top: 8%;
 }
 #LR_2 img
 {
@@ -136,5 +135,13 @@
 {
     background: #dc3545;
     color: white;
+}
+#workstation_name{
+	padding: 2px;
+	font-size: 17px !important;
+	height: 40px;
+	background: transparent;
+    color: #737373;
+    font-family: mediumFont;
 }
 
