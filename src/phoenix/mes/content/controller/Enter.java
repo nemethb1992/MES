@@ -34,6 +34,13 @@ public class Enter extends HttpServlet {
 		String paramStation = request.getParameter("workstation");
 		String pass = request.getParameter("password");
 		String layout = (String)session.getAttribute("Layout");
+
+		if(paramStation == "null")
+		{
+			request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.EMPTY_STATION_ID));
+			getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
+		}
+		
 		try {
 			User user = new User(request,username,pass);
 			new AbasAuthentication().bind(username, pass, request);

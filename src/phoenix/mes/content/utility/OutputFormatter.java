@@ -87,6 +87,7 @@ public class OutputFormatter {
 		DISRUPTION_REASON("Zavar oka","Grund der Störung","Reason of disruption"),
 		DISRUPTION_TITLE("Feladat megszakítás","Aufgabe störung","Task interruption"),
 		COMMIT("Véglegesítés","Verpflichten","Commit"),
+		EMPTY_STATION_ID("Munkaállomás nincs regisztrálva!","Verpflichten","Commit"),
 		CANCEL("Mégsem","Stornieren","Cancel");
 
 		private final String hungarianText;
