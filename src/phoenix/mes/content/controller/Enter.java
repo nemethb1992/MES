@@ -35,12 +35,13 @@ public class Enter extends HttpServlet {
 		String pass = request.getParameter("password");
 		String layout = (String)session.getAttribute("Layout");
 
-		if(paramStation == "null")
+		if("null".equals(paramStation))
 		{
 			request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.EMPTY_STATION_ID));
 			getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
+			return;
 		}
-		
+
 		try {
 			User user = new User(request,username,pass);
 			new AbasAuthentication().bind(username, pass, request);
@@ -68,7 +69,7 @@ public class Enter extends HttpServlet {
 						}
 					}
 				}
-				if (null != ws.getOperatingStation()) {
+				if (!"null".equals(ws.getOperatingStation())) {
 					nextPage = "/OpenTask";
 				}
 			}
