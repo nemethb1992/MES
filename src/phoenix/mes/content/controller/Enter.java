@@ -35,12 +35,7 @@ public class Enter extends HttpServlet {
 		String pass = request.getParameter("password");
 		String layout = (String)session.getAttribute("Layout");
 
-		if("null".equals(paramStation))
-		{
-			request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.EMPTY_STATION_ID));
-			getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
-			return;
-		}
+
 
 		try {
 			User user = new User(request,username,pass);
@@ -51,6 +46,12 @@ public class Enter extends HttpServlet {
 			}
 			String nextPage = null;
 			if("operator".equals(layout)) {
+//				if("null".equals(paramStation))
+//				{
+//				request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.EMPTY_STATION_ID));
+//					getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
+//					return;
+//				}
 				String workstation = "";
 				OperatingWorkstation ws = new OperatingWorkstation(request);
 				workstation = ws.getOperatingStation();
@@ -61,15 +62,22 @@ public class Enter extends HttpServlet {
 							if (cookie.getName().equals("workstation")) {
 								
 								OperatingWorkstation.setOperatingStation(request,OutputFormatter.isStation(cookie.getValue()));
-								if (null == ws.getOperatingStation()) {
+								if ("".equals(ws.getOperatingStation())) {
+									request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.EMPTY_STATION_ID));
 									nextPage = "/Views/Login/loginPage.jsp";
 									break;
 								}
 							}
 						}
 					}
+					if("".equals(ws.getOperatingStation())) {
+
+						request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.EMPTY_STATION_ID));
+						nextPage = "/Views/Login/loginPage.jsp";
+					}
 				}
-				if (!"null".equals(ws.getOperatingStation())) {
+				workstation = ws.getOperatingStation();
+				if (!"".equals(ws.getOperatingStation())) {
 					nextPage = "/OpenTask";
 				}
 			}

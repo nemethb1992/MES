@@ -1,8 +1,34 @@
 <%@include file="/Views/Header.jsp"%>
+<%@page import="java.util.Locale"%>
 <script>
 	
 <%@ include file="/Views/Manager/Todo/Todo.js"%>
+<%
+
+String displayName = (String) session.getAttribute("displayname");
+if(outputFormatter.getLocale() == Locale.GERMAN || outputFormatter.getLocale() == Locale.ENGLISH)
+{
+try {
+	String auxiliaryArr[] = displayName.split(" ");
+	String auxiliary = "";
 	
+	int i = 0;
+	for(String part : auxiliaryArr){
+		if(i>0)
+		{
+			auxiliary += part;
+			auxiliary += " ";
+		}
+		i++;
+	}
+
+	auxiliary += auxiliaryArr[0];
+	displayName = auxiliary;
+	}
+	catch(Exception e) {
+	}
+}
+%>	
 </script>
 <div class='container-fluid h-100'>
 	<p class='actual-time h5'></p>
@@ -22,7 +48,7 @@
 						<input
 							class='form-control h-100 personal-form-control personal-form-name'
 							disabled
-							value='<%=(String)session.getAttribute("displayname")%>'>
+							value='<%=displayName%>'>
 					</div>
 					<div class='form-group personal-secondery'>
 						<input

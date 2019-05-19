@@ -1,3 +1,4 @@
+<%@page import="java.util.Locale"%>
 <%@page import="phoenix.mes.content.AppBuild"%>
 <%@page import="phoenix.mes.content.controller.OperatingWorkstation"%>
 <%@page import="phoenix.mes.content.controller.operator.DataSheetLoader"%>
@@ -7,6 +8,30 @@
 
 <%
 	OperatingWorkstation ws = new OperatingWorkstation(request);
+	String displayName = (String) session.getAttribute("displayname");
+	if(outputFormatter.getLocale() == Locale.GERMAN || outputFormatter.getLocale() == Locale.ENGLISH)
+	{
+	try {
+		String auxiliaryArr[] = displayName.split(" ");
+		String auxiliary = "";
+		
+		int i = 0;
+		for(String part : auxiliaryArr){
+			if(i>0)
+			{
+				auxiliary += part;
+				auxiliary += " ";
+			}
+			i++;
+		}
+
+		auxiliary += auxiliaryArr[0];
+		displayName = auxiliary;
+		}
+		catch(Exception e) {
+		}
+	}
+	
 %>
 </script>
 <div class='container-fluid h-100'>
@@ -94,7 +119,7 @@
 							<input
 								class='form-control h-100 personal-form-control personal-form-name'
 								disabled
-								value='<%=(String) session.getAttribute("displayname")%>'>
+								value='<%=displayName%>'>
 						</div>
 						<div class='form-group'>
 							<input class='form-control h-100 personal-form-control' disabled
