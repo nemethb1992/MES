@@ -56,12 +56,13 @@
 						<div class='container-fluid my-nav-container h-100'>
 							<div class='row h-100'>
 								<div class='col-11 px-5'>
-									<h4 class='h4 mt-5 mb-2'><%=outputFormatter.getWord(DictionaryEntry.SUBMIT)%></h4>
-									<div class="input-group mb-3 w-100 h-25">
+									<h4 class='h4 mt-3 mb-2'><%=outputFormatter.getWord(DictionaryEntry.SUBMIT)%></h4>
+									<div class="input-group mb-3 w-100 h-50">
 										<input type="number" class="form-control input-finished h-100"
 											placeholder="<%=outputFormatter.getWord(DictionaryEntry.FINISHED_QUANTITY)%>"
 											aria-label="<%=outputFormatter.getWord(DictionaryEntry.FINISHED_QUANTITY)%>"
-											aria-describedby="button-addon2" /> <input type="number"
+											aria-describedby="button-addon2" /> 
+											<input type="number"
 											class="form-control input-scrap h-100"
 											placeholder="<%=outputFormatter.getWord(DictionaryEntry.SCRAP_QUANTITY)%>"
 											aria-label="<%=outputFormatter.getWord(DictionaryEntry.SCRAP_QUANTITY)%>"
