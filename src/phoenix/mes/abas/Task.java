@@ -126,6 +126,11 @@ public interface Task extends Serializable {
 		BigDecimal getOutstandingQuantity();
 
 		/**
+		 * @return A nyitott lejelentési mennyiség.
+		 */
+		BigDecimal getOutstandingConfirmationQuantity();
+
+		/**
 		 * @return A mennyiségi egység (raktáregység).
 		 */
 		String getStockUnit();

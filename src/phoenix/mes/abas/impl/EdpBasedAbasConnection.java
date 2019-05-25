@@ -52,7 +52,7 @@ public abstract class EdpBasedAbasConnection<C> implements AbasConnection<C> {
 			return edpSession;
 		} catch (CantBeginSessionException e) {
 			endEdpSessionQuietly(edpSession);
-			throw new LoginException(e.getMessage());
+			throw new LoginException(e.getLocalizedMessage());
 		} catch (EDPException e) {
 			endEdpSessionQuietly(edpSession);
 			throw new EDPRuntimeException(e);

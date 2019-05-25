@@ -25,6 +25,14 @@ public class AbasFunctionException extends Exception {
 	/**
 	 * Konstruktor.
 	 * @param errorCode A hiba kódja.
+	 */
+	public AbasFunctionException(int errorCode) {
+		this(errorCode, null);
+	}
+
+	/**
+	 * Konstruktor.
+	 * @param errorCode A hiba kódja.
 	 * @param message A hibaüzenet szövege.
 	 */
 	public AbasFunctionException(int errorCode, String message) {

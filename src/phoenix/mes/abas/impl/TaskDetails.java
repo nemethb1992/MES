@@ -145,6 +145,11 @@ public abstract class TaskDetails<C> implements Task.Details {
 		 */
 		public String operationReservationText;
 
+		/**
+		 * A nyitott lejelentési mennyiség.
+		 */
+		public BigDecimal outstandingConfirmationQuantity;
+
 	}
 
 	/**
@@ -502,6 +507,14 @@ public abstract class TaskDetails<C> implements Task.Details {
 	@Override
 	public BigDecimal getOutstandingQuantity() {
 		return getBasicData().outstandingQuantity;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.Task.Details#getOutstandingConfirmationQuantity()
+	 */
+	@Override
+	public BigDecimal getOutstandingConfirmationQuantity() {
+		return getOperationData().outstandingConfirmationQuantity;
 	}
 
 	/* (non-Javadoc)
