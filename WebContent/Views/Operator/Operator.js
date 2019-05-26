@@ -331,7 +331,7 @@ function ResumeTask()
 function RefreshTask()
 {	
 	$.post({
-	url:  '/'+path+'/RefreshDatas',
+	url:  '/'+path+'/RefreshData',
 	success: function (response) {
 		if( response == "null")
 		{

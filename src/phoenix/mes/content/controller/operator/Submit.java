@@ -32,8 +32,8 @@ public class Submit extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		AppBuild ab = new AppBuild(request);
-		if(!ab.isStable()){
+		AppBuild build = new AppBuild(request);
+		if(!build.isStabile()){
 			response.setContentType("text/plain"); 
 			response.setCharacterEncoding("UTF-8"); 
 			response.getWriter().write("finished");
@@ -49,13 +49,13 @@ public class Submit extends HttpServlet {
 		try {
 			User user = new User(request); 
 			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), build.isTest());
 			Task task = (Task)session.getAttribute("Task");
 			if(task != null)
 			{
 				Task.Details taskDetails = task.getDetails(abasConnection);
 				task.postCompletionConfirmation(finishedQty, scrapQty, abasConnection);
-				if(finishedQty.intValue() >= taskDetails.getOutstandingQuantity().intValue()){
+				if(finishedQty.intValue() >= taskDetails.getOutstandingConfirmationQuantity().intValue()){
 					session.removeAttribute("Task");
 					responseStr = "finished";
 				}else {

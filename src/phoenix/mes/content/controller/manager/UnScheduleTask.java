@@ -37,7 +37,7 @@ public class UnScheduleTask extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 
 		AppBuild ab = new AppBuild(request);
-		if(!ab.isStable()){
+		if(!ab.isStabile()){
 			doGet(request,response);
 			return;
 		}

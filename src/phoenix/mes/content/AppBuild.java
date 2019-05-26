@@ -33,7 +33,7 @@ public class AppBuild {
 		return test;
 	}
 	
-	public boolean isStable()
+	public boolean isStabile()
 	{
 		return (request.getSession().getAttribute("OutputFormatter") != null ? true : false);
 	}

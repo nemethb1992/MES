@@ -22,7 +22,7 @@ import phoenix.mes.content.utility.OutputFormatter;
 /**
  * Servlet implementation class StartActualTask
  */
-public class RefreshDatas extends HttpServlet {
+public class RefreshData extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 
@@ -33,7 +33,7 @@ public class RefreshDatas extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		AppBuild ab = new AppBuild(request);
-		if(!ab.isStable()){
+		if(!ab.isStabile()){
 			response.setContentType("text/plain"); 
 			response.setCharacterEncoding("UTF-8"); 
 			response.getWriter().write("null"); 

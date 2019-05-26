@@ -137,6 +137,45 @@ try {
   </div>
   <form method='Post' action='${pageContext.request.contextPath}/OpenTask' class='d-none interrupt-form'></form>
 </div>
+
+<div class="modal fade my-fade" id="submit-confirmation-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="false">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"><%=of.getWord(DictionaryEntry.COMMIT)%></h5>
+
+      </div>
+			<div class="modal-body pt-1">
+				<div class="form-group row">
+					<label for="example-search-input"  class="col-12 col-form-label"><%=of.getWord(DictionaryEntry.DISRUPTION_REASON)%></label>
+					<div class="col-12">
+						<textarea class="form-control error-text-back" disabled type="search" id="example-search-input" style="height: 150px;"><%=errorText %></textarea>
+					</div>
+				</div>	
+				<div class="form-group row">
+					<label for="example-search-input" class="col-3 col-form-label"><%=of.getWord(DictionaryEntry.USER_NAME)%></label>
+					<div class="col-9">
+						<input class="form-control username-input"  type="text"
+							value="" id="username-input">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-search-input" class="col-3 col-form-label"><%=of.getWord(DictionaryEntry.PASSWORD)%></label>
+					<div class="col-9">
+						<input class="form-control password-input"  type="password"
+							value="" id="password-input">
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick='ResumeTask()'><%=of.getWord(DictionaryEntry.CANCEL)%></button>
+				<button type="button" class="btn btn-primary"
+				onclick='SuspendTask()'><%=of.getWord(DictionaryEntry.NEXT)%></button>
+			</div>
+		</div>
+  </div>
+</div>
 <%
 }catch(LoginException e )
 {
