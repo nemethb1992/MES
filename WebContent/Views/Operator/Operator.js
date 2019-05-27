@@ -262,6 +262,25 @@ function Cancel()
 	$('#interrupt-level1').modal('hide');
 }
 
+function SubmitConfirmationValidation(item){
+	var open = parseInt($("#confirm-openqty").val(),10);
+	var finished = parseInt($("#confirm-finished").val(),10);
+	if(finished > open){
+		$(item).css("color", "red");
+	}
+	else{
+		$(item).css("color", "black");
+	}
+}
+
+function OpenSubmitConfirmationMod()
+{
+	$('#submit-confirmation-modal').modal({backdrop: 'static', keyboard: false});
+	 $("#confirm-finished").val($(".input-finished").val());
+	 $("#confirm-scrap").val($(".input-scrap").val());
+	 SubmitConfirmationValidation($('.confirm-title'));
+}
+
 function OpenInterruptModal()
 {
 	$('#interrupt-level1').modal({backdrop: 'static', keyboard: false});
@@ -316,6 +335,14 @@ function SuspendTask()
 	});
 }
 
+function CloseConfirmationModal()
+{
+	$('#submit-confirmation-modal').modal('hide'); 
+	$(".input-finished").val(null);
+	$(".input-scrap").val(null);
+	closeSubmit();
+}
+
 function ResumeTask()
 {
 	$('#interrupt-level2').modal('hide');
@@ -356,7 +383,7 @@ function SubmitTask()
 		return;
 	}
 	opened = false;
-	closeSubmit();
+	CloseConfirmationModal();
 	$.post({
 		url:  '/'+path+'/Submit',
 		data:{
@@ -369,6 +396,7 @@ function SubmitTask()
 				getView();
 				setTimer();
 			}else{
+				alert("Lejelentési hiba!");
 				$(".refresh-form").submit();
 			}
 		}

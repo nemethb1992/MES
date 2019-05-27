@@ -70,7 +70,7 @@
 										<div class="input-group-append w-25">
 											<button
 												class="btn btn-outline-secondary w-100 submit-action-btn"
-												type="button" onclick='SubmitTask()' id="button-addon2"><%=outputFormatter.getWord(DictionaryEntry.SEND)%></button>
+												type="button" onclick='OpenSubmitConfirmationMod()' id="button-addon2"><%=outputFormatter.getWord(DictionaryEntry.SEND)%></button>
 										</div>
 									</div>
 								</div>
@@ -90,23 +90,6 @@
 					<div id='btn_megszakitas' onclick='OpenInterruptModal()' 
 						class='btn_navHeader h-100 float-left btn_navHeader-left'>
 						<p class='h6 text-center nav-label'><%=outputFormatter.getWord(DictionaryEntry.DISRUPTION)%></p>
-<!-- 						<div class='container-fluid my-nav-container h-100'> -->
-<!-- 							<div class='row h-100'> -->
-<!-- 								<form method='Post' -->
-<%-- 									action='${pageContext.request.contextPath}/OpenTask' --%>
-<!-- 									class='d-none interrupt-form'></form> -->
-<!-- 								<div class='col-11'> -->
-<!-- 									<button -->
-<!-- 										class="btn btn-outline-secondary mt-5 w-100 submit-action-btn" -->
-<%-- 	<%=(String) session.getAttribute("displayname")%>									type="button" onclick='InterruptTask()' id="interrupt-btn"><%=outputFormatter.getWord(DictionaryEntry.INTERRUPT)%></button> --%>
-<!-- 								</div> -->
-<!-- 								<div class='col-1 px-0'> -->
-<!-- 									<input type='button' -->
-<!-- 										class='w-100 h-100 close-nav-btn megszak-btn' /> -->
-<!-- 								</div> -->
-
-<!-- 							</div> -->
-<!-- 						</div> -->
 					</div>
 					<div class='btn_navHeader h-100 float-right px-0'>
 						<form method='POST' class='h-100'

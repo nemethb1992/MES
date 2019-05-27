@@ -88,9 +88,9 @@ try {
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" onclick='Cancel()'
+				<button type="button" class="btn btn-secondary w-25" onclick='Cancel()'
 					data-dismiss="modal"><%=of.getWord(DictionaryEntry.CANCEL)%></button>
-				<button type="button" class="btn btn-primary"
+				<button type="button" class="btn btn-primary w-25"
 					onclick='InterruptTask()'><%=of.getWord(DictionaryEntry.NEXT)%></button>
 			</div>
 		</div>
@@ -129,8 +129,8 @@ try {
 
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick='ResumeTask()'><%=of.getWord(DictionaryEntry.CANCEL)%></button>
-				<button type="button" class="btn btn-primary"
+				<button type="button" class="btn btn-secondary w-25" data-dismiss="modal" onclick='ResumeTask()'><%=of.getWord(DictionaryEntry.CANCEL)%></button>
+				<button type="button" class="btn btn-primary w-25"
 				onclick='SuspendTask()'><%=of.getWord(DictionaryEntry.NEXT)%></button>
 			</div>
 		</div>
@@ -147,31 +147,31 @@ try {
       </div>
 			<div class="modal-body pt-1">
 				<div class="form-group row">
-					<label for="example-search-input"  class="col-12 col-form-label"><%=of.getWord(DictionaryEntry.DISRUPTION_REASON)%></label>
-					<div class="col-12">
-						<textarea class="form-control error-text-back" disabled type="search" id="example-search-input" style="height: 150px;"><%=errorText %></textarea>
-					</div>
-				</div>	
+				<label for="example-search-input"  class="col-12 col-form-label confirm-title"><%=of.getWord(DictionaryEntry.SUBMIT_CONFIRMATION_TEXT)%></label>
+				</div>					  
 				<div class="form-group row">
-					<label for="example-search-input" class="col-3 col-form-label"><%=of.getWord(DictionaryEntry.USER_NAME)%></label>
-					<div class="col-9">
-						<input class="form-control username-input"  type="text"
-							value="" id="username-input">
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="example-search-input" class="col-3 col-form-label"><%=of.getWord(DictionaryEntry.PASSWORD)%></label>
-					<div class="col-9">
-						<input class="form-control password-input"  type="password"
-							value="" id="password-input">
-					</div>
-				</div>
-
+				    <label for="confirm-openqty" class="col-sm-4 col-form-label"><%=of.getWord(DictionaryEntry.OPEN_QUANTITY)%></label>
+				    <div class="col-sm-8">
+				      <input type="text" disabled class="form-control" id="confirm-openqty" value="<%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity())%>" placeholder="0">
+				    </div>
+				  </div>  
+				  <div class="form-group row">
+				    <label for="confirm-finished" class="col-sm-4 col-form-label"><%=of.getWord(DictionaryEntry.FINISHED_QUANTITY)%></label>
+				    <div class="col-sm-8">
+				      <input type="text" disabled class="form-control" id="confirm-finished" placeholder="0">
+				    </div>
+				  </div>  
+				  <div class="form-group row">
+				    <label for="confirm-scrap" class="col-sm-4 col-form-label"><%=of.getWord(DictionaryEntry.SCRAP_QUANTITY)%></label>
+				    <div class="col-sm-8">
+				      <input type="text" disabled class="form-control" id="confirm-scrap" placeholder="0">
+				    </div>
+				  </div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick='ResumeTask()'><%=of.getWord(DictionaryEntry.CANCEL)%></button>
-				<button type="button" class="btn btn-primary"
-				onclick='SuspendTask()'><%=of.getWord(DictionaryEntry.NEXT)%></button>
+				<button type="button" class="btn btn-secondary w-25" data-dismiss="modal" onclick='CloseConfirmationModal()'><%=of.getWord(DictionaryEntry.NO)%></button>
+				<button type="button" class="btn btn-primary w-25"
+				onclick='SubmitTask()'><%=of.getWord(DictionaryEntry.YES)%></button>
 			</div>
 		</div>
   </div>

@@ -54,11 +54,14 @@ public class Submit extends HttpServlet {
 			if(task != null)
 			{
 				Task.Details taskDetails = task.getDetails(abasConnection);
-				task.postCompletionConfirmation(finishedQty, scrapQty, abasConnection);
-				if(finishedQty.intValue() >= taskDetails.getOutstandingConfirmationQuantity().intValue()){
-					session.removeAttribute("Task");
-					responseStr = "finished";
-				}else {
+				if(finishedQty.intValue() <= taskDetails.getOutstandingConfirmationQuantity().intValue()){
+					task.postCompletionConfirmation(finishedQty, scrapQty, abasConnection);
+					if(finishedQty.intValue() >= taskDetails.getOutstandingQuantity().intValue()) {
+						session.removeAttribute("Task");
+						responseStr = "finished";
+					}
+				}
+				else {
 					taskDetails.clearCache();
 					session.setAttribute("Task", task);
 				}

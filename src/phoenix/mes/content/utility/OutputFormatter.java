@@ -88,6 +88,9 @@ public class OutputFormatter {
 		DISRUPTION_TITLE("Feladat megszakítás","Aufgabe abbrechen","Task interruption"),
 		COMMIT("Véglegesítés","Fertigstellen","Commit"),
 		EMPTY_STATION_ID("Munkaállomás nincs regisztrálva!","Arbeitsstation ist nicht registriert!","Workstation is not registered!"),
+		SUBMIT_CONFIRMATION_TEXT("Biztosan lejelenti a következő mennyiséget?","",""),
+		YES("Igen","Ja","Yes"),
+		NO("Nem","Nein","No"),
 		CANCEL("Mégsem","Abbrechen","Cancel");
 
 		private final String hungarianText;
