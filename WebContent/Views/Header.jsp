@@ -6,6 +6,8 @@
 
 
 
+<%@page import="phoenix.mes.content.controller.OperatingWorkstation"%>
+<%@page import="phoenix.mes.content.AppBuild"%>
 <%@page import="phoenix.mes.content.utility.OutputFormatter"%>
 <%@page import="phoenix.mes.content.controller.LanguageSetter"%>
 <%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
@@ -24,6 +26,21 @@
 		session.setAttribute("OutputFormatter", outputFormatter = OutputFormatter.forRequest(request));
 	}
 
+%>
+
+<%
+	AppBuild build = new AppBuild(request);
+	String titleBuild = build.isTest() ? "DMES" : "MES";
+	OperatingWorkstation workstation = new OperatingWorkstation(request);
+	String titleWorkstation = "";
+	if(workstation.getName() != null)
+	{
+		titleWorkstation = " - " + workstation.getName();
+	}else{
+		titleWorkstation = "";
+	}
+	String titleString = titleBuild+titleWorkstation;
+	
 %>
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -56,7 +73,7 @@
     </style>
 
 
-<title>MES</title>
+<title><%=titleString%></title>
 <script>
 $(document).ready(function () {
     var name = "<%=request.getContextPath()%>";

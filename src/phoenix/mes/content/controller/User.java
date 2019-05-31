@@ -26,11 +26,15 @@ public class User {
 		this.userid = setUserId();
 		this.modifier = setModifier();
 		this.access = setAccessValue();
-		this.workstationAccess = setWorkstationAccess();
+//		this.workstationAccess = true;
 	}
 	
 	public User(HttpServletRequest request, String username, String password) throws SQLException
 	{
+		if(!isExists(username)) {
+			registration(username);
+		}
+		
 		HttpSession session = request.getSession();
 		this.request = request;
 		this.username = username;
@@ -38,7 +42,7 @@ public class User {
 		this.userid = setUserId();
 		this.modifier = setModifier();
 		this.access = setAccessValue();
-		this.workstationAccess = setWorkstationAccess();
+//		this.workstationAccess = setWorkstationAccess();
 		session.setAttribute("username", username);
 		session.setAttribute("password", password);
 		session.setAttribute("userid", userid);

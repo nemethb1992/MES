@@ -204,13 +204,13 @@
   </servlet-mapping>
   <servlet>
     <description></description>
-    <display-name>RefreshDatas</display-name>
-    <servlet-name>RefreshDatas</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.operator.RefreshDatas</servlet-class>
+    <display-name>RefreshData</display-name>
+    <servlet-name>RefreshData</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.operator.RefreshData</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>RefreshDatas</servlet-name>
-    <url-pattern>/RefreshDatas</url-pattern>
+    <servlet-name>RefreshData</servlet-name>
+    <url-pattern>/RefreshData</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>
