@@ -86,7 +86,9 @@
 						class='btn_navHeader-left btn-navHeader-left-refresh-btn refresh-click btn_navHeader h-100 float-left px-0'>
 						<p class='h6 text-center nav-label'><%=outputFormatter.getWord(DictionaryEntry.REFRESH)%></p>
 						<form method='POST' class='h-100 d-none refresh-form'
-							action='${pageContext.request.contextPath}/OpenTask'></form>
+							action='${pageContext.request.contextPath}/OpenTask'></form>						
+							<form method='POST' class='h-100 d-none reload-datasheet'
+							action='${pageContext.request.contextPath}/DataSheet'></form>
 					</div>
 					<div id='btn_megszakitas' onclick='OpenInterruptModal()' 
 						class='btn_navHeader h-100 float-left btn_navHeader-left'>
@@ -110,15 +112,24 @@
 							<input class='form-control h-100 personal-form-control' disabled
 								value='<%=(ws.getOperatingStation()).replace('!', '-')%>'>
 						</div>
-						<div class='form-group personal-secondery'>
+						<div class='form-group personal-secondary'>
+						<div class='float-left date-time-holder'>
 							<input
 								class='form-control h-100 personal-form-control personal-date'
-								disabled>
-						</div>
-						<div class='form-group'>
+								disabled></div>
+						<div class='float-right date-time-holder'>
 							<input
 								class='form-control h-100 personal-form-control personal-time'
-								disabled>
+								disabled></div>
+								
+						</div>
+						
+						<div class='form-group'>
+						<select class="browser-default custom-select switch-station-select">
+  							<option selected>Állomás váltása</option>
+  							<option onclick='SelectSwitchStation(this)' value="234PG!1">234PG - 1</option>
+  							<option onclick='SelectSwitchStation(this)' value="380PG!1">380PG - 1</option>
+						</select>
 						</div>
 						<div class='form-group d-none py-2'>
 							<%@include file="/Views/Partial/ApplicationCountDown.jsp"%>

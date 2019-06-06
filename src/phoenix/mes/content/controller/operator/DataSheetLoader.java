@@ -58,7 +58,8 @@ public class DataSheetLoader extends HttpServlet {
 			Task.Details taskDetails = task.getDetails(abasConnection);		
 			request.setAttribute("taskDetails", taskDetails);
 			
-			switch (request.getParameter("tabNo")) {
+			String tab = request.getParameter("tabNo") == null ? "1" : request.getParameter("tabNo");
+			switch (tab) {
 			case "1":
 				request.setAttribute("Workstation", ws);
 				partialUrl = "/Views/Operator/DataSheet/Partial/Sheet.jsp";

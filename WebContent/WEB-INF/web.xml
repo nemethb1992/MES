@@ -252,4 +252,14 @@
     <servlet-name>InterruptTask</servlet-name>
     <url-pattern>/InterruptTask</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SwitchWorkstation</display-name>
+    <servlet-name>SwitchWorkstation</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.operator.SwitchWorkstation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SwitchWorkstation</servlet-name>
+    <url-pattern>/SwitchWorkstation</url-pattern>
+  </servlet-mapping>
 </web-app>

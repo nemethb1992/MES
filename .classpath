@@ -3,23 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/fzbal/Documents/GitHub/MES/WebContent/WEB-INF/lib/abas-db.jar"/>
-	<classpathentry kind="lib" path="C:/Users/fzbal/Documents/GitHub/MES/WebContent/WEB-INF/lib/abas-db-base.jar"/>
-	<classpathentry kind="lib" path="C:/Users/fzbal/Documents/GitHub/MES/WebContent/WEB-INF/lib/abas-db-infosys.jar"/>
-	<classpathentry kind="lib" path="C:/Users/fzbal/Documents/GitHub/MES/WebContent/WEB-INF/lib/abas-db-internal.jar"/>
-	<classpathentry kind="lib" path="C:/Users/fzbal/Documents/GitHub/MES/WebContent/WEB-INF/lib/abas-db-util.jar"/>
-	<classpathentry kind="lib" path="C:/Users/fzbal/Documents/GitHub/MES/WebContent/WEB-INF/lib/abas-enums.jar"/>
-	<classpathentry kind="lib" path="C:/Users/fzbal/Documents/GitHub/MES/WebContent/WEB-INF/lib/abas-erp-common.jar"/>
-	<classpathentry kind="lib" path="C:/Users/fzbal/Documents/GitHub/MES/WebContent/WEB-INF/lib/abas-s3charset.jar"/>
-	<classpathentry kind="lib" path="C:/Users/fzbal/Documents/GitHub/MES/WebContent/WEB-INF/lib/commons-collections.jar"/>
-	<classpathentry kind="lib" path="C:/Users/fzbal/Documents/GitHub/MES/WebContent/WEB-INF/lib/gson-2.2.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/fzbal/Documents/GitHub/MES/WebContent/WEB-INF/lib/jedp.jar"/>
-	<classpathentry kind="lib" path="C:/Users/fzbal/Documents/GitHub/MES/WebContent/WEB-INF/lib/json-simple-1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/fzbal/Documents/GitHub/MES/WebContent/WEB-INF/lib/ldapsdk-4.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/fzbal/Documents/GitHub/MES/WebContent/WEB-INF/lib/mysql-connector-java-5.1.42-bin.jar"/>
-	<classpathentry kind="lib" path="C:/Users/fzbal/Documents/GitHub/MES/WebContent/WEB-INF/lib/postgresql-42.1.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/fzbal/Documents/GitHub/MES/WebContent/WEB-INF/lib/sqlite-jdbc-3.19.3.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v8.0">
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v8.0 (2)">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.web"/>
 		</attributes>
@@ -29,5 +13,21 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="D:/GitData/MES/WebContent/WEB-INF/lib/abas-db.jar"/>
+	<classpathentry kind="lib" path="D:/GitData/MES/WebContent/WEB-INF/lib/abas-db-base.jar"/>
+	<classpathentry kind="lib" path="D:/GitData/MES/WebContent/WEB-INF/lib/abas-db-infosys.jar"/>
+	<classpathentry kind="lib" path="D:/GitData/MES/WebContent/WEB-INF/lib/abas-db-internal.jar"/>
+	<classpathentry kind="lib" path="D:/GitData/MES/WebContent/WEB-INF/lib/abas-db-util.jar"/>
+	<classpathentry kind="lib" path="D:/GitData/MES/WebContent/WEB-INF/lib/abas-enums.jar"/>
+	<classpathentry kind="lib" path="D:/GitData/MES/WebContent/WEB-INF/lib/abas-erp-common.jar"/>
+	<classpathentry kind="lib" path="D:/GitData/MES/WebContent/WEB-INF/lib/abas-s3charset.jar"/>
+	<classpathentry kind="lib" path="D:/GitData/MES/WebContent/WEB-INF/lib/commons-collections.jar"/>
+	<classpathentry kind="lib" path="D:/GitData/MES/WebContent/WEB-INF/lib/gson-2.2.2.jar"/>
+	<classpathentry kind="lib" path="D:/GitData/MES/WebContent/WEB-INF/lib/jedp.jar"/>
+	<classpathentry kind="lib" path="D:/GitData/MES/WebContent/WEB-INF/lib/json-simple-1.1.jar"/>
+	<classpathentry kind="lib" path="D:/GitData/MES/WebContent/WEB-INF/lib/ldapsdk-4.1.jar"/>
+	<classpathentry kind="lib" path="D:/GitData/MES/WebContent/WEB-INF/lib/mysql-connector-java-5.1.42-bin.jar"/>
+	<classpathentry kind="lib" path="D:/GitData/MES/WebContent/WEB-INF/lib/postgresql-42.1.4.jar"/>
+	<classpathentry kind="lib" path="D:/GitData/MES/WebContent/WEB-INF/lib/sqlite-jdbc-3.19.3.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

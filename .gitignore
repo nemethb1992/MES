@@ -23,3 +23,6 @@ hs_err_pid*
 .classpath
 .project
 .settings/org.eclipse.wst.common.project.facet.core.xml
+.project
+/gijgo.min.css
+/bootstrap.js
