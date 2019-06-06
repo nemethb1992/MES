@@ -32,17 +32,17 @@
 		<link>
 			<name>WebContent/Public/css/gijgo.min.css</name>
 			<type>1</type>
-			<location>D:/GitData/MES/WebContent/Public/css/gijgo.min.css</location>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/css/gijgo.min.css</location>
 		</link>
 		<link>
 			<name>WebContent/Public/js/bootstrap.js</name>
 			<type>1</type>
-			<location>D:/GitData/MES/WebContent/Public/js/bootstrap.js</location>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/js/bootstrap.js</location>
 		</link>
 		<link>
 			<name>WebContent/Public/pdf/proba.pdf</name>
 			<type>1</type>
-			<location>D:/GitData/MES/WebContent/Public/pdf/proba.pdf</location>
+			<location>C:/Users/fzbal/Documents/GitHub/MES/WebContent/Public/pdf/proba.pdf</location>
 		</link>
 	</linkedResources>
 </projectDescription>
