@@ -26,7 +26,9 @@ public class User {
 		this.userid = setUserId();
 		this.modifier = setModifier();
 		this.access = setAccessValue();
-//		this.workstationAccess = true;
+		if(modifier) {
+			this.workstationAccess = setWorkstationAccess();
+		}
 	}
 	
 	public User(HttpServletRequest request, String username, String password) throws SQLException
@@ -42,7 +44,9 @@ public class User {
 		this.userid = setUserId();
 		this.modifier = setModifier();
 		this.access = setAccessValue();
-//		this.workstationAccess = setWorkstationAccess();
+		if(modifier) {
+			this.workstationAccess = setWorkstationAccess();
+		}
 		session.setAttribute("username", username);
 		session.setAttribute("password", password);
 		session.setAttribute("userid", userid);
