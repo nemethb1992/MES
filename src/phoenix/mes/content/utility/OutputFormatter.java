@@ -3,7 +3,6 @@ package phoenix.mes.content.utility;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -24,7 +23,7 @@ public class OutputFormatter {
 		LOGIN("Bejelentkezés","Anmeldung","Login"),
 		WORKSTATION("Munkaállomás","Arbeitsplatz","Workstation"),
 		WORKSTATION_NAME("Munkaállomás neve","Name Arbeitsplatz","Workstation name"),
-		WORKSTATION_GROUP("Gépcsoport","der Regelsatz","Compound"),
+		WORKSTATION_GROUP("Gépcsoport","Maschinengurppe","Compound"),
 		WORKSHEET_NO("Munkalapszám","Arbeitsschein-Nr.","Worksheet No."),
 		ARTICLE("Cikkszám","Artikel-Nr.","Article"),
 		SEARCH_WORD("Keresőszó","Suchwort","Search word"),

@@ -4,7 +4,6 @@ import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 
-
 public class SelectedWorkstation extends Workstation {	
 	
 	public SelectedWorkstation(HttpServletRequest request, String station){
@@ -39,7 +38,8 @@ public class SelectedWorkstation extends Workstation {
 	{
 		request.getSession().setAttribute("selectedWorkstation", obj);
 	}
-	
+
+	@SuppressWarnings("null")
 	public String getSelectedStation() throws SQLException
 	{
 		String station = (String)request.getSession().getAttribute("selectedWorkstation");

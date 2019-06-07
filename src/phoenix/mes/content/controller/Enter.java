@@ -82,6 +82,8 @@ public class Enter extends HttpServlet {
 				nextPage = "/Views/Manager/Main/Main.jsp";
 			}
 			getServletContext().getRequestDispatcher(null == nextPage ? "/Views/WelcomePage/WelcomePage.jsp" : nextPage).forward(request, response);
+
+			response.encodeUrl(nextPage);
 		} catch ( NamingException | LoginException | SQLException t) {
 			System.out.println(t);
 			request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.LOGIN_FAILED));

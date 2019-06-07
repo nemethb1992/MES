@@ -17,8 +17,10 @@ public class OpenTask extends HttpServlet {
   		getServletContext().getRequestDispatcher("/Logout").forward(request, response);
 	}
 
+	@SuppressWarnings("deprecation")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		response.encodeUrl("/Views/Operator/OpenTask/OpenTask.jsp");
 		getServletContext().getRequestDispatcher("/Views/Operator/OpenTask/OpenTask.jsp").forward(request, response);
 	}
 

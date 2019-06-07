@@ -2,9 +2,7 @@ package phoenix.mes.content.controller;
 
 import java.sql.SQLException;
 import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
-
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.PostgreSql;
 import phoenix.mes.content.utility.OutputFormatter;

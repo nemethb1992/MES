@@ -68,6 +68,7 @@ public class DataSheet extends HttpServlet {
 				
 			}
 		}
+		response.encodeUrl("/Views/Operator/DataSheet/DataSheet.jsp");
 		getServletContext().getRequestDispatcher("/Views/Operator/DataSheet/DataSheet.jsp").forward(request, response);
 
 	}

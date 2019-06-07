@@ -38,7 +38,6 @@ public class StationTaskList extends HttpServlet {
 		AbasConnection<EDPSession> abasConnection = null;  
 		BigDecimal summedProductionTime = BigDecimal.ZERO;
 		String view = "";
-		String time = "";
 		try {
 			AppBuild ab = new AppBuild(request);
 			SelectedWorkstation ws = new SelectedWorkstation(request);

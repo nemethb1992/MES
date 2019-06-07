@@ -3,7 +3,6 @@ package phoenix.mes.content.controller.manager;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,7 +47,7 @@ public class WorkstationControl extends HttpServlet {
 		String number = "";
 		String name = "";
 		
-		List<String> pcList = new ArrayList();		
+		List<String> pcList = new ArrayList<String>();		
 		List<Map<String, String>> dataList = new ArrayList<>();
 		List<Map<String, String>> finalDataList =  new ArrayList<>();
 		
