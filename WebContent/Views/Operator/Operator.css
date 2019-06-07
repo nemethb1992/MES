@@ -484,10 +484,6 @@ position: absolute;
 {
 	font-size: 14px;
 }
-.task-data-label
-{
-	
-}
 .task-data-value
 {
 	font-size: large;
@@ -496,9 +492,6 @@ position: absolute;
 	border:none;
 	text-align: left;
 }
-	.personal-date,.personal-time{
-	width:125px;
-	}
 
 @media only screen and (max-width: 1370px) {
 	.timerPanel 

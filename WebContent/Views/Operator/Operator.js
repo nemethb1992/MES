@@ -155,9 +155,6 @@ function openAsset(item)
 
 function TabControlEventHolder()
 {
-	$('.switch-station-select').on('change', function() {
-		  SwitchSelectedWorkstation(this.value);
-		});
 	$('.refresh-click').click(function(){
 		RefreshTask();
 	});
@@ -407,16 +404,3 @@ function SubmitTask()
 	});
 }
 
-function SwitchSelectedWorkstation(station){
-	$.post({
-		url:  '/'+path+'/SwitchWorkstation',
-		data:{
-			workstation: station
-		},
-		success: function (response) {
-
-				$(".reload-datasheet").submit();
-			
-		}
-	});
-}

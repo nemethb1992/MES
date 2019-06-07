@@ -112,25 +112,15 @@
 							<input class='form-control h-100 personal-form-control' disabled
 								value='<%=(ws.getOperatingStation()).replace('!', '-')%>'>
 						</div>
-						<div class='form-group personal-secondary'>
-						<div class='float-left date-time-holder'>
+						<div class='form-group'>
 							<input
 								class='form-control h-100 personal-form-control personal-date'
 								disabled></div>
-						<div class='float-right date-time-holder'>
+						<div class='form-group'>
 							<input
 								class='form-control h-100 personal-form-control personal-time'
 								disabled></div>
-								
-						</div>
 						
-						<div class='form-group'>
-						<select class="browser-default custom-select switch-station-select">
-  							<option selected>Állomás váltása</option>
-  							<option onclick='SelectSwitchStation(this)' value="234PG!1">234PG - 1</option>
-  							<option onclick='SelectSwitchStation(this)' value="380PG!1">380PG - 1</option>
-						</select>
-						</div>
 						<div class='form-group d-none py-2'>
 							<%@include file="/Views/Partial/ApplicationCountDown.jsp"%>
 						</div>

@@ -91,7 +91,7 @@ try {
 						<div class='input-icon-holderDiv float-right h-100'>
 							<div class='refresh_btn h-100'>
 								<img class='h-100 float-left p-3'
-									src='${pageContext.request.contextPath}/Public/icons/reloadGray.svg'>
+									src='${pageContext.request.contextPath}/Public/icons/backArrowgray.svg'>
 							</div>
 						</div>
 					</div>

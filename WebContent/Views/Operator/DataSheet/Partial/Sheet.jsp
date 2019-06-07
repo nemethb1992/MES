@@ -7,7 +7,6 @@
 <%
 	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 	Task.Details taskDetails = (Task.Details)request.getAttribute("taskDetails");
-	Workstation ws = (Workstation)request.getAttribute("Workstation");
 %>
 <div class='container-fluid h-100 px-0 py-3'>
 
@@ -15,12 +14,12 @@
 		<div class="col">
 		<table class="table table-bordered sheet-table">
   <tbody>
-    <tr>
-      <th scope="row"><%=of.getWord(DictionaryEntry.WORKSTATION)%>:</th>
-      <td><%=ws.getGroup()%> - <%=ws.getNumber()%></td>
-      <th scope="row"><%=of.getWord(DictionaryEntry.WORKSTATION_NAME)%>:</th>
-      <td><%=ws.getName()%></td>
-    </tr>
+<!--     <tr> -->
+<%--       <th scope="row"><%=of.getWord(DictionaryEntry.WORKSTATION)%>:</th> --%>
+<%--       <td><%=ws.getGroup()%> - <%=ws.getNumber()%></td> --%>
+<%--       <th scope="row"><%=of.getWord(DictionaryEntry.WORKSTATION_NAME)%>:</th> --%>
+<%--       <td><%=ws.getName()%></td> --%>
+<!--     </tr> -->
     <tr>
       <th scope="row"><%=of.getWord(DictionaryEntry.WORKSHEET_NO)%>:</th>
       <td><%=taskDetails.getWorkSlipNo()%></td>

@@ -74,7 +74,8 @@ function setDateNow(element)
 
 	    var currentTime = new Date();
 	    var year = currentTime.getFullYear();
-	    var month = currentTime.getMonth() + 1;
+	    var rawMonth = currentTime.getMonth() + 1;
+	    var month = (rawMonth < 10 ? "0"+rawMonth : rawMonth);
 	    var rawDay = currentTime.getDate();
 	    var day = (rawDay < 10 ? "0"+rawDay : rawDay);
 	    var currentDate;
