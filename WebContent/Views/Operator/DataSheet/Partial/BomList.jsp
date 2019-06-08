@@ -19,11 +19,11 @@
 				<input class='w-100' disabled
 					value='<%=of.getWord(DictionaryEntry.SEARCH_WORD)%>'>
 			</div>
-			<div class='col-3'>
+			<div class='col-4'>
 				<input class='w-100' disabled
 					value='<%=of.getWord(DictionaryEntry.NAME)%> 1'>
 			</div>
-			<div class='col-3'>
+			<div class='col-2'>
 				<input class='w-100' disabled
 					value='<%=of.getWord(DictionaryEntry.NAME)%> 2'>
 			</div>
@@ -45,11 +45,11 @@
 					<div class='col-2'>
 						<input class='w-100' disabled value='<%=bomItem.getSwd()%>'>
 					</div>
-					<div class='col-3'>
+					<div class='col-4'>
 						<input class='w-100' disabled
 							value='<%=bomItem.getDescription()%>'>
 					</div>
-					<div class='col-3'>
+					<div class='col-2'>
 						<input class='w-100' disabled
 							value='<%=bomItem.getDescription2()%>'>
 					</div>

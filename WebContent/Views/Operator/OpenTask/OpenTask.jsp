@@ -12,7 +12,7 @@
 				<div
 					class='top-nav-button px-0 d-block col col-nav-logout h-100 float-right'>
 					<form method='POST' class='h-100'
-						action='${pageContext.request.contextPath}/Logout'>
+						action='<%=response.encodeURL(request.getContextPath()+"/Logout")%>'>
 						<input class='btn_logout-gray' type='submit' value='' />
 					</form>
 				</div>
@@ -24,7 +24,7 @@
 	<div class='row'>
 		<div class='col-4 offset-4 h-100'>
 			<form method='POST' class='h-100 '
-				action='${pageContext.request.contextPath}/DataSheet'>
+				action='<%=response.encodeURL(request.getContextPath() + "/DataSheet") %>'>
 				<input class='enter-btn w-100 light-shadow' type='submit'
 					value='<%=outputFormatter.getWord(DictionaryEntry.TASK_START)%>' />
 			</form>

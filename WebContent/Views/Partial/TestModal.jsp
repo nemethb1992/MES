@@ -95,7 +95,7 @@ try {
 			</div>
 		</div>
   </div>
-  <form method='Post' action='${pageContext.request.contextPath}/OpenTask' class='d-none interrupt-form'></form>
+  <form method='Post' action='<%=response.encodeURL(request.getContextPath()+"/OpenTask")%>' class='d-none interrupt-form'></form>
 </div>
 
 <div class="modal fade my-fade" id="interrupt-level2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -135,7 +135,7 @@ try {
 			</div>
 		</div>
   </div>
-  <form method='Post' action='${pageContext.request.contextPath}/OpenTask' class='d-none interrupt-form'></form>
+  <form method='Post' action='<%=response.encodeURL(request.getContextPath()+"/OpenTask")%>' class='d-none interrupt-form'></form>
 </div>
 
 <div class="modal fade my-fade" id="submit-confirmation-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="false">

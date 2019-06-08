@@ -7,7 +7,7 @@
 {
 	margin: 25px;
     height: 88%;
-    background: url("Public/icons/pm_logo_white.svg");
+    background: url("${pageContext.request.contextPath}/Public/icons/pm_logo_white.svg");
     background-repeat: no-repeat;
 }
 #loginFrame

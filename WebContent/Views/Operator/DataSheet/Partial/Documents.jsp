@@ -7,7 +7,7 @@
 
 <div class='list-group row dokumentum-list'>
 	<button type='button'
-		class='list-group-item list-group-item-action active disabled'><%=of.getWord(DictionaryEntry.DOCUMENTS)%></button>
+		class='list-group-item list-group-item-action active disabled'><h4 class='mb-0'><%=of.getWord(DictionaryEntry.DOCUMENTS)%></h4></button>
 	<%
 		for (int i = 0; i < 8; i++) {
 	%>

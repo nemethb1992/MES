@@ -1,4 +1,6 @@
 var path = location.pathname.split('/')[1];
+var jsessionID = location.pathname.split(';jsessionid=')[1];
+
 var layoutState = 1;
 
 $(document).ready(function(){
@@ -15,14 +17,17 @@ function pagesetup()
 	setTimeNow('.personal-time');
 	
 }
-
+$.urlParam = function(name){
+	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+	return results[1] || 0;
+}
 function getView(tab = 1)
 {
 	closeNavButtons();
 	$( "#SwitchPanel" ).empty();
 	loadingAnimation("#SwitchPanel", "operator");
 	$.post({
-		url:  '/'+path+'/DataSheetLoader',
+		url:  '<%=response.encodeURL(request.getContextPath()+"/DataSheetLoader")%>',
 		data:{
 			tabNo: tab
 		},
@@ -66,7 +71,7 @@ function setPageDefault()
 function setTimer()
 {
 	$.post({
-		url:  '/'+path+'/Timer',
+		url:  '<%=response.encodeURL(request.getContextPath()+"/Timer")%>',
 		success: function (response) {
 			timerStart(response);
 		}
@@ -83,7 +88,7 @@ function timerStart(time)
 	way = true;
 	$("#timerContainer").css({
 		"background": "#00e68a",
-		"background-image" : "url(Public/icons/timer.svg)",
+		"background-image" : "url(${pageContext.request.contextPath}/Public/icons/timer.svg)",
 		"background-size" : "20%",
 		"background-repeat" : "no-repeat",
 		"background-position" : "center",
@@ -115,7 +120,7 @@ function timeUp()
 	way = false;
 	$("#timerContainer").css({
 		"background": "#dc3545",
-		"background-image" : "url(Public/icons/timer.svg)",
+		"background-image" : "url(${pageContext.request.contextPath}/Public/icons/timer.svg)",
 		"background-size" : "20%",
 		"background-repeat" : "no-repeat",
 		"background-position" : "center",
@@ -142,7 +147,7 @@ function openAsset(item)
 {
 	var value = $(item).attr('value');
 	$.post({
-		url:  '/'+path+'/FileHandler',
+		url:  '<%=response.encodeURL(request.getContextPath()+"/FileHandler")%>',
 		data:{
 			file: value
 		},
@@ -301,7 +306,7 @@ function InterruptTask()
 		return;
 		}
 	$.post({
-		url:  '/'+path+'/InterruptTask',
+		url:  '<%=response.encodeURL(request.getContextPath()+"/InterruptTask")%>',
 		data:{
 			errorText: text
 		},
@@ -320,7 +325,7 @@ function SuspendTask()
 	
 	if(uname.length > 0 && pwd.length > 0)
 	$.post({
-		url:  '/'+path+'/SuspendTask',
+		url:  '<%=response.encodeURL(request.getContextPath()+"/SuspendTask")%>',
 		data:{
 			username: uname, 
 			password: pwd
@@ -348,7 +353,7 @@ function ResumeTask()
 {
 	$('#interrupt-level2').modal('hide');
 	$.post({
-		url:  '/'+path+'/ResumeTask',
+		url:  '<%=response.encodeURL(request.getContextPath()+"/ResumeTask")%>',
 		success: function () {
 //			$('.interrupt-form').submit();
 		}
@@ -359,7 +364,7 @@ function ResumeTask()
 function RefreshTask()
 {	
 	$.post({
-	url:  '/'+path+'/RefreshData',
+	url:  '<%=response.encodeURL(request.getContextPath()+"/RefreshData")%>',
 	success: function (response) {
 		if( response == "null")
 		{
@@ -386,7 +391,7 @@ function SubmitTask()
 	opened = false;
 	CloseConfirmationModal();
 	$.post({
-		url:  '/'+path+'/Submit',
+		url:  '<%=response.encodeURL(request.getContextPath()+"/Submit")%>',
 		data:{
 			finishedQty: finishedQt,
 			scrapQty: scrapQt

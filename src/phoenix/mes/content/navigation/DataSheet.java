@@ -34,10 +34,10 @@ public class DataSheet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		AppBuild ab = new AppBuild(request);
-		if(!ab.isStabile()){
-			doGet(request,response);
-			return;
-		}
+//		if(!ab.isStabile()){
+//			doGet(request,response);
+//			return;
+//		}
 		OperatingWorkstation ws = new OperatingWorkstation(request);
 		if(ws.getGroup().equals(null))
 		{
@@ -68,8 +68,9 @@ public class DataSheet extends HttpServlet {
 				
 			}
 		}
-		response.encodeUrl("/Views/Operator/DataSheet/DataSheet.jsp");
-		getServletContext().getRequestDispatcher("/Views/Operator/DataSheet/DataSheet.jsp").forward(request, response);
+		String encodedURL = response.encodeRedirectURL("/DMES/Views/Operator/DataSheet/DataSheet.jsp");
+		response.sendRedirect(encodedURL);
+//		getServletContext().getRequestDispatcher("/Views/Operator/DataSheet/DataSheet.jsp").forward(request, response);
 
 	}
 

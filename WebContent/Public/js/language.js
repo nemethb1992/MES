@@ -33,8 +33,8 @@ function selectLanguage(button)
 
 function LanguageSetOnServlet(lng)
 {
-	$.ajax({
-	    url:  '/'+path+'/LanguageSetter',
+	$.post({
+	    url:  '<%=response.encodeURL(request.getContextPath()+"/LanguageSetter")%>',
 	    data: { 
 	     language: lng },
 	    success: function () {
@@ -58,7 +58,7 @@ function languageSwitchButton()
         $("#de").css('z-index','9999');
         break;
     }
-    $(".lang_bub").click(function () {
+    $(".lang_bub").hover(function () {
     	if(!openstate)
     	{
     		$(".lang_bub").css('position', 'relative');

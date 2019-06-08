@@ -19,9 +19,9 @@ public class OpenTask extends HttpServlet {
 
 	@SuppressWarnings("deprecation")
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		response.encodeUrl("/Views/Operator/OpenTask/OpenTask.jsp");
-		getServletContext().getRequestDispatcher("/Views/Operator/OpenTask/OpenTask.jsp").forward(request, response);
+		String encodedURL = response.encodeRedirectURL("/DMES/Views/Operator/OpenTask/OpenTask.jsp");
+		response.sendRedirect(encodedURL);
+		//getServletContext().getRequestDispatcher("/Views/Operator/OpenTask/OpenTask.jsp").forward(request, response);
 	}
 
 }

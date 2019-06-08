@@ -39,13 +39,14 @@
 }
 .task-details-row
 {
-	height: 83% !important;
+	height: 83vh !important;
 }
 .station-upper-row
 {
+	border-bottom: 1px solid #dedede;
 	max-height: 180px;
 	min-height: 80px;
-	height: 17% !important;
+	height: 17vh !important;
 }
 
 .enter-btn
@@ -98,7 +99,7 @@
 #timerContainer
 {	
 	background: #00e68a;
-	background-image: url(Public/icons/timer.svg);
+	background-image: url(${pageContext.request.contextPath}/Public/icons/timer.svg);
 	background-size: 20%;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -112,6 +113,7 @@
 }
 .left-buttons
 {
+	height: 83vh;
 	z-index: 8;
 }
 .operator-switch-grid
@@ -134,7 +136,7 @@
 
 .nav-contianer
 {
-	background-image: url(Public/icons/pm_logo_normal.svg);
+	background-image: url(${pageContext.request.contextPath}/Public/icons/pm_logo_normal.svg);
 	background-size: 20%;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -162,19 +164,19 @@ position: absolute;
     background-position-y: 40%;
 }
 #navigation-button-1{
-	background-image: url(Public/icons/TV_btn_nav1.svg);
+	background-image: url(${pageContext.request.contextPath}/Public/icons/TV_btn_nav1.svg);
 }
 #navigation-button-2{
-	background-image: url(Public/icons/TV_btn_nav2.svg);
+	background-image: url(${pageContext.request.contextPath}/Public/icons/TV_btn_nav2.svg);
 }
 #navigation-button-3{
-	background-image: url(Public/icons/TV_btn_nav3.svg);
+	background-image: url(${pageContext.request.contextPath}/Public/icons/TV_btn_nav3.svg);
 }
 #navigation-button-4{
-	background-image: url(Public/icons/TV_btn_nav4.svg);
+	background-image: url(${pageContext.request.contextPath}/Public/icons/TV_btn_nav4.svg);
 }
 #navigation-button-5{
-	background-image: url(Public/icons/list.svg);
+	background-image: url(${pageContext.request.contextPath}/Public/icons/list.svg);
 }
 
 .bom-item-text-row textarea
@@ -199,7 +201,7 @@ position: absolute;
 	background-size: 28px;
 	background-repeat: no-repeat;
 	background-position: center;
-	background-image: url(Public/icons/left-arrow-operator.svg);
+	background-image: url(${pageContext.request.contextPath}/Public/icons/left-arrow-operator.svg);
 	transition: 0,3s;
 }
 .bom-item-row{    
@@ -208,9 +210,7 @@ position: absolute;
 	overflow: hidden;
     height: 70px;
 }
-.bom-list-full-container{
-	overflow: auto;
-}
+
 .bom-item-row input, .bom-item-row label{
 	background: transparent;
 }
@@ -262,18 +262,18 @@ position: absolute;
 .btn_navHeader-left-submit
 {
 	min-width: 15%;
-	background-image: url(Public/icons/upload.svg);
+	background-image: url(${pageContext.request.contextPath}/Public/icons/upload.svg);
 }
 .btn-navHeader-left-refresh-btn
 {
     border-right: 1px solid #dedede;
-	background-image: url(Public/icons/reloadGray.svg);
+	background-image: url(${pageContext.request.contextPath}/Public/icons/reloadGray.svg);
 	background-size: 30px;
 	cursor: pointer;
 }
 #btn_megszakitas
 {
-	background-image: url(Public/icons/warning.svg);
+	background-image: url(${pageContext.request.contextPath}/Public/icons/warning.svg);
 }
 .opentask-row
 {
@@ -346,11 +346,6 @@ position: absolute;
 {
 	height: 60px !important;
 }
-.station-upper-row
-{
-	
-	border-bottom: 1px solid #dedede;
-}
 .rightSide
 {
     background: #f5f5f5;
@@ -374,7 +369,9 @@ position: absolute;
 	height: 100%;
 }
 #SwitchPanel
-{
+{	height: 83vh !important;
+	overflow-y: auto;
+	overflow-x: hidden;
 	display: block;
 }
 .data-row

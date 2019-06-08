@@ -23,12 +23,12 @@ html,body{
 }
 @font-face {
 	font-family: mediumFont;
-	src: url("Public/fonts/Montserrat-Medium.ttf");
+	src: url("${pageContext.request.contextPath}/Public/fonts/Montserrat-Medium.ttf");
 }
 
 @font-face {
 	font-family: lightFont;
-	src: url("Public/fonts/Montserrat-Light.ttf");
+	src: url("${pageContext.request.contextPath}/Public/fonts/Montserrat-Light.ttf");
 }
 .nav-language-box
 {
@@ -54,7 +54,7 @@ html,body{
 	width: 100%;
 	cursor: pointer;
 	background: transparent;
-	background-image: url(Public/icons/logoutGry.svg);
+	background-image: url(${pageContext.request.contextPath}/Public/icons/logoutGry.svg);
 	background-size: 30px;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -64,7 +64,7 @@ html,body{
 
 .btn_logout-gray:hover {
 	background: #ff9797;
-	background-image: url(Public/icons/logoutGry.svg);
+	background-image: url(${pageContext.request.contextPath}/Public/icons/logoutGry.svg);
 	background-size: 25px;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -74,7 +74,7 @@ html,body{
 	width: 100%;
 	cursor: pointer;
 	background: transparent;
-	background-image: url(Public/icons/backArrowgray.svg);
+	background-image: url(${pageContext.request.contextPath}/Public/icons/backArrowgray.svg);
 	background-size: 40px;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -83,7 +83,7 @@ html,body{
 }
 .col-nav-logo
 {
-    background-image: url(Public/icons/pm_logo_normal.svg);
+    background-image: url(${pageContext.request.contextPath}/Public/icons/pm_logo_normal.svg);
     background-size: 200px;
     background-repeat: no-repeat;
     background-position: left;
@@ -91,7 +91,7 @@ html,body{
 }
 .btn_back-gray:hover {
 	background: #e1e1e1;
-	background-image: url(Public/icons/backArrowgray.svg);
+	background-image: url(${pageContext.request.contextPath}/Public/icons/backArrowgray.svg);
 	background-size: 30px;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -124,7 +124,7 @@ body {
 
 @font-face {
 	font-family: Mon;
-	src: url(public/fonts/Montserrat-Regular.ttf);
+	src: url(${pageContext.request.contextPath}/public/fonts/Montserrat-Regular.ttf);
 }
 
 html {

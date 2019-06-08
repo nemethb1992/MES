@@ -86,9 +86,9 @@
 						class='btn_navHeader-left btn-navHeader-left-refresh-btn refresh-click btn_navHeader h-100 float-left px-0'>
 						<p class='h6 text-center nav-label'><%=outputFormatter.getWord(DictionaryEntry.REFRESH)%></p>
 						<form method='POST' class='h-100 d-none refresh-form'
-							action='${pageContext.request.contextPath}/OpenTask'></form>						
+							action='<%=response.encodeURL(request.getContextPath()+"/OpenTask")%>'></form>						
 							<form method='POST' class='h-100 d-none reload-datasheet'
-							action='${pageContext.request.contextPath}/DataSheet'></form>
+							action='<%=response.encodeURL(request.getContextPath()+"/DataSheet")%>'></form>
 					</div>
 					<div id='btn_megszakitas' onclick='OpenInterruptModal()' 
 						class='btn_navHeader h-100 float-left btn_navHeader-left'>
@@ -96,7 +96,7 @@
 					</div>
 					<div class='btn_navHeader h-100 float-right px-0'>
 						<form method='POST' class='h-100'
-							action='${pageContext.request.contextPath}/Logout'>
+							action='<%=response.encodeURL(request.getContextPath()+"/Logout")%>'>
 							<input class='btn_logout-gray' type='submit' value='' />
 						</form>
 					</div>

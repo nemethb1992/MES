@@ -121,7 +121,13 @@ function BackToTaskStart()
     document.location.href = "Logout";
 }
 
-
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
 
 //
 //var distance = IDLE_TIMEOUT - _idleSecondsCounter;

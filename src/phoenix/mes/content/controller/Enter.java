@@ -47,8 +47,12 @@ public class Enter extends HttpServlet {
 				throw new LoginException();
 			}
 			String nextPage = null;
+
 			if("operator".equals(layout)) {
 				String workstation = "";
+				if(null != paramStation) {
+					OperatingWorkstation.setOperatingStation(request,OutputFormatter.isStation(paramStation));
+				}
 				OperatingWorkstation ws = new OperatingWorkstation(request);
 				workstation = ws.getOperatingStation();
 				if ("".equals(workstation) || !workstation.equals(paramStation)) {
@@ -58,6 +62,8 @@ public class Enter extends HttpServlet {
 							if (cookie.getName().equals("workstation")) {
 								
 								OperatingWorkstation.setOperatingStation(request,OutputFormatter.isStation(cookie.getValue()));
+
+								
 								if ("".equals(ws.getOperatingStation())) {
 									request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.EMPTY_STATION_ID));
 									nextPage = "/Views/Login/loginPage.jsp";
@@ -82,8 +88,6 @@ public class Enter extends HttpServlet {
 				nextPage = "/Views/Manager/Main/Main.jsp";
 			}
 			getServletContext().getRequestDispatcher(null == nextPage ? "/Views/WelcomePage/WelcomePage.jsp" : nextPage).forward(request, response);
-
-			response.encodeUrl(nextPage);
 		} catch ( NamingException | LoginException | SQLException t) {
 			System.out.println(t);
 			request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.LOGIN_FAILED));

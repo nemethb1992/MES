@@ -12,7 +12,7 @@
 
 	<div class='col-12'>
 		<div class='row bom-header-row p-2'>
-			<div class='col-2'>
+			<div class='col-1'>
 				<input class='w-100' disabled
 					value='<%=of.getWord(DictionaryEntry.OPERATION_NUMEBER)%>'>
 			</div>
@@ -20,11 +20,11 @@
 				<input class='w-100' disabled
 					value='<%=of.getWord(DictionaryEntry.SEARCH_WORD)%>'>
 			</div>
-			<div class='col-2'>
+			<div class='col-4'>
 				<input class='w-100' disabled
 					value='<%=of.getWord(DictionaryEntry.NAME)%>'>
 			</div>
-			<div class='col-2'>
+			<div class='col-1'>
 				<input class='w-100' disabled
 					value='<%=of.getWord(DictionaryEntry.WORKSTATION_GROUP)%>'>
 			</div>
@@ -40,17 +40,17 @@
 			<div class='position-absolute bg-transparent w-100' style="height: 65px; z-index: 1000;" onclick='bomListDropDown(this)'></div>
 			<div class='col-12'>
 				<div class='row item-data-row py-2'>
-					<div class='col-2'>
+					<div class='col-1'>
 						<input class='w-100' disabled value='<%=item.getIdNo()%>'>
 					</div>
 					<div class='col-2'>
 						<input class='w-100' disabled value='<%=item.getSwd()%>'>
 					</div>
-					<div class='col-2'>
+					<div class='col-4'>
 						<input class='w-100' disabled
 							value='<%=item.getDescription()%>'>
 					</div>
-					<div class='col-2'>
+					<div class='col-1'>
 						<input class='w-100' disabled
 							value='<%=item.getWorkCenterIdNo()%>'>
 					</div>

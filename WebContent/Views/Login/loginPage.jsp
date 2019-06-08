@@ -1,3 +1,4 @@
+
 <%
 String info = (String)request.getAttribute("infoTitle");
 if(info == null)
@@ -48,7 +49,7 @@ if(workstationName != null)
 					src='${pageContext.request.contextPath}/Public/icons/padlock.svg'>
 			</div>
 			<form id='LR_form' method='POST'
-				action='${pageContext.request.contextPath}/Enter'>
+				action='<%=response.encodeURL(request.getContextPath()+"/Enter")%>'>
 				<input type='hidden' name='workstation' class='workstation'
 					value='<%=request.getParameter("workstation")%>' /> <input
 					name='infoTitle' class='w-100 mt-4' value='<%=info%>' />
