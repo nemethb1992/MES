@@ -83,7 +83,7 @@ try {
 				<div class="form-group row">
 					<label for="example-search-input" class="col-12 col-form-label"><%=of.getWord(DictionaryEntry.DISRUPTION_REASON)%></label>
 					<div class="col-12">
-						<textarea class="form-control error-text" type="search" id="example-search-input" style="height: 150px;"></textarea>
+						<textarea class="form-control error-text"  id="example-search-input" style="height: 150px;"></textarea>
 					</div>
 				</div>
 			</div>
@@ -109,7 +109,7 @@ try {
 				<div class="form-group row">
 					<label for="example-search-input"  class="col-12 col-form-label"><%=of.getWord(DictionaryEntry.DISRUPTION_REASON)%></label>
 					<div class="col-12">
-						<textarea class="form-control error-text-back" disabled type="search" id="example-search-input" style="height: 150px;"><%=errorText %></textarea>
+						<textarea class="form-control error-text-back" disabled  id="example-search-input" style="height: 150px;"><%=errorText %></textarea>
 					</div>
 				</div>	
 				<div class="form-group row">

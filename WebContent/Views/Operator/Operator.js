@@ -397,12 +397,13 @@ function SubmitTask()
 			scrapQty: scrapQt
 		},
 		success: function (response) {
-			if(response == "null")
+			if(response == "submit_done")
 			{
 				getView();
 				setTimer();
-			}else{
-				alert("Lejelentési hiba!");
+			}else if(response == "error"){
+				alert("Lejelentesi hiba!");
+			}else if(response == "finish"){
 				$(".refresh-form").submit();
 			}
 		}

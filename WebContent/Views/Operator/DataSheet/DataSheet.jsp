@@ -114,11 +114,11 @@
 						</div>
 						<div class='form-group'>
 							<input
-								class='form-control h-100 personal-form-control personal-date'
+								class='form-control h-100 personal-form-control w-100 personal-date'
 								disabled></div>
 						<div class='form-group'>
 							<input
-								class='form-control h-100 personal-form-control personal-time'
+								class='form-control h-100 personal-form-control w-100 personal-time'
 								disabled></div>
 						
 						<div class='form-group d-none py-2'>

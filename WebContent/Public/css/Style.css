@@ -265,7 +265,7 @@ html {
 .lang_bub {
 	float: left;
 	width: 35px;
-	position: absolute;
+	position: relative;
 	height: 35px;
 	border-radius: 10px;
 	display: inline-block;

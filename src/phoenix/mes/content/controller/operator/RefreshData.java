@@ -54,6 +54,7 @@ public class RefreshData extends HttpServlet {
 			{
 				taskDetails.clearCache();
 				responseStr = "inProgress";
+				session.setAttribute("Task", task);
 			}
 		}catch(LoginException | SQLException e)
 		{

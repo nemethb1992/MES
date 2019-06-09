@@ -58,17 +58,5 @@ function languageSwitchButton()
         $("#de").css('z-index','9999');
         break;
     }
-    $(".lang_bub").hover(function () {
-    	if(!openstate)
-    	{
-    		$(".lang_bub").css('position', 'relative');
-    		openstate = true;
-    	}
-    	else{
-    		$(".lang_bub").css('z-index', '0');
-    		$(this).css('z-index', '9999');
-    		$(".lang_bub").css('position', 'absolute');
-    		openstate = false;
-    	}
-    });
+
 }

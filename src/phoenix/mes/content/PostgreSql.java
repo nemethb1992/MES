@@ -35,7 +35,6 @@ public class PostgreSql {
     {
     	if (null == conn) {
     		conn = DriverManager.getConnection("jdbc:postgresql://192.168.145.217/" + (testSystem ? "dmes" : "mes"), "mes", "jGbLv!nh+?zc346J");
-//    		conn = DriverManager.getConnection("jdbc:postgresql://192.168.145.217/" + (testSystem ? "dmes" : "mes"), "balazs.nemeth", "Hxx8kahxx8ka");
     	}
     }
 

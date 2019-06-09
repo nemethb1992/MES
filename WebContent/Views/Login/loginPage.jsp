@@ -7,10 +7,20 @@ if(info == null)
 }
 
 String workstationName = request.getParameter("workstation");
+
 if(workstationName != null)
 {
 	workstationName = workstationName.replace("!"," - ");
 }
+else{
+	try{
+		workstationName = (String)request.getSession().getAttribute("operatingWorkstation");
+		workstationName = workstationName.replace("!"," - ");
+	}catch(Exception e){
+		workstationName = "";
+	}
+}
+
 %>
 <%@include file="/Views/Header.jsp"%>
 <script><%@ include file="/Views/Login/loginScript.js"%></script>

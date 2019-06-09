@@ -56,9 +56,11 @@ public class Submit extends HttpServlet {
 				Task.Details taskDetails = task.getDetails(abasConnection);
 				if(finishedQty.intValue() <= taskDetails.getOutstandingConfirmationQuantity().intValue()){
 					task.postCompletionConfirmation(finishedQty, scrapQty, abasConnection);
+					taskDetails.clearCache();
+					responseStr = "submit_done";
 					if(finishedQty.intValue() >= taskDetails.getOutstandingQuantity().intValue()) {
 						session.removeAttribute("Task");
-						responseStr = "finished";
+						responseStr = "finish";
 					}
 				}
 				else {
@@ -69,8 +71,7 @@ public class Submit extends HttpServlet {
 			}
 		}catch(LoginException | SQLException | AbasFunctionException e)
 		{
-			session.removeAttribute("Task");
-			responseStr = "finished";
+			responseStr = "error";
 			System.out.println(e);
 		}finally
 		{

@@ -48,16 +48,16 @@ public class StationAccess {
     
     protected List<Map<String, String>> setWorkstationAccess() throws SQLException{
 		PostgreSql pg = new PostgreSql(new AppBuild(request).isTest());
-		if(sqlBindEngine("select count(pc_id) as count from profitcenter_relation where user_id = "+userid+"", "count")) {
+		if(sqlBindEngine("select count(pc_id) as count from profitcenter_relation where user_id = "+userid+"", "count",pg)) {
 			pc_access = pg.sqlQuery("select pc_id from profitcenter_relation where user_id = "+userid+"", "pc_id");		
 		}		
-		if(sqlBindEngine("select count(section_id) as count from section_relation where user_id = "+userid+"", "count")) {
+		if(sqlBindEngine("select count(section_id) as count from section_relation where user_id = "+userid+"", "count",pg)) {
 			section_access = pg.sqlQuery("select section_id from section_relation where user_id = "+userid+"", "section_id");		
 		}		
-		if(sqlBindEngine("select count(workstation_group) as count from group_relation where user_id = "+userid+"", "count")) {
+		if(sqlBindEngine("select count(workstation_group) as count from group_relation where user_id = "+userid+"", "count",pg)) {
 			group_access = pg.sqlQuery("select workstation_group from group_relation where user_id = "+userid+"", "workstation_group");
 		}
-		pg.dbClose();
+			pg.dbClose();
 		
     	return null;
     }
@@ -97,17 +97,17 @@ public class StationAccess {
 				}
 			}
 		}
-		pg.dbClose();
+		if(group_access != null && section_access != null && pc_access != null) {
+			pg.dbClose();
+		}
     	return list;
     }
     
 
     
-    protected boolean sqlBindEngine(String command, String field) throws SQLException
+    protected boolean sqlBindEngine(String command, String field, PostgreSql pg) throws SQLException
     {
-		PostgreSql pg = new PostgreSql(new AppBuild(request).isTest());
 		String result = pg.sqlSingleQuery(command,field);
-		pg.dbClose();
 		if("".equals(result) || "0".equals(result)){
 			return false;
 		}

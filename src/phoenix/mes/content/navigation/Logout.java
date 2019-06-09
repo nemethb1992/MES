@@ -19,7 +19,7 @@ public class Logout extends HttpServlet {
 		
  	    HttpSession session = request.getSession();
  	    String layout = (String)session.getAttribute("Layout");
- 	    session.invalidate();
+// 	    session.invalidate();
  	    RequestDispatcher rd = request.getRequestDispatcher((layout == null || "".equals(layout) ? "/" : (layout == "manager" ? "/Manager" : "/Operator")));
  	    rd.forward(request, response);
 //  		getServletContext().getRequestDispatcher((layout == null || "".equals(layout) ? "/" : (layout == "manager" ? "/Manager" : "/Operator"))).forward(request, response);

@@ -50,7 +50,7 @@ public class Enter extends HttpServlet {
 
 			if("operator".equals(layout)) {
 				String workstation = "";
-				if(null != paramStation) {
+				if(!paramStation.equals("null")) {
 					OperatingWorkstation.setOperatingStation(request,OutputFormatter.isStation(paramStation));
 				}
 				OperatingWorkstation ws = new OperatingWorkstation(request);
