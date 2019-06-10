@@ -86,114 +86,43 @@
 		</div>
 </div>
 
+</div>
 
-<!-- 	<div class=' my-white-container h-100 px-0'> -->
-<!-- 		<div class='row data-row mx-3 mt-0'> -->
-<!-- 			<div class='col-6 pt-3'> -->
-<!-- 				<div class='inputContainer'> -->
-<%-- 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.WORKSTATION)%></p> --%>
-<!-- 					<input class='px-2 w-100 task-data-value' type='text' disabled -->
-<%-- 						value='<%=ws.getGroup()%> - <%=ws.getNumber()%>'/> --%>
-<!-- 				</div> -->
-<!-- 				<div class='inputContainer'> -->
-<%-- 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.WORKSHEET_NO)%></p> --%>
-<!-- 					<input class='px-2 w-100 task-data-value' type='text' disabled -->
-<%-- 						value='<%=taskDetails.getWorkSlipNo()%>'/> --%>
-<!-- 				</div> -->
-<!-- 				<div class='inputContainer'> -->
-<%-- 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.GET_STARTED)%> </p> --%>
-<!-- 					<input class='px-2 w-100 task-data-value' type='text' disabled -->
-<%-- 						value='<%=of.formatDate(taskDetails.getStartDate())%>'/> --%>
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 			<div class='col-6 pt-3'> -->
-<!-- 				<div class='inputContainer'> -->
-<%-- 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.WORKSTATION_NAME)%></p> --%>
-<!-- 					<input class='px-2 w-100 task-data-value' type='text' disabled -->
-<%-- 						value='<%=ws.getName()%>'/> --%>
-<!-- 				</div> -->
-<!-- 				<div class='inputContainer'> -->
-<%-- 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.PLACE_OF_USE)%></p> --%>
-<!-- 					<input class='px-2 w-100 task-data-value' type='text' disabled -->
-<%-- 						value='<%=taskDetails.getUsage()%>'/> --%>
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
+<div class="modal fade my-fade" id="submit-confirmation-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="false">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle"><%=of.getWord(DictionaryEntry.COMMIT)%></h5>
 
-<!-- 		<div class='row data-row mx-3 my-0'> -->
-<!-- 			<div class='col-6 pt-3'> -->
-<!-- 				<div class='inputContainer'> -->
-<%-- 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.ARTICLE)%></p> --%>
-<!-- 					<input class='px-2 w-100 task-data-value' type='text' disabled -->
-<%-- 						value='<%=taskDetails.getProductIdNo()%>'> --%>
-<!-- 				</div> -->
-<!-- 				<div class='inputContainer'> -->
-<%-- 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.SEARCH_WORD)%></p> --%>
-<!-- 					<input class='px-2 w-100 task-data-value' type='text' disabled -->
-<%-- 						value='<%=taskDetails.getProductSwd()%>'> --%>
-<!-- 				</div> -->
-<!-- 				<div class='inputContainer'> -->
-<%-- 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.OPEN_QUANTITY)%></p> --%>
-<!-- 					<input class='px-2 w-100 task-data-value' type='text' disabled -->
-<%-- 						value='<%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity())%> <%=taskDetails.getStockUnit()%>'> --%>
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 			<div class='col-6 pt-3'> -->
-<!-- 				<div class='inputContainer'> -->
-<%-- 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.NAME)%></p> --%>
-<!-- 					<input class='px-2 w-100 task-data-value' type='text' disabled -->
-<%-- 						value='<%=taskDetails.getProductDescription()%>'> --%>
-<!-- 				</div> -->
-<!-- 				<div class='inputContainer'> -->
-<%-- 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.NAME)%> 2</p> --%>
-<!-- 					<input class='px-2 w-100 task-data-value' type='text' disabled -->
-<%-- 						value='<%=taskDetails.getProductDescription2()%>'> --%>
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 		<div class='row data-row mx-3 my-0'> -->
-<!-- 			<div class='col-6 pt-3 px-3'> -->
-<!-- 				<div class='inputContainer'> -->
-<%-- 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.OPERATION_NUMEBER)%></p> --%>
-<!-- 					<input class='px-2 w-100 task-data-value' type='text' disabled -->
-<%-- 						value='<%=taskDetails.getOperationIdNo()%>'> --%>
-<!-- 				</div> -->
-<!-- 				<div class='inputContainer'> -->
-<%-- 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.SEARCH_WORD)%></p> --%>
-<!-- 					<input class='px-2 w-100 task-data-value' type='text' disabled -->
-<%-- 						value='<%=taskDetails.getOperationSwd()%>'> --%>
-<!-- 				</div> -->
-<!-- 				<div class='inputContainer'> -->
-<%-- 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.NAME)%></p> --%>
-<!-- 					<input class='px-2 w-100 task-data-value' type='text' disabled -->
-<%-- 						value='<%=taskDetails.getOperationDescription()%>'> --%>
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 			<div class='col-6 pt-3 px-3'> -->
-<!-- 				<div class='inputContainer'> -->
-<%-- 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.EXECUTION_NO)%></p> --%>
-<!-- 					<input class='px-2 w-100 task-data-value' type='text' disabled -->
-<%-- 						value='<%=of.formatWithoutTrailingZeroes(taskDetails.getNumberOfExecutions())%>'> --%>
-<!-- 				</div> -->
-<!-- 				<div class='inputContainer'> -->
-<%-- 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.SETTING_TIME)%></p> --%>
-<!-- 					<input class='px-2 w-100 task-data-value' type='text' disabled -->
-<%-- 						value='<%=of.formatWithoutTrailingZeroes(taskDetails.getSetupTime())%> <%=taskDetails.getSetupTimeUnit()%>'> --%>
-<!-- 				</div> -->
-<!-- 				<div class='inputContainer'> -->
-<%-- 					<p class='task-data-label'><%=of.getWord(DictionaryEntry.TIME_FOR_PCS)%></p> --%>
-<!-- 					<input class='px-2 w-100 task-data-value' -->
-<%-- 						type='text' disabled  value='<%=of.formatWithoutTrailingZeroes(taskDetails.getUnitTime())%> <%=taskDetails.getUnitTimeUnit()%>'/> --%>
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 		<div class='row data-row px-3'> -->
-<!-- 			<div class='col-12'> -->
-<!-- 				<div class='inputContainer px-3'> -->
-<%-- 					<p class='mb-0 pt-1 task-data-label'><%=of.getWord(DictionaryEntry.PRODUCTION_INFO)%></p> --%>
-<%-- 					<textarea class='px-2 w-100 task-data-value' disabled><%=taskDetails.getOperationReservationText()%></textarea> --%>
-<!-- 				</div> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
+      </div>
+			<div class="modal-body pt-1">
+				<div class="form-group row">
+				<label for="example-search-input"  class="col-12 col-form-label confirm-title"><%=of.getWord(DictionaryEntry.SUBMIT_CONFIRMATION_TEXT)%></label>
+				</div>					  
+				<div class="form-group row">
+				    <label for="confirm-openqty" class="col-sm-4 col-form-label"><%=of.getWord(DictionaryEntry.OPEN_QUANTITY)%></label>
+				    <div class="col-sm-8">
+				      <input type="text" disabled class="form-control" id="confirm-openqty" value="<%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity())%>" placeholder="0">
+				    </div>
+				  </div>  
+				  <div class="form-group row">
+				    <label for="confirm-finished" class="col-sm-4 col-form-label"><%=of.getWord(DictionaryEntry.FINISHED_QUANTITY)%></label>
+				    <div class="col-sm-8">
+				      <input type="text" disabled class="form-control" id="confirm-finished" placeholder="0">
+				    </div>
+				  </div>  
+				  <div class="form-group row">
+				    <label for="confirm-scrap" class="col-sm-4 col-form-label"><%=of.getWord(DictionaryEntry.SCRAP_QUANTITY)%></label>
+				    <div class="col-sm-8">
+				      <input type="text" disabled class="form-control" id="confirm-scrap" placeholder="0">
+				    </div>
+				  </div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary w-25" data-dismiss="modal" onclick='CloseConfirmationModal()'><%=of.getWord(DictionaryEntry.NO)%></button>
+				<button type="button" class="btn btn-primary w-25"
+				onclick='SubmitTask()'><%=of.getWord(DictionaryEntry.YES)%></button>
+			</div>
+		</div>
+  </div>
 </div>

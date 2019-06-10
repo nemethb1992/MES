@@ -68,9 +68,8 @@ public class DataSheet extends HttpServlet {
 				
 			}
 		}
-		String encodedURL = response.encodeRedirectURL("/DMES/Views/Operator/DataSheet/DataSheet.jsp");
-		response.sendRedirect(encodedURL);
-//		getServletContext().getRequestDispatcher("/Views/Operator/DataSheet/DataSheet.jsp").forward(request, response);
+		String encodedURL = response.encodeRedirectURL("/Views/Operator/DataSheet/DataSheet.jsp");
+		getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
 
 	}
 

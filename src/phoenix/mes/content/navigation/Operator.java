@@ -16,7 +16,6 @@ public class Operator extends HttpServlet {
 		HttpSession session = request.getSession();		
 		session.setAttribute("Layout", "operator");
 		String url =  response.encodeRedirectURL("/Views/Login/loginPage.jsp");
-//		getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
 		getServletContext().getRequestDispatcher(url).forward(request, response);
 	}
 
