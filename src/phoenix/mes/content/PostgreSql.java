@@ -41,6 +41,7 @@ public class PostgreSql {
     public void dbClose()
     {
         try {
+        	if(conn != null)
             conn.close();
         } catch (SQLException e) {
         	System.out.println(e);

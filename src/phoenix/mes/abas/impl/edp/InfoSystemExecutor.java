@@ -43,6 +43,13 @@ public class InfoSystemExecutor {
 		}
 
 		/**
+		 * @return Egyetlen mezőérték sem szerepel a gyűjteményben?
+		 */
+		public boolean isEmpty() {
+			return fieldValues.isEmpty();
+		}
+
+		/**
 		 * @param fieldName A mező neve.
 		 * @return A megadott mező tartalma szöveges formában.
 		 */
@@ -159,7 +166,7 @@ public class InfoSystemExecutor {
 	 * @return A lekérdezendő fejrészmezők értékei az infosystem lefuttatása után.
 	 */
 	public FieldValues getResultHeaderFields(EDPEditFieldList inputFieldValues, EDPSession edpSession) {
-		return (new FieldValues(executeQuery(inputFieldValues, edpSession).getHeaderFields()));
+		return new FieldValues(executeQuery(inputFieldValues, edpSession).getHeaderFields());
 	}
 
 }

@@ -95,7 +95,7 @@ public abstract class TaskImpl<C> implements Task {
 	 */
 	@Override
 	public Id getWorkSlipId() {
-		return (new IdImpl(workSlipId));
+		return new IdImpl(workSlipId);
 	}
 
 	/* (non-Javadoc)

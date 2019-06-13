@@ -80,6 +80,15 @@ try {
 							id="example-search-input">
 					</div>
 				</div>
+<!-- 				<div class="form-group row"> -->
+<!-- 					<label for="example-search-input" class="col-3 col-form-label">Hiba típusa</label> -->
+<!-- 					<div class="col-9"> -->
+<!--     					<select onmousedown="listEvent(this)" id="failure-list" name="failure-list" class="custom-select d-block w-100 failure-list" required> -->
+<!--         					<option value="">Válasszon...</option> -->
+<!--         					<option class='opt' value=''></option> -->
+<!--     					</select> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
 				<div class="form-group row">
 					<label for="example-search-input" class="col-12 col-form-label"><%=of.getWord(DictionaryEntry.DISRUPTION_REASON)%></label>
 					<div class="col-12">
@@ -152,7 +161,7 @@ try {
 				<div class="form-group row">
 				    <label for="confirm-openqty" class="col-sm-4 col-form-label"><%=of.getWord(DictionaryEntry.OPEN_QUANTITY)%></label>
 				    <div class="col-sm-8">
-				      <input type="text" disabled class="form-control" id="confirm-openqty" value="<%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity())%>" placeholder="0">
+				      <input type="text" disabled class="form-control" id="confirm-openqty" value="<%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingConfirmationQuantity())%>" placeholder="0">
 				    </div>
 				  </div>  
 				  <div class="form-group row">

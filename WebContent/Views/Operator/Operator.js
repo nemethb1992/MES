@@ -371,7 +371,7 @@ function RefreshTask()
 			$('.refresh-form').submit();
 		}else
 		{
-			getView(layoutState);
+			location.reload();
 		}
 	}
 	});
@@ -399,11 +399,10 @@ function SubmitTask()
 		success: function (response) {
 			if(response == "submit_done")
 			{
-				getView();
-				setTimer();
+				location.reload();
 			}else if(response == "error"){
 				alert("Lejelentesi hiba!");
-			}else if(response == "finish"){
+			}else if(response == "exit"){
 				$(".refresh-form").submit();
 			}
 		}

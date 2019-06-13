@@ -270,10 +270,10 @@ public abstract class TaskDetails<C> implements Task.Details {
 			return BigDecimal.ONE;
 		}
 		if (UnitTime.HUR == timeUnit) {
-			return (new BigDecimal(3600));
+			return new BigDecimal(3600);
 		}
 		if (UnitTime.DAY == timeUnit) {
-			return (new BigDecimal(86400));
+			return new BigDecimal(86400);
 		}
 		throw new RuntimeException("Ismeretlen időegység: " + timeUnit);
 	}

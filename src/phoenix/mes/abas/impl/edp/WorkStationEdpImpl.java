@@ -104,7 +104,7 @@ public class WorkStationEdpImpl extends WorkStationImpl {
 		 * @param workCenterId Az Abas-beli gépcsoport azonosítója.
 		 * @param workStationNumber A munkaállomás sorszáma.
 		 * @param edpSession Az EDP-munkamenet.
-		 * @return A munkaállomás első beütemezett és végrehajtható gyártási feladata (null, ha a munkaállomás feladatlistája üres).
+		 * @return A munkaállomásra elsőként beütemezett és végrehajtható gyártási feladat (null, ha a munkaállomás feladatlistája üres).
 		 */
 		public Task getFirstScheduledTask(String workCenterId, int workStationNumber, EDPSession edpSession) {
 			try {

@@ -92,7 +92,7 @@ public abstract class WorkStationImpl implements WorkStation {
 	 */
 	@Override
 	public Id getWorkCenterId() {
-		return (new IdImpl(workCenterId));
+		return new IdImpl(workCenterId);
 	}
 
 	/* (non-Javadoc)

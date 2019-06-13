@@ -69,10 +69,18 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 * A lekérdezés végrehajtása.
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 		 * @param edpSession Az EDP-munkamenet.
-		 * @return A lekérdezendő (fejrész)mezők értékei.
+		 * @return A lekérdezendő (fejrész)mezők értékei (null, ha a munkalap nem létezik).
 		 */
 		public FieldValues getResultFields(String workSlipId, EDPSession edpSession) {
-			return getResultHeaderFields(getFilterCriteria(getCriteriaFieldNames(), workSlipId), edpSession);
+			final EDPEditFieldList filterCriteria = getFilterCriteria(getCriteriaFieldNames(), workSlipId);
+			try {
+				return getResultHeaderFields(filterCriteria, edpSession);
+			} catch (EDPRuntimeException e) {
+				if (e.getCause() instanceof CantChangeFieldValException) {
+					return null;
+				}
+				throw e;
+			}
 		}
 
 		/**
@@ -393,10 +401,19 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		/**
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 		 * @param edpSession Az EDP-munkamenet.
-		 * @return A szűrésnek megfelelő gyártásilista-sorok adatait tartalmazó objektumok listája.
+		 * @return A szűrésnek megfelelő gyártásilista-sorok adatait tartalmazó objektumok listája (null, ha a munkalap nem létezik).
 		 */
 		public List<R> getRows(String workSlipId, EDPSession edpSession) {
-			final List<R> rows = getRows(TaskDataQuery.getFilterCriteria(criteriaFieldNames, workSlipId), edpSession);
+			final EDPEditFieldList filterCriteria = TaskDataQuery.getFilterCriteria(criteriaFieldNames, workSlipId);
+			final List<R> rows;
+			try {
+				rows = getRows(filterCriteria, edpSession);
+			} catch (EDPRuntimeException e) {
+				if (e.getCause() instanceof CantChangeFieldValException) {
+					return null;
+				}
+				throw e;
+			}
 			return (1 < rows.size() ? Collections.unmodifiableList(rows) : rows);
 		}
 
@@ -761,26 +778,30 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		protected BasicData newBasicData() {
 			final InfoSystemExecutor.FieldValues result = BasicDataQuery.EXECUTOR.getResultFields(workSlipId, abasConnectionObject);
 			final BasicData basicData = new BasicData();
-			basicData.workSlipNo = result.getString(BasicDataQuery.Field.ID_NO);
-			basicData.startDate = result.getAbasDate(BasicDataQuery.Field.START_DATE);
-			basicData.status = getStatus(result);
-			basicData.productIdNo = result.getString(BasicDataQuery.Field.PRODUCT_ID_NO);
-			basicData.productSwd = result.getString(BasicDataQuery.Field.PRODUCT_SWD);
-			basicData.productDescription = result.getString(BasicDataQuery.Field.PRODUCT_DESCRIPTION);
-			basicData.productDescription2 = result.getString(BasicDataQuery.Field.PRODUCT_DESCRIPTION2);
-			basicData.usage = result.getString(BasicDataQuery.Field.USAGE);
-			basicData.setupTime = calculateGrossTime(result.getBigDecimal(BasicDataQuery.Field.SETUP_TIME),
-					result.getAbasUnit(BasicDataQuery.Field.SETUP_TIME_UNIT),
-					result.getBigDecimal(BasicDataQuery.Field.SETUP_TIME_SEC));
-			basicData.setupTimeUnit = result.getString(BasicDataQuery.Field.SETUP_TIME_UNIT_NAME);
-			basicData.unitTime = calculateGrossTime(result.getBigDecimal(BasicDataQuery.Field.UNIT_TIME),
-					result.getAbasUnit(BasicDataQuery.Field.UNIT_TIME_UNIT),
-					result.getBigDecimal(BasicDataQuery.Field.UNIT_TIME_SEC));
-			basicData.unitTimeUnit = result.getString(BasicDataQuery.Field.UNIT_TIME_UNIT_NAME);
-			basicData.numberOfExecutions = result.getBigDecimal(BasicDataQuery.Field.NUMBER_OF_EXECUTIONS);
-			basicData.outstandingQuantity = result.getBigDecimal(BasicDataQuery.Field.OUTSTANDING_QUANTITY);
-			basicData.stockUnit = result.getString(BasicDataQuery.Field.STOCK_UNIT_NAME);
-			basicData.calculatedProductionTime = result.getBigDecimal(BasicDataQuery.Field.CALCULATED_PRODUCTION_TIME);
+			if (null == result) {
+				basicData.status = Status.DELETED;
+			} else {
+				basicData.workSlipNo = result.getString(BasicDataQuery.Field.ID_NO);
+				basicData.startDate = result.getAbasDate(BasicDataQuery.Field.START_DATE);
+				basicData.status = getStatus(result);
+				basicData.productIdNo = result.getString(BasicDataQuery.Field.PRODUCT_ID_NO);
+				basicData.productSwd = result.getString(BasicDataQuery.Field.PRODUCT_SWD);
+				basicData.productDescription = result.getString(BasicDataQuery.Field.PRODUCT_DESCRIPTION);
+				basicData.productDescription2 = result.getString(BasicDataQuery.Field.PRODUCT_DESCRIPTION2);
+				basicData.usage = result.getString(BasicDataQuery.Field.USAGE);
+				basicData.setupTime = calculateGrossTime(result.getBigDecimal(BasicDataQuery.Field.SETUP_TIME),
+						result.getAbasUnit(BasicDataQuery.Field.SETUP_TIME_UNIT),
+						result.getBigDecimal(BasicDataQuery.Field.SETUP_TIME_SEC));
+				basicData.setupTimeUnit = result.getString(BasicDataQuery.Field.SETUP_TIME_UNIT_NAME);
+				basicData.unitTime = calculateGrossTime(result.getBigDecimal(BasicDataQuery.Field.UNIT_TIME),
+						result.getAbasUnit(BasicDataQuery.Field.UNIT_TIME_UNIT),
+						result.getBigDecimal(BasicDataQuery.Field.UNIT_TIME_SEC));
+				basicData.unitTimeUnit = result.getString(BasicDataQuery.Field.UNIT_TIME_UNIT_NAME);
+				basicData.numberOfExecutions = result.getBigDecimal(BasicDataQuery.Field.NUMBER_OF_EXECUTIONS);
+				basicData.outstandingQuantity = result.getBigDecimal(BasicDataQuery.Field.OUTSTANDING_QUANTITY);
+				basicData.stockUnit = result.getString(BasicDataQuery.Field.STOCK_UNIT_NAME);
+				basicData.calculatedProductionTime = result.getBigDecimal(BasicDataQuery.Field.CALCULATED_PRODUCTION_TIME);
+			}
 			return basicData;
 		}
 
@@ -789,6 +810,9 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 * @return A gyártási feladat végrehajtási állapota.
 		 */
 		protected Status getStatus(InfoSystemExecutor.FieldValues basicDataQueryResult) {
+			if (0 <= BigDecimal.ZERO.compareTo(basicDataQueryResult.getBigDecimal(BasicDataQuery.Field.OUTSTANDING_QUANTITY))) {
+				return Status.DONE;
+			}
 			if (basicDataQueryResult.getBoolean(BasicDataQuery.Field.INTERRUPTED_TASK)) {
 				return Status.INTERRUPTED;
 			}
@@ -808,11 +832,13 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		protected OperationData newOperationData() {
 			final InfoSystemExecutor.FieldValues result = OperationQuery.EXECUTOR.getResultFields(workSlipId, abasConnectionObject);
 			final OperationData operationData = new OperationData();
-			operationData.operationIdNo = result.getString(OperationQuery.Field.ID_NO);
-			operationData.operationSwd = result.getString(OperationQuery.Field.SWD);
-			operationData.operationDescription = result.getString(OperationQuery.Field.DESCRIPTION);
-			operationData.operationReservationText = result.getString(OperationQuery.Field.ITEM_TEXT);
-			operationData.outstandingConfirmationQuantity = result.getBigDecimal(OperationQuery.Field.OUTSTANDING_CONFIRMATION_QUANTITY);
+			if (null != result) {
+				operationData.operationIdNo = result.getString(OperationQuery.Field.ID_NO);
+				operationData.operationSwd = result.getString(OperationQuery.Field.SWD);
+				operationData.operationDescription = result.getString(OperationQuery.Field.DESCRIPTION);
+				operationData.operationReservationText = result.getString(OperationQuery.Field.ITEM_TEXT);
+				operationData.outstandingConfirmationQuantity = result.getBigDecimal(OperationQuery.Field.OUTSTANDING_CONFIRMATION_QUANTITY);
+			}
 			return operationData;
 		}
 
@@ -823,8 +849,10 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		protected SalesOrderData newSalesOrderData() {
 			final InfoSystemExecutor.FieldValues result = SalesOrderQuery.EXECUTOR.getResultFields(workSlipId, abasConnectionObject);
 			final SalesOrderData salesOrderData = new SalesOrderData();
-			salesOrderData.salesOrderItemText = result.getString(SalesOrderQuery.Field.ITEM_TEXT);
-			salesOrderData.salesOrderItemText2 = result.getString(SalesOrderQuery.Field.ITEM_TEXT2);
+			if (null != result) {
+				salesOrderData.salesOrderItemText = result.getString(SalesOrderQuery.Field.ITEM_TEXT);
+				salesOrderData.salesOrderItemText2 = result.getString(SalesOrderQuery.Field.ITEM_TEXT2);
+			}
 			return salesOrderData;
 		}
 
@@ -897,7 +925,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 */
 	@Override
 	protected DetailsEdpImpl newDetails(AbasConnection<EDPSession> abasConnection) {
-		return (new DetailsEdpImpl(abasConnection));
+		return new DetailsEdpImpl(abasConnection);
 	}
 
 	/* (non-Javadoc)
@@ -951,6 +979,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		TaskManager.postCompletionConfirmation(workSlipId, yield, scrapQuantity, abasConnection);
 		if (null != details) {
 			details.clearBasicDataCache();
+			details.clearOperationDataCache();
 		}
 	}
 

@@ -16,6 +16,7 @@ import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasFunctionException;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
@@ -51,28 +52,20 @@ public class Submit extends HttpServlet {
 			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), build.isTest());
 			Task task = (Task)session.getAttribute("Task");
+			Task.Details taskDetails = task.getDetails(abasConnection);
 			if(task != null)
 			{
-				Task.Details taskDetails = task.getDetails(abasConnection);
-				if(finishedQty.intValue() <= taskDetails.getOutstandingConfirmationQuantity().intValue()){
-					task.postCompletionConfirmation(finishedQty, scrapQty, abasConnection);
-					taskDetails.clearCache();
-					responseStr = "submit_done";
-					if(finishedQty.intValue() >= taskDetails.getOutstandingQuantity().intValue()) {
-						session.removeAttribute("Task");
-						responseStr = "finish";
-					}
+				task.postCompletionConfirmation(finishedQty, scrapQty, abasConnection);
+				responseStr = "submit_done";
+				if(taskDetails.getStatus() == Status.DONE || taskDetails.getStatus() == Status.INTERRUPTED) {
+					session.removeAttribute("Task");
+					responseStr = "exit";
 				}
-				else {
-					taskDetails.clearCache();
-					session.setAttribute("Task", task);
-				}
-
 			}
 		}catch(LoginException | SQLException | AbasFunctionException e)
 		{
 			responseStr = "error";
-			System.out.println(e);
+    		System.out.println(e.getMessage());
 		}finally
 		{
 			try {

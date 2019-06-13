@@ -44,7 +44,7 @@ public class DataSheet extends HttpServlet {
 			doGet(request,response);
 			return;
 		}	
-
+		String page = "/Views/Operator/OpenTask/OpenTask.jsp";
 		AbasConnection<EDPSession> abasConnection = null;
 		try {
 			HttpSession session = request.getSession();
@@ -52,7 +52,10 @@ public class DataSheet extends HttpServlet {
 			User user = new User(request);
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(),user.getPassword(), of.getLocale(), ab.isTest());	
 			Task task = AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(),ws.getNumber(), abasConnection).startFirstScheduledTask(abasConnection);
-			session.setAttribute("Task", task);
+			if(task != null) {
+				session.setAttribute("Task", task);
+				page = "/Views/Operator/DataSheet/DataSheet.jsp";
+			}
 		}catch(LoginException e)
 		{
 		} catch (SQLException e) {
@@ -68,7 +71,7 @@ public class DataSheet extends HttpServlet {
 				
 			}
 		}
-		String encodedURL = response.encodeRedirectURL("/Views/Operator/DataSheet/DataSheet.jsp");
+		String encodedURL = response.encodeRedirectURL(page);
 		getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
 
 	}

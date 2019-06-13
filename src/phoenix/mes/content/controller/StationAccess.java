@@ -57,7 +57,7 @@ public class StationAccess {
 		if(sqlBindEngine("select count(workstation_group) as count from group_relation where user_id = "+userid+"", "count",pg)) {
 			group_access = pg.sqlQuery("select workstation_group from group_relation where user_id = "+userid+"", "workstation_group");
 		}
-			pg.dbClose();
+		pg.dbClose();
 		
     	return null;
     }
@@ -69,7 +69,7 @@ public class StationAccess {
 		if(pc_access != null)
 		for (Map<String, String> row : pc_access) {
 				List<Map<String, String>> result = pg.sqlQuery("SELECT csoport FROM stations WHERE pc = "+row.get("pc_id")+"","csoport");
-
+				pg.dbClose();
 				for (Map<String, String> groupRow : result) {
 					if(!OutputFormatter.isExists(list,groupRow.get("csoport"))){
 						list.add(groupRow.get("csoport"));
@@ -79,7 +79,7 @@ public class StationAccess {
 		if(section_access != null)
 		for (Map<String, String> row : section_access) {
 			List<Map<String, String>> result = pg.sqlQuery("SELECT csoport FROM stations WHERE section = "+row.get("section_id")+"","csoport");
-
+			pg.dbClose();
 			for (Map<String, String> groupRow : result) {
 
 				if(!OutputFormatter.isExists(list,groupRow.get("csoport"))){
@@ -90,15 +90,12 @@ public class StationAccess {
 		if(group_access != null)
 		for (Map<String, String> row : group_access) {
 			List<Map<String, String>> result = pg.sqlQuery("SELECT csoport FROM stations WHERE csoport = '"+row.get("workstation_group")+"'","csoport");
-
+			pg.dbClose();
 			for (Map<String, String> groupRow : result) {
 				if(!OutputFormatter.isExists(list,groupRow.get("csoport"))){
 					list.add(groupRow.get("csoport"));
 				}
 			}
-		}
-		if(group_access != null && section_access != null && pc_access != null) {
-			pg.dbClose();
 		}
     	return list;
     }
@@ -108,6 +105,7 @@ public class StationAccess {
     protected boolean sqlBindEngine(String command, String field, PostgreSql pg) throws SQLException
     {
 		String result = pg.sqlSingleQuery(command,field);
+		pg.dbClose();
 		if("".equals(result) || "0".equals(result)){
 			return false;
 		}

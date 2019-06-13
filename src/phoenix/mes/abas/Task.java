@@ -166,7 +166,9 @@ public interface Task extends Serializable {
 		WAITING,
 		IN_PROGRESS,
 		INTERRUPTED,
-		SUSPENDED;
+		SUSPENDED,
+		DONE,
+		DELETED;
 
 	}
 

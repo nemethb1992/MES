@@ -32,6 +32,8 @@ public class AbasAuthentication {
     			session.setAttribute("displayname", abasConnection.getUserDisplayName());
     		}
     	} catch (Throwable t) {
+    		
+    		System.out.println(t.getMessage());
 			return false;
 
     	}finally

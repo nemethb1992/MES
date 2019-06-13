@@ -29,7 +29,7 @@ public class EdpObjectFactory implements AbasObjectFactory<EDPSession> {
 	 */
 	@Override
 	public EdpConnection openAbasConnection(String userName, String password, Locale locale, boolean testSystem) throws LoginException {
-		return (new EdpConnection(new DefaultEDPCredentialsProvider(userName, password), locale, testSystem));
+		return new EdpConnection(new DefaultEDPCredentialsProvider(userName, password), locale, testSystem);
 	}
 
 	/* (non-Javadoc)
@@ -37,7 +37,7 @@ public class EdpObjectFactory implements AbasObjectFactory<EDPSession> {
 	 */
 	@Override
 	public WorkStation createWorkStation(String workCenterIdNo, int workStationNumber, AbasConnection<EDPSession> abasConnection) {
-		return (new WorkStationEdpImpl(workCenterIdNo, workStationNumber, abasConnection.getConnectionObject()));
+		return new WorkStationEdpImpl(workCenterIdNo, workStationNumber, abasConnection.getConnectionObject());
 	}
 
 	/* (non-Javadoc)
@@ -45,7 +45,7 @@ public class EdpObjectFactory implements AbasObjectFactory<EDPSession> {
 	 */
 	@Override
 	public TaskEdpImpl createTask(Id workSlipId, AbasConnection<EDPSession> abasConnection) {
-		return (new TaskEdpImpl(workSlipId, abasConnection.getConnectionObject()));
+		return new TaskEdpImpl(workSlipId, abasConnection.getConnectionObject());
 	}
 
 }
