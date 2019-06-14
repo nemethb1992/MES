@@ -30,14 +30,15 @@ public class Enter extends HttpServlet {
 		AppBuild ab = new AppBuild(request);
 		ab.setSessionListener();
 		
-		String username = request.getParameter("username");
+		String username = request.getParameter("username").toLowerCase();
 		String paramStation = request.getParameter("workstation");
+		String shownPassword = request.getParameter("shownPassword");
 		String pass = request.getParameter("password");
 		String layout = (String)session.getAttribute("Layout");
 
 		try {
 			boolean abasAccess = new AbasAuthentication().bind(username, pass, request);
-			if(!abasAccess)
+			if(!abasAccess || "".equals(shownPassword))
 			{
 				throw new LoginException();
 			}

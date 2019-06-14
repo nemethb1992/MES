@@ -80,16 +80,19 @@ public class User {
     
     public boolean isModifier(String username) throws SQLException
     {
-    	return sqlBindEngine("SELECT users.username FROM users WHERE username='"+username+"' AND modifier = 1", "username");
+    	return sqlBindEngine("SELECT users.username FROM users WHERE LOWER(username)=LOWER('"+username+"') AND modifier = 1", "username");
     }
     
     public boolean isExists(String... username) throws SQLException
     {
-    	return sqlBindEngine("SELECT users.username FROM users WHERE username='"+(username.length != 0 ? username[0] : this.username)+"'", "username");
+    	return sqlBindEngine("SELECT users.username FROM users WHERE LOWER(username)=LOWER('"+(username.length != 0 ? username[0] : this.username)+"')", "username");
     }
     
 	protected void registration(String... username) throws SQLException 
 	{
+		if("null".equals(username)||"".equals(username)) {
+			return;
+		}
 		PostgreSql pg = new PostgreSql(new AppBuild(request).isTest());
 		pg.sqlUpdate("INSERT INTO users (username) VALUES('"+(username.length != 0 ? username[0] : this.username)+"')");
 		pg.dbClose();
@@ -97,10 +100,10 @@ public class User {
 	
 	protected int setUserId() throws SQLException {
 		PostgreSql pg = new PostgreSql(new AppBuild(request).isTest());
-		String id = pg.sqlSingleQuery("SELECT users.id FROM users WHERE username='"+this.username+"'", "id");
+		String id = pg.sqlSingleQuery("SELECT users.id FROM users WHERE LOWER(username)=LOWER('"+this.username+"')", "id");
 		if(id == "") {
 			registration();
-			id = pg.sqlSingleQuery("SELECT users.id FROM users WHERE username='"+this.username+"'", "id");
+			id = pg.sqlSingleQuery("SELECT users.id FROM users WHERE LOWER(username)=LOWER('"+this.username+"')", "id");
 		}
 		pg.dbClose();
 		return Integer.parseInt(id);
@@ -108,12 +111,12 @@ public class User {
     
     protected boolean setAccessValue(String... username) throws SQLException
     { 
-    	return sqlBindEngine("SELECT users.username FROM users WHERE username='"+(username.length != 0 ? username[0] : this.username)+"' AND access = 1", "username");
+    	return sqlBindEngine("SELECT users.username FROM users WHERE LOWER(username)=LOWER('"+(username.length != 0 ? username[0] : this.username)+"') AND access = 1", "username");
     }
     
     protected boolean setModifier() throws SQLException
     {
-    	return sqlBindEngine("SELECT users.username FROM users WHERE username='"+username+"' AND modifier = 1", "username");
+    	return sqlBindEngine("SELECT users.username FROM users WHERE LOWER(username)=LOWER('"+username+"') AND modifier = 1", "username");
     }
     
     protected StationAccess setWorkstationAccess() throws SQLException{

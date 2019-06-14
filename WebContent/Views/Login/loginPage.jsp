@@ -72,10 +72,11 @@ else{
 						placeholder='<%=outputFormatter.getWord(DictionaryEntry.USER_NAME)%>'
 						id='inp_username' type='text' value=''>
 				</div>
-				<div class="form-group">
-					<input class='inp_login px-3 w-100'
+				<div class="form-group"> 
+					<input type="text" hidden value="" name='password' id="hidden"/>
+					<input  class='inp_login px-3 w-100 pass'
 						placeholder='<%=outputFormatter.getWord(DictionaryEntry.PASSWORD)%>'
-						name='password' id='inp_pass' type='password' value=''>
+						name="shownPassword" id='inp_pass' type='text' value=''>
 				</div>
 				<div class="form-group">
 					<input class='inp_login w-100' id='inp_enterbutton' type='submit'
