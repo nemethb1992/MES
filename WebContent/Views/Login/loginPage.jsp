@@ -7,8 +7,7 @@ if(info == null)
 }
 
 String workstationName = request.getParameter("workstation");
-
-if(workstationName != null)
+if(null != workstationName && !"null".equals(workstationName))
 {
 	workstationName = workstationName.replace("!"," - ");
 }
@@ -17,7 +16,6 @@ else{
 		workstationName = (String)request.getSession().getAttribute("operatingWorkstation");
 		workstationName = workstationName.replace("!"," - ");
 	}catch(Exception e){
-		workstationName = "";
 	}
 }
 
@@ -68,13 +66,13 @@ else{
 					<p id='login_title' class='w-100 w-100 h5 mt-3'><%=outputFormatter.getWord(DictionaryEntry.LOGIN)%></p>
 				</div>
 				<div class="form-group mb-0">
-					<input name='username' class='inp_login px-3 w-100'
+					<input name='username' autocomplete="off" class='inp_login px-3 w-100'
 						placeholder='<%=outputFormatter.getWord(DictionaryEntry.USER_NAME)%>'
 						id='inp_username' type='text' value=''>
 				</div>
 				<div class="form-group"> 
 					<input type="text" hidden value="" name='password' id="hidden"/>
-					<input  class='inp_login px-3 w-100 pass'
+					<input autocomplete="off" class='inp_login px-3 w-100 pass'
 						placeholder='<%=outputFormatter.getWord(DictionaryEntry.PASSWORD)%>'
 						name="shownPassword" id='inp_pass' type='text' value=''>
 				</div>
