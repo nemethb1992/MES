@@ -12,7 +12,7 @@ var delay = 800;
 var hideAll = setTimeout(function() {}, 0);
 
 function passwordConfigure(){
-	  $("#inp_pass").on("input", function() {
+	  $("#inp_pass").bind("paste keyup input", function() {
 		    var offset = $("#inp_pass").val().length - $("#hidden").val().length;
 		    if (offset > 0) $("#hidden").val($("#hidden").val() + $("#inp_pass").val().substring($("#hidden").val().length, $("#hidden").val().length + offset));
 		    else if (offset < 0) $("#hidden").val($("#hidden").val().substring(0, $("#hidden").val().length + offset));

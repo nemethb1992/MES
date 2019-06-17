@@ -57,7 +57,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 function loadingAnimation(element, name)
 {
-//$(element).append("<div class='"+name+" loaderCycle position-absolute'></div>");
+	$("."+name).remove();
 $(element).append("<div class='"+name+" position-absolute' id='circle'><div class='loader'><div class='loader'><div class='loader'><div class='loader'></div></div></div></div></div>");	
 
 }

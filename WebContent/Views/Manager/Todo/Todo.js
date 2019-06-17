@@ -92,7 +92,7 @@ function ListLoader()
 		date = null;
 	}
 	$( ".dndf1" ).empty();
-	loadingAnimation('.sortContDiv_ListHolder', 'proba');
+	loadingAnimation('.sortContDiv_ListHolder', 'loading');
 	$.post({
 		url:  '/'+path+'/AbasTaskList',
 		data: {
@@ -100,7 +100,7 @@ function ListLoader()
 		},
 		success: function (respond) {
 
-			loadingAnimationStop('proba');
+			loadingAnimationStop('loading');
 			$( ".dndf1" ).empty();
 			$( ".dndf1" ).append(respond);
 		},
