@@ -17,6 +17,8 @@ import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.Log;
+import phoenix.mes.content.Log.FaliureType;
+import phoenix.mes.content.controller.OperatingWorkstation;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
 
@@ -56,7 +58,16 @@ public class InterruptTask extends HttpServlet {
 			task.interrupt(abasConnection);
 			new Log(request).insert(task.getDetails(abasConnection).getWorkSlipNo(),request.getParameter("errorText"));
 		} catch (LoginException | SQLException | AbasFunctionException e) {
-			System.out.println(e);
+			System.out.println(e);			
+			try {
+				OperatingWorkstation ws = new OperatingWorkstation(request);
+				String workstation = "";
+				if(ws != null) {
+					workstation = ws.group + " - " + ws.no;
+				}
+				new Log(request).logFaliure(FaliureType.TASK_INTERRUP, e.getMessage(),workstation);
+			}catch(SQLException exc) {
+			}
 		}finally
 		{
 			try {

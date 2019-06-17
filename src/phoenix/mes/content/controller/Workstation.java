@@ -11,8 +11,8 @@ public class Workstation {
 	
 	protected HttpServletRequest request;
 	protected String name;
-	protected String group;
-	protected int no;
+	public String group;
+	public int no;
 	
 	public String getGroup() {
 		return group;

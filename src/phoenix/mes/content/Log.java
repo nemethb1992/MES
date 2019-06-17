@@ -10,7 +10,45 @@ import phoenix.mes.content.controller.OperatingWorkstation;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.controller.Workstation;
 
+
 public class Log {
+	
+	public enum FaliureType{
+		APPLICATION(0,1,"Alkalmazás hiba"),
+		LOGIN(0,2,"Bejelentkezési hiba"),
+		TASK_SUBMIT(1,3,"Lejelentési hiba"),
+		TASK_LIST_LOAD(2,4,"Feladatlista betöltési hiba"),
+		TASK_LIST_NAVIGATION(2,5,"Feladatlista navigálási hiba"),
+		TASK_DATA_LOAD(1,6,"Feladat betöltési hiba"),
+		TASK_INTERRUP(1,7,"Feladat megszakítási hiba"),
+		TASK_REFRESH(1,8,"Feladat frissítési hiba"),
+		TASK_RESUME(1,9,"Feladat folytatási hiba"),
+		TASK_SUSPEND(1,10,"Feladat felfüggesztési hiba"),
+		WORKSTATION_LIST_LOAD(2,11,"Állomáslista betöltési hiba");
+		
+		private final int region;
+		private final int type;
+		private final String title;
+		
+		FaliureType(int region, int type, String title){
+			this.region = region;
+			this.type = type;
+			this.title = title;
+		}
+		 
+		public int getRegion() {
+			return this.region;
+		}
+		 
+		public int getNo() {
+			return this.type;
+		}
+		 
+		public String getTitle() {
+			return this.title;
+		}
+
+	}
 	
 	HttpServletRequest request;
 	protected Workstation ws;
@@ -38,5 +76,32 @@ public class Log {
 		String result = pg.sqlSingleQuery("SELECT text FROM log WHERE workslipno='"+workSplitNo+"' ORDER BY date DESC","text");
 		pg.dbClose();
 		return result;
+	}
+	public boolean logFaliure(FaliureType faliureType, String description, String... workstation) {
+		try {
+			String date = new SimpleDateFormat("yyyy.MM.dd hh.mm").format(Calendar.getInstance().getTime());
+			PostgreSql pg = new PostgreSql(new AppBuild(request).isTest());
+			String command = "INSERT INTO application_log (workstation,title,type_id,description,date,region) VALUES('"+(workstation.length>0 ? workstation[0] : "")+"','"+getFaliureTitle(faliureType)+"',"+getFaliureNo(faliureType)+",'"+description+"','"+date+"',"+getFaliureRegion(faliureType)+")";
+			pg.sqlUpdate(command);
+			pg.dbClose();
+		}catch(Exception e) {
+			
+		}
+		return true;
+	}
+	
+	public int getFaliureRegion(FaliureType faliureType)
+	{
+		return faliureType.getRegion();
+	}
+	
+	public int getFaliureNo(FaliureType faliureType)
+	{
+		return faliureType.getNo();
+	}
+	
+	public String getFaliureTitle(FaliureType faliureType)
+	{
+		return faliureType.getTitle();
 	}
 }

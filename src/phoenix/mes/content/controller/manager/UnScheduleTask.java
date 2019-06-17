@@ -17,6 +17,8 @@ import phoenix.mes.abas.AbasFunctionException;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.Log;
+import phoenix.mes.content.Log.FaliureType;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
 
@@ -53,7 +55,10 @@ public class UnScheduleTask extends HttpServlet {
 			Task task = AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(workSlipId), abasConnection);
 			task.unSchedule(abasConnection);
 		} catch (LoginException | SQLException | AbasFunctionException e) {
-
+    		try {
+				new Log(request).logFaliure(FaliureType.TASK_LIST_NAVIGATION, e.getMessage());
+			}catch(SQLException exc) {
+			}
 		}
 	}
 

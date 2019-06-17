@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.Log;
 import phoenix.mes.content.PostgreSql;
+import phoenix.mes.content.Log.FaliureType;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
 import phoenix.mes.content.utility.RenderView;
@@ -137,6 +139,10 @@ public class WorkstationControl extends HttpServlet {
 		request.setAttribute("Data", finalDataList);
 		
 		} catch (SQLException e) {
+    		try {
+				new Log(request).logFaliure(FaliureType.WORKSTATION_LIST_LOAD, e.getMessage());
+			}catch(SQLException exc) {
+			}
 			return;
 		}
 		

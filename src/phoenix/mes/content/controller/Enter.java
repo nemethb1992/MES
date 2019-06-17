@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.Log;
+import phoenix.mes.content.Log.FaliureType;
 import phoenix.mes.content.utility.OutputFormatter;
 import phoenix.mes.content.utility.OutputFormatter.DictionaryEntry;
 
@@ -34,7 +36,9 @@ public class Enter extends HttpServlet {
 		String paramStation = request.getParameter("workstation");
 		String shownPassword = request.getParameter("shownPassword");
 		String pass = request.getParameter("password");
-		String layout = (String)session.getAttribute("Layout");
+		String layout = (String)session.getAttribute("Layout");	
+		OutputFormatter outputFormatter = (OutputFormatter)session.getAttribute("OutputFormatter") != null ? (OutputFormatter)session.getAttribute("OutputFormatter") : OutputFormatter.forRequest(request);
+		
 
 		try {
 			boolean abasAccess = new AbasAuthentication().bind(username, pass, request);
@@ -66,7 +70,7 @@ public class Enter extends HttpServlet {
 
 								
 								if ("".equals(ws.getOperatingStation())) {
-									request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.EMPTY_STATION_ID));
+									request.setAttribute("infoTitle", outputFormatter.getWord(DictionaryEntry.EMPTY_STATION_ID));
 									nextPage = "/Views/Login/loginPage.jsp";
 									break;
 								}
@@ -75,7 +79,7 @@ public class Enter extends HttpServlet {
 					}
 					if("".equals(ws.getOperatingStation())) {
 
-						request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.EMPTY_STATION_ID));
+						request.setAttribute("infoTitle", outputFormatter.getWord(DictionaryEntry.EMPTY_STATION_ID));
 						nextPage = "/Views/Login/loginPage.jsp";
 					}
 				}
@@ -89,13 +93,16 @@ public class Enter extends HttpServlet {
 				nextPage = "/Views/Manager/Main/Main.jsp";
 			}
 			else if("manager".equals(layout) && !user.isModifier()) {
-				request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.LOGIN_FAILED));
+				request.setAttribute("infoTitle", outputFormatter.getWord(DictionaryEntry.LOGIN_FAILED));
 				nextPage = "/Views/Login/loginPage.jsp";
 			}
 			getServletContext().getRequestDispatcher(null == nextPage ? "/Views/WelcomePage/WelcomePage.jsp" : nextPage).forward(request, response);
 		} catch ( NamingException | LoginException | SQLException t) {
-			System.out.println(t);
-			request.setAttribute("infoTitle", ((OutputFormatter)session.getAttribute("OutputFormatter")).getWord(DictionaryEntry.LOGIN_FAILED));
+			try {
+				new Log(request).logFaliure(FaliureType.LOGIN, t.getMessage());
+			}catch(SQLException e) {
+			}
+			request.setAttribute("infoTitle", outputFormatter.getWord(DictionaryEntry.LOGIN_FAILED));
 			getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
 		}
 	}

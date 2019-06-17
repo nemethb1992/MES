@@ -15,6 +15,8 @@ import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.Log;
+import phoenix.mes.content.Log.FaliureType;
 import phoenix.mes.content.controller.SelectedWorkstation;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
@@ -51,6 +53,10 @@ public class AbasTaskList extends HttpServlet {
 			view = RenderView.render("/Views/Manager/Todo/Partial/AbasList.jsp", request, response);
 		}catch(LoginException | SQLException e){
 			System.out.println(e);
+			try {
+				new Log(request).logFaliure(FaliureType.TASK_LIST_LOAD, e.getMessage());
+			}catch(SQLException exc) {
+			}
 		}finally
 		{			
 			abasConnection.close();

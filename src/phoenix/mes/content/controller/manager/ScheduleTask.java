@@ -18,6 +18,8 @@ import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.Log;
+import phoenix.mes.content.Log.FaliureType;
 import phoenix.mes.content.controller.SelectedWorkstation;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
@@ -59,7 +61,11 @@ public class ScheduleTask extends HttpServlet {
         	}
 		}catch(LoginException | SQLException | AbasFunctionException e)
     	{
-    		System.out.println(e);
+    		System.out.println(e);			
+    		try {
+				new Log(request).logFaliure(FaliureType.TASK_LIST_NAVIGATION, e.getMessage());
+			}catch(SQLException exc) {
+			}
     	}finally
     	{
     		try

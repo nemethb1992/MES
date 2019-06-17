@@ -18,6 +18,9 @@ import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.abas.Task.Status;
 import phoenix.mes.content.AppBuild;
+import phoenix.mes.content.Log;
+import phoenix.mes.content.Log.FaliureType;
+import phoenix.mes.content.controller.OperatingWorkstation;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
 
@@ -65,7 +68,16 @@ public class Submit extends HttpServlet {
 		}catch(LoginException | SQLException | AbasFunctionException e)
 		{
 			responseStr = "error";
-    		System.out.println(e.getMessage());
+    		System.out.println(e.getMessage());			
+    		try {
+				OperatingWorkstation ws = new OperatingWorkstation(request);
+				String workstation = "";
+				if(ws != null) {
+					workstation = ws.group + " - " + ws.no;
+				}
+				new Log(request).logFaliure(FaliureType.TASK_SUBMIT, e.getMessage(),workstation);
+			}catch(SQLException exc) {
+			}
 		}finally
 		{
 			try {
