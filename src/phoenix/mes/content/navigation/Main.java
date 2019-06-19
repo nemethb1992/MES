@@ -15,11 +15,13 @@ public class Main extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-  		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
+		String encodedURL = response.encodeRedirectURL("/Views/WelcomePage/WelcomePage.jsp");
+		getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher("/Views/Manager/Main/Main.jsp").forward(request, response);
+		String encodedURL = response.encodeRedirectURL("/Views/Manager/Main/Main.jsp");
+		getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
 	}
 
 }

@@ -14,7 +14,8 @@ public class OpenTask extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-  		getServletContext().getRequestDispatcher("/Logout").forward(request, response);
+		String encodedURL = response.encodeRedirectURL("/Logout");
+		getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -94,7 +94,7 @@ function ListLoader()
 	$( ".dndf1" ).empty();
 	loadingAnimation('.sortContDiv_ListHolder', 'loading');
 	$.post({
-		url:  '/'+path+'/AbasTaskList',
+		url:  '<%=response.encodeURL(request.getContextPath()+"/AbasTaskList")%>',
 		data: {
 			date: date
 		},
@@ -117,7 +117,7 @@ function workstationListLoader()
 		$( ".dndf2" ).empty();
 		$( ".ts_sumTime" ).val("0:00:00");
 		$.post({
-			url:  '/'+path+'/StationTaskList',
+			url:  '<%=response.encodeURL(request.getContextPath()+"/StationTaskList")%>',
 			success: function (response) {
 
 				$( ".dndf2" ).empty();
@@ -135,7 +135,7 @@ function SessionStoreStation(station)
 {
 	// Tárolja a kiválasztott állomás nevét egy session változóban.
 	$.post({
-		url:  '/'+path+'/StoreSelectedStation',
+		url:  '<%=response.encodeURL(request.getContextPath()+"/StoreSelectedStation")%>',
 		data: {
 			station: station,
 		},
@@ -178,7 +178,7 @@ function WorkStationItemCollect()
 function FirstStationList()
 {
 	$.post({
-		url:  '/'+path+'/WorkstationControl',
+		url:  '<%=response.encodeURL(request.getContextPath()+"/WorkstationControl")%>',
 		success: function (view) {
 			$( ".dndf1" ).empty();
 			$( ".dndf2" ).empty();
@@ -195,7 +195,7 @@ function StationItemSelect(item, level)
 	var value = $(item).attr("value");
 	console.log(value);
 	$.post({
-		url:  '/'+path+'/WorkstationControl',
+		url:  '<%=response.encodeURL(request.getContextPath()+"/WorkstationControl")%>',
 		data: {
 			element: value,
 			level: level
@@ -272,7 +272,7 @@ function MoveTaskDown(item)
 function MoveTask(current,targeted,next = null){
 	
 	$.post({
-		url:  '/'+path+'/ScheduleTask',
+		url:  '<%=response.encodeURL(request.getContextPath()+"/ScheduleTask")%>',
 		data: {
 			currentId: current,
 			targetId: targeted,
@@ -287,7 +287,7 @@ function MoveTask(current,targeted,next = null){
 function AddTask(current,targeted){
 	
 	$.post({
-		url:  '/'+path+'/ScheduleTask',
+		url:  '<%=response.encodeURL(request.getContextPath()+"/ScheduleTask")%>',
 		data: {
 			currentId: current,
 			targetId: targeted
@@ -302,7 +302,7 @@ function RemoveFromStation(item)
 {
 	var value = $(item).parents('.dnd-container').children('.workSlipId').val();
 	$.post({
-		url:  '/'+path+'/UnScheduleTask',
+		url:  '<%=response.encodeURL(request.getContextPath()+"/UnScheduleTask")%>',
 		data: {
 			workSlipId: value,
 		},

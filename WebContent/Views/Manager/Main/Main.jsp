@@ -15,7 +15,7 @@
 				<div
 					class='top-nav-button px-0 d-block col col-nav-logout h-100 float-right'>
 					<form method='POST' class='h-100'
-						action='${pageContext.request.contextPath}/Logout'>
+						action='<%=response.encodeURL(request.getContextPath() + "/Logout") %>'>
 						<input class='btn_logout-gray' type='submit' value='' />
 					</form>
 				</div>
@@ -26,7 +26,7 @@
 			<div id='TM_Select_container_activity' class='select-panel container px-4'>
 			<div class='row align-items-center h-100'>
 				<div class='col-12 col-md-6'>
-					<form id='btn_select_1' method='POST' action='${pageContext.request.contextPath}/Todo'
+					<form id='btn_select_1' method='POST' action='<%=response.encodeURL(request.getContextPath() + "/Todo") %>'
 						class='activity-button light-shadow btnstyle mx-auto '>
 						<img
 							src='${pageContext.request.contextPath}/Public/icons/btn_wscontrol.svg'
@@ -44,7 +44,7 @@
 <!-- 					</form> -->
 <!-- 				</div> -->
 				<div class='col-12 col-md-6'>
-					<form id='btn_select_3' method='POST' action='${pageContext.request.contextPath}/Settings'
+					<form id='btn_select_3' method='POST' action='<%=response.encodeURL(request.getContextPath() + "/Settings") %>'
 						class='activity-button light-shadow btnstyle mx-auto '>
 						<img
 							src='${pageContext.request.contextPath}/Public/icons/btn_settings.svg'

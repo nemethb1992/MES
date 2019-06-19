@@ -13,9 +13,10 @@ public class Manager extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		HttpSession session = request.getSession();
+		HttpSession session = request.getSession(true);
 		session.setAttribute("Layout", "manager");
-		getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);
+		String encodedURL = response.encodeRedirectURL("/Views/Login/loginPage.jsp");
+		getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

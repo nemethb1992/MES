@@ -18,7 +18,8 @@ public class Settings extends HttpServlet {
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-  		getServletContext().getRequestDispatcher("/Views/WelcomePage/WelcomePage.jsp").forward(request, response);
+		String encodedURL = response.encodeRedirectURL("/Views/WelcomePage/WelcomePage.jsp");
+		getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -28,7 +29,8 @@ public class Settings extends HttpServlet {
 			request.setAttribute("groupList", new PostgreSql(true).sqlQuery("SELECT csoport FROM stations GROUP BY csoport","csoport"));
 		} catch (SQLException e) {
 		}		
-		getServletContext().getRequestDispatcher("/Views/Manager/Settings/Settings.jsp").forward(request, response);
+		String encodedURL = response.encodeRedirectURL("/Views/Manager/Settings/Settings.jsp");
+		getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
 	}
 
 }

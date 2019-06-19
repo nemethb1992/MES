@@ -2,7 +2,6 @@ package phoenix.mes.content.navigation;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,9 +18,11 @@ public class Logout extends HttpServlet {
 		
  	    HttpSession session = request.getSession();
  	    String layout = (String)session.getAttribute("Layout");
+		String encodedURL = response.encodeRedirectURL((layout == null || "".equals(layout) ? "/" : (layout == "manager" ? "/Manager" : "/Operator")));
+		getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
 // 	    session.invalidate();
- 	    RequestDispatcher rd = request.getRequestDispatcher((layout == null || "".equals(layout) ? "/" : (layout == "manager" ? "/Manager" : "/Operator")));
- 	    rd.forward(request, response);
+// 	    RequestDispatcher rd = request.getRequestDispatcher((layout == null || "".equals(layout) ? "/" : (layout == "manager" ? "/Manager" : "/Operator")));
+// 	    rd.forward(request, response);
 //  		getServletContext().getRequestDispatcher((layout == null || "".equals(layout) ? "/" : (layout == "manager" ? "/Manager" : "/Operator"))).forward(request, response);
 	}
 

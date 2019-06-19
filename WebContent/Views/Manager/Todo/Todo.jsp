@@ -63,14 +63,14 @@ try {
 				</div>
 				<div class='top-nav-button h-100 px-0 col-nav-back float-right'>
 					<form method='POST' class='h-100'
-						action='${pageContext.request.contextPath}/Main'>
+						action='<%=response.encodeURL(request.getContextPath() + "/Main") %>'>
 						<input class='btn_back-gray' type='submit' value='' />
 					</form>
 				</div>
 				<div
 					class='top-nav-button px-0 d-block col col-nav-logout h-100 float-right'>
 					<form method='POST' class='h-100'
-						action='${pageContext.request.contextPath}/Logout'>
+						action='<%=response.encodeURL(request.getContextPath() + "/Logout") %>'>
 						<input class='btn_logout-gray' type='submit' value='' />
 					</form>
 				</div>
