@@ -143,7 +143,7 @@ public class EdpQueryExecutor {
 
 	/**
 	 * EDP-lekérdezés megnyitása.
-	 * @param edpSession Az EDP-lekérdezés.
+	 * @param edpSession Az EDP-munkamenet.
 	 * @return A megnyitott EDP-lekérdezés.
 	 */
 	protected EDPQuery createQuery(EDPSession edpSession) {

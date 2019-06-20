@@ -21,14 +21,29 @@ import java.util.Locale;
 
 import javax.security.auth.login.LoginException;
 
-import phoenix.mes.abas.AbasConnection;
+import phoenix.mes.abas.GenericAbasConnection;
 
 /**
  * Alaposztály EDP-alapú Abas-kapcsolatokat reprezentáló osztályok készítéséhez.
  * @param <C> Az Abas-kapcsolat típusa.
  * @author szizo
  */
-public abstract class EdpBasedAbasConnection<C> implements AbasConnection<C> {
+public abstract class EdpBasedAbasConnection<C> implements GenericAbasConnection<C> {
+
+	/**
+	 * Az Abas-adatbázisszerver neve.
+	 */
+	public static final String SERVER_NAME = "abasdb.pmhu.local";
+
+	/**
+	 * Az éles Abas-mandant elérési útja.
+	 */
+	public static final String PRODUCTION_CLIENT_PATH = "/Abas/pmk";
+
+	/**
+	 * Az Abas-tesztmandant elérési útja.
+	 */
+	public static final String TEST_CLIENT_PATH = "/Abas/dpmk";
 
 	/**
 	 * EDP-munkamenet megnyitása a megadott bejelentkezési adatokkal és beállításokkal.
@@ -104,7 +119,7 @@ public abstract class EdpBasedAbasConnection<C> implements AbasConnection<C> {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.AbasConnection#getOperatingLanguageCode()
+	 * @see phoenix.mes.abas.GenericAbasConnection#getOperatingLanguageCode()
 	 */
 	@Override
 	public String getOperatingLanguageCode() {

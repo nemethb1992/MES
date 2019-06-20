@@ -14,17 +14,18 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
-import phoenix.mes.abas.AbasConnection;
-import phoenix.mes.abas.Task;
-import phoenix.mes.abas.Task.BomElement;
-import phoenix.mes.abas.Task.Operation;
-import phoenix.mes.abas.Task.Status;
+import phoenix.mes.abas.GenericAbasConnection;
+import phoenix.mes.abas.GenericTask;
+import phoenix.mes.abas.GenericTask.BomElement;
+import phoenix.mes.abas.GenericTask.Operation;
+import phoenix.mes.abas.GenericTask.Status;
 
 /**
  * Alaposztály gyártási feladatok részleteit leíró osztályok implementálásához.
+ * @param <C> Az Abas-kapcsolat típusa.
  * @author szizo
  */
-public abstract class TaskDetails<C> implements Task.Details {
+public abstract class TaskDetails<C> extends LanguageDependentCache<C> implements GenericTask.Details {
 
 	/**
 	 * Konstans, hatékonysági okból gyorsítótárazva.
@@ -176,11 +177,6 @@ public abstract class TaskDetails<C> implements Task.Details {
 	protected C abasConnectionObject;
 
 	/**
-	 * Az aktuális kezelőnyelv kódja.
-	 */
-	protected String operatingLanguageCode;
-
-	/**
 	 * A gyártási feladat alapadatait gyorsítótárazó objektum.
 	 */
 	protected BasicData basicData = null;
@@ -208,42 +204,45 @@ public abstract class TaskDetails<C> implements Task.Details {
 	/**
 	 * Konstruktor.
 	 * @param abasConnection Az Abas-kapcsolat.
-	 * @param abasConnectionType Az Abas-kapcsolat osztálya.
 	 */
-	protected TaskDetails(AbasConnection<C> abasConnection, Class<C> abasConnectionType) {
-		setAbasConnectionObject(abasConnection, abasConnectionType);
+	protected TaskDetails(GenericAbasConnection<C> abasConnection) {
+		super(abasConnection);
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.impl.LanguageDependentCache#resetCacheIfLanguageDoesNotMatch(phoenix.mes.abas.GenericAbasConnection)
+	 */
+	@Override
+	protected void resetCacheIfLanguageDoesNotMatch(GenericAbasConnection<C> abasConnection) {
+		super.resetCacheIfLanguageDoesNotMatch(abasConnection);
+		abasConnectionObject = abasConnection.getConnectionObject();
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.impl.LanguageDependentCache#resetCache(phoenix.mes.abas.GenericAbasConnection)
+	 */
+	@Override
+	protected void resetCache(GenericAbasConnection<C> abasConnection) {
+		resetCache();
 	}
 
 	/**
-	 * @param abasConnection Az Abas-kapcsolat.
-	 * @param abasConnectionType Az Abas-kapcsolat osztálya.
+	 * A gyorsítótár alaphelyzetbe hozása.
 	 */
-	protected void setAbasConnectionObject(AbasConnection<C> abasConnection, Class<C> abasConnectionType) {
-		final String newOperatingLanguageCode = abasConnection.getOperatingLanguageCode();
-		if (newOperatingLanguageCode.equals(operatingLanguageCode)) {
-			clearStatusCache();
-		} else {
-			if (null != operatingLanguageCode) {
-				clearBasicDataCache();
-				clearOperationDataCache();
-				clearBomCache();
-				clearFollowingOperationsCache();
-			}
-			operatingLanguageCode = newOperatingLanguageCode;
-		}
-		final C newAbasConnectionObject = AbasConnection.getConnectionObject(abasConnection, abasConnectionType);
-		if (!newAbasConnectionObject.equals(abasConnectionObject)) {
-			abasConnectionObject = newAbasConnectionObject;
-		}
+	protected void resetCache() {
+		clearBasicDataCache();
+		clearOperationDataCache();
+		clearBomCache();
+		clearFollowingOperationsCache();
 	}
 
-	/**
-	 * A gyártási feladat végrehajtási állapotát tartalmazó gyorsítótár kiürítése.
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericTask.Details#clearCache()
 	 */
-	public void clearStatusCache() {
-		if (null != basicData) {
-			basicData.status = null;
-		}
+	@Override
+	public void clearCache() {
+		resetCache();
+		clearSalesOrderDataCache();
 	}
 
 	/**
@@ -345,7 +344,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getWorkSlipNo()
+	 * @see phoenix.mes.abas.GenericTask.Details#getWorkSlipNo()
 	 */
 	@Override
 	public String getWorkSlipNo() {
@@ -353,7 +352,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getStartDate()
+	 * @see phoenix.mes.abas.GenericTask.Details#getStartDate()
 	 */
 	@Override
 	public AbasDate getStartDate() {
@@ -361,7 +360,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getStatus()
+	 * @see phoenix.mes.abas.GenericTask.Details#getStatus()
 	 */
 	@Override
 	public Status getStatus() {
@@ -373,8 +372,17 @@ public abstract class TaskDetails<C> implements Task.Details {
 		return status;
 	}
 
+	/**
+	 * A gyártási feladat végrehajtási állapotát tartalmazó gyorsítótár kiürítése.
+	 */
+	public void clearStatusCache() {
+		if (null != basicData) {
+			basicData.status = null;
+		}
+	}
+
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getProductIdNo()
+	 * @see phoenix.mes.abas.GenericTask.Details#getProductIdNo()
 	 */
 	@Override
 	public String getProductIdNo() {
@@ -382,7 +390,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getProductSwd()
+	 * @see phoenix.mes.abas.GenericTask.Details#getProductSwd()
 	 */
 	@Override
 	public String getProductSwd() {
@@ -390,7 +398,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getProductDescription()
+	 * @see phoenix.mes.abas.GenericTask.Details#getProductDescription()
 	 */
 	@Override
 	public String getProductDescription() {
@@ -398,7 +406,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getProductDescription2()
+	 * @see phoenix.mes.abas.GenericTask.Details#getProductDescription2()
 	 */
 	@Override
 	public String getProductDescription2() {
@@ -406,7 +414,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getUsage()
+	 * @see phoenix.mes.abas.GenericTask.Details#getUsage()
 	 */
 	@Override
 	public String getUsage() {
@@ -414,7 +422,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getSalesOrderItemText()
+	 * @see phoenix.mes.abas.GenericTask.Details#getSalesOrderItemText()
 	 */
 	@Override
 	public String getSalesOrderItemText() {
@@ -422,7 +430,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getSalesOrderItemText2()
+	 * @see phoenix.mes.abas.GenericTask.Details#getSalesOrderItemText2()
 	 */
 	@Override
 	public String getSalesOrderItemText2() {
@@ -430,7 +438,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getOperationIdNo()
+	 * @see phoenix.mes.abas.GenericTask.Details#getOperationIdNo()
 	 */
 	@Override
 	public String getOperationIdNo() {
@@ -438,7 +446,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getOperationSwd()
+	 * @see phoenix.mes.abas.GenericTask.Details#getOperationSwd()
 	 */
 	@Override
 	public String getOperationSwd() {
@@ -446,7 +454,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getOperationDescription()
+	 * @see phoenix.mes.abas.GenericTask.Details#getOperationDescription()
 	 */
 	@Override
 	public String getOperationDescription() {
@@ -454,7 +462,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getOperationReservationText()
+	 * @see phoenix.mes.abas.GenericTask.Details#getOperationReservationText()
 	 */
 	@Override
 	public String getOperationReservationText() {
@@ -462,7 +470,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getSetupTime()
+	 * @see phoenix.mes.abas.GenericTask.Details#getSetupTime()
 	 */
 	@Override
 	public BigDecimal getSetupTime() {
@@ -470,7 +478,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getSetupTimeUnit()
+	 * @see phoenix.mes.abas.GenericTask.Details#getSetupTimeUnit()
 	 */
 	@Override
 	public String getSetupTimeUnit() {
@@ -478,7 +486,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getUnitTime()
+	 * @see phoenix.mes.abas.GenericTask.Details#getUnitTime()
 	 */
 	@Override
 	public BigDecimal getUnitTime() {
@@ -486,7 +494,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getUnitTimeUnit()
+	 * @see phoenix.mes.abas.GenericTask.Details#getUnitTimeUnit()
 	 */
 	@Override
 	public String getUnitTimeUnit() {
@@ -494,7 +502,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getNumberOfExecutions()
+	 * @see phoenix.mes.abas.GenericTask.Details#getNumberOfExecutions()
 	 */
 	@Override
 	public BigDecimal getNumberOfExecutions() {
@@ -502,7 +510,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getOutstandingQuantity()
+	 * @see phoenix.mes.abas.GenericTask.Details#getOutstandingQuantity()
 	 */
 	@Override
 	public BigDecimal getOutstandingQuantity() {
@@ -510,7 +518,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getOutstandingConfirmationQuantity()
+	 * @see phoenix.mes.abas.GenericTask.Details#getOutstandingConfirmationQuantity()
 	 */
 	@Override
 	public BigDecimal getOutstandingConfirmationQuantity() {
@@ -518,7 +526,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getStockUnit()
+	 * @see phoenix.mes.abas.GenericTask.Details#getStockUnit()
 	 */
 	@Override
 	public String getStockUnit() {
@@ -526,7 +534,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getCalculatedProductionTime()
+	 * @see phoenix.mes.abas.GenericTask.Details#getCalculatedProductionTime()
 	 */
 	@Override
 	public BigDecimal getCalculatedProductionTime() {
@@ -534,7 +542,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getBom()
+	 * @see phoenix.mes.abas.GenericTask.Details#getBom()
 	 */
 	@Override
 	public List<BomElement> getBom() {
@@ -557,7 +565,7 @@ public abstract class TaskDetails<C> implements Task.Details {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#getFollowingOperations()
+	 * @see phoenix.mes.abas.GenericTask.Details#getFollowingOperations()
 	 */
 	@Override
 	public List<Operation> getFollowingOperations() {
@@ -577,18 +585,6 @@ public abstract class TaskDetails<C> implements Task.Details {
 	 */
 	public void clearFollowingOperationsCache() {
 		followingOperations = null;
-	}
-
-	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Details#clearCache()
-	 */
-	@Override
-	public void clearCache() {
-		clearBasicDataCache();
-		clearOperationDataCache();
-		clearSalesOrderDataCache();
-		clearBomCache();
-		clearFollowingOperationsCache();
 	}
 
 }

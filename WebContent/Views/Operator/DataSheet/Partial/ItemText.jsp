@@ -1,6 +1,7 @@
 <%@page import="phoenix.mes.content.utility.OutputFormatter"%>
 <%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
 <%@page import="phoenix.mes.abas.Task"%>
+<%@page import="phoenix.mes.abas.GenericTask.Details"%>
 <%
 	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 	Task.Details td = (Task.Details)request.getAttribute("taskDetails");

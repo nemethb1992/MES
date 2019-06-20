@@ -12,15 +12,14 @@ import de.abas.erp.common.type.IdImpl;
 import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
 
-import phoenix.mes.abas.AbasConnection;
-import phoenix.mes.abas.Task;
+import phoenix.mes.abas.GenericTask;
 
 /**
  * Alaposztály a gyártási feladat típus implementálásához.
  * @param <C> Az Abas-kapcsolat típusa.
  * @author szizo
  */
-public abstract class TaskImpl<C> implements Task {
+public abstract class TaskImpl<C> extends CachedDetailsContainer<C, TaskDetails<C>> implements GenericTask<C> {
 
 	/**
 	 * Az objektum kiírhatóságához kell.
@@ -33,23 +32,11 @@ public abstract class TaskImpl<C> implements Task {
 	protected final String workSlipId;
 
 	/**
-	 * Az Abas-kapcsolat osztálya.
-	 */
-	protected final Class<C> abasConnectionType;
-
-	/**
-	 * A gyártási feladat részleteit leíró objektum.
-	 */
-	protected transient TaskDetails<C> details = null;
-
-	/**
 	 * Konstruktor.
 	 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
-	 * @param abasConnectionType Az Abas-kapcsolat osztálya.
 	 */
-	protected TaskImpl(String workSlipId, Class<C> abasConnectionType) {
+	protected TaskImpl(String workSlipId) {
 		this.workSlipId = workSlipId;
-		this.abasConnectionType = abasConnectionType;
 	}
 
 	/* (non-Javadoc)
@@ -57,10 +44,10 @@ public abstract class TaskImpl<C> implements Task {
 	 */
 	@Override
 	public boolean equals(Object object) {
-		if (!(object instanceof Task)) {
+		if (!(object instanceof GenericTask)) {
 			return false;
 		}
-		final Id otherWorkSlipId = ((Task)object).getWorkSlipId();
+		final Id otherWorkSlipId = ((GenericTask<?>)object).getWorkSlipId();
 		return null != otherWorkSlipId && workSlipId.equals(otherWorkSlipId.toString());
 	}
 
@@ -91,32 +78,11 @@ public abstract class TaskImpl<C> implements Task {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task#getWorkSlipId()
+	 * @see phoenix.mes.abas.GenericTask#getWorkSlipId()
 	 */
 	@Override
 	public Id getWorkSlipId() {
 		return new IdImpl(workSlipId);
 	}
-
-	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task#getDetails(phoenix.mes.abas.AbasConnection)
-	 */
-	@Override
-	public TaskDetails<C> getDetails(AbasConnection<?> abasConnection) {
-		@SuppressWarnings("unchecked")
-		final AbasConnection<C> abasConnectionC = (AbasConnection<C>)abasConnection;
-		if (null == details) {
-			details = newDetails(abasConnectionC);
-		} else {
-			details.setAbasConnectionObject(abasConnectionC, abasConnectionType);
-		}
-		return details;
-	}
-
-	/**
-	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A gyártási feladat részleteit leíró, újonnan létrehozott objektum.
-	 */
-	protected abstract TaskDetails<C> newDetails(AbasConnection<C> abasConnection);
 
 }

@@ -7,11 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import phoenix.mes.abas.AbasConnection;
+import phoenix.mes.abas.AbasObjectFactory;
+import phoenix.mes.abas.WorkCenter;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.Log;
 import phoenix.mes.content.PostgreSql;
@@ -33,6 +37,7 @@ public class WorkstationControl extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
 		try {
+		AppBuild ab = new AppBuild(request);
 		User user = new User(request);
 		OutputFormatter of = (OutputFormatter)request.getSession().getAttribute("OutputFormatter");
 
@@ -84,12 +89,16 @@ public class WorkstationControl extends HttpServlet {
 //			command = "SELECT stations.csoport FROM stations LEFT JOIN profitcenter ON stations.pc = profitcenter.id LEFT JOIN group_relation ON group_relation.workstation_group = stations.csoport WHERE "+(null != value ? "long = '"+value+"' AND":"")+" group_relation.user_id = "+user.getUserid()+" GROUP BY stations.csoport";
 //			list = pg.sqlQuery(command, field);
 			pg.dbClose();
-			
+
+			AbasConnection abasConnection = null;
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(),user.getPassword(), of.getLocale(), ab.isTest());	
+			WorkCenter.Details workcenter = null;
 			for (Map<String, String> row : (List<Map<String,String>>)dataList) {
+				workcenter = AbasObjectFactory.INSTANCE.createWorkCenter(row.get("divValue"), abasConnection).getDetails(abasConnection);
 				final Map<String, String> valueRow = new HashMap<>((int)Math.ceil((3) / 0.75));
 				valueRow.put("divValue", row.get("divValue"));
 				valueRow.put("method", method);
-				valueRow.put("inputValue", row.get("divValue"));
+				valueRow.put("inputValue", workcenter.getDescription());
 				finalDataList.add(valueRow);
 			}
 			break;
@@ -103,6 +112,8 @@ public class WorkstationControl extends HttpServlet {
 			+ "' ORDER BY sorszam ASC";
 			dataList = pg.sqlQuery(command, group, number, name);
 			pg.dbClose();
+
+			
 			
 			for (Map<String, String> row : (List<Map<String,String>>)dataList) {
 				final Map<String, String> valueRow = new HashMap<>((int)Math.ceil((3) / 0.75));
@@ -138,7 +149,7 @@ public class WorkstationControl extends HttpServlet {
 		
 		request.setAttribute("Data", finalDataList);
 		
-		} catch (SQLException e) {
+		} catch (SQLException | LoginException e) {
     		try {
 				new Log(request).logFaliure(FaliureType.WORKSTATION_LIST_LOAD, e.getMessage());
 			}catch(SQLException exc) {

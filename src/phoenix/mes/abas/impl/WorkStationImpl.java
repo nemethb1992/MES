@@ -12,13 +12,14 @@ import de.abas.erp.common.type.IdImpl;
 import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
 
-import phoenix.mes.abas.WorkStation;
+import phoenix.mes.abas.GenericWorkStation;
 
 /**
  * Alaposztály a gyártási munkaállomás típus implementálásához.
+ * @param <C> Az Abas-kapcsolat típusa.
  * @author szizo
  */
-public abstract class WorkStationImpl implements WorkStation {
+public abstract class WorkStationImpl<C> implements GenericWorkStation<C> {
 
 	/**
 	 * Az objektum kiírhatóságához kell.
@@ -41,6 +42,9 @@ public abstract class WorkStationImpl implements WorkStation {
 	 * @param workStationNumber A munkaállomás (egyedi) sorszáma a gépcsoporton belül.
 	 */
 	protected WorkStationImpl(String workCenterId, int workStationNumber) {
+		if (1 > workStationNumber) {
+			throw new IllegalArgumentException("Érvénytelen gépszám: " + workStationNumber);
+		}
 		this.workCenterId = workCenterId;
 		this.number = workStationNumber;
 	}
@@ -50,10 +54,10 @@ public abstract class WorkStationImpl implements WorkStation {
 	 */
 	@Override
 	public boolean equals(Object object) {
-		if (!(object instanceof WorkStation)) {
+		if (!(object instanceof GenericWorkStation)) {
 			return false;
 		}
-		final WorkStation other = (WorkStation)object;
+		final GenericWorkStation<?> other = (GenericWorkStation<?>)object;
 		final Id otherWorkCenterId = other.getWorkCenterId();
 		return (number == other.getNumber() && null != otherWorkCenterId && workCenterId.equals(otherWorkCenterId.toString()));
 	}
@@ -88,7 +92,7 @@ public abstract class WorkStationImpl implements WorkStation {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.WorkStation#getWorkCenterId()
+	 * @see phoenix.mes.abas.GenericWorkStation#getWorkCenterId()
 	 */
 	@Override
 	public Id getWorkCenterId() {
@@ -96,7 +100,7 @@ public abstract class WorkStationImpl implements WorkStation {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.WorkStation#getNumber()
+	 * @see phoenix.mes.abas.GenericWorkStation#getNumber()
 	 */
 	@Override
 	public int getNumber() {

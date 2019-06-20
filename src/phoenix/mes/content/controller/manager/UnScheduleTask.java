@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.IdImpl;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasFunctionException;
@@ -47,7 +46,7 @@ public class UnScheduleTask extends HttpServlet {
 		HttpSession session = request.getSession();
 		String workSlipId = request.getParameter("workSlipId");
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-		AbasConnection<EDPSession> abasConnection = null;
+		AbasConnection abasConnection = null;
 
 		try {   
 			User user = new User(request);     	

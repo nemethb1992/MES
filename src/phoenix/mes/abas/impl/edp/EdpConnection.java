@@ -8,6 +8,7 @@ package phoenix.mes.abas.impl.edp;
 
 import de.abas.ceks.jedp.CantChangeSettingException;
 import de.abas.ceks.jedp.CantReadSettingException;
+import de.abas.ceks.jedp.DefaultEDPCredentialsProvider;
 import de.abas.ceks.jedp.EDPCredentialsProvider;
 import de.abas.ceks.jedp.EDPFTextMode;
 import de.abas.ceks.jedp.EDPLockBehavior;
@@ -21,7 +22,6 @@ import java.util.Locale;
 
 import javax.security.auth.login.LoginException;
 
-import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.impl.EdpBasedAbasConnection;
 
 /**
@@ -54,18 +54,6 @@ public class EdpConnection extends EdpBasedAbasConnection<EDPSession> {
 	 * Az EDP-munkamenet.
 	 */
 	protected final EDPSession edpSession;
-
-	/**
-	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return Az Abas-kapcsolathoz tartozó EDP-munkamenet.
-	 * @throws IllegalArgumentException Ha az Abas-kapcsolat nem EDP-típusú.
-	 */
-	public static EDPSession getEdpSession(AbasConnection<?> abasConnection) {
-		if (abasConnection instanceof EdpConnection) {
-			return ((EdpConnection)abasConnection).getConnectionObject();
-		}
-		throw new IllegalArgumentException("Nem megfelelő Abas-kapcsolattípus: " + abasConnection.getClass().getName());
-	}
 
 	/**
 	 * EDP-munkamenet megnyitása a megadott bejelentkezési adatokkal.
@@ -114,12 +102,24 @@ public class EdpConnection extends EdpBasedAbasConnection<EDPSession> {
 
 	/**
 	 * Konstruktor.
+	 * @param userName A tartományi felhasználónév.
+	 * @param password A jelszó.
+	 * @param locale A kezelőnyelv (null esetén a felhasználónál beállított kezelőnyelvvel történik a kapcsolódás).
+	 * @param testSystem A bejelentkezés a tesztrendszerbe történik?
+	 * @throws LoginException Ha hiba történt a bejelentkezés során.
+	 */
+	protected EdpConnection(String userName, String password, Locale locale, boolean testSystem) throws LoginException {
+		this(new DefaultEDPCredentialsProvider(userName, password), locale, testSystem);
+	}
+
+	/**
+	 * Konstruktor.
 	 * @param edpCredentialsProvider A bejelentkezési adatok.
 	 * @param locale A kezelőnyelv (null esetén a felhasználónál beállított kezelőnyelvvel történik a kapcsolódás).
 	 * @param testSystem A bejelentkezés a tesztrendszerbe történik?
 	 * @throws LoginException Ha hiba történt a bejelentkezés során.
 	 */
-	public EdpConnection(EDPCredentialsProvider edpCredentialsProvider, Locale locale, boolean testSystem) throws LoginException {
+	protected EdpConnection(EDPCredentialsProvider edpCredentialsProvider, Locale locale, boolean testSystem) throws LoginException {
 		this(startEdpSession(edpCredentialsProvider, locale, testSystem));
 	}
 
@@ -133,7 +133,7 @@ public class EdpConnection extends EdpBasedAbasConnection<EDPSession> {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.AbasConnection#getConnectionObject()
+	 * @see phoenix.mes.abas.GenericAbasConnection#getConnectionObject()
 	 */
 	@Override
 	public EDPSession getConnectionObject() {
@@ -141,7 +141,7 @@ public class EdpConnection extends EdpBasedAbasConnection<EDPSession> {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.AbasConnection#getUserDisplayName()
+	 * @see phoenix.mes.abas.GenericAbasConnection#getUserDisplayName()
 	 */
 	@Override
 	public String getUserDisplayName() {
@@ -153,7 +153,7 @@ public class EdpConnection extends EdpBasedAbasConnection<EDPSession> {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.AbasConnection#close()
+	 * @see phoenix.mes.abas.GenericAbasConnection#close()
 	 */
 	@Override
 	public void close() {

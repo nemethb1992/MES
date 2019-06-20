@@ -6,7 +6,7 @@
 
 package phoenix.mes.abas.impl;
 
-import phoenix.mes.abas.Task.Operation;
+import phoenix.mes.abas.GenericTask.Operation;
 
 /**
  * Gyártási tevékenységet (műveletet) leíró osztály.
@@ -68,7 +68,7 @@ public class OperationImpl implements Operation {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Operation#getIdNo()
+	 * @see phoenix.mes.abas.GenericTask.Operation#getIdNo()
 	 */
 	@Override
 	public String getIdNo() {
@@ -76,7 +76,7 @@ public class OperationImpl implements Operation {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Operation#getSwd()
+	 * @see phoenix.mes.abas.GenericTask.Operation#getSwd()
 	 */
 	@Override
 	public String getSwd() {
@@ -84,7 +84,7 @@ public class OperationImpl implements Operation {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Operation#getDescription()
+	 * @see phoenix.mes.abas.GenericTask.Operation#getDescription()
 	 */
 	@Override
 	public String getDescription() {
@@ -92,7 +92,7 @@ public class OperationImpl implements Operation {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Operation#getWorkCenterIdNo()
+	 * @see phoenix.mes.abas.GenericTask.Operation#getWorkCenterIdNo()
 	 */
 	@Override
 	public String getWorkCenterIdNo() {
@@ -100,7 +100,7 @@ public class OperationImpl implements Operation {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Operation#getWorkCenterDescription()
+	 * @see phoenix.mes.abas.GenericTask.Operation#getWorkCenterDescription()
 	 */
 	@Override
 	public String getWorkCenterDescription() {
@@ -108,7 +108,7 @@ public class OperationImpl implements Operation {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task.Operation#getItemText()
+	 * @see phoenix.mes.abas.GenericTask.Operation#getItemText()
 	 */
 	@Override
 	public String getItemText() {

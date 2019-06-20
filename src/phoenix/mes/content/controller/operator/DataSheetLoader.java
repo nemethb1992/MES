@@ -12,11 +12,10 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
-import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
-import phoenix.mes.abas.Task.Status;
+import phoenix.mes.abas.GenericTask.Status;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.Log;
 import phoenix.mes.content.Log.FaliureType;
@@ -46,7 +45,7 @@ public class DataSheetLoader extends HttpServlet {
 		String partialUrl = null;
 		String view = "";
 		String state = "";
-		AbasConnection<EDPSession> abasConnection = null;
+		AbasConnection abasConnection = null;
 		try {
 			User user = new User(request);
 			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");

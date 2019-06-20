@@ -22,9 +22,10 @@ import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 
-import phoenix.mes.abas.AbasConnection;
+import phoenix.mes.abas.GenericAbasConnection;
 import phoenix.mes.abas.AbasFunctionException;
-import phoenix.mes.abas.WorkStation;
+import phoenix.mes.abas.GenericWorkStation;
+import phoenix.mes.abas.Task;
 import phoenix.mes.abas.impl.TaskImpl;
 import phoenix.mes.abas.impl.AbasFunctionExecutionException;
 import phoenix.mes.abas.impl.BomElementImpl;
@@ -36,7 +37,7 @@ import phoenix.mes.abas.impl.TaskDetails;
  * Gyártási feladat osztálya, EDP-ben implementálva.
  * @author szizo
  */
-public class TaskEdpImpl extends TaskImpl<EDPSession> {
+public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 
 	/**
 	 * Alaposztály a gyártási feladat adatainak lekérdezéséhez.
@@ -462,6 +463,11 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 			public static final String STOCK_UNIT_NAME = InfosysOw1MESTASKDATA.Row.META.ytlebspr.getName();
 
 			/**
+			 * Az anyagkivét raktárhelye.
+			 */
+			public static final String WAREHOUSE_LOCATION = InfosysOw1MESTASKDATA.Row.META.ytplatzsuch.getName();
+
+			/**
 			 * A tételszöveg.
 			 */
 			public static final String ITEM_TEXT = InfosysOw1MESTASKDATA.Row.META.ytptext.getName();
@@ -497,6 +503,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 					rowData.getString(Field.DESCRIPTION2),
 					rowData.getBigDecimal(Field.QUANTITY_PER_PRODUCT),
 					rowData.getString(Field.STOCK_UNIT_NAME),
+					rowData.getString(Field.WAREHOUSE_LOCATION),
 					rowData.getString(Field.ITEM_TEXT));
 		}
 
@@ -634,69 +641,69 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 		 * @param workStation A munkaállomás.
 		 * @param precedingWorkSlipId A munkaállomáson közvetlenül a beütemezendő gyártási feladat előtt végrehajtandó munkalap azonosítója (üres (vagy üres azonosító), ha a beütemezendő gyártási feladat az első a végrehajtási listában).
-		 * @param abasConnection Az Abas-kapcsolat.
+		 * @param edpConnection Az EDP-kapcsolat.
 		 * @throws InvalidAbasFunctionCallException Ha a funkcióhívás érvénytelen bemeneti adatok miatt meghiúsult.
 		 * @throws AbasFunctionExecutionException Ha (futásidejű) hiba történt a funkcióhívás végrehajtása során.
 		 */
-		public static void scheduleTask(String workSlipId, WorkStation workStation, String precedingWorkSlipId, AbasConnection<?> abasConnection) throws AbasFunctionException {
-			SCHEDULER.executeAbasFunction(scheduleInputFieldNames, new String[] {workSlipId, workStation.getWorkCenterId().toString(), Integer.toString(workStation.getNumber()), precedingWorkSlipId, " "}, abasConnection);
+		public static void scheduleTask(String workSlipId, GenericWorkStation<?> workStation, String precedingWorkSlipId, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+			SCHEDULER.executeAbasFunction(scheduleInputFieldNames, new String[] {workSlipId, workStation.getWorkCenterId().toString(), Integer.toString(workStation.getNumber()), precedingWorkSlipId, " "}, edpConnection);
 		}
 
 		/**
 		 * A megadott gyártási feladat beütemezésének visszavonása.
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
-		 * @param abasConnection Az Abas-kapcsolat.
+		 * @param edpConnection Az EDP-kapcsolat.
 		 * @throws InvalidAbasFunctionCallException Ha a funkcióhívás érvénytelen bemeneti adatok miatt meghiúsult.
 		 * @throws AbasFunctionExecutionException Ha (futásidejű) hiba történt a funkcióhívás végrehajtása során.
 		 */
-		public static void unScheduleTask(String workSlipId, AbasConnection<?> abasConnection) throws AbasFunctionException {
-			unScheduleTask(workSlipId, false, abasConnection);
+		public static void unScheduleTask(String workSlipId, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+			unScheduleTask(workSlipId, false, edpConnection);
 		}
 
 		/**
 		 * A megadott gyártási feladat beütemezésének visszavonása ill. felfüggesztése.
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 		 * @param suspend A gyártási feladat felfüggesztésre kerül?
-		 * @param abasConnection Az Abas-kapcsolat.
+		 * @param edpConnection Az EDP-kapcsolat.
 		 * @throws InvalidAbasFunctionCallException Ha a funkcióhívás érvénytelen bemeneti adatok miatt meghiúsult.
 		 * @throws AbasFunctionExecutionException Ha (futásidejű) hiba történt a funkcióhívás végrehajtása során.
 		 */
-		protected static void unScheduleTask(String workSlipId, boolean suspend, AbasConnection<?> abasConnection) throws AbasFunctionException {
-			SCHEDULER.executeAbasFunction(unScheduleInputFieldNames, new String[] {workSlipId, suspend ? "1" : "0", " "}, abasConnection);
+		protected static void unScheduleTask(String workSlipId, boolean suspend, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+			SCHEDULER.executeAbasFunction(unScheduleInputFieldNames, new String[] {workSlipId, suspend ? "1" : "0", " "}, edpConnection);
 		}
 
 		/**
 		 * A megadott gyártási feladat végrehajtásának félbeszakítása.
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
-		 * @param abasConnection Az Abas-kapcsolat.
+		 * @param edpConnection Az EDP-kapcsolat.
 		 * @throws InvalidAbasFunctionCallException Ha a funkcióhívás érvénytelen bemeneti adatok miatt meghiúsult.
 		 * @throws AbasFunctionExecutionException Ha (futásidejű) hiba történt a funkcióhívás végrehajtása során.
 		 */
-		public static void interruptTask(String workSlipId, AbasConnection<?> abasConnection) throws AbasFunctionException {
-			interruptTask(workSlipId, true, abasConnection);
+		public static void interruptTask(String workSlipId, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+			interruptTask(workSlipId, true, edpConnection);
 		}
 
 		/**
 		 * A megadott gyártási feladat végrehajtásának félbeszakítása ill. a félbeszakítás visszavonása.
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 		 * @param interrupt A gyártás feladat végrehajtása félbeszakításra kerül?
-		 * @param abasConnection Az Abas-kapcsolat.
+		 * @param edpConnection Az EDP-kapcsolat.
 		 * @throws InvalidAbasFunctionCallException Ha a funkcióhívás érvénytelen bemeneti adatok miatt meghiúsult.
 		 * @throws AbasFunctionExecutionException Ha (futásidejű) hiba történt a funkcióhívás végrehajtása során.
 		 */
-		protected static void interruptTask(String workSlipId, boolean interrupt, AbasConnection<?> abasConnection) throws AbasFunctionException {
-			SCHEDULER.executeAbasFunction(interruptInputFieldNames, new String[] {workSlipId, interrupt ? "1" : "0", " "}, abasConnection);
+		protected static void interruptTask(String workSlipId, boolean interrupt, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+			SCHEDULER.executeAbasFunction(interruptInputFieldNames, new String[] {workSlipId, interrupt ? "1" : "0", " "}, edpConnection);
 		}
 
 		/**
 		 * A megadott gyártási feladat végrehajtásának folytatása.
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
-		 * @param abasConnection Az Abas-kapcsolat.
+		 * @param edpConnection Az EDP-kapcsolat.
 		 * @throws InvalidAbasFunctionCallException Ha a funkcióhívás érvénytelen bemeneti adatok miatt meghiúsult.
 		 * @throws AbasFunctionExecutionException Ha (futásidejű) hiba történt a funkcióhívás végrehajtása során.
 		 */
-		public static void resumeTask(String workSlipId, AbasConnection<?> abasConnection) throws AbasFunctionException {
-			interruptTask(workSlipId, false, abasConnection);
+		public static void resumeTask(String workSlipId, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+			interruptTask(workSlipId, false, edpConnection);
 		}
 
 		/**
@@ -704,23 +711,23 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 		 * @param yield Az elkészült jó mennyiség.
 		 * @param scrapQuantity A keletkezett selejt mennyisége.
-		 * @param abasConnection Az Abas-kapcsolat.
+		 * @param edpConnection Az EDP-kapcsolat.
 		 * @throws InvalidAbasFunctionCallException Ha a funkcióhívás érvénytelen bemeneti adatok miatt meghiúsult.
 		 * @throws AbasFunctionExecutionException Ha (futásidejű) hiba történt a funkcióhívás végrehajtása során.
 		 */
-		public static void postCompletionConfirmation(String workSlipId, BigDecimal yield, BigDecimal scrapQuantity, AbasConnection<?> abasConnection) throws AbasFunctionException {
-			CONFIRMER.executeAbasFunction(completionConfirmationFieldNames, new String[] {workSlipId, yield.toPlainString(), scrapQuantity.toPlainString(), " "}, abasConnection);
+		public static void postCompletionConfirmation(String workSlipId, BigDecimal yield, BigDecimal scrapQuantity, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+			CONFIRMER.executeAbasFunction(completionConfirmationFieldNames, new String[] {workSlipId, yield.toPlainString(), scrapQuantity.toPlainString(), " "}, edpConnection);
 		}
 
 		/**
 		 * A megadott gyártási feladat felfüggesztése.
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
-		 * @param abasConnection Az Abas-kapcsolat.
+		 * @param edpConnection Az EDP-kapcsolat.
 		 * @throws InvalidAbasFunctionCallException Ha a funkcióhívás érvénytelen bemeneti adatok miatt meghiúsult.
 		 * @throws AbasFunctionExecutionException Ha (futásidejű) hiba történt a funkcióhívás végrehajtása során.
 		 */
-		public static void suspendTask(String workSlipId, AbasConnection<?> abasConnection) throws AbasFunctionException {
-			unScheduleTask(workSlipId, true, abasConnection);
+		public static void suspendTask(String workSlipId, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+			unScheduleTask(workSlipId, true, edpConnection);
 		}
 
 		/**
@@ -736,13 +743,13 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 		 * Funkcióhívás (lekérdezés) végrehajtása.
 		 * @param inputFieldNames Az eredmény lekérdezése előtt beállítandó mezők nevei.
 		 * @param inputFieldValues Az eredmény lekérdezése előtt beállítandó mezők értékei.
-		 * @param abasConnection Az Abas-kapcsolat.
+		 * @param edpConnection Az EDP-kapcsolat.
 		 * @throws InvalidAbasFunctionCallException Ha a funkcióhívás érvénytelen bemeneti adatok miatt meghiúsult.
 		 * @throws AbasFunctionExecutionException Ha (futásidejű) hiba történt a funkcióhívás végrehajtása során.
 		 */
-		protected void executeAbasFunction(String[] inputFieldNames, String[] inputFieldValues, AbasConnection<?> abasConnection) throws AbasFunctionException {
+		protected void executeAbasFunction(String[] inputFieldNames, String[] inputFieldValues, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
 			try {
-				final int errorCode = getResultHeaderFields(new EDPEditFieldList(inputFieldNames, inputFieldValues), EdpConnection.getEdpSession(abasConnection)).getInt(resultFieldName);
+				final int errorCode = getResultHeaderFields(new EDPEditFieldList(inputFieldNames, inputFieldValues), edpConnection.getConnectionObject()).getInt(resultFieldName);
 				if (0 == errorCode) {
 					return;
 				}
@@ -761,14 +768,14 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	 * Gyártási feladat részleteit leíró osztály, EDP-ben implementálva.
 	 * @author szizo
 	 */
-	protected class DetailsEdpImpl extends TaskDetails<EDPSession> {
+	protected class TaskDetailsEdpImpl extends TaskDetails<EDPSession> {
 
 		/**
 		 * Konstruktor.
-		 * @param abasConnection Az Abas-kapcsolat.
+		 * @param edpConnection Az EDP-kapcsolat.
 		 */
-		protected DetailsEdpImpl(AbasConnection<EDPSession> abasConnection) {
-			super(abasConnection, abasConnectionType);
+		protected TaskDetailsEdpImpl(GenericAbasConnection<EDPSession> edpConnection) {
+			super(edpConnection);
 		}
 
 		/* (non-Javadoc)
@@ -882,15 +889,15 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	/**
 	 * A megadott Abas-objektumazonosító továbbengedése, ha egy munkalapot azonosít.
 	 * @param abasObjectId Az Abas-objektumazonosító.
-	 * @param edpSession Az EDP-munkamenet.
+	 * @param edpConnection Az EDP-kapcsolat.
 	 * @return Abas-munkalapazonosító.
 	 * @throws IllegalArgumentException Ha az Abas-objektumazonosító nem egy létező munkalap azonosítója.
 	 */
-	protected static Id workSlipIdFilter(Id abasObjectId, EDPSession edpSession) {
+	protected static Id workSlipIdFilter(Id abasObjectId, GenericAbasConnection<EDPSession> edpConnection) {
 		if (9 != abasObjectId.getDatabaseNo()) {
 			throw new IllegalArgumentException("Nem munkalap-azonosító: " + abasObjectId);
 		}
-		final EDPQuery edpQuery = edpSession.createQuery();
+		final EDPQuery edpQuery = edpConnection.getConnectionObject().createQuery();
 		try {
 			edpQuery.enableQueryMetaData(false);
 			if (!edpQuery.readRecord(abasObjectId.toString(), WorkOrders.META.type.getName())
@@ -906,50 +913,50 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	/**
 	 * Konstruktor.
 	 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
-	 * @param edpSession Az EDP-munkamenet.
+	 * @param edpConnection Az EDP-kapcsolat.
 	 */
-	public TaskEdpImpl(Id workSlipId, EDPSession edpSession) {
-		this(workSlipIdFilter(workSlipId, edpSession).toString());
+	public TaskEdpImpl(Id workSlipId, GenericAbasConnection<EDPSession> edpConnection) {
+		this(workSlipIdFilter(workSlipId, edpConnection).toString());
 	}
 
 	/**
 	 * Konstruktor.
 	 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 	 */
-	TaskEdpImpl(String workSlipId) {
-		super(workSlipId, EDPSession.class);
+	protected TaskEdpImpl(String workSlipId) {
+		super(workSlipId);
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.impl.TaskImpl#newDetails(phoenix.mes.abas.AbasConnection)
+	 * @see phoenix.mes.abas.impl.CachedDetailsContainer#newDetails(phoenix.mes.abas.GenericAbasConnection)
 	 */
 	@Override
-	protected DetailsEdpImpl newDetails(AbasConnection<EDPSession> abasConnection) {
-		return new DetailsEdpImpl(abasConnection);
+	protected TaskDetailsEdpImpl newDetails(GenericAbasConnection<EDPSession> edpConnection) {
+		return new TaskDetailsEdpImpl(edpConnection);
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task#schedule(phoenix.mes.abas.WorkStation, de.abas.erp.common.type.Id, phoenix.mes.abas.AbasConnection)
+	 * @see phoenix.mes.abas.GenericTask#schedule(phoenix.mes.abas.GenericWorkStation, de.abas.erp.common.type.Id, phoenix.mes.abas.GenericAbasConnection)
 	 */
 	@Override
-	public void schedule(WorkStation workStation, Id precedingWorkSlipId, AbasConnection<?> abasConnection) throws AbasFunctionException {
-		TaskManager.scheduleTask(workSlipId, workStation, precedingWorkSlipId.toString(), abasConnection);
+	public void schedule(GenericWorkStation<?> workStation, Id precedingWorkSlipId, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+		TaskManager.scheduleTask(workSlipId, workStation, precedingWorkSlipId.toString(), edpConnection);
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task#unSchedule(phoenix.mes.abas.AbasConnection)
+	 * @see phoenix.mes.abas.GenericTask#unSchedule(phoenix.mes.abas.GenericAbasConnection)
 	 */
 	@Override
-	public void unSchedule(AbasConnection<?> abasConnection) throws AbasFunctionException {
-		TaskManager.unScheduleTask(workSlipId, abasConnection);
+	public void unSchedule(GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+		TaskManager.unScheduleTask(workSlipId, edpConnection);
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task#interrupt(phoenix.mes.abas.AbasConnection)
+	 * @see phoenix.mes.abas.GenericTask#interrupt(phoenix.mes.abas.GenericAbasConnection)
 	 */
 	@Override
-	public void interrupt(AbasConnection<?> abasConnection) throws AbasFunctionException {
-		TaskManager.interruptTask(workSlipId, abasConnection);
+	public void interrupt(GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+		TaskManager.interruptTask(workSlipId, edpConnection);
 		clearDetailsStatusCache();
 	}
 
@@ -963,20 +970,20 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task#resume(phoenix.mes.abas.AbasConnection)
+	 * @see phoenix.mes.abas.GenericTask#resume(phoenix.mes.abas.GenericAbasConnection)
 	 */
 	@Override
-	public void resume(AbasConnection<?> abasConnection) throws AbasFunctionException {
-		TaskManager.resumeTask(workSlipId, abasConnection);
+	public void resume(GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+		TaskManager.resumeTask(workSlipId, edpConnection);
 		clearDetailsStatusCache();
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task#postCompletionConfirmation(java.math.BigDecimal, java.math.BigDecimal, phoenix.mes.abas.AbasConnection)
+	 * @see phoenix.mes.abas.GenericTask#postCompletionConfirmation(java.math.BigDecimal, java.math.BigDecimal, phoenix.mes.abas.GenericAbasConnection)
 	 */
 	@Override
-	public void postCompletionConfirmation(BigDecimal yield, BigDecimal scrapQuantity, AbasConnection<?> abasConnection) throws AbasFunctionException {
-		TaskManager.postCompletionConfirmation(workSlipId, yield, scrapQuantity, abasConnection);
+	public void postCompletionConfirmation(BigDecimal yield, BigDecimal scrapQuantity, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+		TaskManager.postCompletionConfirmation(workSlipId, yield, scrapQuantity, edpConnection);
 		if (null != details) {
 			details.clearBasicDataCache();
 			details.clearOperationDataCache();
@@ -984,11 +991,11 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.Task#suspend(phoenix.mes.abas.AbasConnection)
+	 * @see phoenix.mes.abas.GenericTask#suspend(phoenix.mes.abas.GenericAbasConnection)
 	 */
 	@Override
-	public void suspend(AbasConnection<?> abasConnection) throws AbasFunctionException {
-		TaskManager.suspendTask(workSlipId, abasConnection);
+	public void suspend(GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+		TaskManager.suspendTask(workSlipId, edpConnection);
 		clearDetailsStatusCache();
 	}
 

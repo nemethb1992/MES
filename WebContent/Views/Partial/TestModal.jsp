@@ -5,17 +5,16 @@
 <%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
 <%@page import="phoenix.mes.abas.Task"%>
 <%@page import="java.util.List"%>
-<%@page import="phoenix.mes.abas.Task.Status"%>
+<%@page import="phoenix.mes.abas.GenericTask.Status"%>
 <%@page import="phoenix.mes.abas.AbasConnection"%>
 <%@page import="phoenix.mes.abas.AbasObjectFactory"%>
 <%@page import="phoenix.mes.content.AppBuild"%>
-<%@page import="de.abas.ceks.jedp.EDPSession"%>
 <%@page import="javax.security.auth.login.LoginException"%>
 
 <%
 OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 
-AbasConnection<EDPSession> abasConnection = null;
+AbasConnection abasConnection = null;
 try {
 	User user = new User(request);
 	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), new AppBuild(request).isTest());

@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.AbasDate;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
@@ -40,14 +39,14 @@ public class AbasTaskList extends HttpServlet {
 			return;
 		}
 		String view = "";
-		AbasConnection<EDPSession> abasConnection = null;
+		AbasConnection abasConnection = null;
 		String date = request.getParameter("date");
 		AbasDate abasDate = (date.isEmpty() ? AbasDate.INFINITY : AbasDate.valueOf(date));
 		try {
 			User user = new User(request);
 			OutputFormatter of = (OutputFormatter)request.getSession().getAttribute("OutputFormatter");
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
-			List<Task> task = AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection).getUnassignedTasks(abasDate, abasConnection);
+			List<Task> task = (List<Task>)AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection).getUnassignedTasks(abasDate, abasConnection);
 			request.setAttribute("AbasList",task);
 			request.setAttribute("abasConnection", abasConnection);
 			view = RenderView.render("/Views/Manager/Todo/Partial/AbasList.jsp", request, response);

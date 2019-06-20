@@ -1,69 +1,43 @@
 /*
  * Osztálykönyvtár az Abas-interfészhez.
  *
- * Created on Aug 21, 2018
+ * Created on Jun 16, 2019
  */
 
 package phoenix.mes.abas;
 
+import de.abas.ceks.jedp.EDPSession;
+
+import java.util.Locale;
+
+import javax.security.auth.login.LoginException;
+
+import phoenix.mes.abas.impl.edp.EdpConnection;
+
 /**
- * Abas-kapcsolatot reprezentáló típus.
- * @param <C> Az Abas-kapcsolat típusa.
+ * Az alapértelmezett típusú Abas-kapcsolatot reprezentáló osztály.
  * @author szizo
  */
-public interface AbasConnection<C> {
+public class AbasConnection extends EdpConnection {
 
 	/**
-	 * @param abasConnection Az Abas-kapcsolat.
-	 * @param abasConnectionType Az Abas-kapcsolat (elvárt) osztálya.
-	 * @return Az Abas-kapcsolat objektuma.
-	 * @throws IllegalArgumentException Ha az Abas-kapcsolat nem a megadott típusú.
+	 * Konstruktor.
+	 * @param userName A tartományi felhasználónév.
+	 * @param password A jelszó.
+	 * @param locale A kezelőnyelv (null esetén a felhasználónál beállított kezelőnyelvvel történik a kapcsolódás).
+	 * @param testSystem A bejelentkezés a tesztrendszerbe történik?
+	 * @throws LoginException Ha hiba történt a bejelentkezés során.
 	 */
-	public static <C> C getConnectionObject(AbasConnection<?> abasConnection, Class<C> abasConnectionType) {
-		try {
-			final C connectionObject = abasConnectionType.cast(abasConnection.getConnectionObject());
-			if (null == connectionObject) {
-				throw new NullPointerException("Az Abas-kapcsolat objektuma nem lehet null!");
-			}
-			return connectionObject;
-		} catch (ClassCastException e) {
-			throw new IllegalArgumentException("Nem megfelelő Abas-kapcsolattípus: " + abasConnection.getClass().getName(), e);
-		}
+	protected AbasConnection(String userName, String password, Locale locale, boolean testSystem) throws LoginException {
+		super(userName, password, locale, testSystem);
 	}
 
 	/**
-	 * Az Abas-adatbázisszerver neve.
+	 * Konstruktor.
+	 * @param edpSession Az EDP-munkamenet.
 	 */
-	String SERVER_NAME = "abasdb.pmhu.local";
-
-	/**
-	 * Az éles Abas-mandant elérési útja.
-	 */
-	String PRODUCTION_CLIENT_PATH = "/Abas/pmk";
-
-	/**
-	 * Az Abas-tesztmandant elérési útja.
-	 */
-	String TEST_CLIENT_PATH = "/Abas/dpmk";
-
-	/**
-	 * @return Az Abas-kapcsolat objektuma.
-	 */
-	C getConnectionObject();
-
-	/**
-	 * @return Az Abas-kapcsolat aktuális kezelőnyelvének kódja.
-	 */
-	String getOperatingLanguageCode();
-
-	/**
-	 * @return A bejelentkezett felhasználó neve az aktuális kezelőnyelvnek megfelelő formában.
-	 */
-	String getUserDisplayName();
-
-	/**
-	 * Az Abas-kapcsolat lezárása.
-	 */
-	void close();
+	protected AbasConnection(EDPSession edpSession) {
+		super(edpSession);
+	}
 
 }

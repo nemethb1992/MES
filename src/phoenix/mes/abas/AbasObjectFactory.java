@@ -1,7 +1,7 @@
 /*
  * Osztálykönyvtár az Abas-interfészhez.
  *
- * Created on Aug 21, 2018
+ * Created on Jun 16, 2019
  */
 
 package phoenix.mes.abas;
@@ -16,55 +16,75 @@ import javax.security.auth.login.LoginException;
 import phoenix.mes.abas.impl.edp.EdpObjectFactory;
 
 /**
- * Gyár típus az Abas-interfész objektumainak létrehozásához.
- * @param <C> Az Abas-kapcsolat típusa.
+ * Az Abas-interfész alapértelmezett típusú Abas-kapcsolathoz tartozó gyár osztálya.
  * @author szizo
  */
-public interface AbasObjectFactory<C> {
+public class AbasObjectFactory implements GenericAbasObjectFactory<EDPSession, AbasConnection> {
 
 	/**
-	 * Az Abas-interfész alapértelmezett gyár objektuma.
+	 * Egyke objektum.
 	 */
-	AbasObjectFactory<EDPSession> INSTANCE = new EdpObjectFactory();
+	public static final AbasObjectFactory INSTANCE = new AbasObjectFactory();
 
 	/**
-	 * Kapcsolódás az Abashoz a megadott bejelentkezési adatokkal, a felhasználónál beállított kezelőnyelvvel.
-	 * @param userName A tartományi felhasználónév.
-	 * @param password A jelszó.
-	 * @param testSystem A bejelentkezés a tesztrendszerbe történik?
-	 * @return A megnyitott Abas-kapcsolat.
-	 * @throws LoginException Ha hiba történt a bejelentkezés során.
+	 * Az alapértelmezett típusú Abas-kapcsolathoz tartozó tényleges gyár objektum.
 	 */
-	default AbasConnection<C> openAbasConnection(String userName, String password, boolean testSystem) throws LoginException {
-		return openAbasConnection(userName, password, null, testSystem);
+	protected static final GenericAbasObjectFactory<EDPSession, ? super AbasConnection> DELEGATEE = new EdpObjectFactory();
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericAbasObjectFactory#openAbasConnection(java.lang.String, java.lang.String, java.util.Locale, boolean)
+	 */
+	@Override
+	public AbasConnection openAbasConnection(String userName, String password, Locale locale, boolean testSystem) throws LoginException {
+		return new AbasConnection(userName, password, locale, testSystem);
 	}
 
-	/**
-	 * Kapcsolódás az Abashoz a megadott bejelentkezési adatokkal.
-	 * @param userName A tartományi felhasználónév.
-	 * @param password A jelszó.
-	 * @param locale A kezelőnyelv (null esetén a felhasználónál beállított kezelőnyelvvel történik a kapcsolódás).
-	 * @param testSystem A bejelentkezés a tesztrendszerbe történik?
-	 * @return A megnyitott Abas-kapcsolat.
-	 * @throws LoginException Ha hiba történt a bejelentkezés során.
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericAbasObjectFactory#createWorkCenter(java.lang.String, phoenix.mes.abas.GenericAbasConnection)
 	 */
-	AbasConnection<C> openAbasConnection(String userName, String password, Locale locale, boolean testSystem) throws LoginException;
+	@Override
+	public WorkCenter createWorkCenter(String idNo, AbasConnection abasConnection) {
+		return (WorkCenter)(DELEGATEE.createWorkCenter(idNo, abasConnection));
+	}
 
-	/**
-	 * A megadott azonosítókkal rendelkező munkaállomást reprezentáló objektum létrehozása.
-	 * @param workCenterIdNo Az Abas-beli gépcsoport hivatkozási száma.
-	 * @param workStationNumber A munkaállomás (egyedi) sorszáma a gépcsoporton belül.
-	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return Egy új munkaállomás-objektum.
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericAbasObjectFactory#createWorkCenter(de.abas.erp.common.type.Id, phoenix.mes.abas.GenericAbasConnection)
 	 */
-	WorkStation createWorkStation(String workCenterIdNo, int workStationNumber, AbasConnection<C> abasConnection);
+	@Override
+	public WorkCenter createWorkCenter(Id id, AbasConnection abasConnection) {
+		return (WorkCenter)(DELEGATEE.createWorkCenter(id, abasConnection));
+	}
 
-	/**
-	 * Adott munkalap által leírt gyártási feladatot reprezentáló objektum létrehozása.
-	 * @param workSlipId A munkalap azonosítója.
-	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return Egy új feladat-objektum.
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericAbasObjectFactory#createWorkStation(phoenix.mes.abas.GenericWorkCenter, int, phoenix.mes.abas.GenericAbasConnection)
 	 */
-	Task createTask(Id workSlipId, AbasConnection<C> abasConnection);
+	@Override
+	public WorkStation createWorkStation(GenericWorkCenter<?> workCenter, int workStationNumber, AbasConnection abasConnection) {
+		return (WorkStation)(DELEGATEE.createWorkStation(workCenter, workStationNumber, abasConnection));
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericAbasObjectFactory#createWorkStation(de.abas.erp.common.type.Id, int, phoenix.mes.abas.GenericAbasConnection)
+	 */
+	@Override
+	public WorkStation createWorkStation(Id workCenterId, int workStationNumber, AbasConnection abasConnection) {
+		return (WorkStation)(DELEGATEE.createWorkStation(workCenterId, workStationNumber, abasConnection));
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericAbasObjectFactory#createWorkStation(java.lang.String, int, phoenix.mes.abas.GenericAbasConnection)
+	 */
+	@Override
+	public WorkStation createWorkStation(String workCenterIdNo, int workStationNumber, AbasConnection abasConnection) {
+		return (WorkStation)(DELEGATEE.createWorkStation(workCenterIdNo, workStationNumber, abasConnection));
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericAbasObjectFactory#createTask(de.abas.erp.common.type.Id, phoenix.mes.abas.GenericAbasConnection)
+	 */
+	@Override
+	public Task createTask(Id workSlipId, AbasConnection abasConnection) {
+		return (Task)(DELEGATEE.createTask(workSlipId, abasConnection));
+	}
 
 }

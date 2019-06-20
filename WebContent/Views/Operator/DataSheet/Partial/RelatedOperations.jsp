@@ -2,7 +2,7 @@
 <%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
 <%@page import="java.util.List"%>
 <%@page import="phoenix.mes.abas.Task"%>
-<%@page import="phoenix.mes.abas.Task.Operation"%>
+<%@page import="phoenix.mes.abas.GenericTask.Operation"%>
 <%
 	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 	List<Task.Operation> data = (List<Task.Operation>)request.getAttribute("operationdata");

@@ -10,13 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.IdImpl;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasFunctionException;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
-import phoenix.mes.abas.Task.Status;
+import phoenix.mes.abas.GenericTask.Status;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.Log;
 import phoenix.mes.content.Log.FaliureType;
@@ -46,7 +45,7 @@ public class ScheduleTask extends HttpServlet {
 		String currentId = request.getParameter("currentId");
 		String targetId = request.getParameter("targetId");
 		IdImpl id = (null != targetId && !"".equals(targetId) ? (IdImpl) IdImpl.valueOf(targetId) : (IdImpl) IdImpl.NULLREF);
-		AbasConnection<EDPSession> abasConnection = null;
+		AbasConnection abasConnection = null;
 		
     	try {
 			User user = new User(request);

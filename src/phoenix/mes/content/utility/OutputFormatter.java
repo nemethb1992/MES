@@ -79,6 +79,7 @@ public class OutputFormatter {
 		TASKS("Feladatok","Aufgaben","Tasks"),
 		TASK("Feladat","Aufgabe","Task"),
 		STATIONS("Állomások","Arbeitsplätze","Stations"),
+		WAREHOUSE("Raktárhely","Lagerplatz","Warehouse"),
 		LOGIN_FAILED("Sikertelen bejelentkezés","Anmeldung fehlgeschlagen","Login failed"),
 		LOGIN_FAILED_MISSING_WS("Nincs regisztrált munkaállomás","Fehlende registrierte Arbeitsstation","Missing registered workstation"),
 		LOGIN_FAILED_EMPTY_CREDENTIALS("A felhasználónév és/vagy jelszó nincs megadva!","Ihr Benutzername und / oder Passwort ist nicht angegeben!","Your username and / or password is not specified!"),
@@ -87,7 +88,7 @@ public class OutputFormatter {
 		DISRUPTION_TITLE("Feladat megszakítás","Aufgabe abbrechen","Task interruption"),
 		COMMIT("Véglegesítés","Fertigstellen","Commit"),
 		EMPTY_STATION_ID("Munkaállomás nincs regisztrálva!","Arbeitsstation ist nicht registriert!","Workstation is not registered!"),
-		SUBMIT_CONFIRMATION_TEXT("Biztosan lejelenti a következő mennyiséget?","",""),
+		SUBMIT_CONFIRMATION_TEXT("Biztosan lejelenti a következő mennyiséget?","",""), 
 		YES("Igen","Ja","Yes"),
 		NO("Nem","Nein","No"),
 		CANCEL("Mégsem","Abbrechen","Cancel");

@@ -6,7 +6,6 @@ import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.content.AppBuild;
@@ -23,7 +22,7 @@ public class AbasAuthentication {
     	if (username.isEmpty() || password.isEmpty()) {
     		throw new AuthenticationException(of.getWord(DictionaryEntry.LOGIN_FAILED_EMPTY_CREDENTIALS));
     	}
-    	AbasConnection<EDPSession> abasConnection = null;
+    	AbasConnection abasConnection = null;
     	try {
     		boolean isTest = new AppBuild(request).isTest();
     		abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, password, of.getLocale(),isTest );

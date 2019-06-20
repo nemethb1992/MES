@@ -3,12 +3,11 @@
 <%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
 <%@page import="phoenix.mes.abas.Task"%>
 <%@page import="java.util.List"%>
-<%@page import="phoenix.mes.abas.Task.Status"%>
-<%@page import="de.abas.ceks.jedp.EDPSession"%>
+<%@page import="phoenix.mes.abas.GenericTask.Status"%>
 <%
 	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 	List<Task> li = (List<Task>)request.getAttribute("AbasList");
-	AbasConnection<EDPSession> abasConnection = (AbasConnection<EDPSession>)request.getAttribute("abasConnection");
+	AbasConnection abasConnection = (AbasConnection)request.getAttribute("abasConnection");
 	String startDate, startDateFormated;
 	String cssClass = "";
 	for (Task task: li) {
@@ -40,19 +39,19 @@
 					<div class='row'>
 						<div class='col my-col-1 article-col px-1 pl-2 py-2 dnd-input-div'>
 							<p><%=of.getWord(DictionaryEntry.WORKSHEET_NO)%></p>
-							<textarea disabled class='dnd-input dnd-in1'><%=taskDetails.getWorkSlipNo()%></textarea>
+							<textarea readonly class='dnd-input dnd-in1'><%=taskDetails.getWorkSlipNo()%></textarea>
 						</div>
 						<div class='col my-col-2 px-1 py-2 dnd-input-div'>
 							<p><%=of.getWord(DictionaryEntry.ARTICLE)%></p>
-							<textarea disabled class='dnd-input dnd-in1'><%=taskDetails.getProductIdNo()%></textarea>
+							<textarea readonly class='dnd-input dnd-in1'><%=taskDetails.getProductIdNo()%></textarea>
 						</div>
 						<div class='col my-col-3 px-1 py-2 dnd-input-div'>
 							<p><%=of.getWord(DictionaryEntry.SEARCH_WORD)%></p>
-							<textarea disabled class='dnd-input dnd-in1'><%=taskDetails.getProductSwd()%></textarea>
+							<textarea readonly class='dnd-input dnd-in1'><%=taskDetails.getProductSwd()%></textarea>
 						</div>
 						<div class='col my-col-4 placeofuse-col  px-1 py-2 dnd-input-div'>
 							<p><%=of.getWord(DictionaryEntry.PLACE_OF_USE)%></p>
-							<textarea disabled class='dnd-input dnd-in1'><%=taskDetails.getUsage()%></textarea>
+							<textarea readonly class='dnd-input dnd-in1'><%=taskDetails.getUsage()%></textarea>
 						</div>
 						<div class='col my-col-5 px-1 py-2 dnd-input-div'>
 							<p><%=of.getWord(DictionaryEntry.NAME)%></p>
@@ -60,15 +59,15 @@
 						</div>
 						<div class='col my-col-6 px-1 py-2 dnd-input-div'>
 							<p><%=of.getWord(DictionaryEntry.GET_STARTED)%></p>
-							<textarea disabled class='dnd-input dnd-in1'><%=startDateFormated%></textarea>
+							<textarea readonly class='dnd-input dnd-in1'><%=startDateFormated%></textarea>
 						</div>
 						<div class='col my-col-7 px-1 py-2 dnd-input-div'>
 							<p><%=of.getWord(DictionaryEntry.OPEN_QUANTITY)%></p>
-							<textarea disabled class='dnd-input dnd-in1'><%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity()) +" "+ taskDetails.getStockUnit()%></textarea>
+							<textarea readonly class='dnd-input dnd-in1'><%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity()) +" "+ taskDetails.getStockUnit()%></textarea>
 						</div>
 						<div class='col my-col-8 px-1 py-2 dnd-input-div'>
 							<p><%=of.getWord(DictionaryEntry.CALCULATED_PROD_TIME)%></p>
-							<textarea disabled class='dnd-input dnd-in1'><%=of.formatTime(taskDetails.getCalculatedProductionTime())%></textarea>
+							<textarea readonly class='dnd-input dnd-in1'><%=of.formatTime(taskDetails.getCalculatedProductionTime())%></textarea>
 						</div>
 					</div>
 				</div>

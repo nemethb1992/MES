@@ -3,7 +3,7 @@
 <%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
 <%@page import="phoenix.mes.abas.Task"%>
 <%@page import="java.util.List"%>
-<%@page import="phoenix.mes.abas.Task.BomElement"%>
+<%@page import="phoenix.mes.abas.GenericTask.BomElement"%>
 <%
 	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 	Task.Details taskDetails = (Task.Details)request.getAttribute("taskDetails");

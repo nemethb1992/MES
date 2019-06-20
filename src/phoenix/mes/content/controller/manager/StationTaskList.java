@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
-import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
@@ -35,7 +34,7 @@ public class StationTaskList extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-		AbasConnection<EDPSession> abasConnection = null;  
+		AbasConnection abasConnection = null;  
 		BigDecimal summedProductionTime = BigDecimal.ZERO;
 		String view = "";
 		try {
@@ -43,7 +42,7 @@ public class StationTaskList extends HttpServlet {
 			SelectedWorkstation ws = new SelectedWorkstation(request);
 			User user = new User(request);
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
-			List<Task> task = AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection).getScheduledTasks(abasConnection);
+			List<Task> task = (List<Task>)AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection).getScheduledTasks(abasConnection);
 			request.setAttribute("StationList",task);
 			request.setAttribute("abasConnection", abasConnection);			
 			view = RenderView.render("/Views/Manager/Todo/Partial/StationList.jsp", request, response);

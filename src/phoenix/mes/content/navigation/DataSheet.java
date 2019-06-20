@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import de.abas.ceks.jedp.EDPSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
@@ -45,7 +44,7 @@ public class DataSheet extends HttpServlet {
 			return;
 		}	
 		String page = "/Views/Operator/OpenTask/OpenTask.jsp";
-		AbasConnection<EDPSession> abasConnection = null;
+		AbasConnection abasConnection = null;
 		try {
 			HttpSession session = request.getSession();
 			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");

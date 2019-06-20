@@ -1,51 +1,38 @@
 /*
  * Domain típusok könyvtára.
  *
- * Created on Aug 7, 2018
+ * Created on Jun 16, 2019
  */
 
 package phoenix.mes.abas;
 
+import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.AbasDate;
-import de.abas.erp.common.type.Id;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
- * Gyártási munkaállomás típusa.
+ * Gyártási munkaállomás adattípusa, az alapértelmezett típusú Abas-kapcsolattal.
  * @author szizo
  */
-public interface WorkStation extends Serializable {
+public interface WorkStation extends GenericWorkStation<EDPSession> {
 
-	/**
-	 * @return Az Abas-beli gépcsoport azonosítója.
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericWorkStation#getUnassignedTasks(de.abas.erp.common.type.AbasDate, phoenix.mes.abas.GenericAbasConnection)
 	 */
-	Id getWorkCenterId();
+	@Override
+	List<? extends Task> getUnassignedTasks(AbasDate startDateUntil, GenericAbasConnection<EDPSession> abasConnection);
 
-	/**
-	 * @return A munkaállomás (egyedi) sorszáma a gépcsoporton belül.
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericWorkStation#getScheduledTasks(phoenix.mes.abas.GenericAbasConnection)
 	 */
-	int getNumber();
+	@Override
+	List<? extends Task> getScheduledTasks(GenericAbasConnection<EDPSession> abasConnection);
 
-	/**
-	 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa (AbasDate.INFINITY, ha nincs szükség időkorlátra).
-	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A vizsgált kezdődátum-intervallumba eső, a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt gyártási feladatok listája.
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericWorkStation#startFirstScheduledTask(phoenix.mes.abas.GenericAbasConnection)
 	 */
-	List<Task> getUnassignedTasks(AbasDate startDateUntil, AbasConnection<?> abasConnection);
-
-	/**
-	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A munkaállomásra beütemezett és végrehajtható gyártási feladatok listája.
-	 */
-	List<Task> getScheduledTasks(AbasConnection<?> abasConnection);
-
-	/**
-	 * A munkaállomásra elsőként beütemezett és végrehajtható gyártási feladat elindítása.
-	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return Az elindított gyártási feladat (null, ha a munkaállomás feladatlistája üres).
-	 */
-	Task startFirstScheduledTask(AbasConnection<?> abasConnection);
+	@Override
+	Task startFirstScheduledTask(GenericAbasConnection<EDPSession> abasConnection);
 
 }
