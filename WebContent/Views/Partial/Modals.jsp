@@ -3,7 +3,7 @@
 <%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
 <%@page import="phoenix.mes.abas.Task"%>
 <%@page import="java.util.List"%>
-<%@page import="phoenix.mes.abas.Task.Status"%>
+<%@page import="phoenix.mes.abas.GenericTask.Status"%>
 <%@page import="phoenix.mes.abas.AbasConnection"%>
 <%@page import="phoenix.mes.abas.AbasObjectFactory"%>
 <%@page import="phoenix.mes.content.AppBuild"%>
@@ -12,7 +12,7 @@
 <%
 OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 Task task = (Task)session.getAttribute("Task");
-AbasConnection<EDPSession> abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), new AppBuild(request).isTest());
+AbasConnection abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection((String)session.getAttribute("username"), (String)session.getAttribute("pass"), of.getLocale(), new AppBuild(request).isTest());
 Task.Details taskDetails = task.getDetails(abasConnection);
 %>
 <div class="modal fade" id="interrupt-level1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
