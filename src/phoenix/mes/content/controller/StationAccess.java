@@ -68,7 +68,7 @@ public class StationAccess {
     	List<String> list = new ArrayList<String>();
 		if(pc_access != null)
 		for (Map<String, String> row : pc_access) {
-				List<Map<String, String>> result = pg.sqlQuery("SELECT csoport FROM stations WHERE pc = "+row.get("pc_id")+"","csoport");
+				List<Map<String, String>> result = pg.sqlQuery("SELECT csoport FROM stations WHERE pc = "+row.get("pc_id")+"  ORDER BY stations.csoport","csoport");
 				pg.dbClose();
 				for (Map<String, String> groupRow : result) {
 					if(!OutputFormatter.isExists(list,groupRow.get("csoport"))){
@@ -78,7 +78,7 @@ public class StationAccess {
 		}
 		if(section_access != null)
 		for (Map<String, String> row : section_access) {
-			List<Map<String, String>> result = pg.sqlQuery("SELECT csoport FROM stations WHERE section = "+row.get("section_id")+"","csoport");
+			List<Map<String, String>> result = pg.sqlQuery("SELECT csoport FROM stations WHERE section = "+row.get("section_id")+"  ORDER BY stations.csoport","csoport");
 			pg.dbClose();
 			for (Map<String, String> groupRow : result) {
 
@@ -89,7 +89,7 @@ public class StationAccess {
 		}
 		if(group_access != null)
 		for (Map<String, String> row : group_access) {
-			List<Map<String, String>> result = pg.sqlQuery("SELECT csoport FROM stations WHERE csoport = '"+row.get("workstation_group")+"'","csoport");
+			List<Map<String, String>> result = pg.sqlQuery("SELECT csoport FROM stations WHERE csoport = '"+row.get("workstation_group")+"' ORDER BY stations.csoport","csoport");
 			pg.dbClose();
 			for (Map<String, String> groupRow : result) {
 				if(!OutputFormatter.isExists(list,groupRow.get("csoport"))){

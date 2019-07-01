@@ -6,9 +6,6 @@
 
 package phoenix.mes.abas.impl;
 
-import de.abas.erp.common.type.Id;
-import de.abas.erp.common.type.IdImpl;
-
 import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
 
@@ -27,9 +24,9 @@ public abstract class WorkStationImpl<C> implements GenericWorkStation<C> {
 	private static final long serialVersionUID = 6873301319949108993L;
 
 	/**
-	 * Az Abas-beli gépcsoport azonosítója.
+	 * A gépcsoport hivatkozási száma.
 	 */
-	protected final String workCenterId;
+	protected final String workCenterIdNo;
 
 	/**
 	 * A munkaállomás (egyedi) sorszáma a gépcsoporton belül.
@@ -38,14 +35,14 @@ public abstract class WorkStationImpl<C> implements GenericWorkStation<C> {
 
 	/**
 	 * Konstruktor.
-	 * @param workCenterId Az Abas-beli gépcsoport azonosítója.
+	 * @param workCenterIdNo A gépcsoport hivatkozási száma.
 	 * @param workStationNumber A munkaállomás (egyedi) sorszáma a gépcsoporton belül.
 	 */
-	protected WorkStationImpl(String workCenterId, int workStationNumber) {
+	protected WorkStationImpl(String workCenterIdNo, int workStationNumber) {
 		if (1 > workStationNumber) {
 			throw new IllegalArgumentException("Érvénytelen gépszám: " + workStationNumber);
 		}
-		this.workCenterId = workCenterId;
+		this.workCenterIdNo = workCenterIdNo;
 		this.number = workStationNumber;
 	}
 
@@ -57,9 +54,8 @@ public abstract class WorkStationImpl<C> implements GenericWorkStation<C> {
 		if (!(object instanceof GenericWorkStation)) {
 			return false;
 		}
-		final GenericWorkStation<?> other = (GenericWorkStation<?>)object;
-		final Id otherWorkCenterId = other.getWorkCenterId();
-		return (number == other.getNumber() && null != otherWorkCenterId && workCenterId.equals(otherWorkCenterId.toString()));
+		final GenericWorkStation<?> otherWorkStation = (GenericWorkStation<?>)object;
+		return (number == otherWorkStation.getNumber() && workCenterIdNo.equals(otherWorkStation.getWorkCenter().getIdNo()));
 	}
 
 	/* (non-Javadoc)
@@ -69,7 +65,7 @@ public abstract class WorkStationImpl<C> implements GenericWorkStation<C> {
 	public int hashCode() {
 		int result = 17;
 		result = 31 * result + number;
-		result = 31 * result + workCenterId.hashCode();
+		result = 31 * result + workCenterIdNo.hashCode();
 		return result;
 	}
 
@@ -78,7 +74,7 @@ public abstract class WorkStationImpl<C> implements GenericWorkStation<C> {
 	 */
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + " [workCenterId=" + workCenterId + ", number=" + number + "]";
+		return getClass().getSimpleName() + " [workCenterIdNo=" + workCenterIdNo + ", number=" + number + "]";
 	}
 
 	/**
@@ -89,14 +85,6 @@ public abstract class WorkStationImpl<C> implements GenericWorkStation<C> {
 	@SuppressWarnings("unused")
 	private void readObjectNoData() throws ObjectStreamException {
 		throw new InvalidObjectException("");
-	}
-
-	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.GenericWorkStation#getWorkCenterId()
-	 */
-	@Override
-	public Id getWorkCenterId() {
-		return new IdImpl(workCenterId);
 	}
 
 	/* (non-Javadoc)

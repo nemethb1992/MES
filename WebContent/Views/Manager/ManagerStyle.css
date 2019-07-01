@@ -75,7 +75,6 @@ font-size: 14px;
 	background-image: url(Public/icons/delete-sign.svg);
 }
 .workstation-container {
-	height: 50px;
 	background: white;
 	border-bottom: 1px solid #d6d6d6;
 /* 	background-image: url(Public/icons/computerSignGray.svg); */
@@ -92,6 +91,15 @@ font-size: 14px;
 	z-index: 1;
 }
 
+.workstation-container textarea {
+  	resize: none;
+	pointer-events: none;
+	background: transparent;
+	border: none;
+	font-size: 14px;
+	color: #737373;
+	width: 100%;
+}
 TM_content_layer {
 	height: inherit;
 }
@@ -222,15 +230,6 @@ TM_content_layer {
 	    border: 1px solid #d6d6d6;
 }
 
-.workstation-container input {
-	pointer-events: none;
-	background: transparent;
-	border: none;
-	font-size: 14px;
-	color: #737373;
-	width: 100%;
-	padding: 15px 0 0 10px;
-}
 
 .TV_stationContainer input {
 	pointer-events: none;

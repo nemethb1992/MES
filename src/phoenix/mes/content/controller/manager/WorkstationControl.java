@@ -79,7 +79,7 @@ public class WorkstationControl extends HttpServlet {
 			for(String item : user.getStationAccess().getSuggestedGroups())
 			{
 				final Map<String, String> row = new HashMap<>((int)Math.ceil((1) / 0.75));
-				String segedValue = pg.sqlSingleQuery("SELECT stations.csoport FROM stations LEFT JOIN profitcenter ON stations.pc = profitcenter.id WHERE "+(null != value ? "long = '"+value+"' AND":"")+" csoport='"+item+"'", field);
+				String segedValue = pg.sqlSingleQuery("SELECT stations.csoport FROM stations LEFT JOIN profitcenter ON stations.pc = profitcenter.id WHERE "+(null != value ? "long = '"+value+"' AND":"")+" csoport='"+item+"' ORDER BY stations.csoport", field);
 				if(!"".equals(segedValue))
 				{
 					row.put("divValue", segedValue);
@@ -95,10 +95,11 @@ public class WorkstationControl extends HttpServlet {
 			WorkCenter.Details workcenter = null;
 			for (Map<String, String> row : (List<Map<String,String>>)dataList) {
 				workcenter = AbasObjectFactory.INSTANCE.createWorkCenter(row.get("divValue"), abasConnection).getDetails(abasConnection);
+				String GroupTitle = "("+row.get("divValue") +") "+ workcenter.getDescription();
 				final Map<String, String> valueRow = new HashMap<>((int)Math.ceil((3) / 0.75));
 				valueRow.put("divValue", row.get("divValue"));
 				valueRow.put("method", method);
-				valueRow.put("inputValue", workcenter.getDescription());
+				valueRow.put("inputValue", GroupTitle);
 				finalDataList.add(valueRow);
 			}
 			break;

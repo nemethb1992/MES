@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.abas.WorkCenter;
 import phoenix.mes.abas.GenericTask.Status;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.Log;
@@ -38,6 +39,7 @@ public class DataSheetLoader extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		OperatingWorkstation ws = new OperatingWorkstation(request);
+
 		if(ws.getGroup().equals(null))
 		{
 			return;
@@ -57,7 +59,7 @@ public class DataSheetLoader extends HttpServlet {
 				return;
 			}
 			Task.Details taskDetails = task.getDetails(abasConnection);		
-			request.setAttribute("taskDetails", taskDetails);
+			request.setAttribute("taskDetails", taskDetails);	
 			
 			String tab = request.getParameter("tabNo") == null ? "1" : request.getParameter("tabNo");
 			switch (tab) {

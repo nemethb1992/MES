@@ -45,16 +45,20 @@ public class SuspendTask extends HttpServlet {
 
 		String username = request.getParameter("username");
 		String pass = request.getParameter("password");
+		String secureParam = request.getParameter("secure");
+		boolean secure = (secureParam.equals("true") ? true : false);
 
 		response.setContentType("text/plain"); 
 		response.setCharacterEncoding("UTF-8"); 
-		try {
-			if(!new AbasAuthentication().bind(username, pass, request) && !new User(request).isModifier(username))
-			{
-				response.getWriter().write("Sikertelen hitelesítés!");
-				return;
+		if(secure) {
+			try {
+				if(!new AbasAuthentication().bind(username, pass, request) && !new User(request).isModifier(username))
+				{
+					response.getWriter().write("Sikertelen hitelesítés!");
+					return;
+				}
+			} catch (SQLException | LoginException | NamingException e1) {
 			}
-		} catch (SQLException | LoginException | NamingException e1) {
 		}
 
 		HttpSession session = request.getSession();

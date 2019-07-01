@@ -11,6 +11,6 @@
 %>
 <div class='workstation-container col-12 px-0' 
 	value='<%=row.get("divValue")%>' OnClick='<%=row.get("method")%>'>
-	<input disabled class='si1' value='<%=row.get("inputValue") %>'>
+	<textarea class='si1  p-3' disabled><%=row.get("inputValue") %></textarea>
 </div>
 <% } %>

@@ -12,7 +12,6 @@ import de.abas.ceks.jedp.EDPQuery;
 import de.abas.ceks.jedp.EDPRuntimeException;
 import de.abas.ceks.jedp.EDPSession;
 import de.abas.erp.common.type.AbasDate;
-import de.abas.erp.common.type.Id;
 import de.abas.erp.db.infosystem.custom.ow1.InfosysOw1MESWORKSTATION;
 import de.abas.erp.db.schema.capacity.WorkCenter;
 
@@ -71,42 +70,42 @@ public class WorkStationEdpImpl extends WorkStationImpl<EDPSession> implements W
 		}
 
 		/**
-		 * @param workCenterId Az Abas-beli gépcsoport azonosítója.
+		 * @param workCenterIdNo A gépcsoport hivatkozási száma.
 		 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa (AbasDate.INFINITY, ha nincs szükség időkorlátra).
 		 * @param edpSession Az EDP-munkamenet.
 		 * @return A vizsgált kezdődátum-intervallumba eső, a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt gyártási feladatok listája.
 		 */
-		public List<TaskEdpImpl> getUnassignedTasks(String workCenterId, AbasDate startDateUntil, EDPSession edpSession) {
+		public List<TaskEdpImpl> getUnassignedTasks(String workCenterIdNo, AbasDate startDateUntil, EDPSession edpSession) {
 			try {
-				return getRows(new EDPEditFieldList(unassignedTasksFilterCriteria, new String[] {workCenterId, startDateUntil.toString(), " "}), edpSession);
+				return getRows(new EDPEditFieldList(unassignedTasksFilterCriteria, new String[] {workCenterIdNo, startDateUntil.toString(), " "}), edpSession);
 			} catch (CantChangeFieldValException e) {
 				throw new EDPRuntimeException(e);
 			}
 		}
 
 		/**
-		 * @param workCenterId Az Abas-beli gépcsoport azonosítója.
+		 * @param workCenterIdNo A gépcsoport hivatkozási száma.
 		 * @param workStationNumber A munkaállomás sorszáma.
 		 * @param edpSession Az EDP-munkamenet.
 		 * @return A munkaállomásra beütemezett és végrehajtható gyártási feladatok listája.
 		 */
-		public List<TaskEdpImpl> getScheduledTasks(String workCenterId, int workStationNumber, EDPSession edpSession) {
+		public List<TaskEdpImpl> getScheduledTasks(String workCenterIdNo, int workStationNumber, EDPSession edpSession) {
 			try {
-				return getRows(new EDPEditFieldList(scheduledTasksFilterCriteria, new String[] {workCenterId, Integer.toString(workStationNumber), " "}), edpSession);
+				return getRows(new EDPEditFieldList(scheduledTasksFilterCriteria, new String[] {workCenterIdNo, Integer.toString(workStationNumber), " "}), edpSession);
 			} catch (CantChangeFieldValException e) {
 				throw new EDPRuntimeException(e);
 			}
 		}
 
 		/**
-		 * @param workCenterId Az Abas-beli gépcsoport azonosítója.
+		 * @param workCenterIdNo A gépcsoport hivatkozási száma.
 		 * @param workStationNumber A munkaállomás sorszáma.
 		 * @param edpSession Az EDP-munkamenet.
 		 * @return A munkaállomásra elsőként beütemezett és végrehajtható gyártási feladat (null, ha a munkaállomás feladatlistája üres).
 		 */
-		public TaskEdpImpl getFirstScheduledTask(String workCenterId, int workStationNumber, EDPSession edpSession) {
+		public TaskEdpImpl getFirstScheduledTask(String workCenterIdNo, int workStationNumber, EDPSession edpSession) {
 			try {
-				final List<TaskEdpImpl> taskList = getRows(new EDPEditFieldList(firstScheduledTaskFilterCriteria, new String[] {workCenterId, Integer.toString(workStationNumber), "1", " "}), edpSession);
+				final List<TaskEdpImpl> taskList = getRows(new EDPEditFieldList(firstScheduledTaskFilterCriteria, new String[] {workCenterIdNo, Integer.toString(workStationNumber), "1", " "}), edpSession);
 				return (taskList.isEmpty() ? null : taskList.get(0));
 			} catch (CantChangeFieldValException e) {
 				throw new EDPRuntimeException(e);
@@ -126,17 +125,7 @@ public class WorkStationEdpImpl extends WorkStationImpl<EDPSession> implements W
 	 * @param workStationNumber A munkaállomás (egyedi) sorszáma a gépcsoporton belül.
 	 */
 	public WorkStationEdpImpl(GenericWorkCenter<?> workCenter, int workStationNumber) {
-		super(workCenter.getId().toString(), workStationNumber);
-	}
-
-	/**
-	 * Konstruktor.
-	 * @param workCenterId Az Abas-beli gépcsoport azonosítója.
-	 * @param workStationNumber A munkaállomás (egyedi) sorszáma a gépcsoporton belül.
-	 * @param edpConnection Az EDP-kapcsolat.
-	 */
-	public WorkStationEdpImpl(Id workCenterId, int workStationNumber, GenericAbasConnection<EDPSession> edpConnection) {
-		this(WorkCenterEdpImpl.loadWorkCenterData(workCenterId, edpConnection), workStationNumber);
+		super(workCenter.getIdNo(), workStationNumber);
 	}
 
 	/**
@@ -155,8 +144,16 @@ public class WorkStationEdpImpl extends WorkStationImpl<EDPSession> implements W
 	 * @param workStationNumber A munkaállomás (egyedi) sorszáma a gépcsoporton belül.
 	 */
 	protected WorkStationEdpImpl(EDPQuery workCenterData, int workStationNumber) {
-		super(workCenterData.getField(WorkCenter.META.id.getName()), workStationNumber);
+		super(workCenterData.getField(WorkCenter.META.idno.getName()), workStationNumber);
 		workCenterData.breakQuery();
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericWorkStation#getWorkCenter()
+	 */
+	@Override
+	public WorkCenterEdpImpl getWorkCenter() {
+		return new WorkCenterEdpImpl(workCenterIdNo);
 	}
 
 	/* (non-Javadoc)
@@ -164,7 +161,7 @@ public class WorkStationEdpImpl extends WorkStationImpl<EDPSession> implements W
 	 */
 	@Override
 	public List<TaskEdpImpl> getUnassignedTasks(AbasDate startDateUntil, GenericAbasConnection<EDPSession> edpConnection) {
-		return WorkSlipQuery.EXECUTOR.getUnassignedTasks(workCenterId, startDateUntil, edpConnection.getConnectionObject());
+		return WorkSlipQuery.EXECUTOR.getUnassignedTasks(workCenterIdNo, startDateUntil, edpConnection.getConnectionObject());
 	}
 
 	/* (non-Javadoc)
@@ -172,7 +169,7 @@ public class WorkStationEdpImpl extends WorkStationImpl<EDPSession> implements W
 	 */
 	@Override
 	public List<TaskEdpImpl> getScheduledTasks(GenericAbasConnection<EDPSession> edpConnection) {
-		return WorkSlipQuery.EXECUTOR.getScheduledTasks(workCenterId, number, edpConnection.getConnectionObject());
+		return WorkSlipQuery.EXECUTOR.getScheduledTasks(workCenterIdNo, number, edpConnection.getConnectionObject());
 	}
 
 	/* (non-Javadoc)
@@ -180,7 +177,7 @@ public class WorkStationEdpImpl extends WorkStationImpl<EDPSession> implements W
 	 */
 	@Override
 	public TaskEdpImpl startFirstScheduledTask(GenericAbasConnection<EDPSession> edpConnection) {
-		return WorkSlipQuery.EXECUTOR.getFirstScheduledTask(workCenterId, number, edpConnection.getConnectionObject());
+		return WorkSlipQuery.EXECUTOR.getFirstScheduledTask(workCenterIdNo, number, edpConnection.getConnectionObject());
 	}
 
 }

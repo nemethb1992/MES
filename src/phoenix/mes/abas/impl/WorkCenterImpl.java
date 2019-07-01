@@ -6,9 +6,6 @@
 
 package phoenix.mes.abas.impl;
 
-import de.abas.erp.common.type.Id;
-import de.abas.erp.common.type.IdImpl;
-
 import java.io.InvalidObjectException;
 import java.io.ObjectStreamException;
 
@@ -27,16 +24,16 @@ public abstract class WorkCenterImpl<C> extends CachedDetailsContainer<C, WorkCe
 	private static final long serialVersionUID = -5166818850011328339L;
 
 	/**
-	 * A gépcsoport Abas-beli azonosítója.
+	 * A gépcsoport hivatkozási száma.
 	 */
-	protected final String id;
+	protected final String idNo;
 
 	/**
 	 * Konstruktor.
-	 * @param id A gépcsoport Abas-beli azonosítója.
+	 * @param idNo A gépcsoport hivatkozási száma.
 	 */
-	protected WorkCenterImpl(String id) {
-		this.id = id;
+	protected WorkCenterImpl(String idNo) {
+		this.idNo = idNo;
 	}
 
 	/* (non-Javadoc)
@@ -47,8 +44,7 @@ public abstract class WorkCenterImpl<C> extends CachedDetailsContainer<C, WorkCe
 		if (!(object instanceof GenericWorkCenter)) {
 			return false;
 		}
-		final Id otherWorkCenterId = ((GenericWorkCenter<?>)object).getId();
-		return null != otherWorkCenterId && id.equals(otherWorkCenterId.toString());
+		return idNo.equals(((GenericWorkCenter<?>)object).getIdNo());
 	}
 
 	/* (non-Javadoc)
@@ -56,7 +52,7 @@ public abstract class WorkCenterImpl<C> extends CachedDetailsContainer<C, WorkCe
 	 */
 	@Override
 	public int hashCode() {
-		return id.hashCode();
+		return idNo.hashCode();
 	}
 
 	/* (non-Javadoc)
@@ -64,7 +60,7 @@ public abstract class WorkCenterImpl<C> extends CachedDetailsContainer<C, WorkCe
 	 */
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + " [id=" + id + "]";
+		return getClass().getSimpleName() + " [idNo=" + idNo + "]";
 	}
 
 	/**
@@ -78,11 +74,11 @@ public abstract class WorkCenterImpl<C> extends CachedDetailsContainer<C, WorkCe
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.GenericWorkCenter#getId()
+	 * @see phoenix.mes.abas.GenericWorkCenter#getIdNo()
 	 */
 	@Override
-	public Id getId() {
-		return new IdImpl(id);
+	public String getIdNo() {
+		return idNo;
 	}
 
 }

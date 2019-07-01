@@ -30,7 +30,7 @@
 			</div>
 			<div class='col-3'>
 				<input class='w-100' disabled
-					value='<%=of.getWord(DictionaryEntry.WORKSTATION_NAME)%>'>
+					value='<%=of.getWord(DictionaryEntry.GROUP_NAME)%>'>
 			</div>
 		</div>
 		<%

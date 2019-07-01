@@ -646,7 +646,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		 * @throws AbasFunctionExecutionException Ha (futásidejű) hiba történt a funkcióhívás végrehajtása során.
 		 */
 		public static void scheduleTask(String workSlipId, GenericWorkStation<?> workStation, String precedingWorkSlipId, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
-			SCHEDULER.executeAbasFunction(scheduleInputFieldNames, new String[] {workSlipId, workStation.getWorkCenterId().toString(), Integer.toString(workStation.getNumber()), precedingWorkSlipId, " "}, edpConnection);
+			SCHEDULER.executeAbasFunction(scheduleInputFieldNames, new String[] {workSlipId, workStation.getWorkCenter().getIdNo(), Integer.toString(workStation.getNumber()), precedingWorkSlipId, " "}, edpConnection);
 		}
 
 		/**

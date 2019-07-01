@@ -48,27 +48,11 @@ public class AbasObjectFactory implements GenericAbasObjectFactory<EDPSession, A
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.GenericAbasObjectFactory#createWorkCenter(de.abas.erp.common.type.Id, phoenix.mes.abas.GenericAbasConnection)
-	 */
-	@Override
-	public WorkCenter createWorkCenter(Id id, AbasConnection abasConnection) {
-		return (WorkCenter)(DELEGATEE.createWorkCenter(id, abasConnection));
-	}
-
-	/* (non-Javadoc)
 	 * @see phoenix.mes.abas.GenericAbasObjectFactory#createWorkStation(phoenix.mes.abas.GenericWorkCenter, int, phoenix.mes.abas.GenericAbasConnection)
 	 */
 	@Override
 	public WorkStation createWorkStation(GenericWorkCenter<?> workCenter, int workStationNumber, AbasConnection abasConnection) {
 		return (WorkStation)(DELEGATEE.createWorkStation(workCenter, workStationNumber, abasConnection));
-	}
-
-	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.GenericAbasObjectFactory#createWorkStation(de.abas.erp.common.type.Id, int, phoenix.mes.abas.GenericAbasConnection)
-	 */
-	@Override
-	public WorkStation createWorkStation(Id workCenterId, int workStationNumber, AbasConnection abasConnection) {
-		return (WorkStation)(DELEGATEE.createWorkStation(workCenterId, workStationNumber, abasConnection));
 	}
 
 	/* (non-Javadoc)

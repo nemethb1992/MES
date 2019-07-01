@@ -13,7 +13,6 @@ import de.abas.ceks.jedp.EDPSession;
 import de.abas.ceks.jedp.InvalidQueryException;
 import de.abas.ceks.jedp.StandardEDPSelection;
 import de.abas.ceks.jedp.StandardEDPSelectionCriteria;
-import de.abas.erp.common.type.Id;
 import de.abas.erp.db.schema.capacity.WorkCenter;
 
 import phoenix.mes.abas.GenericAbasConnection;
@@ -39,9 +38,9 @@ public class WorkCenterEdpImpl extends WorkCenterImpl<EDPSession> implements pho
 		public static final class Field {
 
 			/**
-			 * A gépcsoport Abas-beli azonosítója.
+			 * A gépcsoport hivatkozási száma.
 			 */
-			public static final String ID = WorkCenter.META.id.getName();
+			public static final String ID_NO = WorkCenter.META.idno.getName();
 
 			/**
 			 * A gépcsoport megnevezése az aktuálisan beállított kezelőnyelven.
@@ -71,11 +70,36 @@ public class WorkCenterEdpImpl extends WorkCenterImpl<EDPSession> implements pho
 	protected class WorkCenterDetailsEdpImpl extends WorkCenterDetails<EDPSession> {
 
 		/**
+		 * Az EDP-kapcsolat.
+		 */
+		protected GenericAbasConnection<EDPSession> edpConnection;
+
+		/**
+		 * Konstruktor.
+		 * @param workCenterData A gépcsoport adatai.
+		 * @param edpConnection Az EDP-kapcsolat.
+		 */
+		protected WorkCenterDetailsEdpImpl(EDPQuery workCenterData, GenericAbasConnection<EDPSession> edpConnection) {
+			this(edpConnection);
+			loadCache(workCenterData);
+		}
+
+		/**
 		 * Konstruktor.
 		 * @param edpConnection Az EDP-kapcsolat.
 		 */
 		protected WorkCenterDetailsEdpImpl(GenericAbasConnection<EDPSession> edpConnection) {
 			super(edpConnection);
+			suspendWithoutApproval = true;
+		}
+
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.LanguageDependentCache#resetCacheIfLanguageDoesNotMatch(phoenix.mes.abas.GenericAbasConnection)
+		 */
+		@Override
+		protected void resetCacheIfLanguageDoesNotMatch(GenericAbasConnection<EDPSession> edpConnection) {
+			super.resetCacheIfLanguageDoesNotMatch(edpConnection);
+			this.edpConnection = edpConnection;
 		}
 
 		/* (non-Javadoc)
@@ -83,7 +107,7 @@ public class WorkCenterEdpImpl extends WorkCenterImpl<EDPSession> implements pho
 		 */
 		@Override
 		protected void resetCache(GenericAbasConnection<EDPSession> edpConnection) {
-			loadCache(loadWorkCenterData(id, edpConnection));
+			loadCache(getWorkCenterData(idNo, edpConnection));
 		}
 
 		/**
@@ -92,6 +116,17 @@ public class WorkCenterEdpImpl extends WorkCenterImpl<EDPSession> implements pho
 		protected void loadCache(EDPQuery workCenterData) {
 			description = workCenterData.getField(WorkCenterQuery.Field.DESCRIPTION);
 			workCenterData.breakQuery();
+		}
+
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.WorkCenterDetails#getDescription()
+		 */
+		@Override
+		public String getDescription() {
+			if (null == description) {
+				resetCache(edpConnection);
+			}
+			return description;
 		}
 
 	}
@@ -124,33 +159,6 @@ public class WorkCenterEdpImpl extends WorkCenterImpl<EDPSession> implements pho
 	}
 
 	/**
-	 * A gépcsoport adatainak betöltése.
-	 * @param id A gépcsoport Abas-beli azonosítója.
-	 * @param edpConnection Az EDP-kapcsolat.
-	 * @return A gépcsoport adatai.
-	 */
-	protected static EDPQuery loadWorkCenterData(Id id, GenericAbasConnection<EDPSession> edpConnection) {
-		if (8 != id.getDatabaseNo()) {
-			throw new IllegalArgumentException("Nem gépcsoport-azonosító: " + id);
-		}
-		return loadWorkCenterData(id.toString(), edpConnection);
-	}
-
-	/**
-	 * A gépcsoport adatainak betöltése.
-	 * @param id A gépcsoport Abas-beli azonosítója.
-	 * @param edpConnection Az EDP-kapcsolat.
-	 * @return A gépcsoport adatai.
-	 */
-	protected static EDPQuery loadWorkCenterData(String id, GenericAbasConnection<EDPSession> edpConnection) {
-		final EDPQuery edpQuery = WorkCenterQuery.EXECUTOR.readRecord(id, edpConnection.getConnectionObject());
-		if (null == edpQuery) {
-			throw new IllegalArgumentException("Nem gépcsoport-azonosító: " + id);
-		}
-		return edpQuery;
-	}
-
-	/**
 	 * Konstruktor.
 	 * @param idNo A gépcsoport hivatkozási száma.
 	 * @param edpConnection Az EDP-kapcsolat.
@@ -161,22 +169,20 @@ public class WorkCenterEdpImpl extends WorkCenterImpl<EDPSession> implements pho
 
 	/**
 	 * Konstruktor.
-	 * @param id A gépcsoport Abas-beli azonosítója.
-	 * @param edpConnection Az EDP-kapcsolat.
-	 */
-	public WorkCenterEdpImpl(Id id, GenericAbasConnection<EDPSession> edpConnection) {
-		this(loadWorkCenterData(id, edpConnection), edpConnection);
-	}
-
-	/**
-	 * Konstruktor.
 	 * @param workCenterData A gépcsoport adatai.
 	 * @param edpConnection Az EDP-kapcsolat.
 	 */
 	protected WorkCenterEdpImpl(EDPQuery workCenterData, GenericAbasConnection<EDPSession> edpConnection) {
-		super(workCenterData.getField(WorkCenterQuery.Field.ID));
-		details = newDetails(edpConnection);
-		((WorkCenterDetailsEdpImpl)details).loadCache(workCenterData);
+		super(workCenterData.getField(WorkCenterQuery.Field.ID_NO));
+		details = new WorkCenterDetailsEdpImpl(workCenterData, edpConnection);
+	}
+
+	/**
+	 * Konstruktor.
+	 * @param idNo A gépcsoport hivatkozási száma.
+	 */
+	protected WorkCenterEdpImpl(String idNo) {
+		super(idNo);
 	}
 
 	/* (non-Javadoc)

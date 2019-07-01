@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.abas.WorkCenter;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.controller.OperatingWorkstation;
 import phoenix.mes.content.controller.User;
@@ -52,6 +53,8 @@ public class DataSheet extends HttpServlet {
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(),user.getPassword(), of.getLocale(), ab.isTest());	
 			Task task = AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(),ws.getNumber(), abasConnection).startFirstScheduledTask(abasConnection);
 			if(task != null) {
+				WorkCenter.Details workcenter = AbasObjectFactory.INSTANCE.createWorkCenter(ws.getGroup(), abasConnection).getDetails(abasConnection);
+				session.setAttribute("WorkCenter", workcenter);
 				session.setAttribute("Task", task);
 				page = "/Views/Operator/DataSheet/DataSheet.jsp";
 			}

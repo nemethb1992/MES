@@ -6,8 +6,6 @@
 
 package phoenix.mes.abas;
 
-import de.abas.erp.common.type.Id;
-
 import java.io.Serializable;
 
 /**
@@ -28,12 +26,17 @@ public interface GenericWorkCenter<C> extends Serializable {
 		 */
 		String getDescription();
 
+		/**
+		 * @return A gyártási feladatok külön jóváhagyás nélkül is felfüggeszthetők?
+		 */
+		boolean getSuspendWithoutApproval();
+
 	}
 
 	/**
-	 * @return A gépcsoport Abas-beli azonosítója.
+	 * @return A gépcsoport hivatkozási száma.
 	 */
-	Id getId();
+	String getIdNo();
 
 	/**
 	 * @param abasConnection Az Abas-kapcsolat.

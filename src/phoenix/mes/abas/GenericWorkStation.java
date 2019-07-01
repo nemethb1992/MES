@@ -7,7 +7,6 @@
 package phoenix.mes.abas;
 
 import de.abas.erp.common.type.AbasDate;
-import de.abas.erp.common.type.Id;
 
 import java.io.Serializable;
 import java.util.List;
@@ -20,9 +19,9 @@ import java.util.List;
 public interface GenericWorkStation<C> extends Serializable {
 
 	/**
-	 * @return Az Abas-beli gépcsoport azonosítója.
+	 * @return A gépcsoport.
 	 */
-	Id getWorkCenterId();
+	GenericWorkCenter<C> getWorkCenter();
 
 	/**
 	 * @return A munkaállomás (egyedi) sorszáma a gépcsoporton belül.

@@ -18,6 +18,12 @@ import java.util.List;
 public interface WorkStation extends GenericWorkStation<EDPSession> {
 
 	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericWorkStation#getWorkCenter()
+	 */
+	@Override
+	WorkCenter getWorkCenter();
+
+	/* (non-Javadoc)
 	 * @see phoenix.mes.abas.GenericWorkStation#getUnassignedTasks(de.abas.erp.common.type.AbasDate, phoenix.mes.abas.GenericAbasConnection)
 	 */
 	@Override

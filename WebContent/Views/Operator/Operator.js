@@ -318,15 +318,25 @@ function InterruptTask()
 	$('#interrupt-level2').modal({backdrop: 'static', keyboard: false});
 	$('#interrupt-level2').modal('show');
 }
-function SuspendTask()
+function SuspendTask(approval = true)
 {
 	var uname = $(".username-input").val();
 	var pwd = $(".password-input").val();
+	var secure = approval;
+	
+	if(approval == false){
+		var text = $(".error-text").val();
+		if(text.length == 0)
+			{
+			return;
+			}
+	}
 	
 	if(uname.length > 0 && pwd.length > 0)
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/SuspendTask")%>',
 		data:{
+			secure: secure,
 			username: uname, 
 			password: pwd
 			},

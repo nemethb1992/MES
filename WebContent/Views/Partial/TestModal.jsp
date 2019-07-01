@@ -9,6 +9,7 @@
 <%@page import="phoenix.mes.abas.AbasConnection"%>
 <%@page import="phoenix.mes.abas.AbasObjectFactory"%>
 <%@page import="phoenix.mes.content.AppBuild"%>
+<%@page import="phoenix.mes.abas.WorkCenter"%>
 <%@page import="javax.security.auth.login.LoginException"%>
 
 <%
@@ -20,6 +21,9 @@ try {
 	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), new AppBuild(request).isTest());
 	Task task = (Task)session.getAttribute("Task");
 	Task.Details taskDetails = task.getDetails(abasConnection);
+	WorkCenter.Details workCenter = (WorkCenter.Details)session.getAttribute("WorkCenter");
+	boolean suspendWithoutApproval = true;
+// 	boolean suspendWithoutApproval = workCenter.getSuspendWithoutApproval();
 	session.setAttribute("Task", task);
 	String errorText = "";
 	if(taskDetails.getStatus() == Status.INTERRUPTED){
@@ -98,8 +102,13 @@ try {
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary w-25" onclick='Cancel()'
 					data-dismiss="modal"><%=of.getWord(DictionaryEntry.CANCEL)%></button>
-				<button type="button" class="btn btn-primary w-25"
-					onclick='InterruptTask()'><%=of.getWord(DictionaryEntry.NEXT)%></button>
+					<%
+						if(suspendWithoutApproval){
+							out.print("<button type='button' class='btn btn-primary w-25' onclick='SuspendTask(false)'>"+ of.getWord(DictionaryEntry.NEXT) +"</button>");
+						}else{
+							out.print("<button type='button' class='btn btn-primary w-25' onclick='InterruptTask()'>"+ of.getWord(DictionaryEntry.NEXT) +"</button>");
+						}
+					%>
 			</div>
 		</div>
   </div>

@@ -52,14 +52,6 @@ public interface GenericAbasObjectFactory<C, A extends GenericAbasConnection<C>>
 	GenericWorkCenter<C> createWorkCenter(String idNo, A abasConnection);
 
 	/**
-	 * A megadott azonosítóval rendelkező gépcsoportot reprezentáló objektum létrehozása.
-	 * @param id A gépcsoport Abas-beli azonosítója.
-	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return Egy új gépcsoport-objektum.
-	 */
-	GenericWorkCenter<C> createWorkCenter(Id id, A abasConnection);
-
-	/**
 	 * A megadott azonosítókkal rendelkező munkaállomást reprezentáló objektum létrehozása.
 	 * @param workCenter A gépcsoport.
 	 * @param workStationNumber A munkaállomás (egyedi) sorszáma a gépcsoporton belül.
@@ -67,17 +59,8 @@ public interface GenericAbasObjectFactory<C, A extends GenericAbasConnection<C>>
 	 * @return Egy új munkaállomás-objektum.
 	 */
 	default GenericWorkStation<C> createWorkStation(GenericWorkCenter<?> workCenter, int workStationNumber, A abasConnection) {
-		return createWorkStation(workCenter.getId(), workStationNumber, abasConnection);
+		return createWorkStation(workCenter.getIdNo(), workStationNumber, abasConnection);
 	}
-
-	/**
-	 * A megadott azonosítókkal rendelkező munkaállomást reprezentáló objektum létrehozása.
-	 * @param workCenterId Az Abas-beli gépcsoport azonosítója.
-	 * @param workStationNumber A munkaállomás (egyedi) sorszáma a gépcsoporton belül.
-	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return Egy új munkaállomás-objektum.
-	 */
-	GenericWorkStation<C> createWorkStation(Id workCenterId, int workStationNumber, A abasConnection);
 
 	/**
 	 * A megadott azonosítókkal rendelkező munkaállomást reprezentáló objektum létrehozása.

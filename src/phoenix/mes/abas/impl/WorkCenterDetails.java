@@ -22,6 +22,11 @@ public abstract class WorkCenterDetails<C> extends LanguageDependentCache<C> imp
 	protected String description;
 
 	/**
+	 * A gyártási feladatok külön jóváhagyás nélkül is felfüggeszthetők?
+	 */
+	protected boolean suspendWithoutApproval;
+
+	/**
 	 * Konstruktor.
 	 * @param abasConnection Az Abas-kapcsolat.
 	 */
@@ -35,6 +40,14 @@ public abstract class WorkCenterDetails<C> extends LanguageDependentCache<C> imp
 	@Override
 	public String getDescription() {
 		return description;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericWorkCenter.Details#getSuspendWithoutApproval()
+	 */
+	@Override
+	public boolean getSuspendWithoutApproval() {
+		return suspendWithoutApproval;
 	}
 
 }
