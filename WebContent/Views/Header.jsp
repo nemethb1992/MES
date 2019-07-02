@@ -34,11 +34,13 @@
 	String titleBuild = build.isTest() ? "DMES" : "MES";
 	OperatingWorkstation workstation = new OperatingWorkstation(request);
 	String titleWorkstation = "";
-	if(workstation.getName() != null)
+	if(workstation.getName() != null && (String)session.getAttribute("Layout") != "manager")
 	{
 		titleWorkstation = " - " + workstation.getName();
 	}else{
 		titleWorkstation = "";
+		if((String)session.getAttribute("Layout") == "manager")
+			titleWorkstation = " - Manager";
 	}
 	String titleString = titleBuild+titleWorkstation;
 	

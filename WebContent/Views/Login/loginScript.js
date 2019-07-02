@@ -27,3 +27,8 @@ function passwordConfigure(){
 		    }, delay);
 		  });
 }
+
+//function test(){
+//	$('#inp_username').val('balazs.nemeth');
+//	$('#inp_pass').val('Hxx8ka3hgb8w');
+//}

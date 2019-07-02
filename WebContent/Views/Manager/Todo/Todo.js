@@ -86,6 +86,7 @@ function ListLoader()
 	if(date != null && date != "" && date != "undefinied")
 	{
 		date = date.split('-')[0] + date.split('-')[1] + date.split('-')[2];
+		console.log(date);
 	}
 	else
 	{
@@ -149,7 +150,7 @@ function setToday()
 
 	var now = new Date();
 
-	var day = ("0" + now.getDate()).slice(-2);
+	var day = ("0" + (now.getDate()+7)).slice(-2);
 
 	var month = ("0" + (now.getMonth() + 1)).slice(-2);
 

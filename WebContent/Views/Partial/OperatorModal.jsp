@@ -11,20 +11,19 @@
 <%@page import="phoenix.mes.content.AppBuild"%>
 <%@page import="phoenix.mes.abas.WorkCenter"%>
 <%@page import="javax.security.auth.login.LoginException"%>
-
 <%
-OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
+ OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 
 AbasConnection abasConnection = null;
 try {
 	User user = new User(request);
 	abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), new AppBuild(request).isTest());
 	Task task = (Task)session.getAttribute("Task");
-	Task.Details taskDetails = task.getDetails(abasConnection);
+ 	Task.Details taskDetails = task.getDetails(abasConnection);
 	WorkCenter.Details workCenter = (WorkCenter.Details)session.getAttribute("WorkCenter");
 	boolean suspendWithoutApproval = true;
 // 	boolean suspendWithoutApproval = workCenter.getSuspendWithoutApproval();
-	session.setAttribute("Task", task);
+// 	session.setAttribute("Task", task);
 	String errorText = "";
 	if(taskDetails.getStatus() == Status.INTERRUPTED){
 		Log log = new Log(request);

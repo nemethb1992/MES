@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
-import phoenix.mes.abas.WorkCenter;
 import phoenix.mes.abas.GenericTask.Status;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.Log;

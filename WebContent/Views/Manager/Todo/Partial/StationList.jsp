@@ -17,6 +17,8 @@
 		final Task.Details taskDetails = task.getDetails(abasConnection);
 				boolean progress = (task.getDetails(abasConnection).getStatus() == Status.IN_PROGRESS ? true : false);
 				summedProductionTime = summedProductionTime.add(taskDetails.getCalculatedProductionTime());
+				startDate = taskDetails.getStartDate().toString();
+				startDateFormated = startDate.substring(0,4) + "." + startDate.substring(4,6) + "." + startDate.substring(6,8) + ".";
 				
 				switch(taskDetails.getStatus()){
 				case IN_PROGRESS:
@@ -42,10 +44,12 @@
 				<textarea readonly class='dnd-input dnd-in1'><%=taskDetails.getWorkSlipNo()%></textarea>
 				<p><%=of.getWord(DictionaryEntry.ARTICLE)%></p>
 				<textarea readonly class='dnd-input dnd-in1'><%=taskDetails.getProductIdNo()%></textarea>
+				<p><%=of.getWord(DictionaryEntry.GET_STARTED)%></p>
+				<textarea readonly class='dnd-input dnd-in1'><%=startDateFormated%></textarea>
 				<p><%=of.getWord(DictionaryEntry.OPEN_QUANTITY)%></p>
 				<textarea readonly class='dnd-input dnd-in1'><%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity()) +" "+ taskDetails.getStockUnit()%></textarea>
 			</div>
-			<div class='col-6 pr-0 py-2 dnd-input-div'>
+			<div class='col-6 pr-3 py-2 dnd-input-div'>
 				<p><%=of.getWord(DictionaryEntry.SEARCH_WORD)%></p>
 				<textarea readonly class='dnd-input dnd-in1'><%=taskDetails.getProductSwd()%></textarea>
 				<p><%=of.getWord(DictionaryEntry.NAME)%></p>

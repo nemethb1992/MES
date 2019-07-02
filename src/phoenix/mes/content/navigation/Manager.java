@@ -15,6 +15,7 @@ public class Manager extends HttpServlet {
 		
 		HttpSession session = request.getSession(true);
 		session.setAttribute("Layout", "manager");
+		request.setAttribute("LayoutType", "manager");
 		String encodedURL = response.encodeRedirectURL("/Views/Login/loginPage.jsp");
 		getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
 	}

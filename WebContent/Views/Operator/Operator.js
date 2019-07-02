@@ -281,6 +281,7 @@ function SubmitConfirmationValidation(item){
 
 function OpenSubmitConfirmationMod()
 {
+	
 	$('#submit-confirmation-modal').modal({backdrop: 'static', keyboard: false});
 	 $("#confirm-finished").val($(".input-finished").val());
 	 $("#confirm-scrap").val($(".input-scrap").val());
@@ -410,6 +411,8 @@ function SubmitTask()
 			if(response == "submit_done")
 			{
 				location.reload();
+//				getView();
+//				setTimer();
 			}else if(response == "error"){
 				alert("Lejelentesi hiba!");
 			}else if(response == "exit"){

@@ -62,6 +62,8 @@ public class Submit extends HttpServlet {
 				if(taskDetails.getStatus() == Status.DONE || taskDetails.getStatus() == Status.INTERRUPTED) {
 					session.removeAttribute("Task");
 					responseStr = "exit";
+				}else {
+					session.setAttribute("Task", task);	
 				}
 			}
 		}catch(LoginException | SQLException | AbasFunctionException e)

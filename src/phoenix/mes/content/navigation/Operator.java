@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 public class Operator extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -15,6 +16,7 @@ public class Operator extends HttpServlet {
 		
 		HttpSession session = request.getSession(true);	
 		session.setAttribute("Layout", "operator");
+		request.setAttribute("LayoutType", "operator");
 		String encodedURL =  response.encodeRedirectURL("/Views/Login/loginPage.jsp");
 		getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
 	}

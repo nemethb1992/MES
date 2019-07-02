@@ -58,9 +58,9 @@ else{
 			</div>
 			<form id='LR_form' method='POST'
 				action='<%=response.encodeURL(request.getContextPath()+"/Enter")%>'>
-				<input type='hidden' name='workstation' class='workstation'
-					value='<%=request.getParameter("workstation")%>' /> <input
-					name='infoTitle' class='w-100 mt-4' value='<%=info%>' />
+				<input type='hidden' name='workstation' class='workstation' value='<%=request.getParameter("workstation")%>' /> 
+				<input type='hidden' name='LayoutType' class='layout' value='<%=request.getAttribute("LayoutType")%>' />
+				<input name='infoTitle' class='w-100 mt-4' value='<%=info%>' />
 
 				<div class="form-group">
 					<p id='login_title' class='w-100 w-100 h5 mt-3'><%=outputFormatter.getWord(DictionaryEntry.LOGIN)%></p>

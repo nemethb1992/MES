@@ -36,7 +36,7 @@ public class Enter extends HttpServlet {
 		String paramStation = request.getParameter("workstation");
 		String shownPassword = request.getParameter("shownPassword");
 		String pass = request.getParameter("password");
-		String layout = (String)session.getAttribute("Layout");	
+		String layout = (String)request.getParameter("LayoutType");
 		OutputFormatter outputFormatter = (OutputFormatter)session.getAttribute("OutputFormatter") != null ? (OutputFormatter)session.getAttribute("OutputFormatter") : OutputFormatter.forRequest(request);
 		
 

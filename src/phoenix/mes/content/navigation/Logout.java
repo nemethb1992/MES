@@ -18,6 +18,9 @@ public class Logout extends HttpServlet {
 		
  	    HttpSession session = request.getSession();
  	    String layout = (String)session.getAttribute("Layout");
+		session.removeAttribute("username");
+		session.removeAttribute("password");
+		session.removeAttribute("userid");
 		String encodedURL = response.encodeRedirectURL((layout == null || "".equals(layout) ? "/" : (layout == "manager" ? "/Manager" : "/Operator")));
 		getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
 // 	    session.invalidate();

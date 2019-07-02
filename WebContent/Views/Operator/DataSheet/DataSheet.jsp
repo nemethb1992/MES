@@ -178,6 +178,5 @@
 </div>
 <%@include file="/Views/Footer.jsp"%>
 
-<%@include file="/Views/Partial/TestModal.jsp"%>
 
-
+<%@include file="/Views/Partial/OperatorModal.jsp"%>
