@@ -24,7 +24,7 @@ public class FileHandler extends HttpServlet {
 		{
 			result = "Megnyitás sikertelen!";
 		}
-	    response.getWriter().write(result); 
+	    System.out.println(result +"  "+ url); 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

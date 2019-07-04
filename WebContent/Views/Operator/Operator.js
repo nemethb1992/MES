@@ -146,15 +146,16 @@ function timeUp()
 function openAsset(item)
 {
 	var value = $(item).attr('value');
-	$.post({
-		url:  '<%=response.encodeURL(request.getContextPath()+"/FileHandler")%>',
-		data:{
-			file: value
-		},
-		success: function (response) {
-
-		}
-	});
+	window.open(value,'_blank');
+//	$.post({
+//		url:  '<%=response.encodeURL(request.getContextPath()+"/FileHandler")%>',
+//		data:{
+//			file: value
+//		},
+//		success: function (response) {
+//
+//		}
+//	});
 }
 
 
