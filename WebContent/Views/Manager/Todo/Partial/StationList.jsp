@@ -5,6 +5,9 @@
 <%@page import="java.util.List"%>
 <%@page import="java.math.BigDecimal"%>
 <%@page import="phoenix.mes.abas.GenericTask.Status"%>
+
+
+
 <%
 	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 	List<Task> li = (List<Task>)request.getAttribute("StationList");

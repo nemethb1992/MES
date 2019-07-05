@@ -30,6 +30,16 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>WebContent/Public/icons/add.svg</name>
+			<type>1</type>
+			<location>D:/GitData/MES/WebContent/Public/icons/add.svg</location>
+		</link>
+		<link>
+			<name>WebContent/Public/icons/more.svg</name>
+			<type>1</type>
+			<location>D:/GitData/MES/WebContent/Public/icons/more.svg</location>
+		</link>
+		<link>
 			<name>WebContent/Public/pdf/Csomagolás általános AA55.pdf</name>
 			<type>1</type>
 			<location>D:/GitData/MES/WebContent/Public/pdf/Csomagolás általános AA55.pdf</location>

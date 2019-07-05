@@ -15,6 +15,13 @@ function TaskManagerStartUp()
 	setDateNow('.personal-date');
 	setTimeNow('.personal-time');
 	datepicker();
+	
+    $('[id^=detail-]').hide();
+    $('.toggle').click(function() {
+        $input = $( this );
+        $target = $('#'+$input.attr('data-toggle'));
+        $target.slideToggle();
+    });
 }
 
 function ButtonScriptElements()
@@ -181,8 +188,8 @@ function FirstStationList()
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/WorkstationControl")%>',
 		success: function (view) {
-			$( ".dndf1" ).empty();
-			$( ".dndf2" ).empty();
+//			$( ".dndf1" ).empty();
+//			$( ".dndf2" ).empty();
 			$( ".station-container" ).empty();
 			$( ".station-container" ).append(view);
 			level = 0;
