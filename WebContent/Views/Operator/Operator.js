@@ -324,7 +324,6 @@ function SuspendTask(authernticated = true)
 {
 	var uname = $(".username-input").val();
 	var pwd = $(".password-input").val();
-	var secure = authernticated;
 	var text = $(".error-text").val();
 	
 	if(text.length == 0)
@@ -341,7 +340,7 @@ function SuspendTask(authernticated = true)
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/SuspendTask")%>',
 		data:{
-			secure: secure,
+			secure: authernticated,
 			username: uname, 
 			password: pwd
 			},
