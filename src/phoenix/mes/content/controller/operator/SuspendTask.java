@@ -59,13 +59,6 @@ public class SuspendTask extends HttpServlet {
 				}
 			} catch (SQLException | LoginException | NamingException e1) {
 			}
-		}else if(!secure) {
-			try {
-				User user = new User(request);
-				username = user.getUsername();
-				pass = user.getPassword();
-			} catch(Exception e) {
-			}
 		}
 
 		HttpSession session = request.getSession();

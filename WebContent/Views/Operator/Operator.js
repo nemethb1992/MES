@@ -320,24 +320,21 @@ function InterruptTask()
 	$('#interrupt-level2').modal({backdrop: 'static', keyboard: false});
 	$('#interrupt-level2').modal('show');
 }
-function SuspendTask(authernticated = true)
+function SuspendTask(approval = true)
 {
 	var uname = $(".username-input").val();
 	var pwd = $(".password-input").val();
-	var secure = authernticated;
-	var text = $(".error-text").val();
+	var secure = approval;
 	
-	if(text.length == 0)
-	{
-		return;
-	}
-	if(authernticated == true){
-		if(uname.length == 0 || pwd.length == 0)
-		{
+	if(approval == false){
+		var text = $(".error-text").val();
+		if(text.length == 0)
+			{
 			return;
-		}
+			}
 	}
 	
+	if(uname.length > 0 && pwd.length > 0)
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/SuspendTask")%>',
 		data:{
