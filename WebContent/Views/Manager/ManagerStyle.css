@@ -20,6 +20,12 @@
 	background-repeat: no-repeat;
 	background-position: center;
 }
+.task-details-manager-row {
+    height: 75vh !important;
+}
+.my-datasheet-modal-dialog{
+	max-width: 170vh !important;
+}
 
 .pass-item-remove {
 	background-image: url(Public/icons/remove-task.svg);
@@ -332,10 +338,26 @@ TM_content_layer {
 	display:none;
 }
 
+.abas-list-table{
+	font-size: 13px;
+	color:black;
+}
+.list-item-extended-content{
+	border-top: 1px solid #d6d6d6;
+}
 .dnd-container {
-	border: 1px solid #d6d6d6;
-	border-top: none;
-	background: white;
+	font-size: 13px;
+	color:black;
+    border: 1px solid #d6d6d6;
+    margin: 2px 0;
+    border-radius: 10px;
+    border-top: none;
+    background: white;
+}
+
+.button-holder-list{
+    border-radius: 0px 5px 5px 0px;
+    border: 1px solid #d6d6d6;
 }
 .dnd-container-suspended {
 	background: #ffce3d;
@@ -381,11 +403,13 @@ TM_content_layer {
 	font-size: 12px;
 	border-radius: 5px;
 }
-.dnd-input-div textarea {
+.dnd-input-div textarea, .faliure-text {
 	font-size: 12px;
 	width: 100%;
 	resize: none;
-	overflow-y: auto;	  
+	overflow-y: auto;	
+	background: transparent;
+	color: black;
 }
 
 .dnd-input-div p {
@@ -394,27 +418,41 @@ TM_content_layer {
 	color: #575757;
 }
 
-.task-panel-button {
-	cursor: pointer;
-	background: transparent;
-	border-color: transparent;
-	background-image: url(Public/icons/add.svg);
-	background-size: 60%;
-	background-repeat: no-repeat;
-	background-position: center;
-	transition: 0.2s;
-}
 
+.task-panel-button {
+    cursor: pointer;
+    background: transparent;
+    background-size: 15%;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: 0.2s;
+}
 .task-panel-button:hover {
-	background: white;
-	background-image: url(Public/icons/add.svg);
-	background-size: 63%;
-	background-repeat: no-repeat;
-	background-position: center;
-	box-shadow: 0px 0px 10px #9e9a9a;
-	-moz-box-shadow: 0px 0px 10px #9e9a9a;
-	-webkit-box-shadow: 0px 0px 10px #9e9a9a;;
-	border-left: 1px solid #e0e6e8;
+    background-size: 18%;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0px 0px 2px #9e9a9a;
+    -moz-box-shadow: 0px 0px 10px #9e9a9a;
+    -webkit-box-shadow: 0px 0px 10px #9e9a9a;
+    border-left: 1px solid #e0e6e8;
+}
+.task-panel-button-add{
+    border-color: transparent;
+    background-image: url(Public/icons/add.svg);
+}
+.task-panel-button-add:hover{
+    background-image: url(Public/icons/add.svg);
+}
+.task-panel-button-more{
+    border-color: transparent;
+    background-image: url(Public/icons/more.svg);
+}
+.task-panel-button-more:hover{
+    background-image: url(Public/icons/more.svg);
+}
+.abas-list-table{
+	font-size: 13px;
+	color:black;
 }
 .mini-button,.mini-button:hover
 {
@@ -528,6 +566,8 @@ TM_content_layer {
 .my-lower-row{
 	height: 90%;
 }
+
+
 @media only screen and (max-width: 1300px) {
 	.workstation-container 
 	{

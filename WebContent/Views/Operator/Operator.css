@@ -369,7 +369,7 @@ position: absolute;
 	height: 100%;
 }
 #SwitchPanel
-{	height: 83vh !important;
+{	height: 83vh;
 	overflow-y: auto;
 	overflow-x: hidden;
 	display: block;

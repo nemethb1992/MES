@@ -157,7 +157,12 @@ function openAsset(item)
 //		}
 //	});
 }
+function suspendListEvent(element){
 
+	$(element).change(function() {
+		$(".error-text").val($(element).val());
+	});
+}
 
 function TabControlEventHolder()
 {
@@ -169,23 +174,6 @@ function TabControlEventHolder()
 		$(this).css({'background-color':'#e6e6e6','background-size':'24%','border-right':'3px solid #ff6666'});
 	});
 	$('#navigationContainer').click(closeNavButtons());
-
-	$('#btn_leftNav_1').click(function(){
-		layoutState = 1;
-		getView(layoutState);
-	})
-	$('#btn_leftNav_2').click(function(){
-		layoutState = 2;
-		getView(layoutState);
-	})
-	$('#btn_leftNav_3').click(function(){
-		layoutState = 3;
-		getView(layoutState);
-	})
-	$('#btn_leftNav_4').click(function(){
-		layoutState = 4;
-		getView(layoutState);
-	})
 
 	$('#btn_lejelentes').click(function(){
 		if(opened != false)
@@ -322,9 +310,9 @@ function InterruptTask()
 }
 function SuspendTask(authernticated = true)
 {
+	var text = $(".error-text").val();
 	var uname = $(".username-input").val();
 	var pwd = $(".password-input").val();
-	var text = $(".error-text").val();
 	
 	if(text.length == 0)
 	{
@@ -342,6 +330,7 @@ function SuspendTask(authernticated = true)
 		data:{
 			secure: authernticated,
 			username: uname, 
+			errorText: text,
 			password: pwd
 			},
 		success: function (response) {

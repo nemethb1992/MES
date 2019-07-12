@@ -46,7 +46,8 @@
 	
 %>
 <meta name="format-detection" content="telephone=no">
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script src="${pageContext.request.contextPath}/Public/js/jquery-3.3.1.js"></script>
 <script src="${pageContext.request.contextPath}/Public/js/jquery_cookie.js"></script>
 <script src="${pageContext.request.contextPath}/Public/js/utils.js"></script>

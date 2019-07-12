@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import de.abas.erp.common.type.Id;
+import de.abas.erp.common.type.IdImpl;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasFunctionException;
 import phoenix.mes.abas.AbasObjectFactory;
@@ -46,6 +48,8 @@ public class SuspendTask extends HttpServlet {
 		String username = request.getParameter("username");
 		String pass = request.getParameter("password");
 		String secureParam = request.getParameter("secure");
+		String taskId = request.getParameter("taskId");
+		String errorText = request.getParameter("errorText");
 		boolean secure = (secureParam.equals("true") ? true : false);
 
 		response.setContentType("text/plain"); 
@@ -69,25 +73,30 @@ public class SuspendTask extends HttpServlet {
 		}
 
 		HttpSession session = request.getSession();
-
-		Task task = (Task)session.getAttribute("Task");
-		if(null == task){
-			return;
-		}
-
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 		AbasConnection abasConnection = null;
 
 		try {
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(username, pass, of.getLocale(), ab.isTest());
-
+			Task task = null;
+			if(taskId != null) {
+				Id AbasId = IdImpl.valueOf(taskId);
+				task = AbasObjectFactory.INSTANCE.createTask(AbasId,abasConnection);
+			}
+			else {
+				task = (Task)session.getAttribute("Task");
+			}
+			if(null == task){
+				return;
+			}
 			if(task != null)
 			{
 				task.resume(abasConnection);
 				task.suspend(abasConnection);
+				new Log(request).insert(task.getDetails(abasConnection).getWorkSlipNo(),errorText);
 				session.removeAttribute("Task");
 			}
-		}catch(LoginException | AbasFunctionException e)
+		}catch(LoginException | AbasFunctionException | SQLException e)
 		{
 			System.out.println(e);
     		try {

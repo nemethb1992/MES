@@ -55,7 +55,6 @@ public class InterruptTask extends HttpServlet {
 			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");   	
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
 			task.interrupt(abasConnection);
-			new Log(request).insert(task.getDetails(abasConnection).getWorkSlipNo(),request.getParameter("errorText"));
 		} catch (LoginException | SQLException | AbasFunctionException e) {
 			System.out.println(e);			
 			try {

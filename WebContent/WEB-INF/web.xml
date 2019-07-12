@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <display-name>dmes</display-name>
-  	<session-config>
-		<session-timeout>540</session-timeout>
-	</session-config>
+  <session-config>
+    <session-timeout>540</session-timeout>
+  </session-config>
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <servlet-name>TaskSuspendModal</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.manager.TaskSuspendModal</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TaskSuspendModal</servlet-name>
+    <url-pattern>/TaskSuspendModal</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>TaskDataSheetModal</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.manager.TaskDataSheetModal</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TaskDataSheetModal</servlet-name>
+    <url-pattern>/TaskDataSheetModal</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>Enter</servlet-name>
     <servlet-class>phoenix.mes.content.controller.Enter</servlet-class>
@@ -84,6 +100,16 @@
   <servlet-mapping>
     <servlet-name>StoreSelectedStation</servlet-name>
     <url-pattern>/StoreSelectedStation</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>RemoveSelectedStation</display-name>
+    <servlet-name>RemoveSelectedStation</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.manager.RemoveSelectedStation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RemoveSelectedStation</servlet-name>
+    <url-pattern>/RemoveSelectedStation</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

@@ -48,6 +48,7 @@ public class AbasTaskList extends HttpServlet {
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
 			List<Task> task = (List<Task>)AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection).getUnassignedTasks(abasDate, abasConnection);
 			request.setAttribute("AbasList",task);
+			request.setAttribute("OutputFormatter", of);
 			request.setAttribute("abasConnection", abasConnection);
 			view = RenderView.render("/Views/Manager/Todo/Partial/AbasList.jsp", request, response);
 		}catch(LoginException | SQLException e){

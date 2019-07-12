@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import de.abas.erp.common.type.Id;
+import de.abas.erp.common.type.IdImpl;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasFunctionException;
 import phoenix.mes.abas.AbasObjectFactory;
@@ -42,18 +44,25 @@ public class ResumeTask extends HttpServlet {
 			doGet(request,response);
 			return;
 		}
+		String taskId = request.getParameter("taskId");
 		
 		HttpSession session = request.getSession();
 
-		Task task = (Task)session.getAttribute("Task");
-		if(null == task){
-			return;
-		}
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 		AbasConnection abasConnection = null;
 		try { 
 			User user = new User(request);       	
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
+			Task task = null;
+			if(taskId != null) {
+				Id AbasId = IdImpl.valueOf(taskId);
+				task = AbasObjectFactory.INSTANCE.createTask(AbasId,abasConnection);
+			}else {
+				task = (Task)session.getAttribute("Task");
+			}
+			if(null == task){
+				return;
+			}
 			task.resume(abasConnection);
 		} catch (LoginException | SQLException | AbasFunctionException e) {
 			try {
@@ -73,6 +82,7 @@ public class ResumeTask extends HttpServlet {
 				}
 			} catch (Throwable t) {
 			}
+			response.getWriter().write("true");
 		}
 	}
 

@@ -33,6 +33,9 @@ function ApplicationCountDown()
 	    }
 	}
 }
+function utf8(s) {
+	  return decodeURIComponent(escape(s));
+}
 
 function showProgress(max, actual, progressbar)
 {

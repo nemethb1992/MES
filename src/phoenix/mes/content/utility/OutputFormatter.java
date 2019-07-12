@@ -31,6 +31,7 @@ public class OutputFormatter {
 		PLACE_OF_USE("Felhasználás","Verwendung","Place of use"),
 		REMAINING_TIME("Hátralévő idő","Restlaufzeit","Remaining time"),
 		TASK_START("Feladat indítása","Arbeit starten","Task start"),
+		OPEN_TASK_DATASHEET("Adatlap megnyitása","Datenblatt öffnen","Open datasheet"),
 		START_TIME("Indítás ideje","Startzeit","Start time"),
 		END_TIME("Várható befejezés","Erwarteter Abschluss","Expected completion"),
 		INTERRUPT("Megszakítás","Abbrechen","Interrupt"),
@@ -88,10 +89,16 @@ public class OutputFormatter {
 		DISRUPTION_REASON("Zavar oka","Störungsursache","Reason of disruption"),
 		DISRUPTION_TITLE("Feladat megszakítás","Aufgabe abbrechen","Task interruption"),
 		COMMIT("Véglegesítés","Fertigstellen","Commit"),
+		SUSPEND_LIST_ITEM_1("Anyaghiány","Materialmangel",""),
+		SUSPEND_LIST_ITEM_2("Minőségi probléma","Qualitätsproblem",""),
+		SUSPEND_LIST_ITEM_3("Dokumentációs hiba","Dokumentationsfehler",""),
+		SUSPEND_LIST_ITEM_4("Géphiba","Maschinenfehler",""),
+		SUSPEND_LIST_ITEM_5("Egyéb probléma","Sonstiges Problem",""),
 		EMPTY_STATION_ID("Munkaállomás nincs regisztrálva!","Arbeitsstation ist nicht registriert!","Workstation is not registered!"),
 		SUBMIT_CONFIRMATION_TEXT("Biztosan lejelenti a következő mennyiséget?","",""), 
 		YES("Igen","Ja","Yes"),
 		NO("Nem","Nein","No"),
+		BACK("Vissza","Zurück","Back"),
 		CANCEL("Mégsem","Abbrechen","Cancel");
 
 		private final String hungarianText;

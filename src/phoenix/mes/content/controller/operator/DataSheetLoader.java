@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import de.abas.erp.common.type.Id;
+import de.abas.erp.common.type.IdImpl;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
@@ -38,6 +40,8 @@ public class DataSheetLoader extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		OperatingWorkstation ws = new OperatingWorkstation(request);
+		
+		String taskId = request.getParameter("taskId");
 
 		if(ws.getGroup().equals(null))
 		{
@@ -51,7 +55,14 @@ public class DataSheetLoader extends HttpServlet {
 			User user = new User(request);
 			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(),  new AppBuild(request).isTest());
-			Task task = (Task)session.getAttribute("Task");
+			Task task = null;
+			if(taskId != null && taskId != "") {
+				System.out.println(taskId);
+				Id AbasId = IdImpl.valueOf(taskId);
+				task = AbasObjectFactory.INSTANCE.createTask(AbasId,abasConnection);
+			}else {
+				task = (Task)session.getAttribute("Task");
+			}
 			if(task == null)
 			{
 				doGet(request,response);

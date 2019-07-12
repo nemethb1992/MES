@@ -15,8 +15,21 @@ function TaskManagerStartUp()
 	setDateNow('.personal-date');
 	setTimeNow('.personal-time');
 	datepicker();
+	
+    $('[id^=detail-]').hide();
+    $('.toggle').click(function() {
+        $input = $( this );
+        $target = $('#'+$input.attr('data-toggle'));
+        $target.slideToggle();
+    });
 }
 
+function suspendListEvent(element){
+
+	$(element).change(function() {
+		$(".error-text").val($(element).val());
+	});
+}
 function ButtonScriptElements()
 {
 //	$('.station-container').on("click", function(event){
@@ -24,6 +37,8 @@ function ButtonScriptElements()
 //		      index = $(target).index();
 //		  console.log(target, index);
 //	});
+
+
 	
 	$(".date-refresh").click(function(){
 		ListLoader();
@@ -36,14 +51,6 @@ function ButtonScriptElements()
 
 	$('#btn_select_1').click(function(){
 		$('#btn_select_1').submit();
-	});
-
-	$('.refresh_btn').click(function(){
-		$( ".ts_sumTime" ).val("0:00:00");
-		setToday(".datepicker_own");
-		$(".station_label").val("<%=outputFormatter.getWord(DictionaryEntry.SELECT_A_WORKSTATION)%>");
-		SessionStoreStation();
-		FirstStationList();
 	});
 
 	$('.ts_searchInp').focusin(function(){
@@ -66,6 +73,17 @@ function ButtonScriptElements()
 	});
 }
 
+function refreshButton(){
+	$( ".ts_sumTime" ).val("0:00:00");
+	$( ".station-container" ).empty();
+	$( ".dndf1" ).empty();
+	$( ".dndf2" ).empty();
+	setToday(".datepicker_own");
+	$(".station_label").val("<%=outputFormatter.getWord(DictionaryEntry.SELECT_A_WORKSTATION)%>");
+	SessionStoreStation();
+	FirstStationList();
+}
+
 function datepicker()
 {
 	$('.datepicker_own').datepicker({
@@ -77,16 +95,135 @@ function datepicker()
 	});
 }
 
+var layoutState = 1;
+function NavigationButtonClick(item)
+{
+	$(item).show();
+	var id = $(item).val();
+	var tab = $(item).attr("id").split('-')[2];
+	if(tab != layoutState){
+		layoutState = tab;
+		getView(tab, id);
+	}
+	else{
+		return;
+	}
+}
+
+function getView(tab = 1, id)
+{
+	$( "#SwitchPanel" ).empty();
+	loadingAnimation("#SwitchPanel", "operator");
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/DataSheetLoader")%>',
+		data:{
+			tabNo: tab,
+			taskId: id
+		},
+		success: function (response) {
+			loadingAnimationStop("operator");
+			$( "#SwitchPanel" ).empty();
+			$( "#SwitchPanel" ).append(response[0]);
+		}
+	});
+}
+
+function openSuspendModal(item){
+	var id = $(item).val();
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/TaskSuspendModal")%>',
+		data: {
+			TaskID: id
+		},
+		success: function (response) {
+			$("#SuspendModal").remove();
+			document.body.innerHTML += response;
+			$('#SuspendModal').modal("show");
+		},
+		error: function() {
+		}  
+	});
+}
+
+function openDataSheetModal(item){
+	var id = $(item).val();
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/TaskDataSheetModal")%>',
+		data: {
+			TaskID: id
+		},
+		success: function (response) {
+			$("#DataSheetModal").remove();
+			document.body.innerHTML += response;
+			$('#DataSheetModal').modal("show");
+			getView(1,id);
+		},
+		error: function() {
+		}  
+	});
+}
+//function ResumeTaskFromManager(item)
+//{
+//	var id = $(item).val();
+//	
+//	$.post({
+//		url:  '<%=response.encodeURL(request.getContextPath()+"/ResumeTask")%>',
+//		data:{
+//			taskId: id
+//			},
+//		success: function (response) {
+//			if(response == "true"){
+//				ListLoader();
+//			}else
+//				{
+//				alert(response);
+//				}
+//		}
+//	});
+//}
+
+function SuspendTaskFromManager(item)
+{
+	var text = $(".error-text").val();
+	var id = $(item).val();
+	
+	if(text.length == 0)
+	{
+		return;
+	}
+	
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/SuspendTask")%>',
+		data:{
+			secure: "false",
+			errorText: text,
+			taskId: id
+			
+			},
+		success: function (response) {
+			if(response == "true"){
+				$('#SuspendModal').modal("hide");
+				ListLoader();
+			}else
+				{
+				alert(response);
+				}
+		}
+	});
+}
+
+function Cancel()
+{
+	$('#interrupt-level1').modal('hide');
+}
+
 function ListLoader()
 {
-	SessionStoreStation(SelectedStation);
-	
 	workstationListLoader();
 	var date = $(".datepicker_own").val();
 	if(date != null && date != "" && date != "undefinied")
 	{
 		date = date.split('-')[0] + date.split('-')[1] + date.split('-')[2];
-		console.log(date);
 	}
 	else
 	{
@@ -150,7 +287,7 @@ function setToday()
 
 	var now = new Date();
 
-	var day = ("0" + (now.getDate()+7)).slice(-2);
+	var day = ("0" + (now.getDate()+14)).slice(-2);
 
 	var month = ("0" + (now.getMonth() + 1)).slice(-2);
 
@@ -181,8 +318,8 @@ function FirstStationList()
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/WorkstationControl")%>',
 		success: function (view) {
-			$( ".dndf1" ).empty();
-			$( ".dndf2" ).empty();
+//			$( ".dndf1" ).empty();
+//			$( ".dndf2" ).empty();
 			$( ".station-container" ).empty();
 			$( ".station-container" ).append(view);
 			level = 0;
@@ -194,7 +331,6 @@ function StationItemSelect(item, level)
 {
 	$( ".station-container" ).empty();
 	var value = $(item).attr("value");
-	console.log(value);
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/WorkstationControl")%>',
 		data: {
@@ -226,7 +362,6 @@ function PushToStation(item)
 	if(!isEmpty($('.station-list'))){
 		targeted = $('.station-list-item').last().children('.workSlipId').val();
 	}
-	console.log(current + targeted);
 	AddTask(current, targeted);
 }
 

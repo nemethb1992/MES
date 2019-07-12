@@ -38,6 +38,10 @@ public class SelectedWorkstation extends Workstation {
 	{
 		request.getSession().setAttribute("selectedWorkstation", obj);
 	}
+	public void removeSelectedStation()
+	{
+		request.getSession().removeAttribute("selectedWorkstation");
+	}
 
 	@SuppressWarnings("null")
 	public String getSelectedStation() throws SQLException

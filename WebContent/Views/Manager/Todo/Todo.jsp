@@ -3,32 +3,28 @@
 <script>
 	
 <%@ include file="/Views/Manager/Todo/Todo.js"%>
-<%
-
-String displayName = (String) session.getAttribute("displayname");
-if(outputFormatter.getLocale() == Locale.GERMAN || outputFormatter.getLocale() == Locale.ENGLISH)
-{
-try {
-	String auxiliaryArr[] = displayName.split(" ");
-	String auxiliary = "";
 	
-	int i = 0;
-	for(String part : auxiliaryArr){
-		if(i>0)
-		{
-			auxiliary += part;
-			auxiliary += " ";
-		}
-		i++;
-	}
+<%String displayName = (String) session.getAttribute("displayname");
+			if (outputFormatter.getLocale() == Locale.GERMAN || outputFormatter.getLocale() == Locale.ENGLISH) {
+				try {
+					String auxiliaryArr[] = displayName.split(" ");
+					String auxiliary = "";
 
-	auxiliary += auxiliaryArr[0];
-	displayName = auxiliary;
-	}
-	catch(Exception e) {
-	}
-}
-%>	
+					int i = 0;
+					for (String part : auxiliaryArr) {
+						if (i > 0) {
+							auxiliary += part;
+							auxiliary += " ";
+						}
+						i++;
+					}
+
+					auxiliary += auxiliaryArr[0];
+					displayName = auxiliary;
+				} catch (Exception e) {
+				}
+			}%>
+	
 </script>
 <div class='container-fluid h-100'>
 	<p class='actual-time h5'></p>
@@ -36,19 +32,19 @@ try {
 		<div class='col-12 h-100 px-0 topNav'>
 			<div class='h-100 w-100 mx-0 row'>
 				<div class='h-100 col col-nav-logo float-left'>
-<!-- 					<img -->
-<%-- 						src="${pageContext.request.contextPath}/Public/icons/pm_logo_normal.svg" --%>
-<!-- 						class='d-block m-3 img-fluid LogoMiniPM' /> -->
+					<!-- 					<img -->
+					<%-- 						src="${pageContext.request.contextPath}/Public/icons/pm_logo_normal.svg" --%>
+					<!-- 						class='d-block m-3 img-fluid LogoMiniPM' /> -->
 				</div>
 				<div class='language-top-nav h-100 px-0'>
 					<%@include file="/Views/Partial/LanguageSelector.jsp"%>
 				</div>
-				<div class='personal-data-display manager-personal-data h-100 float-right px-0'>
+				<div
+					class='personal-data-display manager-personal-data h-100 float-right px-0'>
 					<div class='form-group'>
 						<input
 							class='form-control h-100 personal-form-control personal-form-name'
-							disabled
-							value='<%=displayName%>'>
+							disabled value='<%=displayName%>'>
 					</div>
 					<div class='form-group personal-secondery'>
 						<input
@@ -63,41 +59,34 @@ try {
 				</div>
 				<div class='top-nav-button h-100 px-0 col-nav-back float-right'>
 					<form method='POST' class='h-100'
-						action='<%=response.encodeURL(request.getContextPath() + "/Main") %>'>
+						action='<%=response.encodeURL(request.getContextPath() + "/Main")%>'>
 						<input class='btn_back-gray' type='submit' value='' />
 					</form>
 				</div>
 				<div
 					class='top-nav-button px-0 d-block col col-nav-logout h-100 float-right'>
 					<form method='POST' class='h-100'
-						action='<%=response.encodeURL(request.getContextPath() + "/Logout") %>'>
+						action='<%=response.encodeURL(request.getContextPath() + "/Logout")%>'>
 						<input class='btn_logout-gray' type='submit' value='' />
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- 			<img -->
-	<%-- 				src="${pageContext.request.contextPath}/Public/icons/pm_logo_mini_white.svg" --%>
-	<!-- 				class='row d-block m-3 img-fluid LogoMiniPM float-left' /> -->
-	<!-- 			<form method='POST' class='h-100 float-right' -->
-	<%-- 				action='${pageContext.request.contextPath}/Home'> --%>
-	<!-- 				<input class='btn_logout' type='submit' value='' /> -->
-	<!-- 			</form> -->
 	<div class='row my-lower-row'>
 		<div class=' col-2'>
-				<div class='row station-select-row h-100'>
-					<div class='cont_header col-12 px-0'>
-						<div class='input-icon-holderDiv float-right h-100'>
-							<div class='refresh_btn h-100'>
-								<img class='h-100 float-left p-3'
-									src='${pageContext.request.contextPath}/Public/icons/backArrowgray.svg'>
-							</div>
+			<div class='row station-select-row h-100'>
+				<div class='cont_header col-12 px-0'>
+					<div class='input-icon-holderDiv float-right h-100'>
+						<div class='refresh_btn h-100' onclick='refreshButton()'>
+							<img class='h-100 float-left p-3'
+								src='${pageContext.request.contextPath}/Public/icons/backArrowgray.svg'>
 						</div>
 					</div>
-					<div class='col-12 cont_content'>
-						<div class='station-container row'></div>
-					</div>
+				</div>
+				<div class='col-12 cont_content'>
+					<div class='station-container row'></div>
+				</div>
 			</div>
 		</div>
 		<div class='sortContDiv h-100 col-10 pr-0'>
@@ -139,10 +128,16 @@ try {
 				</div>
 				<div class='sortContDiv_ListHolder row'>
 					<div class='abas-list-holder h-100   sort-list-holder  col-9 px-0'>
-						<div class='abas-list dnd-frame dndf1 m-0 row'></div>
+						<div class='abas-list dnd-frame dndf1 m-0 row'>
+
+
+						</div>
 					</div>
-					<div class='ws-list-holder sort-list-holder col-3 px-0'>
-						<div class='dnd-frame h-100 m-0 dndf2 station-list'></div>
+					<div class='ws-list-holder h-100 sort-list-holder col-3 px-0'>
+						<div class='dnd-frame h-100 m-0 dndf2 station-list'>
+
+
+						</div>
 					</div>
 				</div>
 			</div>
