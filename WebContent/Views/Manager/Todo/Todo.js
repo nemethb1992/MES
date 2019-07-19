@@ -286,8 +286,10 @@ function setToday()
 {
 
 	var now = new Date();
+	//plusz 2 hét
+	now.setDate(now.getDate() + 14);
 
-	var day = ("0" + (now.getDate()+14)).slice(-2);
+	var day = ("0" + now.getDate()).slice(-2);
 
 	var month = ("0" + (now.getMonth() + 1)).slice(-2);
 

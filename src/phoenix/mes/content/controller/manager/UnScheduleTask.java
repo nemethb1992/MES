@@ -52,7 +52,7 @@ public class UnScheduleTask extends HttpServlet {
 			User user = new User(request);     	
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
 			Task task = AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(workSlipId), abasConnection);
-			task.unSchedule(abasConnection);
+			task.unschedule(abasConnection);
 		} catch (LoginException | SQLException | AbasFunctionException e) {
     		try {
 				new Log(request).logFaliure(FaliureType.TASK_LIST_NAVIGATION, e.getMessage());

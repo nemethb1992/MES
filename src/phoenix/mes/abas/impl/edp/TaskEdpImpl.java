@@ -656,8 +656,8 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		 * @throws InvalidAbasFunctionCallException Ha a funkcióhívás érvénytelen bemeneti adatok miatt meghiúsult.
 		 * @throws AbasFunctionExecutionException Ha (futásidejű) hiba történt a funkcióhívás végrehajtása során.
 		 */
-		public static void unScheduleTask(String workSlipId, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
-			unScheduleTask(workSlipId, false, edpConnection);
+		public static void unscheduleTask(String workSlipId, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+			unscheduleTask(workSlipId, false, edpConnection);
 		}
 
 		/**
@@ -668,7 +668,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		 * @throws InvalidAbasFunctionCallException Ha a funkcióhívás érvénytelen bemeneti adatok miatt meghiúsult.
 		 * @throws AbasFunctionExecutionException Ha (futásidejű) hiba történt a funkcióhívás végrehajtása során.
 		 */
-		protected static void unScheduleTask(String workSlipId, boolean suspend, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+		protected static void unscheduleTask(String workSlipId, boolean suspend, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
 			SCHEDULER.executeAbasFunction(unScheduleInputFieldNames, new String[] {workSlipId, suspend ? "1" : "0", " "}, edpConnection);
 		}
 
@@ -727,7 +727,18 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		 * @throws AbasFunctionExecutionException Ha (futásidejű) hiba történt a funkcióhívás végrehajtása során.
 		 */
 		public static void suspendTask(String workSlipId, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
-			unScheduleTask(workSlipId, true, edpConnection);
+			unscheduleTask(workSlipId, true, edpConnection);
+		}
+
+		/**
+		 * A megadott gyártási feladat felfüggesztésének visszavonása.
+		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
+		 * @param edpConnection Az EDP-kapcsolat.
+		 * @throws InvalidAbasFunctionCallException Ha a funkcióhívás érvénytelen bemeneti adatok miatt meghiúsult.
+		 * @throws AbasFunctionExecutionException Ha (futásidejű) hiba történt a funkcióhívás végrehajtása során.
+		 */
+		public static void unsuspendTask(String workSlipId, GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+			unscheduleTask(workSlipId, false, edpConnection);
 		}
 
 		/**
@@ -944,11 +955,11 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.GenericTask#unSchedule(phoenix.mes.abas.GenericAbasConnection)
+	 * @see phoenix.mes.abas.GenericTask#unschedule(phoenix.mes.abas.GenericAbasConnection)
 	 */
 	@Override
-	public void unSchedule(GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
-		TaskManager.unScheduleTask(workSlipId, edpConnection);
+	public void unschedule(GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+		TaskManager.unscheduleTask(workSlipId, edpConnection);
 	}
 
 	/* (non-Javadoc)
@@ -996,6 +1007,15 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 	@Override
 	public void suspend(GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
 		TaskManager.suspendTask(workSlipId, edpConnection);
+		clearDetailsStatusCache();
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericTask#unsuspend(phoenix.mes.abas.GenericAbasConnection)
+	 */
+	@Override
+	public void unsuspend(GenericAbasConnection<EDPSession> edpConnection) throws AbasFunctionException {
+		TaskManager.unsuspendTask(workSlipId, edpConnection);
 		clearDetailsStatusCache();
 	}
 

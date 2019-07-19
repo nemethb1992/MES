@@ -284,7 +284,7 @@ public interface GenericTask<C> extends Serializable {
 	 * @param abasConnection Az Abas-kapcsolat.
 	 * @throws AbasFunctionException Ha hiba történt a funkcióhívás végrehajtása során.
 	 */
-	void unSchedule(GenericAbasConnection<C> abasConnection) throws AbasFunctionException;
+	void unschedule(GenericAbasConnection<C> abasConnection) throws AbasFunctionException;
 
 	/**
 	 * A gyártási feladat végrehajtásának félbeszakítása.
@@ -315,5 +315,12 @@ public interface GenericTask<C> extends Serializable {
 	 * @throws AbasFunctionException Ha hiba történt a funkcióhívás végrehajtása során.
 	 */
 	void suspend(GenericAbasConnection<C> abasConnection) throws AbasFunctionException;
+
+	/**
+	 * A gyártási feladat felfüggesztésének visszavonása.
+	 * @param abasConnection Az Abas-kapcsolat.
+	 * @throws AbasFunctionException Ha hiba történt a funkcióhívás végrehajtása során.
+	 */
+	void unsuspend(GenericAbasConnection<C> abasConnection) throws AbasFunctionException;
 
 }
