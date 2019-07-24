@@ -128,13 +128,11 @@
 				</div>
 				<div class='sortContDiv_ListHolder row'>
 					<div class='abas-list-holder h-100   sort-list-holder  col-9 px-0'>
-						<div class='abas-list dnd-frame dndf1 m-0 row'>
-
-
-						</div>
+						<div class='abas-list dnd-frame dndf1 m-0 row'></div>
 					</div>
 					<div class='ws-list-holder h-100 sort-list-holder col-3 px-0'>
 						<div class='dnd-frame h-100 m-0 dndf2 station-list'>
+
 
 
 						</div>

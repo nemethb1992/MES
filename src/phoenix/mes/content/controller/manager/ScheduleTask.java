@@ -30,7 +30,9 @@ public class ScheduleTask extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher("/Logout").forward(request, response);
+
+		String encodedURL = response.encodeRedirectURL("/Logout");
+		getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
 		
 		
 	}

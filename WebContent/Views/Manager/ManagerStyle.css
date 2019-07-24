@@ -345,6 +345,9 @@ TM_content_layer {
 .list-item-extended-content{
 	border-top: 1px solid #d6d6d6;
 }
+.top-table-header{
+	border: transparent;
+}
 .dnd-container {
 	font-size: 13px;
 	color:black;
@@ -418,6 +421,26 @@ TM_content_layer {
 	color: #575757;
 }
 
+.more-button-station{
+    cursor: pointer;
+    background: transparent;
+    background-size: 5%;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: 0.2s;
+    border-color: transparent;
+    background-image: url(Public/icons/more.svg);
+}
+.more-button-station:hover{
+    background-size: 6%;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0px 0px 2px #9e9a9a;
+    -moz-box-shadow: 0px 0px 10px #9e9a9a;
+    -webkit-box-shadow: 0px 0px 10px #9e9a9a;
+    border-color: transparent;
+    background-image: url(Public/icons/more.svg);
+}
 
 .task-panel-button {
     cursor: pointer;

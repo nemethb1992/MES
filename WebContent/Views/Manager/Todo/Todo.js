@@ -4,6 +4,7 @@ var path = location.pathname.split('/')[1];
 $(document).ready(function(){
 	TaskManagerStartUp();
 	FirstStationList();
+	$(".station-list").sortable();
 });
 
 function TaskManagerStartUp()
@@ -162,25 +163,25 @@ function openDataSheetModal(item){
 		}  
 	});
 }
-//function ResumeTaskFromManager(item)
-//{
-//	var id = $(item).val();
-//	
-//	$.post({
-//		url:  '<%=response.encodeURL(request.getContextPath()+"/ResumeTask")%>',
-//		data:{
-//			taskId: id
-//			},
-//		success: function (response) {
-//			if(response == "true"){
-//				ListLoader();
-//			}else
-//				{
-//				alert(response);
-//				}
-//		}
-//	});
-//}
+function UnsuspendTaskFromManager(item)
+{
+	var id = $(item).val();
+	
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/UnsuspendTask")%>',
+		data:{
+			TaskID: id
+			},
+		success: function (response) {
+			if(response == "true"){
+				ListLoader();
+			}else
+				{
+				alert(response);
+				}
+		}
+	});
+}
 
 function SuspendTaskFromManager(item)
 {

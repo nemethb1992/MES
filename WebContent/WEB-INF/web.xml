@@ -273,6 +273,16 @@
   </servlet-mapping>
   <servlet>
     <description></description>
+    <display-name>UnsuspendTask</display-name>
+    <servlet-name>UnsuspendTask</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.manager.UnsuspendTask</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UnsuspendTask</servlet-name>
+    <url-pattern>/UnsuspendTask</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
     <display-name>InterruptTask</display-name>
     <servlet-name>InterruptTask</servlet-name>
     <servlet-class>phoenix.mes.content.controller.operator.InterruptTask</servlet-class>

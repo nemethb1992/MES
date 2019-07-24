@@ -16,6 +16,7 @@
 
 	BigDecimal summedProductionTime = BigDecimal.ZERO;
 	String cssClass;
+	int i =0;
 	for (Task task: li) {
 		final Task.Details taskDetails = task.getDetails(abasConnection);
 				boolean progress = (task.getDetails(abasConnection).getStatus() == Status.IN_PROGRESS ? true : false);
@@ -37,52 +38,115 @@
 					cssClass = "";
 					break;			
 				}
-				%>
-<div class='dnd-container station-list-item <%=cssClass%> col-12 px-0'>
-	<input class='d-none workSlipId' value='<%=task.getWorkSlipId()%>'>
-	<div class='container px-0'>
-		<div class='row w-100 mx-auto'>
-			<div class='<%=(progress ? "col-6" : "col-4")%> pr-0 py-2 dnd-input-div'>
-				<p><%=of.getWord(DictionaryEntry.WORKSHEET_NO)%></p>
-				<textarea readonly class='dnd-input dnd-in1'><%=taskDetails.getWorkSlipNo()%></textarea>
-				<p><%=of.getWord(DictionaryEntry.ARTICLE)%></p>
-				<textarea readonly class='dnd-input dnd-in1'><%=taskDetails.getProductIdNo()%></textarea>
-				<p><%=of.getWord(DictionaryEntry.GET_STARTED)%></p>
-				<textarea readonly class='dnd-input dnd-in1'><%=startDateFormated%></textarea>
-				<p><%=of.getWord(DictionaryEntry.OPEN_QUANTITY)%></p>
-				<textarea readonly class='dnd-input dnd-in1'><%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity()) +" "+ taskDetails.getStockUnit()%></textarea>
-			</div>
-			<div class='col-6 pr-3 py-2 dnd-input-div'>
-				<p><%=of.getWord(DictionaryEntry.SEARCH_WORD)%></p>
-				<textarea readonly class='dnd-input dnd-in1'><%=taskDetails.getProductSwd()%></textarea>
-				<p><%=of.getWord(DictionaryEntry.NAME)%></p>
-				<textarea readonly class='dnd-input dnd-in1'><%=taskDetails.getProductDescription()%></textarea>
-				<p><%=of.getWord(DictionaryEntry.CALCULATED_PROD_TIME)%></p>
-				<textarea readonly class='dnd-input dnd-in1'><%=of.formatTime(taskDetails.getCalculatedProductionTime())%></textarea>
-			</div>
-			<div class='col-2 <%=(progress ? "d-none" : "")%> dnd-input-div px-0'>
-				<div class='row w-100 mx-auto h-100 d-flex'>
-					<div class='col-12 px-0'>
-						<input
-							class='h-100 w-100 task-panel-button mini-button up-task-button'
-							onclick='MoveTaskUp(this)' type='button'>
-					</div>
-					<div class='col-12 my-1 px-0'>
-						<input
-							class='h-100 w-100 task-panel-button mini-button remove-task-button'
-							onclick='RemoveFromStation(this)' type='button'>
-					</div>
-					<div class='col-12 px-0'>
-						<input
-							class='h-100 w-100 task-panel-button mini-button down-task-button'
-							onclick='MoveTaskDown(this)' type='button'>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
-<%}
+				%><div class="dnd-container station-list-item sort-list-holder  <%=cssClass%>  col-12 px-0">
+								<input class="d-none workSlipId" value="<%=task.getWorkSlipId()%>">
+								<div class="container-fluid ">
+									<div class="row ">
+										<div class="col ">
+											<div class="row">
+												<div class="<%=(progress ? "col-12" : "col-11")%>">
+													<table class="table station-list-table mb-0">
+														<thead>
+															<tr>
+																<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.WORKSHEET_NO)%></th>
+																<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.PLACE_OF_USE)%></th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td><%=taskDetails.getWorkSlipNo()%></td>
+																<td><%=taskDetails.getUsage()%></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												<div class="pl-2 <%=(progress ? "d-none" : "col-1")%>">
+													<div class='row h-100'>
+														<div class='col-12 px-0'>
+															<input
+																class='h-100 w-100 task-panel-button mini-button up-task-button'
+																onclick='MoveTaskUp(this)' type='button'>
+														</div>
+														<div class='col-12 my-1 px-0'>
+															<input
+																class='h-100 w-100 task-panel-button mini-button remove-task-button'
+																onclick='RemoveFromStation(this)' type='button'>
+														</div>
+														<div class='col-12 px-0'>
+															<input
+																class='h-100 w-100 task-panel-button mini-button down-task-button'
+																onclick='MoveTaskDown(this)' type='button'>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div
+												class="container-fluid collapse list-item-extended-content"
+												id="list-item-extended-content-station-<%=i%>">
+												<div class="row">
+													<table class="table station-list-table mb-0">
+														<thead>
+															<tr>
+																<th scope="col"><%=of.getWord(DictionaryEntry.GET_STARTED)%></th>
+																<th scope="col"><%=of.getWord(DictionaryEntry.ARTICLE)%></th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td><%=startDateFormated%></td>
+																<td><%=taskDetails.getProductIdNo()%></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												<div class="row">
+													<table class="table station-list-table mb-0">
+														<thead>
+															<tr>
+																<th scope="col"><%=of.getWord(DictionaryEntry.SEARCH_WORD)%></th>
+																<th scope="col"><%=of.getWord(DictionaryEntry.NAME)%></th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td><%=taskDetails.getProductSwd()%></td>
+																<td><%=taskDetails.getProductDescription()%></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												<div class="row">
+													<table class="table station-list-table mb-0">
+														<thead>
+															<tr>
+																<th scope="col"><%=of.getWord(DictionaryEntry.CALCULATED_PROD_TIME)%></th>
+																<th scope="col"><%=of.getWord(DictionaryEntry.OPEN_QUANTITY)%></th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td><%=of.formatTime(taskDetails.getCalculatedProductionTime())%></td>
+																<td><%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity()) +" "+ taskDetails.getStockUnit()%></td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class='row h-25'>
+										<div class="col button-holder-list">
+											<div class="row dnd-input-div">
+												<input class="w-100 more-button-station" onclick=""
+													type="button" data-toggle="collapse"
+													data-target="#list-item-extended-content-station-<%=i%>"
+													aria-expanded="false"
+													aria-controls="list-item-extended-content-station-<%=i%>">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+<%i++;}
 request.setAttribute("summedProductionTime", summedProductionTime);
 %>
