@@ -4,7 +4,16 @@ var path = location.pathname.split('/')[1];
 $(document).ready(function(){
 	TaskManagerStartUp();
 	FirstStationList();
-	$(".station-list").sortable();
+	$(".station-list").sortable({
+		  group: 'no-drop',
+		  handle: '.drag-surface',
+		  onDragStart: function ($item, container, _super) {
+		    // Duplicate items of the no drop area
+		    if(!container.options.drop)
+		      $item.clone().insertAfter($item);
+		    _super($item, container);
+		  }
+		});
 });
 
 function TaskManagerStartUp()

@@ -131,11 +131,107 @@
 						<div class='abas-list dnd-frame dndf1 m-0 row'></div>
 					</div>
 					<div class='ws-list-holder h-100 sort-list-holder col-3 px-0'>
-						<div class='dnd-frame h-100 m-0 dndf2 station-list'>
-
-
-
-						</div>
+						<ol class='dnd-frame h-100 m-0 dndf2 station-list'>
+<%for(int i = 0; i < 10; i++){ %>
+					<li class="dnd-container station-list-item sort-list-holder    col-12 px-0">
+								<input class="d-none workSlipId" value="(8257188,9,0)">
+								<div class="container-fluid ">
+									<div class="row ">
+										<div class="col ">
+											<div class="row">
+												<div class="col-11 drag-surface">
+													<table class="table station-list-table mb-0">
+														<thead>
+															<tr>
+																<th style="border: transparent" scope="col">Munkalapszám</th>
+																<th style="border: transparent" scope="col">Felhasználás</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td>218121003</td>
+																<td>0471832B_1</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												<div class="pl-2 col-1">
+													<div class="row h-100">
+														<div class="col-12 px-0">
+															<input class="h-100 w-100 task-panel-button mini-button up-task-button" onclick="MoveTaskUp(this)" type="button">
+														</div>
+														<div class="col-12 my-1 px-0">
+															<input class="h-100 w-100 task-panel-button mini-button remove-task-button" onclick="RemoveFromStation(this)" type="button">
+														</div>
+														<div class="col-12 px-0">
+															<input class="h-100 w-100 task-panel-button mini-button down-task-button" onclick="MoveTaskDown(this)" type="button">
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="container-fluid collapse list-item-extended-content" id="list-item-extended-content-station-2">
+												<div class="row">
+													<table class="table station-list-table mb-0">
+														<thead>
+															<tr>
+																<th scope="col">Tervezett kezdés</th>
+																<th scope="col">Cikkszám</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td>2019.03.19.</td>
+																<td>00000000016833P</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												<div class="row">
+													<table class="table station-list-table mb-0">
+														<thead>
+															<tr>
+																<th scope="col">Keresöszó</th>
+																<th scope="col">Megnevezés</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td>P00126324.2</td>
+																<td>BA 281706 F Bocube Alu-Gehäuse-7024 2</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												<div class="row">
+													<table class="table station-list-table mb-0">
+														<thead>
+															<tr>
+																<th scope="col">Gyártási idö</th>
+																<th scope="col">Nyitott mennyiség</th>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+																<td>0:00:36</td>
+																<td>3 darab</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row h-25">
+										<div class="col button-holder-list">
+											<div class="row dnd-input-div">
+												<input class="w-100 more-button-station" onclick="" type="button" data-toggle="collapse" data-target="#list-item-extended-content-station-2" aria-expanded="false" aria-controls="list-item-extended-content-station-2">
+											</div>
+										</div>
+									</div>
+								</div>
+							</li>	
+<%} %>
+						</ol>
 					</div>
 				</div>
 			</div>
