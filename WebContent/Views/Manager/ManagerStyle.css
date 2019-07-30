@@ -423,7 +423,7 @@ TM_content_layer {
 
 .more-button-station{
     cursor: pointer;
-    background: transparent;
+    background: #d9e4ef;
     background-size: 5%;
     background-repeat: no-repeat;
     background-position: center;

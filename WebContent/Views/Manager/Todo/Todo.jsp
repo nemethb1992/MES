@@ -131,9 +131,11 @@
 						<div class='abas-list dnd-frame dndf1 m-0 row'></div>
 					</div>
 					<div class='ws-list-holder h-100 sort-list-holder col-3 px-0'>
-						<ol class='dnd-frame h-100 m-0 dndf2 station-list'>
+
+						<ul class='dnd-frame h-100 m-0 dndf2 station-list'>
 <%for(int i = 0; i < 10; i++){ %>
-					<li class="dnd-container station-list-item sort-list-holder    col-12 px-0">
+
+					<li class="dnd-container station-list-item sort-list-holder list-group col-12 px-0">
 								<input class="d-none workSlipId" value="(8257188,9,0)">
 								<div class="container-fluid ">
 									<div class="row ">
@@ -231,7 +233,7 @@
 								</div>
 							</li>	
 <%} %>
-						</ol>
+						</ul>
 					</div>
 				</div>
 			</div>
