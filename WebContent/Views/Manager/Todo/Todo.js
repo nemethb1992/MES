@@ -4,17 +4,10 @@ var path = location.pathname.split('/')[1];
 $(document).ready(function(){
 	TaskManagerStartUp();
 	FirstStationList();
-	$(".station-list").sortable({
-		  group: 'no-drop',
-		  handle: '.drag-surface',
-		  onDragStart: function ($item, container, _super) {
-		    // Duplicate items of the no drop area
-		    if(!container.options.drop)
-		      $item.clone().insertAfter($item);
-		    _super($item, container);
-		  }
-		});
+	Sortlist(".station-list");
 });
+
+
 
 function TaskManagerStartUp()
 {
@@ -42,11 +35,11 @@ function suspendListEvent(element){
 }
 function ButtonScriptElements()
 {
-//	$('.station-container').on("click", function(event){
-//		  var target = event.target,
-//		      index = $(target).index();
-//		  console.log(target, index);
-//	});
+// $('.station-container').on("click", function(event){
+// var target = event.target,
+// index = $(target).index();
+// console.log(target, index);
+// });
 
 
 	
@@ -143,7 +136,8 @@ function openSuspendModal(item){
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/TaskSuspendModal")%>',
 		data: {
-			TaskID: id
+			TaskID: id,
+			SuspendType: "manager"
 		},
 		success: function (response) {
 			$("#SuspendModal").remove();
@@ -160,7 +154,8 @@ function openDataSheetModal(item){
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/TaskDataSheetModal")%>',
 		data: {
-			TaskID: id
+			TaskID: id,
+			SuspendType: "manager",
 		},
 		success: function (response) {
 			$("#DataSheetModal").remove();
@@ -222,10 +217,10 @@ function SuspendTaskFromManager(item)
 	});
 }
 
-function Cancel()
-{
-	$('#interrupt-level1').modal('hide');
-}
+//function Cancel()
+//{
+//	$('#interrupt-level1').modal('hide');
+//}
 
 function ListLoader()
 {
@@ -296,7 +291,7 @@ function setToday()
 {
 
 	var now = new Date();
-	//plusz 2 hét
+	// plusz 2 hét
 	now.setDate(now.getDate() + 14);
 
 	var day = ("0" + now.getDate()).slice(-2);
@@ -317,7 +312,8 @@ function WorkStationItemCollect()
 	})
 	if(list.length == 0)
 	{
-//		$('.ws-list-holder .dnd-frame').append("<p class='appended-text'>Üres lista</p>");
+// $('.ws-list-holder .dnd-frame').append("<p class='appended-text'>Üres
+// lista</p>");
 	}
 	else
 	{
@@ -330,8 +326,8 @@ function FirstStationList()
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/WorkstationControl")%>',
 		success: function (view) {
-//			$( ".dndf1" ).empty();
-//			$( ".dndf2" ).empty();
+// $( ".dndf1" ).empty();
+// $( ".dndf2" ).empty();
 			$( ".station-container" ).empty();
 			$( ".station-container" ).append(view);
 			level = 0;
@@ -377,60 +373,93 @@ function PushToStation(item)
 	AddTask(current, targeted);
 }
 
-function MoveTaskUp(item)
-{	
-	var task = $(item).parents('.dnd-container');
-	var targeted, current, next;
-	var index = task.index();
-	
-	if(index == 0)
-	{
-		return;
-	}
-	else{
-		if(index == 1)
-		{
-			targeted = null;
-		}
-		else
-		{
-			targeted = task.prev().prev().children('.workSlipId').val();
-		}
-		next = task.prev().children('.workSlipId').val();
-		current = task.children('.workSlipId').val();
-		MoveTask(current,targeted,next);
-	}
-}
 
-function MoveTaskDown(item)
-{
-	var task = $(item).parents('.dnd-container');
+function SaveStationList(){
 	
-	var index = task.index();
-	if(index == StationListCount()-1)
-		{
-			return;
-		}
-	
-	var currentItemValue = task.children('.workSlipId').val();
-	var nextListItem = task.next().children('.workSlipId').val();
-	MoveTask(currentItemValue,nextListItem);
-}
-
-function MoveTask(current,targeted,next = null){
-	
+	var taskIds = [];
+    $(".station-list").children().each(function() {
+    	taskIds.push($(this).attr('value'));
+   });
+	console.log(taskIds);
 	$.post({
-		url:  '<%=response.encodeURL(request.getContextPath()+"/ScheduleTask")%>',
+		url:  '<%=response.encodeURL(request.getContextPath()+"/SaveStationTaskList")%>',
 		data: {
-			currentId: current,
-			targetId: targeted,
-			nextId: next
+			StationTaskList: taskIds
 		},
 		success: function () {
 			workstationListLoader();
+
+    		$('.task-list-save-btn').attr('class', 'task-list-save-btn btn btn-light mt-2 w-100 h-75');
 		}
 	});
 }
+
+function Sortlist(element){
+    $(element).sortable();
+    $(element).disableSelection();
+    $(element).droppable({
+        drop: function(event, ui){
+        		$('.task-list-save-btn').attr('class', 'task-list-save-btn btn btn-danger mt-2 w-100 h-75');
+           }
+
+    });
+}
+
+//
+//function MoveTaskDown(item)
+//{
+//	var task = $(item).parents('.dnd-container');
+//	
+//	var index = task.index();
+//	if(index == StationListCount()-1)
+//		{
+//			return;
+//		}
+//	
+//	var currentItemValue = task.children('.workSlipId').val();
+//	var nextListItem = task.next().children('.workSlipId').val();
+//	MoveTask(currentItemValue,nextListItem);
+//}
+
+//function MoveTask(current,targeted,next = null){
+//	
+//	$.post({
+//		url:  '<%=response.encodeURL(request.getContextPath()+"/ScheduleTask")%>',
+//		data: {
+//			currentId: current,
+//			targetId: targeted,
+//			nextId: next
+//		},
+//		success: function () {
+//			workstationListLoader();
+//		}
+//	});
+//}
+
+//function MoveTaskUp(item)
+//{	
+//	var task = $(item).parents('.dnd-container');
+//	var targeted, current, next;
+//	var index = task.index();
+//	
+//	if(index == 0)
+//	{
+//		return;
+//	}
+//	else{
+//		if(index == 1)
+//		{
+//			targeted = null;
+//		}
+//		else
+//		{
+//			targeted = task.prev().prev().children('.workSlipId').val();
+//		}
+//		next = task.prev().children('.workSlipId').val();
+//		current = task.children('.workSlipId').val();
+//		MoveTask(current,targeted,next);
+//	}
+//}
 
 function AddTask(current,targeted){
 	

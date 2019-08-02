@@ -126,7 +126,7 @@
 						<div class='col-2 offset-7'>
 							<button type="button" class="btn btn-warning w-100 my-2"
 								onclick='openSuspendModal(this)'
-								value='<%=task.getWorkSlipId()%>'><%=of.getWord(DictionaryEntry.INTERRUPT)%></button>
+								value='<%=task.getWorkSlipId()%>'><%=of.getWord(DictionaryEntry.SUSPEND)%></button>
 						</div>
 						<%
 							} else if (taskDetails.getStatus() == Status.INTERRUPTED
@@ -135,7 +135,7 @@
 						<div class='col-2 offset-7'>
 							<button type="button" class="btn btn-warning w-100 my-2"
 								onclick='UnsuspendTaskFromManager(this)'
-								value='<%=task.getWorkSlipId()%>'>Folytatás</button>
+								value='<%=task.getWorkSlipId()%>'><%=of.getWord(DictionaryEntry.RESUME)%></button>
 						</div>
 						<%
 							}

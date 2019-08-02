@@ -38,7 +38,7 @@
 					cssClass = "";
 					break;			
 				}
-				%><div class="dnd-container station-list-item sort-list-holder  <%=cssClass%>  col-12 px-0">
+				%><li class="dnd-container station-list-item sort-list-holder list-group <%=cssClass%>  col-12 px-0" value="<%=task.getWorkSlipId()%>">
 								<input class="d-none workSlipId" value="<%=task.getWorkSlipId()%>">
 								<div class="container-fluid ">
 									<div class="row ">
@@ -131,6 +131,13 @@
 														</tbody>
 													</table>
 												</div>
+																	<div class='row'>
+						<div class='col-12'>
+							<button type="button" onclick='openDataSheetModal(this)'
+								value='<%=task.getWorkSlipId()%>'
+								class="btn btn-info w-100 my-2"><%=of.getWord(DictionaryEntry.OPEN_TASK_DATASHEET)%></button>
+						</div>
+					</div>
 											</div>
 										</div>
 									</div>
@@ -146,7 +153,7 @@
 										</div>
 									</div>
 								</div>
-							</div>
+							</li>
 <%i++;}
 request.setAttribute("summedProductionTime", summedProductionTime);
 %>

@@ -41,6 +41,16 @@
     <servlet-name>DataSheetLoader</servlet-name>
     <url-pattern>/DataSheetLoader</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <description></description>
+    <display-name>SubmitConfirmationModal</display-name>
+    <servlet-name>SubmitConfirmationModal</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.operator.SubmitConfirmationModal</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SubmitConfirmationModal</servlet-name>
+    <url-pattern>/SubmitConfirmationModal</url-pattern>
+  </servlet-mapping>
   <servlet>
     <description></description>
     <display-name>Submit</display-name>
@@ -60,6 +70,16 @@
   <servlet-mapping>
     <servlet-name>Logout</servlet-name>
     <url-pattern>/Logout</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SaveStationTaskList</display-name>
+    <servlet-name>SaveStationTaskList</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.manager.SaveStationTaskList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SaveStationTaskList</servlet-name>
+    <url-pattern>/SaveStationTaskList</url-pattern>
   </servlet-mapping>
   <servlet>
     <description></description>

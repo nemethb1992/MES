@@ -94,7 +94,8 @@ public class WorkstationControl extends HttpServlet {
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(),user.getPassword(), of.getLocale(), ab.isTest());	
 			WorkCenter.Details workcenter = null;
 			for (Map<String, String> row : (List<Map<String,String>>)dataList) {
-				workcenter = AbasObjectFactory.INSTANCE.createWorkCenter(row.get("divValue"), abasConnection).getDetails(abasConnection);
+				String idNo = row.get("divValue");
+				workcenter = AbasObjectFactory.INSTANCE.createWorkCenter(idNo, abasConnection).getDetails(abasConnection);
 				String GroupTitle = "("+row.get("divValue") +") "+ workcenter.getDescription();
 				final Map<String, String> valueRow = new HashMap<>((int)Math.ceil((3) / 0.75));
 				valueRow.put("divValue", row.get("divValue"));

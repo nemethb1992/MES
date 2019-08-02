@@ -50,6 +50,7 @@ function getView(tab = 1)
 	});
 }
 
+
 function NavigationButtonClick(item)
 {
 	$(item).show();
@@ -174,44 +175,48 @@ function TabControlEventHolder()
 		$(this).css({'background-color':'#e6e6e6','background-size':'24%','border-right':'3px solid #ff6666'});
 	});
 	$('#navigationContainer').click(closeNavButtons());
-
-	$('#btn_lejelentes').click(function(){
-		if(opened != false)
-		{
-			openSubmit(this);
-		}
-		opened = true;
-	});
-	$('.btn_navHeader .lejelent-btn').click(function(){
-		opened = false;
-		closeSubmit();
-	});
 }
 
-var opened = true;
 
 function openInterupt(item)
 {
 	closeNavButtons();
 }
 
+var closing = false;
 function openSubmit(item)
 {
-	$(item).show();
-	closeNavButtons();
-		$(".btn_navHeader-left").hide();
-	$(item).css({'display':'block','width':'55%'});
-	$('#btn_lejelentes p').css({'display':'none'});
-	$('#btn_lejelentes .my-nav-container').css({'display':'block'});
-	$('#btn_lejelentes').css({'background':'white'});
+	if(closing == true)
+		{
+		closing=false;
+		return;
+		}
+	if($('#btn_lejelentes').width()<300){
+		console.log("open");
+		$('#btn_lejelentes').show();
+		closeNavButtons();
+			$(".btn_navHeader-left").hide();
+		$('#btn_lejelentes').css({'display':'block','width':'55%'});
+		$('#btn_lejelentes p').css({'display':'none'});
+		$('#btn_lejelentes .my-nav-container').css({'display':'block'});
+		$('#btn_lejelentes').css({'background':'white'});
+	}
+
+	
+
 }
 
 function closeSubmit()
 {
-	$(".btn_navHeader-left").show();
-	$('#btn_lejelentes').css({'background':'', 'color':'','width':'','border':''});
-	$('#btn_lejelentes .my-nav-container').css({'display':'none'});
-	$('#btn_lejelentes p').css({'display':''});
+	if($('#btn_lejelentes').width()>300){
+		console.log("close");
+		$(".btn_navHeader-left").show();
+		$('#btn_lejelentes').css({'background':'', 'color':'','width':'','border':''});
+		$('#btn_lejelentes .my-nav-container').css({'display':'none'});
+		$('#btn_lejelentes p').css({'display':''});
+		closing = true;
+	}
+
 }
 
 function closeNavButtons()
@@ -268,81 +273,8 @@ function SubmitConfirmationValidation(item){
 	}
 }
 
-function OpenSubmitConfirmationMod()
-{
-	
-	$('#submit-confirmation-modal').modal({backdrop: 'static', keyboard: false});
-	 $("#confirm-finished").val($(".input-finished").val());
-	 $("#confirm-scrap").val($(".input-scrap").val());
-	 SubmitConfirmationValidation($('.confirm-title'));
-}
 
-function OpenInterruptModal()
-{
-	$('#interrupt-level1').modal({backdrop: 'static', keyboard: false});
-	$('#interrupt-level1').modal('show');
-}
-function OpenInterruptModal_2()
-{
-	$('#interrupt-level2').modal({backdrop: 'static', keyboard: false});
-	$('#interrupt-level2').modal('show');
-}
 
-function InterruptTask()
-{
-	var text = $(".error-text").val();
-	if(text.length == 0)
-		{
-		return;
-		}
-	$.post({
-		url:  '<%=response.encodeURL(request.getContextPath()+"/InterruptTask")%>',
-		data:{
-			errorText: text
-		},
-		success: function () {
-			$(".error-text-back").html(text);
-		}
-	});
-	$('#interrupt-level1').modal('hide');
-	$('#interrupt-level2').modal({backdrop: 'static', keyboard: false});
-	$('#interrupt-level2').modal('show');
-}
-function SuspendTask(authernticated = true)
-{
-	var text = $(".error-text").val();
-	var uname = $(".username-input").val();
-	var pwd = $(".password-input").val();
-	
-	if(text.length == 0)
-	{
-		return;
-	}
-	if(authernticated == true){
-		if(uname.length == 0 || pwd.length == 0)
-		{
-			return;
-		}
-	}
-	
-	$.post({
-		url:  '<%=response.encodeURL(request.getContextPath()+"/SuspendTask")%>',
-		data:{
-			secure: authernticated,
-			username: uname, 
-			errorText: text,
-			password: pwd
-			},
-		success: function (response) {
-			if(response == "true"){
-				$('.interrupt-form').submit();
-			}else
-				{
-				alert(response);
-				}
-		}
-	});
-}
 
 function CloseConfirmationModal()
 {
@@ -350,6 +282,7 @@ function CloseConfirmationModal()
 	$(".input-finished").val(null);
 	$(".input-scrap").val(null);
 	closeSubmit();
+	closing = false;
 }
 
 function ResumeTask()
@@ -382,17 +315,15 @@ function RefreshTask()
 
 function SubmitTask()
 {
-	var finished = $(".input-finished").val();
-	var scrap = $(".input-scrap").val();
-
+	var finished = $("#confirm-finished").val();
+	var scrap = $("#confirm-scrap").val();
+	
 	var finishedQt = (finished == "" || finished == null ? 0 : finished);
 	var scrapQt = (scrap == "" || scrap == null ? 0 : scrap);
 	if(finishedQt == 0 && scrapQt == 0)
 	{
 		return;
 	}
-	opened = false;
-	CloseConfirmationModal();
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/Submit")%>',
 		data:{
@@ -402,14 +333,169 @@ function SubmitTask()
 		success: function (response) {
 			if(response == "submit_done")
 			{
-				location.reload();
-//				getView();
-//				setTimer();
+//				location.reload();
+				CloseConfirmationModal();
+				getView();
+				setTimer();
 			}else if(response == "error"){
 				alert("Lejelentesi hiba!");
 			}else if(response == "exit"){
 				$(".refresh-form").submit();
 			}
+		}
+	});
+}
+
+
+function OpenSubmitConfirmationModal(item)
+{ 
+		
+		var id = $(item).val();
+		var finished = $(".input-finished").val();
+		var scrap = $(".input-scrap").val();
+
+		if(finished == "" && scrap == ""){
+			return;
+		}
+		if(finished == 0 && scrap == 0){
+			return;
+		}
+		
+		$.post({
+			url:  '<%=response.encodeURL(request.getContextPath()+"/SubmitConfirmationModal")%>',
+			data: {
+				TaskID: id,
+				finishedQty: finished,
+				scrapQty: scrap
+			},
+			success: function (response) {
+				$("#submit-confirmation-modal").remove();
+				document.body.innerHTML += response;
+				$('#submit-confirmation-modal').modal("show");
+			},
+			error: function() {
+			}  
+		});
+}
+
+
+//New suspend scripts ##############################
+
+function OpenInterruptModal()
+{
+	$('#interrupt-level1').modal({backdrop: 'static', keyboard: false});
+	$('#interrupt-level1').modal('show');
+}
+
+function OpenInterruptModal_2()
+{
+	$('#interrupt-level2').modal({backdrop: 'static', keyboard: false});
+	$('#interrupt-level2').modal('show');
+}
+
+function openSuspendModal(item){
+	var id = $(item).val();
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/TaskSuspendModal")%>',
+		data: {
+			TaskID: id,
+			SuspendType: "operator",
+		},
+		success: function (response) {
+			$("#SuspendModal").remove();
+			document.body.innerHTML += response;
+			$('#SuspendModal').modal("show");
+		},
+		error: function() {
+		}  
+	});
+}
+
+function SuspendTaskFromOperator(item)
+{
+	var text = $(".error-text").val();
+	var id = $(item).val();
+	
+	if(text.length == 0)
+	{
+		return;
+	}
+	
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/SuspendTask")%>',
+		data:{
+			secure: "false",
+			errorText: text,
+			taskId: id
+			
+			},
+		success: function (response) {
+			if(response == "true"){
+				$('#SuspendModal').modal("hide");
+				$('.interrupt-form').submit();
+			}else
+				{
+				alert(response);
+				}
+		}
+	});
+}
+
+
+
+function InterruptTask()
+{
+	var text = $(".error-text").val();
+	if(text.length == 0)
+		{
+		return;
+		}
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/InterruptTask")%>',
+		data:{
+			errorText: text
+		},
+		success: function () {
+			$(".error-text-back").html(text);
+		}
+	});
+	$('#interrupt-level1').modal('hide');
+	$('#interrupt-level2').modal({backdrop: 'static', keyboard: false});
+	$('#interrupt-level2').modal('show');
+}
+
+function SuspendTask(authernticated = true)
+{
+	var text = $(".error-text").val();
+	var uname = $(".username-input").val();
+	var pwd = $(".password-input").val();
+	
+	if(text.length == 0)
+	{
+		return;
+	}
+	if(authernticated == true){
+		if(uname.length == 0 || pwd.length == 0)
+		{
+			return;
+		}
+	}
+	
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/SuspendTask")%>',
+		data:{
+			secure: authernticated,
+			username: uname, 
+			errorText: text,
+			password: pwd
+			},
+		success: function (response) {
+			if(response == "true"){
+				$('.interrupt-form').submit();
+			}else
+				{
+				alert(response);
+				}
 		}
 	});
 }

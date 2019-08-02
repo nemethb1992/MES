@@ -4,36 +4,34 @@
 <%@page import="phoenix.mes.content.controller.OperatingWorkstation"%>
 <%@page import="phoenix.mes.content.controller.operator.DataSheetLoader"%>
 <%@include file="/Views/Header.jsp"%>
+<%@page import="phoenix.mes.abas.Task"%>
 <script>
-<%@ include file="/Views/Operator/Operator.js"%>
-
-<%
-	OperatingWorkstation ws = new OperatingWorkstation(request);
-	String displayName = (String) session.getAttribute("displayname");
-	if(outputFormatter.getLocale() == Locale.GERMAN || outputFormatter.getLocale() == Locale.ENGLISH)
-	{
-	try {
-		String auxiliaryArr[] = displayName.split(" ");
-		String auxiliary = "";
-		
-		int i = 0;
-		for(String part : auxiliaryArr){
-			if(i>0)
-			{
-				auxiliary += part;
-				auxiliary += " ";
-			}
-			i++;
-		}
-
-		auxiliary += auxiliaryArr[0];
-		displayName = auxiliary;
-		}
-		catch(Exception e) {
-		}
-	}
 	
-%>
+<%@ include file="/Views/Operator/Operator.js"%>
+	
+<%OperatingWorkstation ws = new OperatingWorkstation(request);
+			String displayName = (String) session.getAttribute("displayname");
+			Task task = (Task) session.getAttribute("Task");
+			if (outputFormatter.getLocale() == Locale.GERMAN || outputFormatter.getLocale() == Locale.ENGLISH) {
+				try {
+					String auxiliaryArr[] = displayName.split(" ");
+					String auxiliary = "";
+
+					int i = 0;
+					for (String part : auxiliaryArr) {
+						if (i > 0) {
+							auxiliary += part;
+							auxiliary += " ";
+						}
+						i++;
+					}
+
+					auxiliary += auxiliaryArr[0];
+					displayName = auxiliary;
+				} catch (Exception e) {
+				}
+			}%>
+	
 </script>
 <div class='container-fluid h-100'>
 
@@ -51,7 +49,7 @@
 			class='button-container h-100 light-shadow col-10 col-md-10 col-lg-10 col-xl-10 px-0'>
 			<div class='container-fluid px-0 h-100'>
 				<div class='nav-contianer h-100'>
-					<div id='btn_lejelentes'
+					<div id='btn_lejelentes' onclick='openSubmit(this)'
 						class='btn_navHeader-left-submit btn_navHeader-left submit-form btn_navHeader h-100 float-left'>
 						<p class='h6 text-center nav-label' id='p_lejelentes'><%=outputFormatter.getWord(DictionaryEntry.SUBMIT)%></p>
 						<div class='container-fluid my-nav-container h-100'>
@@ -70,14 +68,15 @@
 											aria-describedby="button-addon2">
 										<div class="input-group-append w-25">
 											<button
-												class="btn btn-outline-secondary w-100 submit-action-btn"
-												type="button" onclick='OpenSubmitConfirmationMod()' id="button-addon2"><%=outputFormatter.getWord(DictionaryEntry.SEND)%></button>
+												class="btn btn-outline-secondary w-100 submit-action-btn" value='<%=task.getWorkSlipId()%>'
+												type="button" onclick='OpenSubmitConfirmationModal(this)'
+												id="button-addon2"><%=outputFormatter.getWord(DictionaryEntry.SEND)%></button>
 										</div>
 									</div>
 								</div>
 								<div class='col-1 px-0'>
 									<input type='button'
-										class='w-100 h-100 lejelent-btn close-nav-btn' />
+										class='w-100 h-100 lejelent-btn close-nav-btn' onclick='closeSubmit()' />
 								</div>
 							</div>
 						</div>
@@ -86,17 +85,21 @@
 						class='btn_navHeader-left btn-navHeader-left-refresh-btn refresh-click btn_navHeader h-100 float-left px-0'>
 						<p class='h6 text-center nav-label'><%=outputFormatter.getWord(DictionaryEntry.REFRESH)%></p>
 						<form method='POST' class='h-100 d-none refresh-form'
-							action='<%=response.encodeURL(request.getContextPath()+"/OpenTask")%>'></form>						
-							<form method='POST' class='h-100 d-none reload-datasheet'
-							action='<%=response.encodeURL(request.getContextPath()+"/DataSheet")%>'></form>
+							action='<%=response.encodeURL(request.getContextPath() + "/OpenTask")%>'></form>
+						<form method='POST' class='h-100 d-none reload-datasheet'
+							action='<%=response.encodeURL(request.getContextPath() + "/DataSheet")%>'></form>
 					</div>
-					<div id='btn_megszakitas' onclick='OpenInterruptModal()' 
+					<button id='btn_megszakitas' onclick='openSuspendModal(this)'
+						value='<%=task.getWorkSlipId()%>'
 						class='btn_navHeader h-100 float-left btn_navHeader-left'>
 						<p class='h6 text-center nav-label'><%=outputFormatter.getWord(DictionaryEntry.DISRUPTION)%></p>
-					</div>
+					</button>
+					<form method='Post'
+						action='<%=response.encodeURL(request.getContextPath() + "/OpenTask")%>'
+						class='d-none interrupt-form'></form>
 					<div class='btn_navHeader h-100 float-right px-0'>
 						<form method='POST' class='h-100'
-							action='<%=response.encodeURL(request.getContextPath()+"/Logout")%>'>
+							action='<%=response.encodeURL(request.getContextPath() + "/Logout")%>'>
 							<input class='btn_logout-gray' type='submit' value='' />
 						</form>
 					</div>
@@ -105,8 +108,7 @@
 						<div class='form-group'>
 							<input
 								class='form-control h-100 personal-form-control personal-form-name'
-								disabled
-								value='<%=displayName%>'>
+								disabled value='<%=displayName%>'>
 						</div>
 						<div class='form-group'>
 							<input class='form-control h-100 personal-form-control' disabled
@@ -115,12 +117,14 @@
 						<div class='form-group'>
 							<input
 								class='form-control h-100 personal-form-control w-100 personal-date'
-								disabled></div>
+								disabled>
+						</div>
 						<div class='form-group'>
 							<input
 								class='form-control h-100 personal-form-control w-100 personal-time'
-								disabled></div>
-						
+								disabled>
+						</div>
+
 						<div class='form-group d-none py-2'>
 							<%@include file="/Views/Partial/ApplicationCountDown.jsp"%>
 						</div>
@@ -171,12 +175,11 @@
 		</div>
 		<div
 			class='operator-switch-grid col-10 col-md-10 col-lg-10 col-xl-10 px-0'>
-			<div id='SwitchPanel' class='rightCont container-fluid'>
-			</div>
+			<div id='SwitchPanel' class='rightCont container-fluid'></div>
 		</div>
 	</div>
 </div>
 <%@include file="/Views/Footer.jsp"%>
 
 
-<%@include file="/Views/Partial/OperatorModal.jsp"%>
+<%-- <%@include file="/Views/Partial/OperatorModal.jsp"%> --%>

@@ -1,10 +1,11 @@
-package phoenix.mes.content.controller.manager;
+package phoenix.mes.content.controller.operator;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,13 +20,9 @@ import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
 
-
-/**
- * Servlet implementation class TaskSuspendModal
- */
-public class TaskSuspendModal extends HttpServlet {
+public class SubmitConfirmationModal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String encodedURL = response.encodeRedirectURL("/Logout");
@@ -38,7 +35,8 @@ public class TaskSuspendModal extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String taskID = (String) request.getParameter("TaskID");
-		String suspendType = (String) request.getParameter("SuspendType");
+		String finishedQty = (String) request.getParameter("finishedQty");
+		String scrapQty = (String) request.getParameter("scrapQty");
 		OutputFormatter of = (OutputFormatter) session.getAttribute("OutputFormatter");
 		Task.Details taskDetails = null;
 		Task task = null;
@@ -53,10 +51,12 @@ public class TaskSuspendModal extends HttpServlet {
 		}
 		request.setAttribute("TaskDetails", taskDetails);
 		request.setAttribute("OutputFormatter", of);
-		request.setAttribute("SuspendType", suspendType);
+		request.setAttribute("finishedQty", finishedQty);
+		request.setAttribute("scrapQty", scrapQty);
 		request.setAttribute("workSlipId", task.getWorkSlipId().toString());
-		String encodedURL = response.encodeRedirectURL("/Views/Manager/Todo/Partial/TaskSuspendModal.jsp");
+		String encodedURL = response.encodeRedirectURL("/Views/Operator/DataSheet/Partial/SubmitConfirmationModal.jsp");
 		request.getRequestDispatcher(encodedURL).forward(request, response);
 	}
 
 }
+

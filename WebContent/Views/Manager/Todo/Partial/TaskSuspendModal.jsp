@@ -6,6 +6,8 @@
 <% request.setCharacterEncoding("UTF-8");%>
 <%
 	String workSlipId = (String)request.getAttribute("workSlipId");
+	String suspendType = (String)request.getAttribute("SuspendType");
+	String suspendMethod = ("manager".equals(suspendType)? "SuspendTaskFromManager(this)" : "SuspendTaskFromOperator(this)");
 	OutputFormatter of = (OutputFormatter)request.getAttribute("OutputFormatter");
 	Task.Details taskDetails = (Task.Details)request.getAttribute("TaskDetails");
 %>
@@ -71,6 +73,7 @@
 									<div class="col-9">
 				    					<select onmousedown="suspendListEvent(this)" id="failure-list" name="failure-list" class="custom-select d-block w-100 failure-list" required>
 				        					<option value="">Válasszon...</option>
+				        					<option class='opt' value='<%=of.getWord(DictionaryEntry.SUSPEND_LIST_ITEM_0)%>'><%=of.getWord(DictionaryEntry.SUSPEND_LIST_ITEM_0)%></option>
 				        					<option class='opt' value='<%=of.getWord(DictionaryEntry.SUSPEND_LIST_ITEM_1)%>'><%=of.getWord(DictionaryEntry.SUSPEND_LIST_ITEM_1)%></option>
 				        					<option class='opt' value='<%=of.getWord(DictionaryEntry.SUSPEND_LIST_ITEM_2)%>'><%=of.getWord(DictionaryEntry.SUSPEND_LIST_ITEM_2)%></option>
 				        					<option class='opt' value='<%=of.getWord(DictionaryEntry.SUSPEND_LIST_ITEM_3)%>'><%=of.getWord(DictionaryEntry.SUSPEND_LIST_ITEM_3)%></option>
@@ -89,8 +92,8 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary w-25"
-					onclick='Cancel()' data-dismiss="modal"><%=of.getWord(DictionaryEntry.CANCEL)%></button>
-					<button type='button' class='btn btn-primary w-25' onclick='SuspendTaskFromManager(this)' value='<%=workSlipId%>'><%=of.getWord(DictionaryEntry.NEXT)%></button>
+					 data-dismiss="modal"><%=of.getWord(DictionaryEntry.CANCEL)%></button>
+					<button type='button' class='btn btn-primary w-25' onclick='<%=suspendMethod%>' value='<%=workSlipId%>'><%=of.getWord(DictionaryEntry.NEXT)%></button>
 			</div>
 		</div>
 	</div>
