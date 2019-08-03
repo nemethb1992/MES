@@ -12,7 +12,7 @@
 	Task.Details taskDetails = (Task.Details)request.getAttribute("TaskDetails");
 %>
 
-<div class="modal fade my-fade" id="submit-confirmation-modal"
+<div class="modal fade my-fade" id="submitcConfirmationModal"
 	tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
 	aria-hidden="false">
 	<div class="modal-dialog modal-lg modal-dialog-centered"
@@ -30,7 +30,7 @@
 				<div class="form-group row">
 					<label for="confirm-openqty" class="col-sm-4 col-form-label"><%=of.getWord(DictionaryEntry.OPEN_QUANTITY)%></label>
 					<div class="col-sm-8">
-						<input type="text" disabled class="form-control"
+						<input type="text" readonly="true" class="form-control"
 							id="confirm-openqty"
 							value="<%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingConfirmationQuantity())%>"
 							placeholder="0">
@@ -39,21 +39,21 @@
 				<div class="form-group row">
 					<label for="confirm-finished" class="col-sm-4 col-form-label"><%=of.getWord(DictionaryEntry.FINISHED_QUANTITY)%></label>
 					<div class="col-sm-8">
-						<input type="text" disabled class="form-control" value='<%=finishedQty %>' 
+						<input type="text" readonly="true" class="form-control confirm-finished" value='<%=finishedQty %>' 
 							id="confirm-finished" placeholder="0">
 					</div>
 				</div>
 				<div class="form-group row">
 					<label for="confirm-scrap" class="col-sm-4 col-form-label"><%=of.getWord(DictionaryEntry.SCRAP_QUANTITY)%></label>
 					<div class="col-sm-8">
-						<input type="text" disabled class="form-control" value='<%=scrapQty %>' 
+						<input type="text" readonly="true" class="form-control confirm-scrap" value='<%=scrapQty %>' 
 							id="confirm-scrap" placeholder="0">
 					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary w-25"
-					data-dismiss="modal" onclick='CloseConfirmationModal()'><%=of.getWord(DictionaryEntry.NO)%></button>
+					data-dismiss="modal"><%=of.getWord(DictionaryEntry.NO)%></button>
 				<button type="button" class="btn btn-primary w-25"
 					onclick='SubmitTask()'><%=of.getWord(DictionaryEntry.YES)%></button>
 			</div>

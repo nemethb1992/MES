@@ -278,10 +278,11 @@ function SubmitConfirmationValidation(item){
 
 function CloseConfirmationModal()
 {
-	$('#submit-confirmation-modal').modal('hide'); 
+	$('#submitcConfirmationModal').modal('hide'); 
 	$(".input-finished").val(null);
 	$(".input-scrap").val(null);
 	closeSubmit();
+
 	closing = false;
 }
 
@@ -315,8 +316,10 @@ function RefreshTask()
 
 function SubmitTask()
 {
-	var finished = $("#confirm-finished").val();
-	var scrap = $("#confirm-scrap").val();
+	var finished = $(".confirm-finished").val();
+	var scrap = $(".confirm-scrap").val();	
+	
+	console.log(finished+"-"+scrap);
 	
 	var finishedQt = (finished == "" || finished == null ? 0 : finished);
 	var scrapQt = (scrap == "" || scrap == null ? 0 : scrap);
@@ -369,9 +372,9 @@ function OpenSubmitConfirmationModal(item)
 				scrapQty: scrap
 			},
 			success: function (response) {
-				$("#submit-confirmation-modal").remove();
+				$("#submitcConfirmationModal").remove();
 				document.body.innerHTML += response;
-				$('#submit-confirmation-modal').modal("show");
+				$('#submitcConfirmationModal').modal("show");
 			},
 			error: function() {
 			}  

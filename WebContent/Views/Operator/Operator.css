@@ -273,6 +273,8 @@ position: absolute;
 }
 #btn_megszakitas
 {
+	border: none;
+	border-right: 1px solid #dedede;
 	background-image: url(${pageContext.request.contextPath}/Public/icons/warning.svg);
 }
 .opentask-row
