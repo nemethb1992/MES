@@ -69,10 +69,10 @@
 					</div>
 				</div>
 								<div class="form-group row">
-									<label for="example-search-input" class="col-3 col-form-label">Hiba típusa</label>
+									<label for="example-search-input" class="col-3 col-form-label"><%=of.getWord(DictionaryEntry.FAILURE_TYPE)%></label>
 									<div class="col-9">
 				    					<select onmousedown="suspendListEvent(this)" id="failure-list" name="failure-list" class="custom-select d-block w-100 failure-list" required>
-				        					<option value="">Válasszon...</option>
+				        					<option value=""><%=of.getWord(DictionaryEntry.SELECT)%></option>
 				        					<option class='opt' value='<%=of.getWord(DictionaryEntry.SUSPEND_LIST_ITEM_0)%>'><%=of.getWord(DictionaryEntry.SUSPEND_LIST_ITEM_0)%></option>
 				        					<option class='opt' value='<%=of.getWord(DictionaryEntry.SUSPEND_LIST_ITEM_1)%>'><%=of.getWord(DictionaryEntry.SUSPEND_LIST_ITEM_1)%></option>
 				        					<option class='opt' value='<%=of.getWord(DictionaryEntry.SUSPEND_LIST_ITEM_2)%>'><%=of.getWord(DictionaryEntry.SUSPEND_LIST_ITEM_2)%></option>

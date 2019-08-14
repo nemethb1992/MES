@@ -30,7 +30,7 @@
 				<div class="form-group row">
 					<label for="confirm-openqty" class="col-sm-4 col-form-label"><%=of.getWord(DictionaryEntry.OPEN_QUANTITY)%></label>
 					<div class="col-sm-8">
-						<input type="text" readonly="true" class="form-control"
+						<input type="text" readonly class="form-control"
 							id="confirm-openqty"
 							value="<%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingConfirmationQuantity())%>"
 							placeholder="0">
@@ -39,14 +39,14 @@
 				<div class="form-group row">
 					<label for="confirm-finished" class="col-sm-4 col-form-label"><%=of.getWord(DictionaryEntry.FINISHED_QUANTITY)%></label>
 					<div class="col-sm-8">
-						<input type="text" readonly="true" class="form-control confirm-finished" value='<%=finishedQty %>' 
+						<input type="text" readonly class="form-control confirm-finished" value='<%=finishedQty %>' 
 							id="confirm-finished" placeholder="0">
 					</div>
 				</div>
 				<div class="form-group row">
 					<label for="confirm-scrap" class="col-sm-4 col-form-label"><%=of.getWord(DictionaryEntry.SCRAP_QUANTITY)%></label>
 					<div class="col-sm-8">
-						<input type="text" readonly="true" class="form-control confirm-scrap" value='<%=scrapQty %>' 
+						<input type="text" readonly class="form-control confirm-scrap" value='<%=scrapQty %>' 
 							id="confirm-scrap" placeholder="0">
 					</div>
 				</div>
@@ -55,7 +55,7 @@
 				<button type="button" class="btn btn-secondary w-25"
 					data-dismiss="modal"><%=of.getWord(DictionaryEntry.NO)%></button>
 				<button type="button" class="btn btn-primary w-25"
-					onclick='SubmitTask()'><%=of.getWord(DictionaryEntry.YES)%></button>
+					onclick='SubmitTask(this)'><%=of.getWord(DictionaryEntry.YES)%></button>
 			</div>
 		</div>
 	</div>

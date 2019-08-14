@@ -160,13 +160,20 @@ public class InfoSystemExecutor {
 	}
 
 	/**
-	 * Lekérdezés végrehajtása.
 	 * @param inputFieldValues Az eredmény lekérdezése előtti mezőbeállítások (null, ha nincs szükség bemenetekre).
 	 * @param edpSession Az EDP-munkamenet.
 	 * @return A lekérdezendő fejrészmezők értékei az infosystem lefuttatása után.
 	 */
 	public FieldValues getResultHeaderFields(EDPEditFieldList inputFieldValues, EDPSession edpSession) {
-		return new FieldValues(executeQuery(inputFieldValues, edpSession).getHeaderFields());
+		return getResultHeaderFields(executeQuery(inputFieldValues, edpSession));
+	}
+
+	/**
+	 * @param result A lekérdezendő mezők értékei az infosystem lefuttatása után.
+	 * @return A lekérdezendő fejrészmezők értékei az infosystem lefuttatása után.
+	 */
+	protected FieldValues getResultHeaderFields(EDPEditObject result) {
+		return new FieldValues(result.getHeaderFields());
 	}
 
 }

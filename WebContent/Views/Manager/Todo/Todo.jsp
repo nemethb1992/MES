@@ -111,12 +111,13 @@
 					</div>
 					<div class='ws-list-head sort-list-head sort-list col-7  h-100'>
 						<div class='row h-100'>
+													
 							<div
 								class='input-icon-holderDiv stationName-holderDiv col-7 h-100'>
 								<input disabled class='ts_wsNameInp station_label h-100  p-3'
 									value='<%=outputFormatter.getWord(DictionaryEntry.SELECT_A_WORKSTATION)%>'>
 							</div>
-							<div class='input-icon-holderDiv h-100 col-3   sum-holderDiv'>
+							<div class='input-icon-holderDiv h-100 col-2   sum-holderDiv'>
 								<div class='row h-100 '>
 									<input disabled
 										class='ts_sumTime h-100 disabled col-12 text-right float-right pr-4 py-3'
@@ -124,8 +125,8 @@
 								</div>
 							</div>
 							<div
-								class='col-2 h-100'>
-								<button type="button" class="task-list-save-btn btn btn-light mt-2 w-100 h-75" onclick="SaveStationList()"><%=outputFormatter.getWord(DictionaryEntry.SAVE)%></button>
+								class='col-3 h-100'>
+								<button type="button" class="btn btn-info mt-2 w-100 h-75" id='ListRefreshBtn' disabled onclick='ListLoader()'><%=outputFormatter.getWord(DictionaryEntry.REFRESH)%></button>
 							</div>
 						</div>
 					</div>

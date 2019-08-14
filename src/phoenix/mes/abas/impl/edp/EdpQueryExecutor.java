@@ -52,7 +52,7 @@ public class EdpQueryExecutor {
 	 * @return A BigDecimal típusú tizedestört.
 	 */
 	public static BigDecimal parseBigDecimal(String string) {
-		return new BigDecimal(string);
+		return (string.isEmpty() ? null : new BigDecimal(string));
 	}
 
 	/**

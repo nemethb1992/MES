@@ -14,6 +14,14 @@
 	background: #ff5050;
 	border-color:#ff5050;
 }
+.btn-primary:disabled{
+	background: #b3b3b3;
+	border-color:#8c8c8c;
+}
+.btn-primary:disabled:hover{
+	background: #b3b3b3;
+	border-color:#8c8c8c;
+}
 .btn-primary:hover{
 	background: red;
 	border-color:red;

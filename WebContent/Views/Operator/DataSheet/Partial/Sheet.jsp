@@ -49,6 +49,8 @@
     <tr>
       <th scope="row"><%=of.getWord(DictionaryEntry.OPEN_QUANTITY)%>:</th>
       <td colspan="1"><%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity())%> <%=taskDetails.getStockUnit()%></td>
+      <th scope="row"><%=of.getWord(DictionaryEntry.PREVIOUS_WORKSHEET_NO_SUBMIT)%>:</th>
+      <td colspan="1"><%=of.formatWithoutTrailingZeroes(taskDetails.getYieldOfPrecedingWorkSlip())%> <%=taskDetails.getStockUnit()%></td>
     </tr>
   </tbody>
 </table>

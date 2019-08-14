@@ -90,7 +90,7 @@ public class Enter extends HttpServlet {
 			}
 			else if("manager".equals(layout) && user.isModifier())
 			{
-				nextPage = "/Views/Manager/Main/Main.jsp";
+				nextPage = "/Views/Manager/Todo/Todo.jsp";
 			}
 			else if("manager".equals(layout) && !user.isModifier()) {
 				request.setAttribute("infoTitle", outputFormatter.getWord(DictionaryEntry.LOGIN_FAILED));

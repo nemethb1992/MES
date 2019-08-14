@@ -8,6 +8,7 @@ package phoenix.mes.abas.impl.edp;
 
 import de.abas.ceks.jedp.CantChangeFieldValException;
 import de.abas.ceks.jedp.EDPEditFieldList;
+import de.abas.ceks.jedp.EDPEditObject;
 import de.abas.ceks.jedp.EDPQuery;
 import de.abas.ceks.jedp.EDPRuntimeException;
 import de.abas.ceks.jedp.EDPSession;
@@ -41,41 +42,56 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 
 	/**
 	 * Alaposztály a gyártási feladat adatainak lekérdezéséhez.
+	 * @param <R> A táblázatsorokból készített objektumok típusa.
 	 * @author szizo
 	 */
-	protected static abstract class TaskDataQuery extends InfoSystemExecutor {
+	protected static abstract class TaskDataQuery<R> extends InfoSystemTableConverter<R> {
 
 		/**
-		 * @param criteriaFieldNames A szűrőmezők nevei.
-		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
-		 * @return Az infosystem indításához szükséges mezőbeállítások.
+		 * A szűrőmezők nevei.
 		 */
-		protected static EDPEditFieldList getFilterCriteria(String[] criteriaFieldNames, String workSlipId) {
-			try {
-				return new EDPEditFieldList(criteriaFieldNames, new String[] {workSlipId, "1", " "});
-			} catch (CantChangeFieldValException e) {
-				throw new EDPRuntimeException(e);
-			}
+		protected final String[] criteriaFieldNames;
+
+		/**
+		 * Konstruktor.
+		 * @param criteriaFieldNames A szűrőmezők nevei.
+		 * @param headerFieldNamesClass A lekérdezendő fejrészmezők neveit konstansokként tartalmazó osztály.
+		 */
+		public TaskDataQuery(String[] criteriaFieldNames, Class<?> headerFieldNamesClass) {
+			this(criteriaFieldNames, headerFieldNamesClass, null);
 		}
 
 		/**
 		 * Konstruktor.
-		 * @param headerFieldNamesClass A lekérdezendő fejrészmezők neveit konstansokként tartalmazó osztály.
+		 * @param criteriaFieldNames A szűrőmezők nevei.
+		 * @param headerFieldNamesClass A lekérdezendő fejrészmezők neveit konstansokként tartalmazó osztály (null, ha nincs lekérdezendő fejrészmező).
+		 * @param tableFieldNamesClass A lekérdezendő táblázati mezők neveit konstansokként tartalmazó osztály (null, ha nincs lekérdezendő táblázati mező).
 		 */
-		public TaskDataQuery(Class<?> headerFieldNamesClass) {
-			super("MESTASKDATA", headerFieldNamesClass, null);
+		public TaskDataQuery(String[] criteriaFieldNames, Class<?> headerFieldNamesClass, Class<?> tableFieldNamesClass) {
+			super("MESTASKDATA", headerFieldNamesClass, tableFieldNamesClass);
+			this.criteriaFieldNames = criteriaFieldNames;
+		}
+
+		/**
+		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
+		 * @param edpSession Az EDP-munkamenet.
+		 * @return A lekérdezendő fejrészmezők értékei (null, ha a munkalap nem létezik).
+		 */
+		public FieldValues getResultHeaderFields(String workSlipId, EDPSession edpSession) {
+			final EDPEditObject result = executeQuery(workSlipId, edpSession);
+			return (null == result ? null : getResultHeaderFields(result));
 		}
 
 		/**
 		 * A lekérdezés végrehajtása.
 		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
 		 * @param edpSession Az EDP-munkamenet.
-		 * @return A lekérdezendő (fejrész)mezők értékei (null, ha a munkalap nem létezik).
+		 * @return A lekérdezendő mezők értékei az infosystem lefuttatása után (null, ha a munkalap nem létezik).
 		 */
-		public FieldValues getResultFields(String workSlipId, EDPSession edpSession) {
-			final EDPEditFieldList filterCriteria = getFilterCriteria(getCriteriaFieldNames(), workSlipId);
+		protected EDPEditObject executeQuery(String workSlipId, EDPSession edpSession) {
+			final EDPEditFieldList filterCriteria = getFilterCriteria(workSlipId);
 			try {
-				return getResultHeaderFields(filterCriteria, edpSession);
+				return executeQuery(filterCriteria, edpSession);
 			} catch (EDPRuntimeException e) {
 				if (e.getCause() instanceof CantChangeFieldValException) {
 					return null;
@@ -85,9 +101,24 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		}
 
 		/**
-		 * @return A szűrőmezők nevei.
+		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
+		 * @return Az infosystem indításához szükséges mezőbeállítások.
 		 */
-		protected abstract String[] getCriteriaFieldNames();
+		protected EDPEditFieldList getFilterCriteria(String workSlipId) {
+			try {
+				return new EDPEditFieldList(criteriaFieldNames, new String[] {workSlipId, "1", " "});
+			} catch (CantChangeFieldValException e) {
+				throw new EDPRuntimeException(e);
+			}
+		}
+
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.edp.InfoSystemTableConverter#createRowObject(phoenix.mes.abas.impl.edp.InfoSystemExecutor.FieldValues)
+		 */
+		@Override
+		protected R createRowObject(FieldValues rowData) {
+			throw new UnsupportedOperationException();
+		}
 
 	}
 
@@ -95,7 +126,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 	 * Segédosztály a gyártási feladat alapadatainak lekérdezéséhez.
 	 * @author szizo
 	 */
-	protected static final class BasicDataQuery extends TaskDataQuery {
+	protected static final class BasicDataQuery extends TaskDataQuery<Object> {
 
 		/**
 		 * A lekérdezendő (fejrész)mezők nevei.
@@ -222,11 +253,6 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		}
 
 		/**
-		 * A szűrőmezők nevei.
-		 */
-		protected static final String[] criteriaFieldNames = {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.yalap.getName(), InfosysOw1MESTASKDATA.META.start.getName()};
-
-		/**
 		 * Egyke objektum.
 		 */
 		public static final BasicDataQuery EXECUTOR = new BasicDataQuery();
@@ -235,15 +261,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		 * Konstruktor.
 		 */
 		private BasicDataQuery() {
-			super(Field.class);
-		}
-
-		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.impl.edp.TaskEdpImpl.TaskDataQuery#getCriteriaFieldNames()
-		 */
-		@Override
-		protected String[] getCriteriaFieldNames() {
-			return criteriaFieldNames;
+			super(new String[] {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.yalap.getName(), InfosysOw1MESTASKDATA.META.start.getName()}, Field.class);
 		}
 
 	}
@@ -252,7 +270,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 	 * Segédosztály a kapcsolódó vevői rendelés adatainak lekérdezéséhez.
 	 * @author szizo
 	 */
-	protected static final class SalesOrderQuery extends TaskDataQuery {
+	protected static final class SalesOrderQuery extends TaskDataQuery<Object> {
 
 		/**
 		 * A lekérdezendő (fejrész)mezők nevei.
@@ -279,11 +297,6 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		}
 
 		/**
-		 * A szűrőmezők nevei.
-		 */
-		protected static final String[] criteriaFieldNames = {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.ymb.getName(), InfosysOw1MESTASKDATA.META.start.getName()};
-
-		/**
 		 * Egyke objektum.
 		 */
 		public static final SalesOrderQuery EXECUTOR = new SalesOrderQuery();
@@ -292,15 +305,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		 * Konstruktor.
 		 */
 		private SalesOrderQuery() {
-			super(Field.class);
-		}
-
-		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.impl.edp.TaskEdpImpl.TaskDataQuery#getCriteriaFieldNames()
-		 */
-		@Override
-		protected String[] getCriteriaFieldNames() {
-			return criteriaFieldNames;
+			super(new String[] {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.ymb.getName(), InfosysOw1MESTASKDATA.META.start.getName()}, Field.class);
 		}
 
 	}
@@ -309,7 +314,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 	 * Segédosztály a művelet adatainak lekérdezéséhez.
 	 * @author szizo
 	 */
-	protected static final class OperationQuery extends TaskDataQuery {
+	protected static final class OperationQuery extends TaskDataQuery<Object> {
 
 		/**
 		 * A lekérdezendő (fejrész)mezők nevei.
@@ -351,11 +356,6 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		}
 
 		/**
-		 * A szűrőmezők nevei.
-		 */
-		protected static final String[] criteriaFieldNames = {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.ymuv.getName(), InfosysOw1MESTASKDATA.META.start.getName()};
-
-		/**
 		 * Egyke objektum.
 		 */
 		public static final OperationQuery EXECUTOR = new OperationQuery();
@@ -364,15 +364,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		 * Konstruktor.
 		 */
 		private OperationQuery() {
-			super(Field.class);
-		}
-
-		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.impl.edp.TaskEdpImpl.TaskDataQuery#getCriteriaFieldNames()
-		 */
-		@Override
-		protected String[] getCriteriaFieldNames() {
-			return criteriaFieldNames;
+			super(new String[] {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.ymuv.getName(), InfosysOw1MESTASKDATA.META.start.getName()}, Field.class);
 		}
 
 	}
@@ -382,21 +374,26 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 	 * @param <R> A táblázatsorokból készített objektumok típusa.
 	 * @author szizo
 	 */
-	protected static abstract class ProductionListQuery<R> extends InfoSystemTableConverter<R> {
-
-		/**
-		 * A szűrőmezők nevei.
-		 */
-		protected final String[] criteriaFieldNames;
+	protected static abstract class ProductionListQuery<R> extends TaskDataQuery<R> {
 
 		/**
 		 * Konstruktor.
 		 * @param criteriaFieldNames A szűrőmezők nevei.
+		 * @param headerFieldNamesClass A lekérdezendő fejrészmezők neveit konstansokként tartalmazó osztály (null, ha nincs lekérdezendő fejrészmező).
 		 * @param tableFieldNamesClass A lekérdezendő táblázati mezők neveit konstansokként tartalmazó osztály.
 		 */
-		public ProductionListQuery(String[] criteriaFieldNames, Class<?> tableFieldNamesClass) {
-			super("MESTASKDATA", tableFieldNamesClass);
-			this.criteriaFieldNames = criteriaFieldNames;
+		public ProductionListQuery(String[] criteriaFieldNames, Class<?> headerFieldNamesClass, Class<?> tableFieldNamesClass) {
+			super(criteriaFieldNames, headerFieldNamesClass, tableFieldNamesClass);
+		}
+
+		/**
+		 * @param workSlipId A gyártási feladathoz tartozó munkalap azonosítója.
+		 * @param edpSession Az EDP-munkamenet.
+		 * @return Az infosystem lefuttatásának eredménye (null, ha a munkalap nem létezik).
+		 */
+		public InfoSystemResult getResult(String workSlipId, EDPSession edpSession) {
+			final EDPEditObject result = executeQuery(workSlipId, edpSession);
+			return (null == result ? null : getResult(result));
 		}
 
 		/**
@@ -405,16 +402,16 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		 * @return A szűrésnek megfelelő gyártásilista-sorok adatait tartalmazó objektumok listája (null, ha a munkalap nem létezik).
 		 */
 		public List<R> getRows(String workSlipId, EDPSession edpSession) {
-			final EDPEditFieldList filterCriteria = TaskDataQuery.getFilterCriteria(criteriaFieldNames, workSlipId);
-			final List<R> rows;
-			try {
-				rows = getRows(filterCriteria, edpSession);
-			} catch (EDPRuntimeException e) {
-				if (e.getCause() instanceof CantChangeFieldValException) {
-					return null;
-				}
-				throw e;
-			}
+			final EDPEditObject result = executeQuery(workSlipId, edpSession);
+			return (null == result ? null : getRows(result));
+		}
+
+		/* (non-Javadoc)
+		 * @see phoenix.mes.abas.impl.edp.InfoSystemTableConverter#getRows(de.abas.ceks.jedp.EDPEditObject)
+		 */
+		@Override
+		protected List<R> getRows(EDPEditObject result) {
+			final List<R> rows = super.getRows(result);
 			return (1 < rows.size() ? Collections.unmodifiableList(rows) : rows);
 		}
 
@@ -427,10 +424,29 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 	protected static final class BomQuery extends ProductionListQuery<BomElement> {
 
 		/**
-		 * A lekérdezendő (táblázati) mezők nevei.
+		 * A lekérdezendő (fejrész)mezők nevei.
 		 * @author szizo
 		 */
 		public static final class Field {
+
+			/**
+			 * A megelőző munkalap lejelentett mennyisége.
+			 */
+			public static final String YIELD_OF_PRECEDING_WORK_SLIP = InfosysOw1MESTASKDATA.META.yelozolejelmenny.getName();
+
+			/**
+			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
+			 */
+			private Field() {
+			}
+
+		}
+
+		/**
+		 * A lekérdezendő táblázati mezők nevei.
+		 * @author szizo
+		 */
+		public static final class TableField {
 
 			/**
 			 * A beépülő cikk hivatkozási száma.
@@ -475,7 +491,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 			/**
 			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
 			 */
-			private Field() {
+			private TableField() {
 			}
 
 		}
@@ -489,7 +505,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		 * Konstruktor.
 		 */
 		private BomQuery() {
-			super(new String[] {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.ydbj.getName(), InfosysOw1MESTASKDATA.META.start.getName()}, Field.class);
+			super(new String[] {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.ydbj.getName(), InfosysOw1MESTASKDATA.META.start.getName()}, Field.class, TableField.class);
 		}
 
 		/* (non-Javadoc)
@@ -497,14 +513,14 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		 */
 		@Override
 		protected BomElementImpl createRowObject(FieldValues rowData) {
-			return new BomElementImpl(rowData.getString(Field.ID_NO),
-					rowData.getString(Field.SWD),
-					rowData.getString(Field.DESCRIPTION),
-					rowData.getString(Field.DESCRIPTION2),
-					rowData.getBigDecimal(Field.QUANTITY_PER_PRODUCT),
-					rowData.getString(Field.STOCK_UNIT_NAME),
-					rowData.getString(Field.WAREHOUSE_LOCATION),
-					rowData.getString(Field.ITEM_TEXT));
+			return new BomElementImpl(rowData.getString(TableField.ID_NO),
+					rowData.getString(TableField.SWD),
+					rowData.getString(TableField.DESCRIPTION),
+					rowData.getString(TableField.DESCRIPTION2),
+					rowData.getBigDecimal(TableField.QUANTITY_PER_PRODUCT),
+					rowData.getString(TableField.STOCK_UNIT_NAME),
+					rowData.getString(TableField.WAREHOUSE_LOCATION),
+					rowData.getString(TableField.ITEM_TEXT));
 		}
 
 	}
@@ -516,10 +532,10 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 	protected static final class FollowingOperationsQuery extends ProductionListQuery<Operation> {
 
 		/**
-		 * A lekérdezendő (táblázati) mezők nevei.
+		 * A lekérdezendő táblázati mezők nevei.
 		 * @author szizo
 		 */
-		public static final class Field {
+		public static final class TableField {
 
 			/**
 			 * A művelet hivatkozási száma.
@@ -554,7 +570,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 			/**
 			 * Statikus osztály: private konstruktor, hogy ne lehessen példányosítani.
 			 */
-			private Field() {
+			private TableField() {
 			}
 
 		}
@@ -568,7 +584,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		 * Konstruktor.
 		 */
 		private FollowingOperationsQuery() {
-			super(new String[] {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.ykovmuv.getName(), InfosysOw1MESTASKDATA.META.start.getName()}, Field.class);
+			super(new String[] {InfosysOw1MESTASKDATA.META.yas.getName(), InfosysOw1MESTASKDATA.META.ykovmuv.getName(), InfosysOw1MESTASKDATA.META.start.getName()}, null, TableField.class);
 		}
 
 		/* (non-Javadoc)
@@ -576,12 +592,12 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		 */
 		@Override
 		protected Operation createRowObject(FieldValues rowData) {
-			return new OperationImpl(rowData.getString(Field.ID_NO),
-					rowData.getString(Field.SWD),
-					rowData.getString(Field.DESCRIPTION),
-					rowData.getString(Field.WORK_CENTER_ID_NO),
-					rowData.getString(Field.WORK_CENTER_DESCRIPTION),
-					rowData.getString(Field.ITEM_TEXT));
+			return new OperationImpl(rowData.getString(TableField.ID_NO),
+					rowData.getString(TableField.SWD),
+					rowData.getString(TableField.DESCRIPTION),
+					rowData.getString(TableField.WORK_CENTER_ID_NO),
+					rowData.getString(TableField.WORK_CENTER_DESCRIPTION),
+					rowData.getString(TableField.ITEM_TEXT));
 		}
 
 	}
@@ -747,7 +763,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		 * @param headerFieldNames A lekérdezendő fejrészmezők nevei (null, ha nincs lekérdezendő fejrészmező).
 		 */
 		private TaskManager(String swd, String[] headerFieldNames) {
-			super(swd, new String[] {resultFieldName}, null);
+			super(swd, headerFieldNames, null);
 		}
 
 		/**
@@ -794,7 +810,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		 */
 		@Override
 		protected BasicData newBasicData() {
-			final InfoSystemExecutor.FieldValues result = BasicDataQuery.EXECUTOR.getResultFields(workSlipId, abasConnectionObject);
+			final InfoSystemExecutor.FieldValues result = BasicDataQuery.EXECUTOR.getResultHeaderFields(workSlipId, abasConnectionObject);
 			final BasicData basicData = new BasicData();
 			if (null == result) {
 				basicData.status = Status.DELETED;
@@ -848,7 +864,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		 */
 		@Override
 		protected OperationData newOperationData() {
-			final InfoSystemExecutor.FieldValues result = OperationQuery.EXECUTOR.getResultFields(workSlipId, abasConnectionObject);
+			final InfoSystemExecutor.FieldValues result = OperationQuery.EXECUTOR.getResultHeaderFields(workSlipId, abasConnectionObject);
 			final OperationData operationData = new OperationData();
 			if (null != result) {
 				operationData.operationIdNo = result.getString(OperationQuery.Field.ID_NO);
@@ -865,7 +881,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		 */
 		@Override
 		protected SalesOrderData newSalesOrderData() {
-			final InfoSystemExecutor.FieldValues result = SalesOrderQuery.EXECUTOR.getResultFields(workSlipId, abasConnectionObject);
+			final InfoSystemExecutor.FieldValues result = SalesOrderQuery.EXECUTOR.getResultHeaderFields(workSlipId, abasConnectionObject);
 			final SalesOrderData salesOrderData = new SalesOrderData();
 			if (null != result) {
 				salesOrderData.salesOrderItemText = result.getString(SalesOrderQuery.Field.ITEM_TEXT);
@@ -875,11 +891,17 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 		}
 
 		/* (non-Javadoc)
-		 * @see phoenix.mes.abas.impl.TaskDetails#newBom()
+		 * @see phoenix.mes.abas.impl.TaskDetails#newProductionListData()
 		 */
 		@Override
-		protected List<BomElement> newBom() {
-			return BomQuery.EXECUTOR.getRows(workSlipId, abasConnectionObject);
+		protected ProductionListData newProductionListData() {
+			final InfoSystemTableConverter<BomElement>.InfoSystemResult result = BomQuery.EXECUTOR.getResult(workSlipId, abasConnectionObject);
+			final ProductionListData productionListData = new ProductionListData();
+			if (null != result) {
+				productionListData.yieldOfPrecedingWorkSlip = result.getHeaderFields().getBigDecimal(BomQuery.Field.YIELD_OF_PRECEDING_WORK_SLIP);
+				productionListData.bom = result.getRows();
+			}
+			return productionListData;
 		}
 
 		/* (non-Javadoc)

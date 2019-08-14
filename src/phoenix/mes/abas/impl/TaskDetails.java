@@ -172,6 +172,24 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	}
 
 	/**
+	 * Segédosztály a gyártási feladat gyártási listája adatainak tárolásához.
+	 * @author szizo
+	 */
+	public class ProductionListData {
+
+		/**
+		 * A megelőző munkalap lejelentett mennyisége (null, ha ez az első gyártási feladat).
+		 */
+		public BigDecimal yieldOfPrecedingWorkSlip;
+
+		/**
+		 * A gyártási feladathoz kapcsolódó darabjegyzék.
+		 */
+		public List<BomElement> bom;
+
+	}
+
+	/**
 	 * Az Abas-kapcsolat objektuma.
 	 */
 	protected C abasConnectionObject;
@@ -192,9 +210,9 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	protected SalesOrderData salesOrderData = null;
 
 	/**
-	 * A gyártási feladathoz kapcsolódó darabjegyzéket gyorsítótárazó objektum.
+	 * A gyártási feladat gyártási listájának adatait gyorsítótárazó objektum.
 	 */
-	protected List<BomElement> bom = null;
+	protected ProductionListData productionListData = null;
 
 	/**
 	 * A gyártási feladatot követő műveletek listáját gyorsítótárazó objektum.
@@ -232,7 +250,7 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	protected void resetCache() {
 		clearBasicDataCache();
 		clearOperationDataCache();
-		clearBomCache();
+		clearProductionListDataCache();
 		clearFollowingOperationsCache();
 	}
 
@@ -341,6 +359,28 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	 */
 	public void clearSalesOrderDataCache() {
 		salesOrderData = null;
+	}
+
+	/**
+	 * @return A gyártási feladat gyártási listájának adatait gyorsítótárazó objektum.
+	 */
+	protected ProductionListData getProductionListData() {
+		if (null == productionListData) {
+			productionListData = newProductionListData();
+		}
+		return productionListData;
+	}
+
+	/**
+	 * @return A gyártási feladat gyártási listájának adatait gyorsítótárazó, újonnan létrehozott objektum.
+	 */
+	protected abstract ProductionListData newProductionListData();
+
+	/**
+	 * A gyártási feladat gyártási listájának adatait tartalmazó gyorsítótár kiürítése.
+	 */
+	public void clearProductionListDataCache() {
+		productionListData = null;
 	}
 
 	/* (non-Javadoc)
@@ -510,6 +550,14 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	}
 
 	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericTask.Details#getYieldOfPrecedingWorkSlip()
+	 */
+	@Override
+	public BigDecimal getYieldOfPrecedingWorkSlip() {
+		return getProductionListData().yieldOfPrecedingWorkSlip;
+	}
+
+	/* (non-Javadoc)
 	 * @see phoenix.mes.abas.GenericTask.Details#getOutstandingQuantity()
 	 */
 	@Override
@@ -546,22 +594,7 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	 */
 	@Override
 	public List<BomElement> getBom() {
-		if (null == bom) {
-			bom = newBom();
-		}
-		return bom;
-	}
-
-	/**
-	 * @return A gyártási feladathoz kapcsolódó darabjegyzéket gyorsítótárazó, újonnan létrehozott objektum.
-	 */
-	protected abstract List<BomElement> newBom();
-
-	/**
-	 * A gyártási feladathoz kapcsolódó darabjegyzéket tartalmazó gyorsítótár kiürítése.
-	 */
-	public void clearBomCache() {
-		bom = null;
+		return getProductionListData().bom;
 	}
 
 	/* (non-Javadoc)

@@ -2,6 +2,7 @@ package phoenix.mes.content.controller.operator;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
@@ -57,7 +58,6 @@ public class DataSheetLoader extends HttpServlet {
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(),  new AppBuild(request).isTest());
 			Task task = null;
 			if(taskId != null && taskId != "") {
-				System.out.println(taskId);
 				Id AbasId = IdImpl.valueOf(taskId);
 				task = AbasObjectFactory.INSTANCE.createTask(AbasId,abasConnection);
 			}else {
@@ -90,6 +90,16 @@ public class DataSheetLoader extends HttpServlet {
 			case "5":
 				request.setAttribute("operationdata", taskDetails.getFollowingOperations());
 				partialUrl = "/Views/Operator/DataSheet/Partial/RelatedOperations.jsp";
+				break;
+			case "6":
+
+				List<Task> taskList = (List<Task>)AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection).getScheduledTasks(abasConnection);
+				request.setAttribute("StationList", taskList);
+				request.setAttribute("abasConnection", abasConnection);
+				partialUrl = "/Views/Operator/DataSheet/Partial/FollowingTasks.jsp";
+				break;
+			case "7":
+				partialUrl = "/Views/Operator/DataSheet/Partial/TechnicalManual.jsp";
 				break;
 			default:
 				break;

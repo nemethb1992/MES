@@ -66,7 +66,14 @@
 }
 .big-nav-button
 {
-	height: 20%;
+    width: auto;
+	height: 14.28%;
+	
+}
+.big-nav-button-modal
+{
+    width: auto;
+	height: 17%;
 	
 }
 #contentFrame
@@ -145,11 +152,14 @@
 .nav-label
 {
 	font-family: mediumFont;
-position: absolute;
     bottom: 0px;
     width: 100%;
     color: black;
     font-size: 21px;
+    text-align:left;
+}
+.nav-label-modal{
+	text-align: center;
 }
 
 .input-finished, .input-scrap, .submit-action-btn{
@@ -157,28 +167,37 @@ position: absolute;
 }
 
 .navigation-button{
-    background-size: 20%;
+	border: none;
+    background: transparent;
+    background-size: 15%;
     background-repeat: no-repeat;
     background-position: center;
     background-position-x: 50%;
-    background-position-y: 40%;
+    background-position-y: 30%;
 }
-#navigation-button-1{
-	background-image: url(${pageContext.request.contextPath}/Public/icons/TV_btn_nav1.svg);
+/* #navigation-button-1{ */
+/* 	background-image: url(${pageContext.request.contextPath}/Public/icons/TV_btn_nav1.svg); */
+/* } */
+/* #navigation-button-2{ */
+/* 	background-image: url(${pageContext.request.contextPath}/Public/icons/TV_btn_nav2.svg); */
+/* } */
+/* #navigation-button-3{ */
+/* 	background-image: url(${pageContext.request.contextPath}/Public/icons/TV_btn_nav3.svg); */
+/* } */
+/* #navigation-button-4{ */
+/* 	background-image: url(${pageContext.request.contextPath}/Public/icons/TV_btn_nav4.svg); */
+/* } */
+/* #navigation-button-5{ */
+/* 	background-image: url(${pageContext.request.contextPath}/Public/icons/list.svg); */
+/* } */
+/* #navigation-button-6{ */
+/* 	background-image: url(${pageContext.request.contextPath}/Public/icons/calendar-2.svg); */
+/* } */
+.nav-img{
+	height: 35px !important;
+	display: block;
+	margin: auto 0;
 }
-#navigation-button-2{
-	background-image: url(${pageContext.request.contextPath}/Public/icons/TV_btn_nav2.svg);
-}
-#navigation-button-3{
-	background-image: url(${pageContext.request.contextPath}/Public/icons/TV_btn_nav3.svg);
-}
-#navigation-button-4{
-	background-image: url(${pageContext.request.contextPath}/Public/icons/TV_btn_nav4.svg);
-}
-#navigation-button-5{
-	background-image: url(${pageContext.request.contextPath}/Public/icons/list.svg);
-}
-
 .bom-item-text-row textarea
 {
 	color:black;
@@ -323,10 +342,6 @@ position: absolute;
 	font-family: lightFont;
 	resize: none;
 }
-.big-nav-button
-{
-    width: auto;
-}
 .btn_leftNavigation
 {
     border-bottom: 1px solid #cfcfcf;
@@ -343,10 +358,6 @@ position: absolute;
 	background-color: #e6e6e6;
 /* 	border-right: 3px solid #dc3545; */
 	transition: 0.2s
-}
-.btn_leftNavigation img
-{
-	height: 60px !important;
 }
 .rightSide
 {
@@ -370,7 +381,7 @@ position: absolute;
 	border-radius: 10px;
 	height: 100%;
 }
-#SwitchPanel
+#SwitchPanel, #ModalSwitchPanel
 {	height: 83vh;
 	overflow-y: auto;
 	overflow-x: hidden;
@@ -500,7 +511,13 @@ position: absolute;
 	.nav-label
 	{
 		font-size: medium;
+		text-align: center;
 	}
+	
+	.nav-img-div{
+		display: none;
+	}
+	
 	 .personal-form-control:disabled
 	 {
 		font-size: 14px;
@@ -534,10 +551,13 @@ position: absolute;
 	}
 
 }
-@media only screen and (max-height: 650px) {
-	.btn_navHeader, #btn_megszakitas, #navigation-button-1,#navigation-button-2,#navigation-button-3,#navigation-button-4,#navigation-button-5
+@media only screen and (max-height: 700px) {
+	.btn_navHeader, #btn_megszakitas
 	{
 		background-image: none;
+	}
+	.nav-img{
+		display: none;
 	}
 	 .nav-label
 	 {

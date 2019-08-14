@@ -60,29 +60,31 @@
 										<input type="number" class="form-control input-finished h-100"
 											placeholder="<%=outputFormatter.getWord(DictionaryEntry.FINISHED_QUANTITY)%>"
 											aria-label="<%=outputFormatter.getWord(DictionaryEntry.FINISHED_QUANTITY)%>"
-											aria-describedby="button-addon2" /> 
-											<input type="number"
+											aria-describedby="button-addon2" /> <input type="number"
 											class="form-control input-scrap h-100"
 											placeholder="<%=outputFormatter.getWord(DictionaryEntry.SCRAP_QUANTITY)%>"
 											aria-label="<%=outputFormatter.getWord(DictionaryEntry.SCRAP_QUANTITY)%>"
 											aria-describedby="button-addon2">
 										<div class="input-group-append w-25">
 											<button
-												class="btn btn-outline-secondary w-100 submit-action-btn" value='<%=task.getWorkSlipId()%>'
-												type="button" onclick='OpenSubmitConfirmationModal(this)'
+												class="btn btn-outline-secondary w-100 submit-action-btn"
+												value='<%=task.getWorkSlipId()%>' type="button"
+												onclick='OpenSubmitConfirmationModal(this)'
 												id="button-addon2"><%=outputFormatter.getWord(DictionaryEntry.SEND)%></button>
 										</div>
 									</div>
 								</div>
 								<div class='col-1 px-0'>
 									<input type='button'
-										class='w-100 h-100 lejelent-btn close-nav-btn' onclick='closeSubmit()' />
+										class='w-100 h-100 lejelent-btn close-nav-btn'
+										onclick='closeSubmit()' />
 								</div>
 							</div>
 						</div>
 					</div>
 					<div
-						class='btn_navHeader-left btn-navHeader-left-refresh-btn refresh-click btn_navHeader h-100 float-left px-0'>
+						class='btn_navHeader-left btn-navHeader-left-refresh-btn refresh-click btn_navHeader h-100 float-left px-0'
+						onclick='RefreshTask()'>
 						<p class='h6 text-center nav-label'><%=outputFormatter.getWord(DictionaryEntry.REFRESH)%></p>
 						<form method='POST' class='h-100 d-none refresh-form'
 							action='<%=response.encodeURL(request.getContextPath() + "/OpenTask")%>'></form>
@@ -141,34 +143,118 @@
 			<div class='row h-100'>
 				<div class='col light-shadow bord-radius-nav'>
 					<div class='btn_leftNavigation big-nav-button row'>
-						<div class='col-12 px-0 navigation-button'
+						<button class='col-12 px-0 navigation-button' value='1'
 							id='navigation-button-1' onclick='NavigationButtonClick(this)'>
-							<p class='nav-btn-1 nav-label'><%=outputFormatter.getWord(DictionaryEntry.GENERAL)%></p>
-						</div>
+							<div class="container">
+								<div class="row">
+									<div class="col-2 nav-img-div">
+										<img class="nav-img"
+											src="${pageContext.request.contextPath}/Public/icons/TV_btn_nav1.svg" />
+									</div>
+									<div class="col-10">
+										<p class='nav-btn-1 nav-label'><%=outputFormatter.getWord(DictionaryEntry.GENERAL)%></p>
+									</div>
+								</div>
+							</div>
+						</button>
 					</div>
+					
 					<div class='btn_leftNavigation big-nav-button row'>
-						<div class='col-12 px-0 navigation-button'
+						<button class='col-12 px-0 navigation-button' value='7'
+							id='navigation-button-1' onclick='NavigationButtonClick(this)'>
+							<div class="container">
+								<div class="row">
+									<div class="col-2 nav-img-div">
+										<img class="nav-img"
+											src="${pageContext.request.contextPath}/Public/icons/technical-support.svg" />
+									</div>
+									<div class="col-10">
+										<p class='nav-btn-1 nav-label'><%=outputFormatter.getWord(DictionaryEntry.TECHNICAL_MANUAL)%></p>
+									</div>
+								</div>
+							</div>
+						</button>
+					</div>
+					
+					<div class='btn_leftNavigation big-nav-button row'>
+						<button class='col-12 px-0 navigation-button' value='2'
 							id='navigation-button-2' onclick='NavigationButtonClick(this)'>
+							<div class="container">
+								<div class="row">
+									<div class="col-2 nav-img-div">
+										<img class="nav-img"
+											src="${pageContext.request.contextPath}/Public/icons/TV_btn_nav2.svg" />
+									</div>
+									<div class="col-10">
 							<p class='nav-btn-2 nav-label'><%=outputFormatter.getWord(DictionaryEntry.DOCUMENTS)%></p>
-						</div>
+									</div>
+								</div>
+							</div>
+						</button>
 					</div>
 					<div class='btn_leftNavigation big-nav-button row'>
-						<div class='col-12 px-0 navigation-button'
+						<button class='col-12 px-0 navigation-button' value='3'
 							id='navigation-button-3' onclick='NavigationButtonClick(this)'>
+														<div class="container">
+								<div class="row">
+									<div class="col-2 nav-img-div">
+										<img class="nav-img"
+											src="${pageContext.request.contextPath}/Public/icons/TV_btn_nav3.svg" />
+									</div>
+									<div class="col-10">
 							<p class='nav-btn-3 nav-label'><%=outputFormatter.getWord(DictionaryEntry.BILL_OF_MATERIAL)%></p>
-						</div>
+									</div>
+								</div>
+							</div>
+						</button>
 					</div>
 					<div class='btn_leftNavigation  big-nav-button row'>
-						<div class='col-12 px-0 navigation-button'
+						<button class='col-12 px-0 navigation-button' value='4'
 							id='navigation-button-4' onclick='NavigationButtonClick(this)'>
+							<div class="container">
+								<div class="row">
+									<div class="col-2 nav-img-div">
+										<img class="nav-img"
+											src="${pageContext.request.contextPath}/Public/icons/TV_btn_nav4.svg" />
+									</div>
+									<div class="col-10">
 							<p class='nav-btn-4 nav-label'><%=outputFormatter.getWord(DictionaryEntry.ORDER_INFO)%></p>
-						</div>
+									</div>
+								</div>
+							</div>
+						</button>
+					</div>
+					<div class='btn_leftNavigation big-nav-button row'>
+						<button class='col-12 px-0 navigation-button' value='5'
+							id='navigation-button-5' onclick='NavigationButtonClick(this)'>
+							<div class="container">
+								<div class="row">
+									<div class="col-2 nav-img-div">
+										<img class="nav-img"
+											src="${pageContext.request.contextPath}/Public/icons/list.svg" />
+									</div>
+									<div class="col-10">
+							<p class='nav-btn-5 nav-label'><%=outputFormatter.getWord(DictionaryEntry.FOLLOWING_OPERATIONS)%></p>
+									</div>
+								</div>
+							</div>
+						</button>
 					</div>
 					<div class='btn_leftNavigation bord-radius-nav big-nav-button row'>
-						<div class='col-12 px-0 navigation-button'
-							id='navigation-button-5' onclick='NavigationButtonClick(this)'>
-							<p class='nav-btn-5 nav-label'><%=outputFormatter.getWord(DictionaryEntry.FOLLOWING_OPERATIONS)%></p>
-						</div>
+						<button class='col-12 px-0 navigation-button' value='6'
+							id='navigation-button-6' onclick='NavigationButtonClick(this)'>
+							<div class="container">
+								<div class="row">
+									<div class="col-2 nav-img-div">
+										<img class="nav-img"
+											src="${pageContext.request.contextPath}/Public/icons/calendar-2.svg" />
+									</div>
+									<div class="col-10">
+							<p class='nav-btn-6 nav-label'><%=outputFormatter.getWord(DictionaryEntry.FOLLOWING_TASK_NUMBERS)%></p>
+									</div>
+								</div>
+							</div>
+						</button>
 					</div>
 				</div>
 			</div>

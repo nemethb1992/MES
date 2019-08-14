@@ -22,12 +22,64 @@ import java.util.List;
 public abstract class InfoSystemTableConverter<R> extends InfoSystemExecutor {
 
 	/**
+	 * Segédosztály az eredmények együttes átadásához.
+	 * @author szizo
+	 */
+	public class InfoSystemResult {
+
+		/**
+		 * A lekérdezendő fejrészmezők értékei az infosystem lefuttatása után.
+		 */
+		protected final FieldValues headerFields;
+
+		/**
+		 * Az infosystem táblázatsorai objektumok listájaként.
+		 */
+		protected final List<R> rows;
+
+		/**
+		 * Konstruktor.
+		 * @param headerFields A lekérdezendő fejrészmezők értékei az infosystem lefuttatása után.
+		 * @param rows Az infosystem táblázatsorai objektumok listájaként.
+		 */
+		protected InfoSystemResult(FieldValues headerFields, List<R> rows) {
+			this.headerFields = headerFields;
+			this.rows = rows;
+		}
+
+		/**
+		 * @return A lekérdezendő fejrészmezők értékei az infosystem lefuttatása után.
+		 */
+		public FieldValues getHeaderFields() {
+			return headerFields;
+		}
+
+		/**
+		 * @return Az infosystem táblázatsorai objektumok listájaként.
+		 */
+		public List<R> getRows() {
+			return rows;
+		}
+
+	}
+
+	/**
 	 * Konstruktor.
 	 * @param swd Az infosystem keresőszava.
 	 * @param tableFieldNamesClass A lekérdezendő táblázati mezők neveit konstansokként tartalmazó osztály.
 	 */
 	public InfoSystemTableConverter(String swd, Class<?> tableFieldNamesClass) {
-		super(swd, null, tableFieldNamesClass);
+		this(swd, null, tableFieldNamesClass);
+	}
+
+	/**
+	 * Konstruktor.
+	 * @param swd Az infosystem keresőszava.
+	 * @param headerFieldNamesClass A lekérdezendő fejrészmezők neveit konstansokként tartalmazó osztály (null, ha nincs lekérdezendő fejrészmező).
+	 * @param tableFieldNamesClass A lekérdezendő táblázati mezők neveit konstansokként tartalmazó osztály.
+	 */
+	public InfoSystemTableConverter(String swd, Class<?> headerFieldNamesClass, Class<?> tableFieldNamesClass) {
+		super(swd, headerFieldNamesClass, tableFieldNamesClass);
 	}
 
 	/**
@@ -36,7 +88,34 @@ public abstract class InfoSystemTableConverter<R> extends InfoSystemExecutor {
 	 * @param tableFieldNames A lekérdezendő táblázati mezők nevei.
 	 */
 	public InfoSystemTableConverter(String swd, String[] tableFieldNames) {
-		super(swd, null, tableFieldNames);
+		this(swd, null, tableFieldNames);
+	}
+
+	/**
+	 * Konstruktor.
+	 * @param swd Az infosystem keresőszava.
+	 * @param headerFieldNames A lekérdezendő fejrészmezők nevei (null, ha nincs lekérdezendő fejrészmező).
+	 * @param tableFieldNames A lekérdezendő táblázati mezők nevei.
+	 */
+	public InfoSystemTableConverter(String swd, String[] headerFieldNames, String[] tableFieldNames) {
+		super(swd, headerFieldNames, tableFieldNames);
+	}
+
+	/**
+	 * @param inputFieldValues Az eredmény lekérdezése előtti mezőbeállítások (null, ha nincs szükség bemenetekre).
+	 * @param edpSession Az EDP-munkamenet.
+	 * @return Az infosystem lefuttatásának eredménye.
+	 */
+	public InfoSystemResult getResult(EDPEditFieldList inputFieldValues, EDPSession edpSession) {
+		return getResult(executeQuery(inputFieldValues, edpSession));
+	}
+
+	/**
+	 * @param result A lekérdezendő mezők értékei az infosystem lefuttatása után.
+	 * @return Az infosystem lefuttatásának eredménye.
+	 */
+	protected InfoSystemResult getResult(EDPEditObject result) {
+		return new InfoSystemResult(getResultHeaderFields(result), getRows(result));
 	}
 
 	/**
@@ -45,7 +124,14 @@ public abstract class InfoSystemTableConverter<R> extends InfoSystemExecutor {
 	 * @return Az infosystem táblázatsorai objektumok listájaként.
 	 */
 	public List<R> getRows(EDPEditFieldList inputFieldValues, EDPSession edpSession) {
-		final EDPEditObject result = executeQuery(inputFieldValues, edpSession);
+		return getRows(executeQuery(inputFieldValues, edpSession));
+	}
+
+	/**
+	 * @param result A lekérdezendő mezők értékei az infosystem lefuttatása után.
+	 * @return Az infosystem táblázatsorai objektumok listájaként.
+	 */
+	protected List<R> getRows(EDPEditObject result) {
 		final int rowCount = result.getRowCount();
 		switch (rowCount) {
 			case 0:

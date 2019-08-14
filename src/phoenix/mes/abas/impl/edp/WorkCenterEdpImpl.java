@@ -90,7 +90,7 @@ public class WorkCenterEdpImpl extends WorkCenterImpl<EDPSession> implements pho
 		 */
 		protected WorkCenterDetailsEdpImpl(GenericAbasConnection<EDPSession> edpConnection) {
 			super(edpConnection);
-			suspendWithoutApproval = true;
+			suspendWithoutApproval = !idNo.endsWith("DG");
 		}
 
 		/* (non-Javadoc)

@@ -5,6 +5,11 @@ $(document).ready(function(){
 	TaskManagerStartUp();
 	FirstStationList();
 	Sortlist(".station-list");
+	
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
 });
 
 
@@ -77,6 +82,7 @@ function ButtonScriptElements()
 }
 
 function refreshButton(){
+	$('#ListRefreshBtn').prop('disabled', true);
 	$( ".ts_sumTime" ).val("0:00:00");
 	$( ".station-container" ).empty();
 	$( ".dndf1" ).empty();
@@ -99,24 +105,24 @@ function datepicker()
 }
 
 var layoutState = 1;
-function NavigationButtonClick(item)
+function ModalDataSheetTabButtonClic(item)
 {
 	$(item).show();
 	var id = $(item).val();
 	var tab = $(item).attr("id").split('-')[2];
 	if(tab != layoutState){
 		layoutState = tab;
-		getView(tab, id);
+		getModalDataSheetView(tab, id);
 	}
 	else{
 		return;
 	}
 }
 
-function getView(tab = 1, id)
+function getModalDataSheetView(tab = 1, id)
 {
 	$( "#SwitchPanel" ).empty();
-	loadingAnimation("#SwitchPanel", "operator");
+	loadingAnimation("#ModalSwitchPanel", "operator");
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/DataSheetLoader")%>',
 		data:{
@@ -125,8 +131,8 @@ function getView(tab = 1, id)
 		},
 		success: function (response) {
 			loadingAnimationStop("operator");
-			$( "#SwitchPanel" ).empty();
-			$( "#SwitchPanel" ).append(response[0]);
+			$( "#ModalSwitchPanel" ).empty();
+			$( "#ModalSwitchPanel" ).append(response[0]);
 		}
 	});
 }
@@ -161,7 +167,7 @@ function openDataSheetModal(item){
 			$("#DataSheetModal").remove();
 			document.body.innerHTML += response;
 			$('#DataSheetModal').modal("show");
-			getView(1,id);
+			getModalDataSheetView(1,id);
 		},
 		error: function() {
 		}  
@@ -170,7 +176,8 @@ function openDataSheetModal(item){
 function UnsuspendTaskFromManager(item)
 {
 	var id = $(item).val();
-	
+
+	$(item).prop('disabled', true);
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/UnsuspendTask")%>',
 		data:{
@@ -182,6 +189,7 @@ function UnsuspendTaskFromManager(item)
 			}else
 				{
 				alert(response);
+				$(item).prop('disabled', false);
 				}
 		}
 	});
@@ -189,6 +197,7 @@ function UnsuspendTaskFromManager(item)
 
 function SuspendTaskFromManager(item)
 {
+	$(item).prop('disabled', true);
 	var text = $(".error-text").val();
 	var id = $(item).val();
 	
@@ -212,6 +221,7 @@ function SuspendTaskFromManager(item)
 			}else
 				{
 				alert(response);
+				$(item).prop('disabled', false);
 				}
 		}
 	});
@@ -354,6 +364,7 @@ function StationItemSelect(item, level)
 function clickOnStation(item)
 {	
 	var station = $(item).attr("value");
+	$('#ListRefreshBtn').prop('disabled', false);
 	SessionStoreStation(station);	
 	SelectedStation = station;
 	$(this).css({'background-image':'url(Public/icons/computerSignRed.svg)','background-color' : '#ebebeb','border-left':'5px solid #ff6666'});
@@ -375,7 +386,7 @@ function PushToStation(item)
 
 
 function SaveStationList(){
-	
+	console.log("SaveStationList");
 	var taskIds = [];
     $(".station-list").children().each(function() {
     	taskIds.push($(this).attr('value'));
@@ -389,7 +400,6 @@ function SaveStationList(){
 		success: function () {
 			workstationListLoader();
 
-    		$('.task-list-save-btn').attr('class', 'task-list-save-btn btn btn-light mt-2 w-100 h-75');
 		}
 	});
 }
@@ -399,7 +409,8 @@ function Sortlist(element){
     $(element).disableSelection();
     $(element).droppable({
         drop: function(event, ui){
-        		$('.task-list-save-btn').attr('class', 'task-list-save-btn btn btn-danger mt-2 w-100 h-75');
+        	console.log("Dropped");
+        	setTimeout(SaveStationList, 200);
            }
 
     });

@@ -33,40 +33,47 @@
 					<div class='left-buttons col-2 col-md-2 col-lg-2 col-xl-2'>
 						<div class='row task-details-manager-row'>
 							<div class='col light-shadow bord-radius-nav'>
-								<div class='btn_leftNavigation big-nav-button row'>
+								<div class='btn_leftNavigation big-nav-button-modal row'>
 									<button class='col-12 px-0 navigation-button'
-										id='navigation-button-1' onclick='NavigationButtonClick(this)'
+										id='navigation-button-1' onclick='ModalDataSheetTabButtonClic(this)' 
 										value='<%=workSlipId%>'>
-										<p class='nav-btn-1 nav-label'><%=of.getWord(DictionaryEntry.GENERAL)%></p>
+										<p class='nav-btn-1 nav-label nav-label-modal'><%=of.getWord(DictionaryEntry.GENERAL)%></p>
 									</button>
 								</div>
-								<div class='btn_leftNavigation big-nav-button row'>
+								<div class='btn_leftNavigation big-nav-button-modal row'>
 									<button class='col-12 px-0 navigation-button'
-										id='navigation-button-2' onclick='NavigationButtonClick(this)'
+										id='navigation-button-7' onclick='ModalDataSheetTabButtonClic(this)' 
 										value='<%=workSlipId%>'>
-										<p class='nav-btn-2 nav-label'><%=of.getWord(DictionaryEntry.DOCUMENTS)%></p>
+										<p class='nav-btn-7 nav-label nav-label-modal'><%=of.getWord(DictionaryEntry.TECHNICAL_MANUAL)%></p>
 									</button>
 								</div>
-								<div class='btn_leftNavigation big-nav-button row'>
+								<div class='btn_leftNavigation big-nav-button-modal row'>
 									<button class='col-12 px-0 navigation-button'
-										id='navigation-button-3' onclick='NavigationButtonClick(this)'
+										id='navigation-button-2' onclick='ModalDataSheetTabButtonClic(this)' 
 										value='<%=workSlipId%>'>
-										<p class='nav-btn-3 nav-label'><%=of.getWord(DictionaryEntry.BILL_OF_MATERIAL)%></p>
+										<p class='nav-btn-2 nav-label nav-label-modal'><%=of.getWord(DictionaryEntry.DOCUMENTS)%></p>
 									</button>
 								</div>
-								<div class='btn_leftNavigation  big-nav-button row'>
+								<div class='btn_leftNavigation big-nav-button-modal row'>
 									<button class='col-12 px-0 navigation-button'
-										id='navigation-button-4' onclick='NavigationButtonClick(this)'
+										id='navigation-button-3' onclick='ModalDataSheetTabButtonClic(this)' 
 										value='<%=workSlipId%>'>
-										<p class='nav-btn-4 nav-label'><%=of.getWord(DictionaryEntry.ORDER_INFO)%></p>
+										<p class='nav-btn-3 nav-label nav-label-modal'><%=of.getWord(DictionaryEntry.BILL_OF_MATERIAL)%></p>
+									</button>
+								</div>
+								<div class='btn_leftNavigation  big-nav-button-modal row'>
+									<button class='col-12 px-0 navigation-button'
+										id='navigation-button-4' onclick='ModalDataSheetTabButtonClic(this)' 
+										value='<%=workSlipId%>'>
+										<p class='nav-btn-4 nav-label nav-label-modal'><%=of.getWord(DictionaryEntry.ORDER_INFO)%></p>
 									</button>
 								</div>
 								<div
-									class='btn_leftNavigation bord-radius-nav big-nav-button row'>
+									class='btn_leftNavigation bord-radius-nav big-nav-button-modal row'>
 									<button class='col-12 px-0 navigation-button'
-										id='navigation-button-5' onclick='NavigationButtonClick(this)'
+										id='navigation-button-5' onclick='ModalDataSheetTabButtonClic(this)'
 										value='<%=workSlipId%>'>
-										<p class='nav-btn-5 nav-label'><%=of.getWord(DictionaryEntry.FOLLOWING_OPERATIONS)%></p>
+										<p class='nav-btn-5 nav-label nav-label-modal'><%=of.getWord(DictionaryEntry.FOLLOWING_OPERATIONS)%></p>
 									</button>
 								</div>
 							</div>
@@ -74,7 +81,7 @@
 					</div>
 					<div
 						class='operator-switch-grid col-10 col-md-10 col-lg-10 col-xl-10 px-0'>
-						<div id='SwitchPanel'
+						<div id='ModalSwitchPanel'
 							class='rightCont container-fluid task-details-manager-row'>
 						</div>
 					</div>

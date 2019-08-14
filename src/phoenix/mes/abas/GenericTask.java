@@ -122,6 +122,11 @@ public interface GenericTask<C> extends Serializable {
 		BigDecimal getNumberOfExecutions();
 
 		/**
+		 * @return A megelőző munkalap lejelentett mennyisége (null, ha ez az első gyártási feladat).
+		 */
+		BigDecimal getYieldOfPrecedingWorkSlip();
+
+		/**
 		 * @return A nyitott mennyiség.
 		 */
 		BigDecimal getOutstandingQuantity();

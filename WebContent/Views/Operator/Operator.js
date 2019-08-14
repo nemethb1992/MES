@@ -5,11 +5,16 @@ var layoutState = 1;
 
 $(document).ready(function(){
 	pagesetup();
+
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
 });
 
 function pagesetup()
 {
-	TabControlEventHolder();
+//	TabControlEventHolder();
 	ApplicationCountDown();
 	getView();
 	setTimer();
@@ -50,11 +55,57 @@ function getView(tab = 1)
 	});
 }
 
-
+function openDataSheetModal(item){
+	var id = $(item).val();
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/TaskDataSheetModal")%>',
+		data: {
+			TaskID: id
+		},
+		success: function (response) {
+			$("#DataSheetModal").remove();
+			document.body.innerHTML += response;
+			$('#DataSheetModal').modal("show");
+			getModalDataSheetView(1,id);
+		},
+		error: function() {
+		}  
+	});
+}
+function ModalDataSheetTabButtonClic(item)
+{
+	$(item).show();
+	var id = $(item).val();
+	var tab = $(item).attr("id").split('-')[2];
+	if(tab != layoutState){
+		layoutState = tab;
+		getModalDataSheetView(tab, id);
+	}
+	else{
+		return;
+	}
+}
+function getModalDataSheetView(tab = 1, id)
+{
+	$( "#ModalSwitchPanel" ).empty();
+	loadingAnimation("#ModalSwitchPanel", "operator");
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/DataSheetLoader")%>',
+		data:{
+			tabNo: tab,
+			taskId: id
+		},
+		success: function (response) {
+			loadingAnimationStop("operator");
+			$( "#ModalSwitchPanel" ).empty();
+			$( "#ModalSwitchPanel" ).append(response[0]);
+		}
+	});
+}
 function NavigationButtonClick(item)
 {
 	$(item).show();
-	var tab = $(item).attr("id").split('-')[2];
+	var tab = $(item).val();
 	if(tab != layoutState){
 		layoutState = tab;
 		getView(tab);
@@ -165,11 +216,8 @@ function suspendListEvent(element){
 	});
 }
 
-function TabControlEventHolder()
+function TabControlEventHolder(item)
 {
-	$('.refresh-click').click(function(){
-		RefreshTask();
-	});
 	$('.btn_leftNavigation').click(function(){
 		$('.btn_leftNavigation').css({'background-color':'', 'color':'','border':''});
 		$(this).css({'background-color':'#e6e6e6','background-size':'24%','border-right':'3px solid #ff6666'});
@@ -303,19 +351,21 @@ function RefreshTask()
 	$.post({
 	url:  '<%=response.encodeURL(request.getContextPath()+"/RefreshData")%>',
 	success: function (response) {
-		if( response == "null")
+		if( response == "inProgress")
 		{
-			$('.refresh-form').submit();
+			getView();
 		}else
 		{
-			location.reload();
+			$('.refresh-form').submit();
 		}
 	}
 	});
 }
 
-function SubmitTask()
+function SubmitTask(item)
 {
+
+	$(item).prop('disabled', true);
 	var finished = $(".confirm-finished").val();
 	var scrap = $(".confirm-scrap").val();	
 	
@@ -342,6 +392,7 @@ function SubmitTask()
 				setTimer();
 			}else if(response == "error"){
 				alert("Lejelentesi hiba!");
+				$(item).prop('disabled', false);
 			}else if(response == "exit"){
 				$(".refresh-form").submit();
 			}
@@ -416,6 +467,8 @@ function openSuspendModal(item){
 
 function SuspendTaskFromOperator(item)
 {
+
+	$(item).prop('disabled', true);
 	var text = $(".error-text").val();
 	var id = $(item).val();
 	
@@ -439,6 +492,7 @@ function SuspendTaskFromOperator(item)
 			}else
 				{
 				alert(response);
+				$(item).prop('disabled', false);
 				}
 		}
 	});
