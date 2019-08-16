@@ -3,8 +3,11 @@
 <script>
 	
 <%@ include file="/Views/Manager/Todo/Todo.js"%>
-	
-<%String displayName = (String) session.getAttribute("displayname");
+
+<%
+
+request.setAttribute("page","Todo");
+String displayName = (String) session.getAttribute("displayname");
 			if (outputFormatter.getLocale() == Locale.GERMAN || outputFormatter.getLocale() == Locale.ENGLISH) {
 				try {
 					String auxiliaryArr[] = displayName.split(" ");

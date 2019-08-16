@@ -6,17 +6,17 @@ var layoutState = 1;
 $(document).ready(function(){
 	pagesetup();
 
-    history.pushState(null, null, location.href);
-    window.onpopstate = function () {
-        history.go(1);
-    };
+ history.pushState(null, null, location.href);
+ window.onpopstate = function () {
+ history.go(1);
+ };
 });
 
 function pagesetup()
 {
-//	TabControlEventHolder();
+// TabControlEventHolder();
 	ApplicationCountDown();
-	getView();
+	setTimeout(getView, 1000);
 	setTimer();
 	setDateNow('.personal-date');
 	setTimeNow('.personal-time');
@@ -199,15 +199,15 @@ function openAsset(item)
 {
 	var value = $(item).attr('value');
 	window.open(value,'_blank');
-//	$.post({
-//		url:  '<%=response.encodeURL(request.getContextPath()+"/FileHandler")%>',
-//		data:{
-//			file: value
-//		},
-//		success: function (response) {
+// $.post({
+// url: '<%=response.encodeURL(request.getContextPath()+"/FileHandler")%>',
+// data:{
+// file: value
+// },
+// success: function (response) {
 //
-//		}
-//	});
+// }
+// });
 }
 function suspendListEvent(element){
 
@@ -334,16 +334,7 @@ function CloseConfirmationModal()
 	closing = false;
 }
 
-function ResumeTask()
-{
-	$('#interrupt-level2').modal('hide');
-	$.post({
-		url:  '<%=response.encodeURL(request.getContextPath()+"/ResumeTask")%>',
-		success: function () {
-//			$('.interrupt-form').submit();
-		}
-	});
-}
+
 
 
 function RefreshTask()
@@ -386,7 +377,7 @@ function SubmitTask(item)
 		success: function (response) {
 			if(response == "submit_done")
 			{
-//				location.reload();
+// location.reload();
 				CloseConfirmationModal();
 				getView();
 				setTimer();
@@ -432,19 +423,78 @@ function OpenSubmitConfirmationModal(item)
 		});
 }
 
-
-//New suspend scripts ##############################
-
-function OpenInterruptModal()
+function ResumeTask(item)
 {
-	$('#interrupt-level1').modal({backdrop: 'static', keyboard: false});
-	$('#interrupt-level1').modal('show');
+	var id = $(item).val();
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/ResumeTask")%>',
+		data:{
+			taskId: id
+		},
+		success: function () {
+		}
+	});
 }
 
-function OpenInterruptModal_2()
+// New suspend scripts ##############################
+
+// function OpenInterruptModal()
+// {
+// $('#interrupt-level1').modal({backdrop: 'static', keyboard: false});
+// $('#interrupt-level1').modal('show');
+// }
+//
+// function OpenInterruptModal_2()
+// {
+// $('#interrupt-level2').modal({backdrop: 'static', keyboard: false});
+// $('#interrupt-level2').modal('show');
+// }
+
+function openInterruptModal(item){	
+	var text = $(".error-text").val();
+if(text.length == 0)
 {
-	$('#interrupt-level2').modal({backdrop: 'static', keyboard: false});
-	$('#interrupt-level2').modal('show');
+return;
+}
+	$(item).prop('disabled', true);
+	InterruptTask($(item).val());
+}
+
+
+function InterruptTask(id)
+{
+	var text = $(".error-text").val();
+	if(text.length == 0)
+		{
+		return;
+		}
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/InterruptTask")%>',
+		data:{
+			TaskId: id
+		},
+		success: function () {
+			$.post({
+				url:  '<%=response.encodeURL(request.getContextPath()+"/TaskInterruptModal")%>',
+				data: {
+					TaskID: id,
+					errorText: text
+				},
+				success: function (response) {
+					$(".modal-backdrop").remove();
+					$("#SuspendModal").remove();
+					$("#SuspendValidationModal").remove();
+					document.body.innerHTML += response;
+					$('#SuspendValidationModal').modal({backdrop: 'static', keyboard: false});
+					$('#SuspendValidationModal').modal("show");
+					return true;
+				},
+				error: function() {
+					return false;
+				}  
+			});
+		}
+	});
 }
 
 function openSuspendModal(item){
@@ -465,24 +515,27 @@ function openSuspendModal(item){
 	});
 }
 
-function SuspendTaskFromOperator(item)
+function SuspendTaskFromOperator(item, secure = false)
 {
-
-	$(item).prop('disabled', true);
 	var text = $(".error-text").val();
+	var uname = $(".username-input").val();
+	var pwd = $(".password-input").val();
 	var id = $(item).val();
 	
 	if(text.length == 0)
 	{
 		return;
 	}
-	
+
+	$(item).prop('disabled', true);
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/SuspendTask")%>',
 		data:{
-			secure: "false",
+			secure: secure,
 			errorText: text,
-			taskId: id
+			taskId: id,
+			username: uname, 
+			password: pwd
 			
 			},
 		success: function (response) {
@@ -498,28 +551,6 @@ function SuspendTaskFromOperator(item)
 	});
 }
 
-
-
-function InterruptTask()
-{
-	var text = $(".error-text").val();
-	if(text.length == 0)
-		{
-		return;
-		}
-	$.post({
-		url:  '<%=response.encodeURL(request.getContextPath()+"/InterruptTask")%>',
-		data:{
-			errorText: text
-		},
-		success: function () {
-			$(".error-text-back").html(text);
-		}
-	});
-	$('#interrupt-level1').modal('hide');
-	$('#interrupt-level2').modal({backdrop: 'static', keyboard: false});
-	$('#interrupt-level2').modal('show');
-}
 
 function SuspendTask(authernticated = true)
 {
@@ -542,8 +573,8 @@ function SuspendTask(authernticated = true)
 		url:  '<%=response.encodeURL(request.getContextPath()+"/SuspendTask")%>',
 		data:{
 			secure: authernticated,
-			username: uname, 
 			errorText: text,
+			username: uname, 
 			password: pwd
 			},
 		success: function (response) {

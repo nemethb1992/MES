@@ -10,7 +10,7 @@ public class OperatingWorkstation extends Workstation{
 	
 	public OperatingWorkstation(HttpServletRequest request, String station){
 		this.request = request;
-		String[] rawName;
+		String[] rawName = null;
 		if(station != null)
 		{
 			try {
@@ -19,6 +19,14 @@ public class OperatingWorkstation extends Workstation{
 				loadVariables(rawName, request);
 
 			}catch (SQLException e) {
+			}
+		}
+		if(rawName != null)
+		{
+			try {
+				loadVariables(rawName,request);
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
 		}
 	}
@@ -35,7 +43,7 @@ public class OperatingWorkstation extends Workstation{
 		}catch (Exception e) {
 		}
 	}
-
+	
 	public static void setOperatingStation(HttpServletRequest request, String obj)
 	{
 		request.getSession().setAttribute("operatingWorkstation", obj);

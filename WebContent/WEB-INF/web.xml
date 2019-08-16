@@ -9,11 +9,19 @@
   </welcome-file-list>
   <servlet>
     <servlet-name>TaskSuspendModal</servlet-name>
-    <servlet-class>phoenix.mes.content.controller.manager.TaskSuspendModal</servlet-class>
+    <servlet-class>phoenix.mes.content.controller.TaskSuspendModal</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>TaskSuspendModal</servlet-name>
     <url-pattern>/TaskSuspendModal</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>TaskInterruptModal</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.TaskInterruptModal</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TaskInterruptModal</servlet-name>
+    <url-pattern>/TaskInterruptModal</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>TaskDataSheetModal</servlet-name>

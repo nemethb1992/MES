@@ -7,9 +7,14 @@
 <%
 	String workSlipId = (String)request.getAttribute("workSlipId");
 	String suspendType = (String)request.getAttribute("SuspendType");
-	String suspendMethod = ("manager".equals(suspendType)? "SuspendTaskFromManager(this)" : "SuspendTaskFromOperator(this)");
 	OutputFormatter of = (OutputFormatter)request.getAttribute("OutputFormatter");
 	Task.Details taskDetails = (Task.Details)request.getAttribute("TaskDetails");
+	boolean unsecureSuspend = (boolean)request.getAttribute("SecureSuspend");
+	String suspendMethod = "openInterruptModal(this)";
+	if(unsecureSuspend){
+		suspendMethod = ("manager".equals(suspendType)? "SuspendTaskFromManager(this, false)" : "SuspendTaskFromOperator(this, false)");
+	}
+
 %>
 
 <div class="modal fade my-fade" id="SuspendModal" tabindex="-1"

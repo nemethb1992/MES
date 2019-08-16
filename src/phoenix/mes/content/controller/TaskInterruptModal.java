@@ -1,4 +1,4 @@
-package phoenix.mes.content.controller.manager;
+package phoenix.mes.content.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -16,20 +16,14 @@ import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
 import phoenix.mes.content.AppBuild;
-import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
 
-
-/**
- * Servlet implementation class TaskSuspendModal
- */
-public class TaskSuspendModal extends HttpServlet {
+public class TaskInterruptModal extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String encodedURL = response.encodeRedirectURL("/Logout");
-		getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	String encodedURL = response.encodeRedirectURL("/Logout");
+	getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -38,7 +32,8 @@ public class TaskSuspendModal extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		String taskID = (String) request.getParameter("TaskID");
-		String suspendType = (String) request.getParameter("SuspendType");
+		String errorText = (String) request.getParameter("errorText");
+
 		OutputFormatter of = (OutputFormatter) session.getAttribute("OutputFormatter");
 		Task.Details taskDetails = null;
 		Task task = null;
@@ -53,9 +48,9 @@ public class TaskSuspendModal extends HttpServlet {
 		}
 		request.setAttribute("TaskDetails", taskDetails);
 		request.setAttribute("OutputFormatter", of);
-		request.setAttribute("SuspendType", suspendType);
+		request.setAttribute("errorText", errorText);
 		request.setAttribute("workSlipId", task.getWorkSlipId().toString());
-		String encodedURL = response.encodeRedirectURL("/Views/Manager/Todo/Partial/TaskSuspendModal.jsp");
+		String encodedURL = response.encodeRedirectURL("/Views/Partial/TaskInterruptModal.jsp");
 		request.getRequestDispatcher(encodedURL).forward(request, response);
 	}
 

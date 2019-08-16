@@ -9,7 +9,10 @@
 	
 <%@ include file="/Views/Operator/Operator.js"%>
 	
-<%OperatingWorkstation ws = new OperatingWorkstation(request);
+<%
+
+request.setAttribute("page","DataSheet");
+OperatingWorkstation ws = new OperatingWorkstation(request);
 			String displayName = (String) session.getAttribute("displayname");
 			Task task = (Task) session.getAttribute("Task");
 			if (outputFormatter.getLocale() == Locale.GERMAN || outputFormatter.getLocale() == Locale.ENGLISH) {

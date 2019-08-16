@@ -25,9 +25,7 @@ import phoenix.mes.content.controller.OperatingWorkstation;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
 
-/**
- * Servlet implementation class Suspend
- */
+
 public class SuspendTask extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -56,12 +54,18 @@ public class SuspendTask extends HttpServlet {
 		response.setCharacterEncoding("UTF-8"); 
 		if(secure) {
 			try {
-				if(!new AbasAuthentication().bind(username, pass, request) && !new User(request).isModifier(username))
+				boolean val1 = new AbasAuthentication().bind(username, pass, request);
+				boolean val2 = new User(request).isModifier(username);
+				
+				if(!val1 || !val2)
 				{
 					response.getWriter().write("Sikertelen hitelesítés!");
 					return;
 				}
 			} catch (SQLException | LoginException | NamingException e1) {
+
+				response.getWriter().write("Sikertelen hitelesítés!");
+				return;
 			}
 		}else if(!secure) {
 			try {

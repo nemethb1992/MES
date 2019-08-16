@@ -197,7 +197,6 @@ function UnsuspendTaskFromManager(item)
 
 function SuspendTaskFromManager(item)
 {
-	$(item).prop('disabled', true);
 	var text = $(".error-text").val();
 	var id = $(item).val();
 	
@@ -205,6 +204,7 @@ function SuspendTaskFromManager(item)
 	{
 		return;
 	}
+	$(item).prop('disabled', true);
 	
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/SuspendTask")%>',

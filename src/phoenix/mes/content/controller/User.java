@@ -80,7 +80,8 @@ public class User {
     
     public boolean isModifier(String username) throws SQLException
     {
-    	return sqlBindEngine("SELECT users.username FROM users WHERE LOWER(username)=LOWER('"+username+"') AND modifier = 1", "username");
+    	boolean value = sqlBindEngine("SELECT users.username FROM users WHERE LOWER(username)=LOWER('"+username+"') AND modifier=1", "username");
+    	return value;
     }
     
     public boolean isExists(String... username) throws SQLException

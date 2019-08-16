@@ -1,5 +1,6 @@
 
 <%
+request.setAttribute("page","login");
 String info = (String)request.getAttribute("infoTitle");
 if(info == null)
 {

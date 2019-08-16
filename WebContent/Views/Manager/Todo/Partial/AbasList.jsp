@@ -115,7 +115,7 @@
 						}
 					%>
 					<div class='row'>
-						<div class='col-3'>
+						<div class='col-4'>
 							<button type="button" onclick='openDataSheetModal(this)'
 								value='<%=task.getWorkSlipId()%>'
 								class="btn btn-info w-100 my-2"><%=of.getWord(DictionaryEntry.OPEN_TASK_DATASHEET)%></button>
@@ -123,7 +123,7 @@
 						<%
 							if (taskDetails.getStatus() == Status.WAITING || taskDetails.getStatus() == Status.IN_PROGRESS) {
 						%>
-						<div class='col-2 offset-7'>
+						<div class='col-4 offset-4'>
 							<button type="button" class="btn btn-warning w-100 my-2"
 								onclick='openSuspendModal(this)'
 								value='<%=task.getWorkSlipId()%>'><%=of.getWord(DictionaryEntry.SUSPEND)%></button>
@@ -132,7 +132,7 @@
 							} else if (taskDetails.getStatus() == Status.INTERRUPTED
 										|| taskDetails.getStatus() == Status.SUSPENDED) {
 						%>
-						<div class='col-2 offset-7'>
+						<div class='col-4 offset-4'>
 							<button type="button" class="btn btn-warning w-100 my-2"
 								onclick='UnsuspendTaskFromManager(this)'
 								value='<%=task.getWorkSlipId()%>'><%=of.getWord(DictionaryEntry.RESUME)%></button>

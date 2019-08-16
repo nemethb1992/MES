@@ -19,15 +19,20 @@ $(document).ready(function(){
 //	LanguageSetOnServlet(language);
 //}
 
-function selectLanguage(button)
+function selectLanguage(item)
 {
-	console.log("+");
-	var language = $(button).attr("id");
+	var page = $(item).val();
+	var language = $(item).attr("id");
 	if($.cookie("language") != language)
 	{
 		$.cookie('language', language, { expires: 365 });
 		LanguageSetOnServlet(language);
-		location.reload();
+		if(page=="login"){
+			location.reload();
+		}
+		else{
+			  $( ".language-form" ).submit();
+		}
 	}
 }
 

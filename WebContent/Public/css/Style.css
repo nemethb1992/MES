@@ -270,6 +270,8 @@ html {
 }
 
 .lang_bub {
+	background: transparent;
+	border:none;
 	float: left;
 	width: 35px;
 	position: relative;

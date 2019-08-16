@@ -7,6 +7,11 @@
 <%
 	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 	Task.Details taskDetails = (Task.Details)request.getAttribute("taskDetails");
+	String previous_submit= "-";
+	if(null != taskDetails.getYieldOfPrecedingWorkSlip())
+	{
+		previous_submit = of.formatWithoutTrailingZeroes(taskDetails.getYieldOfPrecedingWorkSlip()).toString() +" "+ taskDetails.getStockUnit();
+	}
 %>
 <div class='container-fluid h-100 px-0 py-3'>
 
@@ -50,7 +55,7 @@
       <th scope="row"><%=of.getWord(DictionaryEntry.OPEN_QUANTITY)%>:</th>
       <td colspan="1"><%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity())%> <%=taskDetails.getStockUnit()%></td>
       <th scope="row"><%=of.getWord(DictionaryEntry.PREVIOUS_WORKSHEET_NO_SUBMIT)%>:</th>
-      <td colspan="1"><%=of.formatWithoutTrailingZeroes(taskDetails.getYieldOfPrecedingWorkSlip())%> <%=taskDetails.getStockUnit()%></td>
+      <td colspan="1"><%=previous_submit %></td>
     </tr>
   </tbody>
 </table>

@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import de.abas.erp.common.type.Id;
+import de.abas.erp.common.type.IdImpl;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasFunctionException;
 import phoenix.mes.abas.AbasObjectFactory;
@@ -26,48 +28,55 @@ import phoenix.mes.content.utility.OutputFormatter;
  */
 public class InterruptTask extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		getServletContext().getRequestDispatcher("/Logout").forward(request, response);
 
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		AppBuild ab = new AppBuild(request);
-		if(!ab.isStabile()){
-			doGet(request,response);
+		if (!ab.isStabile()) {
+			doGet(request, response);
 			return;
 		}
 
 		HttpSession session = request.getSession();
-		Task task = (Task)session.getAttribute("Task");
-		if(null == task)
-		{
-			return;
-		}
-
+		String taskId = request.getParameter("TaskId");
 		AbasConnection abasConnection = null;
-		try {  
-			User user = new User(request);   
-			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");   	
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
-			task.interrupt(abasConnection);
+		try {
+			Task task = null;
+			User user = new User(request);
+			OutputFormatter of = (OutputFormatter) session.getAttribute("OutputFormatter");
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(),
+					of.getLocale(), ab.isTest());
+			if (taskId != null) {
+				Id AbasId = IdImpl.valueOf(taskId);
+				task = AbasObjectFactory.INSTANCE.createTask(AbasId, abasConnection);
+			}
+			if (null == task) {
+				return;
+			}
+			if (task != null) {
+				task.interrupt(abasConnection);
+			}
 		} catch (LoginException | SQLException | AbasFunctionException e) {
-			System.out.println(e);			
+			System.out.println(e);
 			try {
 				OperatingWorkstation ws = new OperatingWorkstation(request);
 				String workstation = "";
-				if(ws != null) {
+				if (ws != null) {
 					workstation = ws.group + " - " + ws.no;
 				}
-				new Log(request).logFaliure(FaliureType.TASK_INTERRUP, e.getMessage(),workstation);
-			}catch(SQLException exc) {
+				new Log(request).logFaliure(FaliureType.TASK_INTERRUP, e.getMessage(), workstation);
+			} catch (SQLException exc) {
 			}
-		}finally
-		{
+		} finally {
 			try {
 				if (null != abasConnection) {
 					abasConnection.close();
