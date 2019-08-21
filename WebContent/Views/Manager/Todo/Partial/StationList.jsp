@@ -12,7 +12,6 @@
 	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 	List<Task> li = (List<Task>)request.getAttribute("StationList");
 	AbasConnection abasConnection = (AbasConnection)request.getAttribute("abasConnection");
-	String startDate, startDateFormated;
 
 	BigDecimal summedProductionTime = BigDecimal.ZERO;
 	String cssClass;
@@ -21,8 +20,6 @@
 		final Task.Details taskDetails = task.getDetails(abasConnection);
 				boolean progress = (task.getDetails(abasConnection).getStatus() == Status.IN_PROGRESS ? true : false);
 				summedProductionTime = summedProductionTime.add(taskDetails.getCalculatedProductionTime());
-				startDate = taskDetails.getStartDate().toString();
-				startDateFormated = startDate.substring(0,4) + "." + startDate.substring(4,6) + "." + startDate.substring(6,8) + ".";
 				
 				switch(taskDetails.getStatus()){
 				case IN_PROGRESS:
@@ -93,7 +90,7 @@
 														</thead>
 														<tbody>
 															<tr>
-																<td><%=startDateFormated%></td>
+																<td><%=of.formatDate(taskDetails.getStartDate())%></td>
 																<td><%=taskDetails.getProductIdNo()%></td>
 															</tr>
 														</tbody>

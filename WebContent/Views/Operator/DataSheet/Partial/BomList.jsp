@@ -13,7 +13,7 @@
 		<div class='row bom-header-row p-2'>
 			<div class='col'>
 				<input class='w-100' readonly
-					value='<%=of.getWord(DictionaryEntry.OPERATION_NUMEBER)%>'>
+					value='<%=of.getWord(DictionaryEntry.ARTICLE)%>'>
 			</div>
 			<div class='col'>
 				<input class='w-100' readonly

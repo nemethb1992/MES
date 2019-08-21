@@ -21,12 +21,9 @@ public class Logout extends HttpServlet {
 		session.removeAttribute("username");
 		session.removeAttribute("password");
 		session.removeAttribute("userid");
+		request.setAttribute("LayoutType",layout);
 		String encodedURL = response.encodeRedirectURL((layout == null || "".equals(layout) ? "/" : (layout == "manager" ? "/Manager" : "/Operator")));
 		getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
-// 	    session.invalidate();
-// 	    RequestDispatcher rd = request.getRequestDispatcher((layout == null || "".equals(layout) ? "/" : (layout == "manager" ? "/Manager" : "/Operator")));
-// 	    rd.forward(request, response);
-//  		getServletContext().getRequestDispatcher((layout == null || "".equals(layout) ? "/" : (layout == "manager" ? "/Manager" : "/Operator"))).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -18,15 +18,10 @@
 	OutputFormatter of = (OutputFormatter) request.getAttribute("OutputFormatter");
 	List<Task> li = (List<Task>) request.getAttribute("AbasList");
 	AbasConnection abasConnection = (AbasConnection) request.getAttribute("abasConnection");
-	String startDate, startDateFormated;
 	String cssClass = "";
 	int i = 0;
 	for (Task task : li) {
 		final Task.Details taskDetails = task.getDetails(abasConnection);
-		startDate = taskDetails.getStartDate().toString();
-		startDateFormated = startDate.substring(0, 4) + "." + startDate.substring(4, 6) + "."
-				+ startDate.substring(6, 8) + ".";
-
 		switch (taskDetails.getStatus()) {
 		case IN_PROGRESS:
 			cssClass = "dnd-container-inprogress";
@@ -71,9 +66,8 @@
 									<td><%=taskDetails.getProductIdNo()%></td>
 									<td><%=taskDetails.getProductSwd()%></td>
 									<td><%=taskDetails.getProductDescription()%></td>
-									<td><%=startDateFormated%></td>
-									<td><%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity()) + " "
-						+ taskDetails.getStockUnit()%></td>
+									<td><%=of.formatDate(taskDetails.getStartDate())%></td>
+									<td><%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity()) + " "+ taskDetails.getStockUnit()%></td>
 									<td><%=of.formatTime(taskDetails.getCalculatedProductionTime())%></td>
 								</tr>
 							</tbody>
@@ -81,17 +75,13 @@
 					</div>
 				</div>
 				<div class='container-fluid collapse list-item-extended-content'
-					id='list-item-extended-content-<%=i%>'>
-					<%
+					id='list-item-extended-content-<%=i%>'><%
 						if (taskDetails.getStatus() == Status.INTERRUPTED || taskDetails.getStatus() == Status.SUSPENDED) {
-
-								List<Map<String, String>> errorIssues = pg.sqlQuery(
-										"select text from log where workslipno='" + taskDetails.getWorkSlipNo() + "'", "text");
-					%>
+							List<Map<String, String>> errorIssues = pg.sqlQuery("select text from log where workslipno='" + taskDetails.getWorkSlipNo() + "'", "text");%>
 					<div class='row faliure-row'>
 						<div class='col-1'>
 							<p class='pt-3 pl-2'>
-								<b>Indoklás:</b>
+								<b><%=of.getWord(DictionaryEntry.CAUSE_OF_INTERRUPTION)%>:</b>
 							</p>
 						</div>
 						<div class='col-11 '>

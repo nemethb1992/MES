@@ -344,7 +344,7 @@ function RefreshTask()
 	success: function (response) {
 		if( response == "inProgress")
 		{
-			getView();
+			setTimeout(getView, 1000);
 		}else
 		{
 			$('.refresh-form').submit();
@@ -379,7 +379,7 @@ function SubmitTask(item)
 			{
 // location.reload();
 				CloseConfirmationModal();
-				getView();
+				setTimeout(getView, 1000);
 				setTimer();
 			}else if(response == "error"){
 				alert("Lejelentesi hiba!");

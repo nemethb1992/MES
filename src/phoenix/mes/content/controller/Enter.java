@@ -37,6 +37,7 @@ public class Enter extends HttpServlet {
 		String shownPassword = request.getParameter("shownPassword");
 		String pass = request.getParameter("password");
 		String layout = (String)request.getParameter("LayoutType");
+		request.setAttribute("LayoutType",layout);
 		OutputFormatter outputFormatter = (OutputFormatter)session.getAttribute("OutputFormatter") != null ? (OutputFormatter)session.getAttribute("OutputFormatter") : OutputFormatter.forRequest(request);
 		
 
@@ -94,7 +95,7 @@ public class Enter extends HttpServlet {
 			}
 			else if("manager".equals(layout) && !user.isModifier()) {
 				request.setAttribute("infoTitle", outputFormatter.getWord(DictionaryEntry.LOGIN_FAILED));
-				nextPage = "/Views/Login/loginPage.jsp";
+				nextPage = "/Manager";
 			}
 			getServletContext().getRequestDispatcher(null == nextPage ? "/Views/WelcomePage/WelcomePage.jsp" : nextPage).forward(request, response);
 		} catch ( NamingException | LoginException | SQLException t) {
