@@ -29,11 +29,11 @@ public interface GenericWorkStation<C> extends Serializable {
 	int getNumber();
 
 	/**
-	 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa (AbasDate.INFINITY, ha nincs szükség időkorlátra).
+	 * @param finishDateUntil A vizsgált befejezésidátum-intervallum felső határa (AbasDate.INFINITY, ha nincs szükség időkorlátra).
 	 * @param abasConnection Az Abas-kapcsolat.
-	 * @return A vizsgált kezdődátum-intervallumba eső, a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt gyártási feladatok listája.
+	 * @return A vizsgált befejezésidátum-intervallumba eső, a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt gyártási feladatok listája.
 	 */
-	List<? extends GenericTask<C>> getUnassignedTasks(AbasDate startDateUntil, GenericAbasConnection<C> abasConnection);
+	List<? extends GenericTask<C>> getUnassignedTasks(AbasDate finishDateUntil, GenericAbasConnection<C> abasConnection);
 
 	/**
 	 * @param abasConnection Az Abas-kapcsolat.

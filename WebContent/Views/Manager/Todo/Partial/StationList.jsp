@@ -84,13 +84,13 @@
 													<table class="table station-list-table mb-0">
 														<thead>
 															<tr>
-																<th scope="col"><%=of.getWord(DictionaryEntry.GET_STARTED)%></th>
+																<th scope="col"><%=of.getWord(DictionaryEntry.GET_FINISHED)%></th>
 																<th scope="col"><%=of.getWord(DictionaryEntry.ARTICLE)%></th>
 															</tr>
 														</thead>
 														<tbody>
 															<tr>
-																<td><%=of.formatDate(taskDetails.getStartDate())%></td>
+																<td><%=of.formatDate(taskDetails.getFinishDate())%></td>
 																<td><%=taskDetails.getProductIdNo()%></td>
 															</tr>
 														</tbody>

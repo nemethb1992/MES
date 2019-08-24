@@ -15,25 +15,26 @@ request.setAttribute("page","DataSheet");
 OperatingWorkstation ws = new OperatingWorkstation(request);
 			String displayName = (String) session.getAttribute("displayname");
 			Task task = (Task) session.getAttribute("Task");
-			if (outputFormatter.getLocale() == Locale.GERMAN || outputFormatter.getLocale() == Locale.ENGLISH) {
-				try {
-					String auxiliaryArr[] = displayName.split(" ");
-					String auxiliary = "";
+// 			if (outputFormatter.getLocale() == Locale.GERMAN || outputFormatter.getLocale() == Locale.ENGLISH) {
+// 				try {
+// 					String auxiliaryArr[] = displayName.split(" ");
+// 					String auxiliary = "";
 
-					int i = 0;
-					for (String part : auxiliaryArr) {
-						if (i > 0) {
-							auxiliary += part;
-							auxiliary += " ";
-						}
-						i++;
-					}
+// 					int i = 0;
+// 					for (String part : auxiliaryArr) {
+// 						if (i > 0) {
+// 							auxiliary += part;
+// 							auxiliary += " ";
+// 						}
+// 						i++;
+// 					}
 
-					auxiliary += auxiliaryArr[0];
-					displayName = auxiliary;
-				} catch (Exception e) {
-				}
-			}%>
+// 					auxiliary += auxiliaryArr[0];
+// 					displayName = auxiliary;
+// 				} catch (Exception e) {
+// 				}
+// 			}
+			%>
 	
 </script>
 <div class='container-fluid h-100'>
@@ -144,7 +145,8 @@ OperatingWorkstation ws = new OperatingWorkstation(request);
 	<div class='row task-details-row'>
 		<div class='left-buttons col-2 col-md-2 col-lg-2 col-xl-2'>
 			<div class='row h-100'>
-				<div class='col light-shadow bord-radius-nav'>
+			
+								<div class='col light-shadow bord-radius-nav'>
 					<div class='btn_leftNavigation big-nav-button row'>
 						<button class='col-12 px-0 navigation-button' value='1'
 							id='navigation-button-1' onclick='NavigationButtonClick(this)'>
@@ -173,6 +175,24 @@ OperatingWorkstation ws = new OperatingWorkstation(request);
 									</div>
 									<div class="col-10">
 										<p class='nav-btn-1 nav-label'><%=outputFormatter.getWord(DictionaryEntry.TECHNICAL_MANUAL)%></p>
+									</div>
+								</div>
+							</div>
+						</button>
+					</div>
+					
+					
+					<div class='btn_leftNavigation big-nav-button row'>
+						<button class='col-12 px-0 navigation-button' value='8'
+							id='navigation-button-1' onclick='NavigationButtonClick(this)'>
+							<div class="container">
+								<div class="row">
+									<div class="col-2 nav-img-div">
+										<img class="nav-img"
+											src="${pageContext.request.contextPath}/Public/icons/technical-support.svg" />
+									</div>
+									<div class="col-10">
+										<p class='nav-btn-1 nav-label'><%=outputFormatter.getWord(DictionaryEntry.OPERATION_LABEL)%></p>
 									</div>
 								</div>
 							</div>

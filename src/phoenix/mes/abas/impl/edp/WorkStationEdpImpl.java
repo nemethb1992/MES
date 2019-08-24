@@ -37,7 +37,7 @@ public class WorkStationEdpImpl extends WorkStationImpl<EDPSession> implements W
 		/**
 		 * A szűrőmezők nevei a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt gyártási feladatok lekérdezéséhez.
 		 */
-		protected static final String[] unassignedTasksFilterCriteria = {InfosysOw1MESWORKSTATION.META.ymgr.getName(), InfosysOw1MESWORKSTATION.META.ystermig.getName(), InfosysOw1MESWORKSTATION.META.start.getName()};
+		protected static final String[] unassignedTasksFilterCriteria = {InfosysOw1MESWORKSTATION.META.ymgr.getName(), InfosysOw1MESWORKSTATION.META.ytermig.getName(), InfosysOw1MESWORKSTATION.META.start.getName()};
 
 		/**
 		 * A szűrőmezők nevei a munkaállomásra beütemezett és végrehajtható gyártási feladatok lekérdezéséhez.
@@ -71,13 +71,13 @@ public class WorkStationEdpImpl extends WorkStationImpl<EDPSession> implements W
 
 		/**
 		 * @param workCenterIdNo A gépcsoport hivatkozási száma.
-		 * @param startDateUntil A vizsgált kezdődátum-intervallum felső határa (AbasDate.INFINITY, ha nincs szükség időkorlátra).
+		 * @param finishDateUntil A vizsgált befejezésidátum-intervallum felső határa (AbasDate.INFINITY, ha nincs szükség időkorlátra).
 		 * @param edpSession Az EDP-munkamenet.
-		 * @return A vizsgált kezdődátum-intervallumba eső, a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt gyártási feladatok listája.
+		 * @return A vizsgált befejezésidátum-intervallumba eső, a gépcsoportra betervezett, de konkrét munkaállomáshoz hozzá nem rendelt gyártási feladatok listája.
 		 */
-		public List<TaskEdpImpl> getUnassignedTasks(String workCenterIdNo, AbasDate startDateUntil, EDPSession edpSession) {
+		public List<TaskEdpImpl> getUnassignedTasks(String workCenterIdNo, AbasDate finishDateUntil, EDPSession edpSession) {
 			try {
-				return getRows(new EDPEditFieldList(unassignedTasksFilterCriteria, new String[] {workCenterIdNo, startDateUntil.toString(), " "}), edpSession);
+				return getRows(new EDPEditFieldList(unassignedTasksFilterCriteria, new String[] {workCenterIdNo, finishDateUntil.toString(), " "}), edpSession);
 			} catch (CantChangeFieldValException e) {
 				throw new EDPRuntimeException(e);
 			}
@@ -160,8 +160,8 @@ public class WorkStationEdpImpl extends WorkStationImpl<EDPSession> implements W
 	 * @see phoenix.mes.abas.GenericWorkStation#getUnassignedTasks(de.abas.erp.common.type.AbasDate, phoenix.mes.abas.GenericAbasConnection)
 	 */
 	@Override
-	public List<TaskEdpImpl> getUnassignedTasks(AbasDate startDateUntil, GenericAbasConnection<EDPSession> edpConnection) {
-		return WorkSlipQuery.EXECUTOR.getUnassignedTasks(workCenterIdNo, startDateUntil, edpConnection.getConnectionObject());
+	public List<TaskEdpImpl> getUnassignedTasks(AbasDate finishDateUntil, GenericAbasConnection<EDPSession> edpConnection) {
+		return WorkSlipQuery.EXECUTOR.getUnassignedTasks(workCenterIdNo, finishDateUntil, edpConnection.getConnectionObject());
 	}
 
 	/* (non-Javadoc)

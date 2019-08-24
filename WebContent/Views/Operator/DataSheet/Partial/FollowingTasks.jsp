@@ -19,7 +19,7 @@
 		for (Task task : li) {
 			final Task.Details taskDetails = task.getDetails(abasConnection);
 			boolean progress = (task.getDetails(abasConnection).getStatus() == Status.IN_PROGRESS ? true : false);
-			startDate = taskDetails.getStartDate().toString();
+			startDate = taskDetails.getFinishDate().toString();
 			startDateFormated = startDate.substring(0, 4) + "." + startDate.substring(4, 6) + "."
 					+ startDate.substring(6, 8) + ".";
 
@@ -38,7 +38,7 @@
 								<tr>
 									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.WORKSHEET_NO)%></th>
 									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.PLACE_OF_USE)%></th>
-									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.GET_STARTED)%></th>
+									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.GET_FINISHED)%></th>
 									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.ARTICLE)%></th>
 									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.SEARCH_WORD)%></th>
 									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.NAME)%></th>

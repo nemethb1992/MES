@@ -29,6 +29,7 @@ public class OutputFormatter {
 		WORKSHEET_NO("Munkalapszám","Arbeitsschein-Nr.","Worksheet No."),
 		PREVIOUS_WORKSHEET_NO_SUBMIT("Előző munkalap lejelentett mennyisége","rückgemeldete Gutmenge des vorigen Arbeitsscheins","-"),
 		TECHNICAL_MANUAL("MPJ","SML","Technical Manual"),
+		OPERATION_LABEL("Művelet","Arbeitsgang","Operation"),
 		ARTICLE("Cikkszám","Artikel-Nr.","Article"),
 		OPERATION_NUMEBER("Műveletszám","Arbeitsgang-Nr.","Operation number"),
 		SEARCH_WORD("Keresőszó","Suchwort","Search word"),
@@ -45,7 +46,7 @@ public class OutputFormatter {
 		DISRUPTION("Zavar","Störung","Disruption"),
 		SUBMIT("Lejelentés","Rückmelden","Submit"),
 		EXECUTION_NO("Végrehajtási szám","Ausführungsanzahl","Implementation number"),
-		GET_STARTED("Tervezett kezdés","geplantes Startdatum","Planned start"),
+		GET_FINISHED("Tervezett befejezés","geplantes Enddatum","-"),
 		CALCULATED_PROD_TIME("Gyártási idő","Produktionszeit","Production time"),
 		OPEN_QUANTITY("Nyitott mennyiség","offene Menge","Open quantity"),
 		FINISHED_QUANTITY("Kész mennyiség","Gutmenge","Finished quantity"),
@@ -259,7 +260,10 @@ public class OutputFormatter {
 		return formatTime(timeInHours.multiply(BIG_DECIMAL_3600).intValue());
 	}
 
-	public String formatDate(AbasDate date) {		
+	public String formatDate(AbasDate date) {
+		if(null == date) {
+			return "";
+		}
 		String dateStr = date.toString();
 		String year = dateStr.substring(0,4);
 		String month = dateStr.substring(4,6);

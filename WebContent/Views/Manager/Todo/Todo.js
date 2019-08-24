@@ -6,10 +6,10 @@ $(document).ready(function(){
 	FirstStationList();
 	Sortlist(".station-list");
 	
-    history.pushState(null, null, location.href);
-    window.onpopstate = function () {
-        history.go(1);
-    };
+//    history.pushState(null, null, location.href);
+//    window.onpopstate = function () {
+//        history.go(1);
+//    };
 });
 
 
@@ -357,6 +357,8 @@ function StationItemSelect(item, level)
 		},
 		success: function (view) {
 			$( ".station-container" ).append(view);
+			var asd = $('.station-container').children().size();
+			alert(asd);
 		}
 	});
 }

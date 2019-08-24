@@ -17,6 +17,7 @@ import java.util.List;
 import phoenix.mes.abas.GenericAbasConnection;
 import phoenix.mes.abas.GenericTask;
 import phoenix.mes.abas.GenericTask.BomElement;
+import phoenix.mes.abas.GenericTask.Characteristic;
 import phoenix.mes.abas.GenericTask.Operation;
 import phoenix.mes.abas.GenericTask.Status;
 
@@ -44,9 +45,9 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 		public String workSlipNo;
 
 		/**
-		 * A gyártási feladat elkezdésének (tervezett) napja.
+		 * A gyártási feladat befejezésének (tervezett) napja.
 		 */
-		public AbasDate startDate;
+		public AbasDate finishDate;
 
 		/**
 		 * A gyártási feladat végrehajtási állapota.
@@ -74,9 +75,34 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 		public String productDescription2;
 
 		/**
+		 * A csomagolási utasítás keresőszava.
+		 */
+		public String packingInstructionSwd;
+
+		/**
+		 * A csomagolási mennyiség.
+		 */
+		public BigDecimal fillingQuantity;
+
+		/**
+		 * A csomagolóeszköz hivatkozási száma.
+		 */
+		public String packagingMaterialIdNo;
+
+		/**
+		 * A csomagolóeszköz megnevezése az aktuálisan beállított kezelőnyelven.
+		 */
+		public String packagingMaterialDescription;
+
+		/**
 		 * A termék Felhasználás-hivatkozása.
 		 */
 		public String usage;
+
+		/**
+		 * A munkautasítás.
+		 */
+		public String workInstruction;
 
 		/**
 		 * A beállítási idő.
@@ -215,6 +241,11 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	protected ProductionListData productionListData = null;
 
 	/**
+	 * A gyártott cikk műszakiparaméter-jegyzéke.
+	 */
+	protected List<Characteristic> characteristicsBar = null;
+
+	/**
 	 * A gyártási feladatot követő műveletek listáját gyorsítótárazó objektum.
 	 */
 	protected List<Operation> followingOperations = null;
@@ -251,6 +282,7 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 		clearBasicDataCache();
 		clearOperationDataCache();
 		clearProductionListDataCache();
+		clearCharacteristicsBarCache();
 		clearFollowingOperationsCache();
 	}
 
@@ -392,11 +424,11 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	}
 
 	/* (non-Javadoc)
-	 * @see phoenix.mes.abas.GenericTask.Details#getStartDate()
+	 * @see phoenix.mes.abas.GenericTask.Details#getFinishDate()
 	 */
 	@Override
-	public AbasDate getStartDate() {
-		return getBasicData().startDate;
+	public AbasDate getFinishDate() {
+		return getBasicData().finishDate;
 	}
 
 	/* (non-Javadoc)
@@ -454,6 +486,38 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	}
 
 	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericTask.Details#getPackingInstructionSwd()
+	 */
+	@Override
+	public String getPackingInstructionSwd() {
+		return getBasicData().packingInstructionSwd;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericTask.Details#getFillingQuantity()
+	 */
+	@Override
+	public BigDecimal getFillingQuantity() {
+		return getBasicData().fillingQuantity;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericTask.Details#getPackagingMaterialIdNo()
+	 */
+	@Override
+	public String getPackagingMaterialIdNo() {
+		return getBasicData().packagingMaterialIdNo;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericTask.Details#getPackagingMaterialDescription()
+	 */
+	@Override
+	public String getPackagingMaterialDescription() {
+		return getBasicData().packagingMaterialDescription;
+	}
+
+	/* (non-Javadoc)
 	 * @see phoenix.mes.abas.GenericTask.Details#getUsage()
 	 */
 	@Override
@@ -507,6 +571,14 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	@Override
 	public String getOperationReservationText() {
 		return getOperationData().operationReservationText;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericTask.Details#getWorkInstruction()
+	 */
+	@Override
+	public String getWorkInstruction() {
+		return getBasicData().workInstruction;
 	}
 
 	/* (non-Javadoc)
@@ -587,6 +659,29 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	@Override
 	public BigDecimal getCalculatedProductionTime() {
 		return getBasicData().calculatedProductionTime;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericTask.Details#getCharacteristicsBar()
+	 */
+	@Override
+	public List<Characteristic> getCharacteristicsBar() {
+		if (null == characteristicsBar) {
+			characteristicsBar = newCharacteristicsBar();
+		}
+		return characteristicsBar;
+	}
+
+	/**
+	 * @return A gyártott cikk műszakiparaméter-jegyzékét gyorsítótárazó, újonnan létrehozott objektum.
+	 */
+	protected abstract List<Characteristic> newCharacteristicsBar();
+
+	/**
+	 * A gyártott cikk műszakiparaméter-jegyzékét tartalmazó gyorsítótár kiürítése.
+	 */
+	public void clearCharacteristicsBarCache() {
+		characteristicsBar = null;
 	}
 
 	/* (non-Javadoc)

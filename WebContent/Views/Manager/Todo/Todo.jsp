@@ -8,25 +8,26 @@
 
 request.setAttribute("page","Todo");
 String displayName = (String) session.getAttribute("displayname");
-			if (outputFormatter.getLocale() == Locale.GERMAN || outputFormatter.getLocale() == Locale.ENGLISH) {
-				try {
-					String auxiliaryArr[] = displayName.split(" ");
-					String auxiliary = "";
+// 			if (outputFormatter.getLocale() == Locale.GERMAN || outputFormatter.getLocale() == Locale.ENGLISH) {
+// 				try {
+// 					String auxiliaryArr[] = displayName.split(" ");
+// 					String auxiliary = "";
 
-					int i = 0;
-					for (String part : auxiliaryArr) {
-						if (i > 0) {
-							auxiliary += part;
-							auxiliary += " ";
-						}
-						i++;
-					}
+// 					int i = 0;
+// 					for (String part : auxiliaryArr) {
+// 						if (i > 0) {
+// 							auxiliary += part;
+// 							auxiliary += " ";
+// 						}
+// 						i++;
+// 					}
 
-					auxiliary += auxiliaryArr[0];
-					displayName = auxiliary;
-				} catch (Exception e) {
-				}
-			}%>
+// 					auxiliary += auxiliaryArr[0];
+// 					displayName = auxiliary;
+// 				} catch (Exception e) {
+// 				}
+// 			}
+			%>
 	
 </script>
 <div class='container-fluid h-100'>

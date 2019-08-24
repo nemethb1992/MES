@@ -101,6 +101,9 @@ public class DataSheetLoader extends HttpServlet {
 			case "7":
 				partialUrl = "/Views/Operator/DataSheet/Partial/TechnicalManual.jsp";
 				break;
+			case "8":
+				partialUrl = "/Views/Operator/DataSheet/Partial/Operation.jsp";
+				break;
 			default:
 				break;
 			}

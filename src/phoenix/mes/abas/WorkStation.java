@@ -27,7 +27,7 @@ public interface WorkStation extends GenericWorkStation<EDPSession> {
 	 * @see phoenix.mes.abas.GenericWorkStation#getUnassignedTasks(de.abas.erp.common.type.AbasDate, phoenix.mes.abas.GenericAbasConnection)
 	 */
 	@Override
-	List<? extends Task> getUnassignedTasks(AbasDate startDateUntil, GenericAbasConnection<EDPSession> abasConnection);
+	List<? extends Task> getUnassignedTasks(AbasDate finishDateUntil, GenericAbasConnection<EDPSession> abasConnection);
 
 	/* (non-Javadoc)
 	 * @see phoenix.mes.abas.GenericWorkStation#getScheduledTasks(phoenix.mes.abas.GenericAbasConnection)

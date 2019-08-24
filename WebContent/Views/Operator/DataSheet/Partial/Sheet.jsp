@@ -32,8 +32,8 @@
       <td><%=taskDetails.getUsage()%></td>
     </tr>
     <tr>
-      <th scope="row"><%=of.getWord(DictionaryEntry.GET_STARTED)%>:</th>
-      <td  colspan="1"><%=of.formatDate(taskDetails.getStartDate())%></td>
+      <th scope="row"><%=of.getWord(DictionaryEntry.GET_FINISHED)%>:</th>
+      <td  colspan="1"><%=of.formatDate(taskDetails.getFinishDate())%></td>
     </tr>
   </tbody>
 </table>

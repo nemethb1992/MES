@@ -32,9 +32,9 @@ public interface GenericTask<C> extends Serializable {
 		String getWorkSlipNo();
 
 		/**
-		 * @return A gyártási feladat elkezdésének (tervezett) napja.
+		 * @return A gyártási feladat befejezésének (tervezett) napja.
 		 */
-		AbasDate getStartDate();
+		AbasDate getFinishDate();
 
 		/**
 		 * @return A gyártási feladat végrehajtási állapota.
@@ -60,6 +60,26 @@ public interface GenericTask<C> extends Serializable {
 		 * @return A termék második megnevezése.
 		 */
 		String getProductDescription2();
+
+		/**
+		 * @return A csomagolási utasítás keresőszava.
+		 */
+		String getPackingInstructionSwd();
+
+		/**
+		 * @return A csomagolási mennyiség.
+		 */
+		BigDecimal getFillingQuantity();
+
+		/**
+		 * @return A csomagolóeszköz hivatkozási száma.
+		 */
+		String getPackagingMaterialIdNo();
+
+		/**
+		 * @return A csomagolóeszköz megnevezése az aktuálisan beállított kezelőnyelven.
+		 */
+		String getPackagingMaterialDescription();
 
 		/**
 		 * @return A termék Felhasználás-hivatkozása.
@@ -95,6 +115,11 @@ public interface GenericTask<C> extends Serializable {
 		 * @return A műveletfoglalás tételszövege.
 		 */
 		String getOperationReservationText();
+
+		/**
+		 * @return A munkautasítás.
+		 */
+		String getWorkInstruction();
 
 		/**
 		 * @return A beállítási idő.
@@ -147,6 +172,11 @@ public interface GenericTask<C> extends Serializable {
 		BigDecimal getCalculatedProductionTime();
 
 		/**
+		 * @return A gyártott cikk műszakiparaméter-jegyzéke.
+		 */
+		List<Characteristic> getCharacteristicsBar();
+
+		/**
 		 * @return A gyártási feladathoz kapcsolódó darabjegyzék.
 		 */
 		List<BomElement> getBom();
@@ -175,6 +205,29 @@ public interface GenericTask<C> extends Serializable {
 		SUSPENDED,
 		DONE,
 		DELETED;
+
+	}
+
+	/**
+	 * Műszaki paramétert leíró típus.
+	 * @author szizo
+	 */
+	interface Characteristic extends Serializable {
+
+		/**
+		 * @return A műszaki paraméter neve az aktuálisan beállított kezelőnyelven.
+		 */
+		String getName();
+
+		/**
+		 * @return A műszaki paraméter értéke.
+		 */
+		String getValue();
+
+		/**
+		 * @return A műszaki paraméter mértékegysége.
+		 */
+		String getUnit();
 
 	}
 

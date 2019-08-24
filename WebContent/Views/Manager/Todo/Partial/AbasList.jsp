@@ -54,7 +54,7 @@
 									<th scope="col"><%=of.getWord(DictionaryEntry.ARTICLE)%></th>
 									<th scope="col"><%=of.getWord(DictionaryEntry.SEARCH_WORD)%></th>
 									<th scope="col"><%=of.getWord(DictionaryEntry.NAME)%></th>
-									<th scope="col"><%=of.getWord(DictionaryEntry.GET_STARTED)%></th>
+									<th scope="col"><%=of.getWord(DictionaryEntry.GET_FINISHED)%></th>
 									<th scope="col"><%=of.getWord(DictionaryEntry.OPEN_QUANTITY)%></th>
 									<th scope="col"><%=of.getWord(DictionaryEntry.CALCULATED_PROD_TIME)%></th>
 								</tr>
@@ -66,7 +66,7 @@
 									<td><%=taskDetails.getProductIdNo()%></td>
 									<td><%=taskDetails.getProductSwd()%></td>
 									<td><%=taskDetails.getProductDescription()%></td>
-									<td><%=of.formatDate(taskDetails.getStartDate())%></td>
+									<td><%=of.formatDate(taskDetails.getFinishDate())%></td>
 									<td><%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity()) + " "+ taskDetails.getStockUnit()%></td>
 									<td><%=of.formatTime(taskDetails.getCalculatedProductionTime())%></td>
 								</tr>
