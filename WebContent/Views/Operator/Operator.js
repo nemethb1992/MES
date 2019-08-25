@@ -106,13 +106,13 @@ function NavigationButtonClick(item)
 {
 	$(item).show();
 	var tab = $(item).val();
-	if(tab != layoutState){
-		layoutState = tab;
+//	if(tab != layoutState){
+//		layoutState = tab;
 		getView(tab);
-	}
-	else{
-		return;
-	}
+//	}
+//	else{
+//		return;
+//	}
 }
 
 function setPageDefault()

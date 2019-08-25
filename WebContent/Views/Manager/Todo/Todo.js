@@ -110,13 +110,13 @@ function ModalDataSheetTabButtonClic(item)
 	$(item).show();
 	var id = $(item).val();
 	var tab = $(item).attr("id").split('-')[2];
-	if(tab != layoutState){
-		layoutState = tab;
+//	if(tab != layoutState){
+//		layoutState = tab;
 		getModalDataSheetView(tab, id);
-	}
-	else{
-		return;
-	}
+//	}
+//	else{
+//		return;
+//	}
 }
 
 function getModalDataSheetView(tab = 1, id)

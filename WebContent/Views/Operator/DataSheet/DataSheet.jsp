@@ -189,7 +189,7 @@ OperatingWorkstation ws = new OperatingWorkstation(request);
 								<div class="row">
 									<div class="col-2 nav-img-div">
 										<img class="nav-img"
-											src="${pageContext.request.contextPath}/Public/icons/technical-support.svg" />
+											src="${pageContext.request.contextPath}/Public/icons/list.svg" />
 									</div>
 									<div class="col-10">
 										<p class='nav-btn-1 nav-label'><%=outputFormatter.getWord(DictionaryEntry.OPERATION_LABEL)%></p>
