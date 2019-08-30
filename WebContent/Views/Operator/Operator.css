@@ -7,8 +7,11 @@
     word-wrap: break-word;
 }
 .sheet-table th, .sheet-table td{
-	padding: 19px 10px;
+	padding: 30px 10px;
 	border-color: gray;
+}
+.mpj-table th, .mpj-table td{
+	padding: 15px 10px;
 }
 .sheet-table th{
     background: #f3f3f3;
@@ -73,8 +76,11 @@
 .big-nav-button-modal
 {
     width: auto;
-	height: 17%;
+	height: 14.5%;
 	
+}
+.item-text-row-size{
+	height: 70vh !important;
 }
 #contentFrame
 {

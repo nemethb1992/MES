@@ -108,6 +108,10 @@ public class OutputFormatter {
 		YES("Igen","Ja","Yes"),
 		NO("Nem","Nein","No"),
 		BACK("Vissza","Zurück","Back"),
+		WORK_INSTRUCTIONS("Munkautasítás","Arbeitsanweisung","-"),
+		PACKING_INSTRUCTIONS("Csomagolási utasítás","Packanweisung","-"),
+		PACKING_QUANTITY("Csomagolási mennyiség","Füllmenge","-"),
+		PACKING_TOOL("Csomagolóeszköz","Packmittel","-"),
 		CANCEL("Mégsem","Abbrechen","Cancel");
 
 		private final String hungarianText;

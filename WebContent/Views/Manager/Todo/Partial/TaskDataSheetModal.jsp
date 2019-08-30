@@ -40,6 +40,7 @@
 										<p class='nav-btn-1 nav-label nav-label-modal'><%=of.getWord(DictionaryEntry.GENERAL)%></p>
 									</button>
 								</div>
+								
 								<div class='btn_leftNavigation big-nav-button-modal row'>
 									<button class='col-12 px-0 navigation-button'
 										id='navigation-button-7' onclick='ModalDataSheetTabButtonClic(this)' 
@@ -47,6 +48,15 @@
 										<p class='nav-btn-7 nav-label nav-label-modal'><%=of.getWord(DictionaryEntry.TECHNICAL_MANUAL)%></p>
 									</button>
 								</div>
+								
+								<div class='btn_leftNavigation big-nav-button-modal row'>
+									<button class='col-12 px-0 navigation-button'
+										id='navigation-button-8' onclick='ModalDataSheetTabButtonClic(this)' 
+										value='<%=workSlipId%>'>
+										<p class='nav-btn-8 nav-label nav-label-modal'><%=of.getWord(DictionaryEntry.OPERATION_LABEL)%></p>
+									</button>
+								</div>
+								
 								<div class='btn_leftNavigation big-nav-button-modal row'>
 									<button class='col-12 px-0 navigation-button'
 										id='navigation-button-2' onclick='ModalDataSheetTabButtonClic(this)' 

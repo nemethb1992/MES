@@ -64,7 +64,7 @@ function openDataSheetModal(item){
 		},
 		success: function (response) {
 			$("#DataSheetModal").remove();
-			document.body.innerHTML += response;
+			$('.frame-container').append(response);
 			$('#DataSheetModal').modal("show");
 			getModalDataSheetView(1,id);
 		},
@@ -77,13 +77,13 @@ function ModalDataSheetTabButtonClic(item)
 	$(item).show();
 	var id = $(item).val();
 	var tab = $(item).attr("id").split('-')[2];
-	if(tab != layoutState){
-		layoutState = tab;
+//	if(tab != layoutState){
+//		layoutState = tab;
 		getModalDataSheetView(tab, id);
-	}
-	else{
-		return;
-	}
+//	}
+//	else{
+//		return;
+//	}
 }
 function getModalDataSheetView(tab = 1, id)
 {
@@ -415,7 +415,8 @@ function OpenSubmitConfirmationModal(item)
 			},
 			success: function (response) {
 				$("#submitcConfirmationModal").remove();
-				document.body.innerHTML += response;
+				$('.frame-container').append(response);
+//				$('.frame-container').append(response);
 				$('#submitcConfirmationModal').modal("show");
 			},
 			error: function() {
@@ -484,7 +485,7 @@ function InterruptTask(id)
 					$(".modal-backdrop").remove();
 					$("#SuspendModal").remove();
 					$("#SuspendValidationModal").remove();
-					document.body.innerHTML += response;
+					$('.frame-container').append(response);
 					$('#SuspendValidationModal').modal({backdrop: 'static', keyboard: false});
 					$('#SuspendValidationModal').modal("show");
 					return true;
@@ -507,7 +508,7 @@ function openSuspendModal(item){
 		},
 		success: function (response) {
 			$("#SuspendModal").remove();
-			document.body.innerHTML += response;
+			$('.frame-container').append(response);
 			$('#SuspendModal').modal("show");
 		},
 		error: function() {

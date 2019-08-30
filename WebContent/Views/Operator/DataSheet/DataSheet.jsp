@@ -6,7 +6,8 @@
 <%@include file="/Views/Header.jsp"%>
 <%@page import="phoenix.mes.abas.Task"%>
 <script>
-	
+
+<%@page pageEncoding="UTF-8"%>
 <%@ include file="/Views/Operator/Operator.js"%>
 	
 <%
@@ -37,7 +38,7 @@ OperatingWorkstation ws = new OperatingWorkstation(request);
 			%>
 	
 </script>
-<div class='container-fluid h-100'>
+<div class='frame-container container-fluid h-100'>
 
 	<p class='actual-time h5'></p>
 

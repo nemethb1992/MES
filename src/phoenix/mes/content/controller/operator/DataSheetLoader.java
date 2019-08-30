@@ -70,7 +70,6 @@ public class DataSheetLoader extends HttpServlet {
 			}
 			Task.Details taskDetails = task.getDetails(abasConnection);		
 			request.setAttribute("taskDetails", taskDetails);	
-			
 			String tab = request.getParameter("tabNo") == null ? "1" : request.getParameter("tabNo");
 			switch (tab) {
 			case "1":
