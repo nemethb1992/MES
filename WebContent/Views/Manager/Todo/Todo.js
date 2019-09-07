@@ -1,22 +1,21 @@
 var SelectedStation = null;
 var path = location.pathname.split('/')[1];
-
+var locale = "<%=outputFormatter.getLocale().toString()%>";
 $(document).ready(function(){
 	TaskManagerStartUp();
 	FirstStationList();
 	Sortlist(".station-list");
 	
-//    history.pushState(null, null, location.href);
-//    window.onpopstate = function () {
-//        history.go(1);
-//    };
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
 });
 
 
 
 function TaskManagerStartUp()
 {
-	setToday();
 	ApplicationCountDown();
 	ButtonScriptElements();
 	WorkStationItemCollect();
@@ -87,17 +86,26 @@ function refreshButton(){
 	$( ".station-container" ).empty();
 	$( ".dndf1" ).empty();
 	$( ".dndf2" ).empty();
-	setToday(".datepicker_own");
 	$(".station_label").val("<%=outputFormatter.getWord(DictionaryEntry.SELECT_A_WORKSTATION)%>");
+	datepicker();
 	SessionStoreStation();
 	FirstStationList();
 }
 
 function datepicker()
 {
+
+	setToday();
+	if(locale == "de"){
+		formatDate = 'dd-mm-yyyy';
+	}else{
+		formatDate = 'yyyy-mm-dd';
+	}
 	$('.datepicker_own').datepicker({
-		format: 'yyyy-mm-dd',
+		format: formatDate,
 		autoclose: true,
+		weekStart: 1,
+		language: locale,
 		keyboardNavigation : true
 	}).on('changeDate', function (ev) {
 		ListLoader();
@@ -236,6 +244,9 @@ function ListLoader()
 {
 	workstationListLoader();
 	var date = $(".datepicker_own").val();
+	if(locale == "de"){
+		date = date.split('-')[2]+"-"+date.split('-')[1]+"-"+date.split('-')[0];
+	}
 	if(date != null && date != "" && date != "undefinied")
 	{
 		date = date.split('-')[0] + date.split('-')[1] + date.split('-')[2];
@@ -308,7 +319,11 @@ function setToday()
 
 	var month = ("0" + (now.getMonth() + 1)).slice(-2);
 
-	var today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+	if(locale == "de"){
+		var today = (day)+"-"+(month)+"-"+now.getFullYear();
+	}else{
+		var today = now.getFullYear()+"-"+(month)+"-"+(day);
+	}
 
 	$('.datepicker_own').val(today);
 }
@@ -356,9 +371,9 @@ function StationItemSelect(item, level)
 			level: level
 		},
 		success: function (view) {
+
+
 			$( ".station-container" ).append(view);
-			var asd = $('.station-container').children().size();
-			alert(asd);
 		}
 	});
 }

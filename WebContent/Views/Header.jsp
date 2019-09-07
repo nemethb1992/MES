@@ -1,10 +1,13 @@
 <%@ page session="true" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="ISO-8859-1"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 
+<meta name="format-detection" content="telephone=no">
+<!-- <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 
 <%@page import="phoenix.mes.content.controller.OperatingWorkstation"%>
@@ -45,9 +48,6 @@
 	String titleString = titleBuild+titleWorkstation;
 	
 %>
-<meta name="format-detection" content="telephone=no">
-<!-- <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> -->
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <script src="${pageContext.request.contextPath}/Public/js/jquery-3.3.1.js"></script>
 <script src="${pageContext.request.contextPath}/Public/js/jquery_cookie.js"></script>
 <script src="${pageContext.request.contextPath}/Public/js/utils.js"></script>
@@ -56,12 +56,11 @@
 <script src="${pageContext.request.contextPath}/Public/js/script.js"></script>
 <script src="${pageContext.request.contextPath}/Public/js/language.js"></script>
 <script src="${pageContext.request.contextPath}/Public/js/jquery-ui.js"></script>
-<script src="${pageContext.request.contextPath}/Public/js/datepicker.js"></script>
+<script src="${pageContext.request.contextPath}/Public/js/datepicker.js" charset="UTF-8"></script>
 <link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/Public/icons/pm_logo_mini.ico"/>
 <script>
 <%@ include file="/Public/js/script.js"%>
 <%@ include file="/Public/js/language.js"%>
-<%@ include file="/Public/js/datepicker.js"%>
 </script>
 
 

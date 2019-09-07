@@ -1,9 +1,9 @@
 <%@include file="/Views/Header.jsp"%>
 <%@page import="java.util.Locale"%>
 <script>
-	
-<%@ include file="/Views/Manager/Todo/Todo.js"%>
 
+<%@page pageEncoding="UTF-8"%>
+<%@ include file="/Views/Manager/Todo/Todo.js"%>
 <%
 
 request.setAttribute("page","Todo");
@@ -30,6 +30,7 @@ String displayName = (String) session.getAttribute("displayname");
 			%>
 	
 </script>
+
 <div class='container-fluid h-100'>
 	<p class='actual-time h5'></p>
 	<div class='row manager-top-nav'>

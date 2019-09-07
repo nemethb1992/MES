@@ -7,9 +7,14 @@
 <%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
 <%
 	List<Map<String,String>> list = (List<Map<String,String>>)request.getAttribute("Data");
+	
 	for (Map<String, String> row : (List<Map<String,String>>)list) {
-%>
-<div class='workstation-container col-12 px-0' 
+		if(list.size() == 1){
+	%>
+	
+	<script>clickOnStation("<input id='single' value='<%=row.get("divValue")%>'/>");</script>
+	<%}%>
+	<div class='workstation-container col-12 px-0' 
 	value='<%=row.get("divValue")%>' OnClick='<%=row.get("method")%>'>
 	<textarea class='si1  p-3' disabled><%=row.get("inputValue") %></textarea>
 </div>
