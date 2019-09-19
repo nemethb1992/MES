@@ -28,6 +28,16 @@
     font-size: large;
     font-family: mediumFont;
 }
+.sheet-input-textarea {
+	font-size: 19px;
+	width: 100%;
+	resize: none;
+	overflow-y: auto;	
+	background: transparent;
+	color: black;
+}
+
+
 #content
 {
 	height: 100%;
@@ -230,10 +240,10 @@
 	transition: 0,3s;
 }
 .bom-item-row{    
-	background: #efefef;
+background: #efefef;
     border-bottom: 1px solid #cccccc;
-	overflow: hidden;
-    height: 70px;
+    overflow: hidden;
+    height: 95px;
 }
 
 .bom-item-row input, .bom-item-row label{
@@ -509,7 +519,14 @@
 	text-align: left;
 }
 
-@media only screen and (max-width: 1370px) {
+@media only screen and (max-width: 1750px) {
+
+	.bom-list-full-container textarea{
+		font-size: 16px;
+	}
+}
+
+@media only screen and (max-width: 1400px) {
 	.timerPanel 
 	{
 		font-size: x-large;
@@ -534,21 +551,22 @@
 	.task-data-label {
 		font-size: 14px;
 	}
-	.bom-list-full-container input{
-		font-size: 14px;
+	.bom-list-full-container textarea{
+		font-size: 13px;
 	}
 }
-@media only screen and (max-width: 1100px) {
+
+@media only screen and (max-width: 1200px) {
 	.timerPanel 
 	{
 		font-size: 24px;
 	}
-	.bom-list-full-container input{
-		font-size: 12px;
+	.bom-list-full-container textarea{
+		font-size: 11px;
 	}
 }
 
-@media only screen and (max-height: 750px) {
+@media only screen and (max-height: 750) {
 	.task-data-value {
 		font-size: small;
 	}

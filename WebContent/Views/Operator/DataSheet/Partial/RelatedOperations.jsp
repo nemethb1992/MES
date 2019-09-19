@@ -12,7 +12,7 @@
 
 	<div class='col-12'>
 		<div class='row bom-header-row p-2'>
-			<div class='col-1'>
+			<div class='col'>
 				<input class='w-100' disabled
 					value='<%=of.getWord(DictionaryEntry.OPERATION_NUMEBER)%>'>
 			</div>
@@ -24,7 +24,7 @@
 				<input class='w-100' disabled
 					value='<%=of.getWord(DictionaryEntry.NAME)%>'>
 			</div>
-			<div class='col-1'>
+			<div class='col'>
 				<input class='w-100' disabled
 					value='<%=of.getWord(DictionaryEntry.WORKSTATION_GROUP)%>'>
 			</div>

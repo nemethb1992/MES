@@ -26,7 +26,12 @@
 .my-datasheet-modal-dialog{
 	max-width: 170vh !important;
 }
-
+.drag{
+background-image: url(Public/icons/move.svg);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 .pass-item-remove {
 	background-image: url(Public/icons/remove-task.svg);
 	background-size: 60%;
@@ -49,7 +54,10 @@ font-size: 14px;
 .refresh_btn:hover {
 	background: #e6e6e6;
 }
-
+.task-input{
+	color:black;
+	background: transparent;
+}
 .date-button {
     float: right;
     background: #efefef;

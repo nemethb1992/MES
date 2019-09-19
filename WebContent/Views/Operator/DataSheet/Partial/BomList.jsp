@@ -43,27 +43,27 @@
 			<div class='position-absolute bg-transparent w-100' style="height: 65px; z-index: 1000;" onclick='bomListDropDown(this)'></div>
 			<div class='col-12'>
 				<div class='row item-data-row py-2'>
-					<div class='col'>
-						<input class='w-100' readonly value='<%=bomItem.getIdNo()%>'>
+					<div class='col sheet-col-small'>
+						<textarea class='w-100 sheet-input-textarea' readonly ><%=bomItem.getIdNo()%></textarea>
 					</div>
 					<div class='col'>
-						<input class='w-100' readonly value='<%=bomItem.getSwd()%>'>
+						<textarea class='w-100 sheet-input-textarea' readonly ><%=bomItem.getSwd()%></textarea>
 					</div>
 					<div class='col-4'>
-						<input class='w-100' readonly
-							value='<%=bomItem.getDescription()%>'>
+						<textarea class='w-100 sheet-input-textarea' readonly
+							><%=bomItem.getDescription()%></textarea>
 					</div>
 					<div class='col'>
-						<input class='w-100' readonly
-							value='<%=bomItem.getDescription2()%>'>
+						<textarea class='w-100 sheet-input-textarea' readonly
+							><%=bomItem.getDescription2()%></textarea>
 					</div>
-					<div class='col'>
-						<input class='w-100' readonly
-							value='<%=of.formatWithoutTrailingZeroes(bomItem.getQuantityPerProduct())%> <%=bomItem.getStockUnit()%>'>
+					<div class='col sheet-col-small'>
+						<textarea class='w-100 sheet-input-textarea' readonly
+							><%=of.formatWithoutTrailingZeroes(bomItem.getQuantityPerProduct())%> <%=bomItem.getStockUnit()%></textarea>
 					</div>
-					<div class='col'>
-						<input class='w-100' readonly
-							value='<%=bomItem.getWarehouseLocation()%>'>
+					<div class='col sheet-col-small'>
+						<textarea class='w-100 sheet-input-textarea' readonly
+							><%=bomItem.getWarehouseLocation()%></textarea>
 					</div>
 				</div>
 				<div class='row bom-item-text-row'>

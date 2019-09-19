@@ -4,18 +4,23 @@ var locale = "<%=outputFormatter.getLocale().toString()%>";
 $(document).ready(function(){
 	TaskManagerStartUp();
 	FirstStationList();
-	Sortlist(".station-list");
 	
-    history.pushState(null, null, location.href);
-    window.onpopstate = function () {
-        history.go(1);
-    };
+//    history.pushState(null, null, location.href);
+//    window.onpopstate = function () {
+//        history.go(1);
+//    };
+	
+	
+	
+	//for test
+	clickOnStation("<div class='workstation-container col-12 px-0' value='234PG!1!Szerel' onclick='clickOnStation(this)'></div>");
 });
 
 
 
 function TaskManagerStartUp()
 {
+	Sortlist();
 	ApplicationCountDown();
 	ButtonScriptElements();
 	WorkStationItemCollect();
@@ -155,7 +160,7 @@ function openSuspendModal(item){
 		},
 		success: function (response) {
 			$("#SuspendModal").remove();
-			document.body.innerHTML += response;
+			$('.frame-container').append(response);
 			$('#SuspendModal').modal("show");
 		},
 		error: function() {
@@ -173,7 +178,8 @@ function openDataSheetModal(item){
 		},
 		success: function (response) {
 			$("#DataSheetModal").remove();
-			document.body.innerHTML += response;
+			$('.frame-container').append(response);
+//			document.body.innerHTML += response;
 			$('#DataSheetModal').modal("show");
 			getModalDataSheetView(1,id);
 		},
@@ -421,13 +427,32 @@ function SaveStationList(){
 	});
 }
 
-function Sortlist(element){
-    $(element).sortable();
-    $(element).disableSelection();
-    $(element).droppable({
+function Sortlist(){
+    $(".sort-list").sortable({
+
+  	  group: 'no-drop',
+  	 handle: 'div.drag',
+//     revert: true,
+  	 cancel: ".station-list-table div div div div div table tbody tr td"
+    });
+    $(".abas-list").sortable({
+    	drop: false,
+    	  onDragStart: function ($item, container, _super) {
+    		    // Duplicate items of the no drop area
+    		    if(!container.options.drop)
+    		      $item.clone().insertAfter($item);
+    		    _super($item, container);
+    		  },
+    	 cancel: ".station-list-table div div div div div table tbody tr td"
+      });    
+    $(".station-list").sortable({
+
+    	 cancel: ".station-list-table div div div div div table tbody tr td"
+      });
+//    $(".sort-list").disableSelection();
+    $(".station-list").droppable({
         drop: function(event, ui){
-        	console.log("Dropped");
-        	setTimeout(SaveStationList, 200);
+        	setTimeout(SaveStationList, 500);
            }
 
     });

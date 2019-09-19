@@ -11,6 +11,8 @@ import de.abas.erp.common.type.Id;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.net.URI;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -177,6 +179,11 @@ public interface GenericTask<C> extends Serializable {
 		List<Characteristic> getCharacteristicsBar();
 
 		/**
+		 * @return A gyártási feladathoz kapcsolódó dokumentumok gyűjteménye.
+		 */
+		Collection<Document> getDocuments();
+
+		/**
 		 * @return A gyártási feladathoz kapcsolódó darabjegyzék.
 		 */
 		List<BomElement> getBom();
@@ -228,6 +235,24 @@ public interface GenericTask<C> extends Serializable {
 		 * @return A műszaki paraméter mértékegysége.
 		 */
 		String getUnit();
+
+	}
+
+	/**
+	 * Dokumentumot leíró típus.
+	 * @author szizo
+	 */
+	interface Document extends Serializable {
+
+		/**
+		 * @return A dokumentum megnevezése.
+		 */
+		String getDescription();
+
+		/**
+		 * @return A dokumentum URI-ja (null, ha nincs megadva vagy a dokumentum nem érhető el).
+		 */
+		URI getURI();
 
 	}
 

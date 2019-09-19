@@ -1,22 +1,25 @@
 <%@page import="phoenix.mes.content.utility.OutputFormatter"%>
 <%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
+<%@page import="phoenix.mes.abas.Task"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.Collection"%>
+<%@page import="java.net.URI"%>
+<%@page import="phoenix.mes.abas.GenericTask.Document"%>
 <%
-	OutputFormatter of = (OutputFormatter) session.getAttribute("OutputFormatter");
+	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
+	Task.Details taskDetails = (Task.Details)request.getAttribute("taskDetails");
 %>
 
-
+<h4 class='pt-2'><%=of.getWord(DictionaryEntry.DOCUMENTS) %></h4>
 <div class='list-group row dokumentum-list'>
-	<button type='button' class='list-group-item list-group-item-action active disabled'><h4 class='mb-0'><%=of.getWord(DictionaryEntry.DOCUMENTS)%></h4></button>
-<%-- 		<button type='button' onclick='openAsset(this)' value='${pageContext.request.contextPath}/Public/pdf/Csomagolás általános AA55.pdf' class='document-button list-group-item list-group-item-action'>Csomagolás általános AA55</button> --%>
-<%-- 		<button type='button' onclick='openAsset(this)' value='${pageContext.request.contextPath}/Public/pdf/Elöírás súly csomag AA56.pdf' class='document-button list-group-item list-group-item-action'>Elöírás súly csomag AA56</button> --%>
-<%-- 		<button type='button' onclick='openAsset(this)' value='${pageContext.request.contextPath}/Public/pdf/Megbízás 413741RK.pdf' class='document-button list-group-item list-group-item-action'>Megbízás 413741RK</button> --%>
-<%-- 		<button type='button' onclick='openAsset(this)' value='${pageContext.request.contextPath}/Public/pdf/Rajz 72130130350 KON.pdf' class='document-button list-group-item list-group-item-action'>Rajz 72130130350 KON</button> --%>
-<%-- 		<button type='button' onclick='openAsset(this)' value='${pageContext.request.contextPath}/Public/pdf/Rajz 72130130350.pdf' class='document-button list-group-item list-group-item-action'>Rajz 72130130350</button> --%>
-<%-- 		<button type='button' onclick='openAsset(this)' value='${pageContext.request.contextPath}/Public/pdf/Rajz A0740008_01_054.pdf' class='document-button list-group-item list-group-item-action'>Rajz A0740008_01_054</button> --%>
-<%-- 		<button type='button' onclick='openAsset(this)' value='${pageContext.request.contextPath}/Public/pdf/Rajz SQB0331110342.pdf' class='document-button list-group-item list-group-item-action'>Rajz SQB0331110342</button> --%>
-<%-- 		<button type='button' onclick='openAsset(this)' value='${pageContext.request.contextPath}/Public/pdf/Rajz X095502270579.pdf' class='document-button list-group-item list-group-item-action'>Rajz X095502270579</button> --%>
-<%-- 		<button type='button' onclick='openAsset(this)' value='${pageContext.request.contextPath}/Public/pdf/Rajz X095502280534.pdf' class='document-button list-group-item list-group-item-action'>Rajz X095502280534</button> --%>
-<%-- 		<button type='button' onclick='openAsset(this)' value='${pageContext.request.contextPath}/Public/pdf/Szerelési utasítás AA18.pdf' class='document-button list-group-item list-group-item-action'>Szerelési utasítás AA18</button> --%>
-
-
+<!-- 		<button type='button'  onclick='openDocumentModal(this)' value='https://web-preview.pspdfkit.com/showcases/8.pdf#page=2' class='document-button list-group-item list-group-item-action'>Próba</button> -->
+<!--   		<button type='button'  onclick='openDocumentModal(this)' value='file://C:/Igazolas.pdf' class='document-button list-group-item list-group-item-action'>Próba2</button> -->
+  
+  <%
+  Collection<Document> data = taskDetails.getDocuments();
+  for (Document item : data)
+  {
+  %>
+		<button type='button' <%=(item.getURI() == null ? "disabled" : "")%>  onclick='openDocumentModal(this)' value='<%=item.getURI()%>' class='document-button list-group-item list-group-item-action'><%=item.getDescription()%> <%=(item.getURI() == null ? " - "+of.getWord(DictionaryEntry.MISSING_FILE) : "")%></button>
+    <%} %>
 </div>

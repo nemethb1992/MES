@@ -39,9 +39,11 @@
 								<input class="d-none workSlipId" value="<%=task.getWorkSlipId()%>">
 								<div class="container-fluid ">
 									<div class="row ">
-										<div class="col ">
+										<div class="col-1 drag px-0">
+										</div>	
+										<div class="col-11 ">
 											<div class="row">
-												<div class="<%=(progress ? "col-12" : "col-11")%>">
+												<div class="<%=(progress ? "col-12" : "col-11")%> content-div">
 													<table class="table station-list-table mb-0">
 														<thead>
 															<tr>
@@ -51,13 +53,13 @@
 														</thead>
 														<tbody>
 															<tr>
-																<td><%=taskDetails.getWorkSlipNo()%></td>
-																<td><%=taskDetails.getUsage()%></td>
+																<td><input class='w-100 task-input' readonly value='<%=taskDetails.getWorkSlipNo()%>'/></td>
+																<td><input class='w-100 task-input' readonly value='<%=taskDetails.getUsage()%>'/></td>
 															</tr>
 														</tbody>
 													</table>
 												</div>
-												<div class="pl-2 <%=(progress ? "d-none" : "col-1")%>">
+												<div class="pl-0 <%=(progress ? "d-none" : "col-1")%>">
 													<div class='row h-100'>
 														<div class='col-12 px-0'>
 															<input
@@ -90,8 +92,8 @@
 														</thead>
 														<tbody>
 															<tr>
-																<td><%=of.formatDate(taskDetails.getFinishDate())%></td>
-																<td><%=taskDetails.getProductIdNo()%></td>
+																<td><input class='w-100 task-input' readonly value='<%=of.formatDate(taskDetails.getFinishDate())%>'/></td>
+																<td><input class='w-100 task-input' readonly value='<%=taskDetails.getProductIdNo()%>'/></td>
 															</tr>
 														</tbody>
 													</table>
@@ -106,8 +108,8 @@
 														</thead>
 														<tbody>
 															<tr>
-																<td><%=taskDetails.getProductSwd()%></td>
-																<td><%=taskDetails.getProductDescription()%></td>
+																<td><input class='w-100 task-input' readonly value='<%=taskDetails.getProductSwd()%>'/></td>
+																<td><input class='w-100 task-input' readonly value='<%=taskDetails.getProductDescription()%>'/></td>
 															</tr>
 														</tbody>
 													</table>
@@ -122,8 +124,8 @@
 														</thead>
 														<tbody>
 															<tr>
-																<td><%=of.formatTime(taskDetails.getCalculatedProductionTime())%></td>
-																<td><%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity()) +" "+ taskDetails.getStockUnit()%></td>
+																<td><input class='w-100 task-input' readonly value='<%=of.formatTime(taskDetails.getCalculatedProductionTime())%>'/></td>
+																<td><input class='w-100 task-input' readonly value='<%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity()) +" "+ taskDetails.getStockUnit()%>'/></td>
 															</tr>
 														</tbody>
 													</table>

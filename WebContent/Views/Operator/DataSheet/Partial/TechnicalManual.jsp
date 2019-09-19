@@ -25,13 +25,13 @@
   %>
     <tr>
       <th scope="row" class="w-25"><%=item.getName()%>:</th>
-      <td><%=item.getValue()%> <%=(item.getValue() != null & item.getValue() != "" ? item.getUnit() : "") %></td>
+      <td><%=item.getValue()%> <%=(item.getValue().length() > 0 ? item.getUnit() : "") %></td>
     </tr>
     <%} %>
   </tbody>
 </table>
 		
-		</div>
+</div>
 </div>
 
 </div>

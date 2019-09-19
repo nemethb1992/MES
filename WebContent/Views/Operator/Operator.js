@@ -26,6 +26,7 @@ $.urlParam = function(name){
 	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
 	return results[1] || 0;
 }
+var limit = 0;
 function getView(tab = 1)
 {
 	closeNavButtons();
@@ -51,8 +52,19 @@ function getView(tab = 1)
 				submit('interrupt-form');
 			}
 
+	},
+
+	error: function (response){
+		loadingAnimationStop("operator");
+		if(limit < 5){
+			getView(tab);
+			limit++;
+		}else{
+			limit = 0;
 		}
-	});
+		}
+	}
+	);
 }
 
 function openDataSheetModal(item){
@@ -279,7 +291,7 @@ function bomListDropDown(item)
 {
 	var parentitem = $(item).parents('.bom-item-row');
 	var itemHeight = parentitem.css("height").match(/\d+/);
-	parentitem.css({'height' : (itemHeight == 70 ? 'auto' : '70px'), 'background' : (itemHeight == 70 ? '#e4e4e4' : '#efefef')});
+	parentitem.css({'height' : (itemHeight == 95 ? 'auto' : '95px'), 'background' : (itemHeight == 70 ? '#e4e4e4' : '#efefef')});
 }
 
 String.prototype.toHHMMSS = function () {
@@ -512,6 +524,26 @@ function openSuspendModal(item){
 			$('#SuspendModal').modal("show");
 		},
 		error: function() {
+		}  
+	});
+}
+
+function openDocumentModal(item){
+	var uri = $(item).val();
+	var name = $(item).html();
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/DocumentModal")%>',
+		data: {
+			uri: uri,
+			name: name
+		},
+		success: function (response) {
+			$("#DocumentModal").remove();
+			$('.frame-container').append(response);
+			$('#DocumentModal').modal("show");
+		},
+		error: function() {
+//			alert("Sikertelen megnyitás!")
 		}  
 	});
 }

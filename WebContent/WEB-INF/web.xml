@@ -25,6 +25,14 @@
     <url-pattern>/TaskInterruptModal</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>DocumentModal</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.DocumentModal</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DocumentModal</servlet-name>
+    <url-pattern>/DocumentModal</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>TaskDataSheetModal</servlet-name>
     <servlet-class>phoenix.mes.content.controller.manager.TaskDataSheetModal</servlet-class>
   </servlet>

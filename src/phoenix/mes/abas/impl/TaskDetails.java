@@ -12,12 +12,14 @@ import de.abas.erp.db.type.AbasUnit;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Collection;
 import java.util.List;
 
 import phoenix.mes.abas.GenericAbasConnection;
 import phoenix.mes.abas.GenericTask;
 import phoenix.mes.abas.GenericTask.BomElement;
 import phoenix.mes.abas.GenericTask.Characteristic;
+import phoenix.mes.abas.GenericTask.Document;
 import phoenix.mes.abas.GenericTask.Operation;
 import phoenix.mes.abas.GenericTask.Status;
 
@@ -246,6 +248,11 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	protected List<Characteristic> characteristicsBar = null;
 
 	/**
+	 * A gyártási feladathoz kapcsolódó dokumentumok gyűjteménye.
+	 */
+	protected Collection<Document> documents = null;
+
+	/**
 	 * A gyártási feladatot követő műveletek listáját gyorsítótárazó objektum.
 	 */
 	protected List<Operation> followingOperations = null;
@@ -293,6 +300,7 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	public void clearCache() {
 		resetCache();
 		clearSalesOrderDataCache();
+		clearDocumentsCache();
 	}
 
 	/**
@@ -682,6 +690,29 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	 */
 	public void clearCharacteristicsBarCache() {
 		characteristicsBar = null;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericTask.Details#getDocuments()
+	 */
+	@Override
+	public Collection<Document> getDocuments() {
+		if (null == documents) {
+			documents = newDocuments();
+		}
+		return documents;
+	}
+
+	/**
+	 * @return A gyártási feladathoz kapcsolódó dokumentumok gyűjteményét gyorsítótárazó, újonnan létrehozott objektum.
+	 */
+	protected abstract Collection<Document> newDocuments();
+
+	/**
+	 * A gyártási feladathoz kapcsolódó dokumentumok gyűjteményét tartalmazó gyorsítótár kiürítése.
+	 */
+	public void clearDocumentsCache() {
+		documents = null;
 	}
 
 	/* (non-Javadoc)

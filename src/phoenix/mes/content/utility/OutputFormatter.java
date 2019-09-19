@@ -29,6 +29,7 @@ public class OutputFormatter {
 		WORKSHEET_NO("Munkalapszám","Arbeitsschein-Nr.","Worksheet No."),
 		PREVIOUS_WORKSHEET_NO_SUBMIT("Előző munkalap lejelentett mennyisége","rückgemeldete Gutmenge des vorigen Arbeitsscheins","-"),
 		TECHNICAL_MANUAL("MPJ","SML","Technical Manual"),
+		MISSING_FILE("Hiányzó fájl","Fehlende Datei","Missing file"),
 		OPERATION_LABEL("Művelet","Arbeitsgang","Operation"),
 		ARTICLE("Cikkszám","Artikel-Nr.","Article"),
 		OPERATION_NUMEBER("Műveletszám","Arbeitsgang-Nr.","Operation number"),
@@ -82,7 +83,7 @@ public class OutputFormatter {
 		QUANTITY("Mennyiség","Menge","Quantity"),
 		SAVE("Mentés","Speichern","Save"),
 		AREA("Terület","Bereich","Area"),
-		GROUP("Gépsoport","Maschinengruppe","Group"),
+		GROUP("Gépcsoport","Maschinengruppe","Group"),
 		GROUP_NAME("Gépsoport neve","Name Maschinengruppe","Group name"),
 		STATION("Állomás:","Arbeitsplatz:","Station:"),
 		TASKS("Feladatok","Aufgaben","Tasks"),
@@ -251,9 +252,19 @@ public class OutputFormatter {
 	public String format(BigDecimal number) {
 		return numberFormat.format(number);
 	}
-
+	
+//	public String formatWithoutTrailingZeroes(BigDecimal number) {
+//		return format(number.stripTrailingZeros());
+//	}
+	
 	public String formatWithoutTrailingZeroes(BigDecimal number) {
-		return format(number.stripTrailingZeros());
+		String value;
+		try {
+			value = format(number.stripTrailingZeros());
+		}catch(Exception e){
+			value = number.toString();
+		}
+		return value;
 	}
 
 	public String formatWithoutTrailingZeroes(BigDecimal number, int decimalPlaces) {
