@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import de.abas.erp.common.type.Id;
+import de.abas.erp.common.type.IdImpl;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
@@ -50,7 +52,8 @@ public class RefreshData extends HttpServlet {
 		try {
 			User user = new User(request); 				
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
-			Task task = (Task)session.getAttribute("Task");			
+			Id AbasId = IdImpl.valueOf((String)session.getAttribute("TaskId"));
+			Task task = AbasObjectFactory.INSTANCE.createTask(AbasId,abasConnection);		
 			Task.Details taskDetails = task.getDetails(abasConnection);			
 			if(taskDetails.getStatus() == Status.IN_PROGRESS)
 			{

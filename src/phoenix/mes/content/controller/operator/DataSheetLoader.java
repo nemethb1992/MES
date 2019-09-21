@@ -61,7 +61,8 @@ public class DataSheetLoader extends HttpServlet {
 				Id AbasId = IdImpl.valueOf(taskId);
 				task = AbasObjectFactory.INSTANCE.createTask(AbasId,abasConnection);
 			}else {
-				task = (Task)session.getAttribute("Task");
+				Id AbasId = IdImpl.valueOf((String)session.getAttribute("TaskId"));
+				task = AbasObjectFactory.INSTANCE.createTask(AbasId,abasConnection);
 			}
 			if(task == null)
 			{

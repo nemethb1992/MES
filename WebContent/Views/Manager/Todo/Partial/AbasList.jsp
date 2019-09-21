@@ -39,7 +39,7 @@
 %>
 <!-- ######### Teszt elem -->
 
-<li class="dnd-container abas-list-item list-group<%=cssClass%> col-12 px-0">
+<li class="dnd-container abas-list-item list-group <%=cssClass%> col-12 px-0">
 	<input class='d-none workSlipId' value='<%=task.getWorkSlipId()%>'>
 	<div class="container-fluid ">
 		<div class="row ">
@@ -136,9 +136,9 @@
 				</div>
 			</div>
 			<div class="col-1 button-holder-list">
-				<div class="row h-50 dnd-input-div drag">
-<!-- 					<input class="h-100 w-100 task-panel-button task-panel-button-add" -->
-<!-- 						onclick="PushToStation(this)" type="button"> -->
+				<div class="row h-50 dnd-input-div">
+					<input class="h-100 w-100 task-panel-button task-panel-button-add"
+						onclick="PushToStation(this)" type="button">
 				</div>
 				<div class=" row h-50 dnd-input-div">
 					<input class="h-100 w-100 task-panel-button task-panel-button-more"

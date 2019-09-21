@@ -5,15 +5,15 @@ $(document).ready(function(){
 	TaskManagerStartUp();
 	FirstStationList();
 	
-//    history.pushState(null, null, location.href);
-//    window.onpopstate = function () {
-//        history.go(1);
-//    };
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+        history.go(1);
+    };
 	
 	
 	
 	//for test
-	clickOnStation("<div class='workstation-container col-12 px-0' value='234PG!1!Szerel' onclick='clickOnStation(this)'></div>");
+//	clickOnStation("<div class='workstation-container col-12 px-0' value='234PG!1!Szerel' onclick='clickOnStation(this)'></div>");
 });
 
 
@@ -266,7 +266,8 @@ function ListLoader()
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/AbasTaskList")%>',
 		data: {
-			date: date
+			date: date,
+			ws: SelectedStation
 		},
 		success: function (respond) {
 
@@ -286,7 +287,10 @@ function workstationListLoader()
 {
 		$( ".dndf2" ).empty();
 		$( ".ts_sumTime" ).val("0:00:00");
-		$.post({
+		$.post({		
+			data: {
+				ws: SelectedStation
+			},
 			url:  '<%=response.encodeURL(request.getContextPath()+"/StationTaskList")%>',
 			success: function (response) {
 
@@ -388,7 +392,7 @@ function clickOnStation(item)
 {	
 	var station = $(item).attr("value");
 	$('#ListRefreshBtn').prop('disabled', false);
-	SessionStoreStation(station);	
+//	SessionStoreStation(station);	
 	SelectedStation = station;
 	$(this).css({'background-image':'url(Public/icons/computerSignRed.svg)','background-color' : '#ebebeb','border-left':'5px solid #ff6666'});
 	$(".station_label").val(station.split("!")[2] + "  (" + station.split("!")[0] +"-"+ station.split("!")[1]+")");

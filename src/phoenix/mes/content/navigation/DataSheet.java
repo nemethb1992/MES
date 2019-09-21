@@ -56,6 +56,7 @@ public class DataSheet extends HttpServlet {
 				WorkCenter.Details workcenter = AbasObjectFactory.INSTANCE.createWorkCenter(ws.getGroup(), abasConnection).getDetails(abasConnection);
 				session.setAttribute("WorkCenter", workcenter);
 				session.setAttribute("Task", task);
+				session.setAttribute("TaskId", task.getWorkSlipId().toString());
 				page = "/Views/Operator/DataSheet/DataSheet.jsp";
 			}
 		}catch(LoginException e)

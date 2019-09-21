@@ -54,12 +54,13 @@ public class ResumeTask extends HttpServlet {
 			User user = new User(request);       	
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
 			Task task = null;
+			Id AbasId = null;
 			if(taskId != null) {
-				Id AbasId = IdImpl.valueOf(taskId);
-				task = AbasObjectFactory.INSTANCE.createTask(AbasId,abasConnection);
+				AbasId = IdImpl.valueOf(taskId);
 			}else {
-				task = (Task)session.getAttribute("Task");
+				AbasId = IdImpl.valueOf((String)session.getAttribute("TaskId"));
 			}
+			task = AbasObjectFactory.INSTANCE.createTask(AbasId,abasConnection);
 			if(null == task){
 				return;
 			}

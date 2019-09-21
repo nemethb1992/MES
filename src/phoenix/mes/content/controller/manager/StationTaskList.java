@@ -34,12 +34,13 @@ public class StationTaskList extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
+		String workstation = (String) request.getParameter("ws");
 		AbasConnection abasConnection = null;  
 		BigDecimal summedProductionTime = BigDecimal.ZERO;
 		String view = "";
 		try {
 			AppBuild ab = new AppBuild(request);
-			SelectedWorkstation ws = new SelectedWorkstation(request);
+			SelectedWorkstation ws = new SelectedWorkstation(request,workstation);
 			User user = new User(request);
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
 			List<Task> task = (List<Task>)AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection).getScheduledTasks(abasConnection);

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import de.abas.erp.common.type.Id;
+import de.abas.erp.common.type.IdImpl;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasFunctionException;
 import phoenix.mes.abas.AbasObjectFactory;
@@ -53,7 +55,9 @@ public class Submit extends HttpServlet {
 			User user = new User(request); 
 			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), build.isTest());
-			Task task = (Task)session.getAttribute("Task");
+//			Task task = (Task)session.getAttribute("Task");
+			Id AbasId = IdImpl.valueOf((String)session.getAttribute("TaskId"));
+			Task task = AbasObjectFactory.INSTANCE.createTask(AbasId,abasConnection);
 			Task.Details taskDetails = task.getDetails(abasConnection);
 			if(task != null)
 			{

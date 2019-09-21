@@ -33,7 +33,8 @@ public class AbasTaskList extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		AppBuild ab = new AppBuild(request);
-		SelectedWorkstation ws = new SelectedWorkstation(request);
+		String workstation = (String) request.getParameter("ws");
+		SelectedWorkstation ws = new SelectedWorkstation(request,workstation);
 		if(ws.getGroup().equals(null))
 		{
 			return;
