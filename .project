@@ -28,16 +28,4 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>WebContent/Public/icons/calendar-2.svg</name>
-			<type>1</type>
-			<location>D:/GitData/MES/WebContent/Public/icons/calendar-2.svg</location>
-		</link>
-		<link>
-			<name>WebContent/Public/icons/move.svg</name>
-			<type>1</type>
-			<location>D:/GitData/MES/WebContent/Public/icons/move.svg</location>
-		</link>
-	</linkedResources>
 </projectDescription>
