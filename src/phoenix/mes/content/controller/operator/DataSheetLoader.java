@@ -2,7 +2,6 @@ package phoenix.mes.content.controller.operator;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.List;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
@@ -22,7 +21,6 @@ import phoenix.mes.abas.GenericTask.Status;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.Log;
 import phoenix.mes.content.Log.FaliureType;
-import phoenix.mes.content.controller.OperatingWorkstation;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
 import phoenix.mes.content.utility.RenderView;
@@ -38,98 +36,107 @@ public class DataSheetLoader extends HttpServlet {
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		
-		OperatingWorkstation ws = new OperatingWorkstation(request);
-		
-		String taskId = request.getParameter("taskId");
 
-		if(ws.getGroup().equals(null))
-		{
-			return;
-		}
-		String partialUrl = null;
+
+		String taskId = request.getParameter("taskId");	
+		String page = null;
 		String view = "";
 		String state = "";
-		AbasConnection abasConnection = null;
 		try {
+			HttpSession session = request.getSession();
+
+			
+			boolean isTest = new AppBuild(request).isTest();
+			
+
 			User user = new User(request);
 			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(),  new AppBuild(request).isTest());
+			Task.Details taskDetails = null;
+			
+			Id abasId = null;
+
+			
+			AbasConnection abasConnection = null;
 			Task task = null;
-			if(taskId != null && taskId != "") {
-				Id AbasId = IdImpl.valueOf(taskId);
-				task = AbasObjectFactory.INSTANCE.createTask(AbasId,abasConnection);
-			}else {
-				Id AbasId = IdImpl.valueOf((String)session.getAttribute("TaskId"));
-				task = AbasObjectFactory.INSTANCE.createTask(AbasId,abasConnection);
+			try {
+				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), isTest);
+				if(taskId != null && taskId != "") {
+					abasId = IdImpl.valueOf(taskId);
+					task = AbasObjectFactory.INSTANCE.createTask(abasId,abasConnection);
+				}else {
+					task = (Task)session.getAttribute("Task");
+				}
+				taskDetails =  task.getDetails(abasConnection);
+				if((Status.INTERRUPTED).equals(taskDetails.getStatus()))
+				{
+					state = "interrupted";
+					request.setAttribute("error-text", "Hiba!");
+				}
+			}catch(LoginException e)
+			{			
+				try {
+					new Log(request).logFaliure(FaliureType.TASK_DATA_LOAD, e.getMessage());
+				}catch(SQLException exc) {
+				}
+			}finally
+			{
+				try {
+					if (null != abasConnection) {
+						abasConnection.close();
+					}
+				} catch (Throwable t) {
+				}
 			}
+			
 			if(task == null)
 			{
 				doGet(request,response);
 				return;
 			}
-			Task.Details taskDetails = task.getDetails(abasConnection);		
-			request.setAttribute("taskDetails", taskDetails);	
+			request.setAttribute("Task", task);	
+			request.setAttribute("User", user);	
+			request.setAttribute("isTest", isTest);	
+			request.setAttribute("taskId", taskId);	
+			request.setAttribute("OutputFormatter", of);
+			
+
+			
 			String tab = request.getParameter("tabNo") == null ? "1" : request.getParameter("tabNo");
 			switch (tab) {
 			case "1":
-				request.setAttribute("Workstation", ws);
-				partialUrl = "/Views/Operator/DataSheet/Partial/Sheet.jsp";
+				page = "/Views/Operator/DataSheet/Partial/Sheet.jsp";
 				break;
 			case "2":
-				partialUrl = "/Views/Operator/DataSheet/Partial/Documents.jsp";
+				page = "/Views/Operator/DataSheet/Partial/Documents.jsp";
 				break;
 			case "3":
-				request.setAttribute("bomdata", taskDetails.getBom());
-				partialUrl = "/Views/Operator/DataSheet/Partial/BomList.jsp";
+				page = "/Views/Operator/DataSheet/Partial/BomList.jsp";
 				break;
 			case "4":
-				partialUrl = "/Views/Operator/DataSheet/Partial/ItemText.jsp";
+				page = "/Views/Operator/DataSheet/Partial/ItemText.jsp";
 				break;
 			case "5":
-				request.setAttribute("operationdata", taskDetails.getFollowingOperations());
-				partialUrl = "/Views/Operator/DataSheet/Partial/RelatedOperations.jsp";
+				page = "/Views/Operator/DataSheet/Partial/RelatedOperations.jsp";
 				break;
 			case "6":
-
-				List<Task> taskList = (List<Task>)AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection).getScheduledTasks(abasConnection);
-				request.setAttribute("StationList", taskList);
-				request.setAttribute("abasConnection", abasConnection);
-				partialUrl = "/Views/Operator/DataSheet/Partial/FollowingTasks.jsp";
+				page = "/Views/Operator/DataSheet/Partial/FollowingTasks.jsp";
 				break;
 			case "7":
-				partialUrl = "/Views/Operator/DataSheet/Partial/TechnicalManual.jsp";
+				page = "/Views/Operator/DataSheet/Partial/TechnicalManual.jsp";
 				break;
 			case "8":
-				partialUrl = "/Views/Operator/DataSheet/Partial/Operation.jsp";
+				page = "/Views/Operator/DataSheet/Partial/Operation.jsp";
 				break;
 			default:
 				break;
 			}
-			view = (null != partialUrl ? RenderView.render(partialUrl, request, response) : "");
-			if((Status.INTERRUPTED).equals(taskDetails.getStatus()))
-			{
-				state = "interrupted";
-				request.setAttribute("error-text", "Hiba!");
-			}
-		}catch(LoginException | SQLException e)
+			view = (null != page ? RenderView.render(page, request, response) : "");
+
+		}catch(SQLException e)
 		{			
 			try {
-				String workstation = "";
-				if(ws != null) {
-					workstation = ws.group + " - " + ws.no;
-				}
-				new Log(request).logFaliure(FaliureType.TASK_DATA_LOAD, e.getMessage(),workstation);
+				new Log(request).logFaliure(FaliureType.TASK_DATA_LOAD, e.getMessage(),taskId);
 			}catch(SQLException exc) {
-			}
-		}finally
-		{
-			try {
-				if (null != abasConnection) {
-					abasConnection.close();
-				}
-			} catch (Throwable t) {
 			}
 		}
 		String[] returnObject = new String[2];

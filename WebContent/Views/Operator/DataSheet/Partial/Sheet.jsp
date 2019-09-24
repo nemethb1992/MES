@@ -6,19 +6,39 @@
 <%@page import="java.util.List"%>
 <%@page import="phoenix.mes.abas.GenericTask.BomElement"%>
 <%@page import="java.math.BigDecimal"%>
+<%@page import="phoenix.mes.abas.Task"%>
+<%@page import="phoenix.mes.content.controller.User"%>
+<%@page import="phoenix.mes.abas.AbasConnection"%>
+<%@page import="phoenix.mes.abas.AbasObjectFactory"%>
+<%@page import="javax.security.auth.login.LoginException"%>
+<%@page import="phoenix.mes.content.Log"%>
+<%@page import="phoenix.mes.content.Log.FaliureType"%>
+<%@page import="java.sql.SQLException"%>
+
 <%
-	OutputFormatter of = (OutputFormatter) session.getAttribute("OutputFormatter");
-	Task.Details taskDetails = (Task.Details) request.getAttribute("taskDetails");
-	String previous_submit = "-";
-	if (null != taskDetails.getYieldOfPrecedingWorkSlip()) {
-		previous_submit = of.formatWithoutTrailingZeroes(taskDetails.getYieldOfPrecedingWorkSlip()).toString()
-				+ " " + taskDetails.getStockUnit();
-	}
-	String packing_quantity = "";
-	if (0 != taskDetails.getFillingQuantity().signum()) {
-		packing_quantity = of.formatWithoutTrailingZeroes(taskDetails.getFillingQuantity()).toString() + " "
-				+ taskDetails.getStockUnit();
-	}
+	OutputFormatter of = (OutputFormatter) request.getAttribute("OutputFormatter");
+	Task task = (Task) request.getAttribute("Task");
+	User user = (User) request.getAttribute("User");
+	boolean isTest = (boolean) request.getAttribute("isTest");
+	String taskId = (String) request.getAttribute("taskId");
+
+	AbasConnection abasConnection = null;
+	Task.Details taskDetails = null;
+	try {
+		abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(),
+				of.getLocale(), isTest);
+		taskDetails = task.getDetails(abasConnection);
+
+		String previous_submit = "-";
+		if (null != taskDetails.getYieldOfPrecedingWorkSlip()) {
+			previous_submit = of.formatWithoutTrailingZeroes(taskDetails.getYieldOfPrecedingWorkSlip())
+					.toString() + " " + taskDetails.getStockUnit();
+		}
+		String packing_quantity = "";
+		if (0 != taskDetails.getFillingQuantity().signum()) {
+			packing_quantity = of.formatWithoutTrailingZeroes(taskDetails.getFillingQuantity()).toString() + " "
+					+ taskDetails.getStockUnit();
+		}
 %>
 <div class='container-fluid h-100 px-0 py-3'>
 
@@ -82,4 +102,19 @@
 	</div>
 
 </div>
+<%
+	} catch (LoginException e) {
+		try {
+			new Log(request).logFaliure(FaliureType.TASK_DATA_LOAD, e.getMessage(), taskId);
+		} catch (SQLException exc) {
+		}
+	} finally {
+		try {
+			if (null != abasConnection) {
+				abasConnection.close();
+			}
+		} catch (Throwable t) {
+		}
+	}
+%>
 

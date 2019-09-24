@@ -6,25 +6,44 @@
 <%@page import="java.util.List"%>
 <%@page import="java.math.BigDecimal"%>
 <%@page import="phoenix.mes.abas.GenericTask.Status"%>
+<%@page import="phoenix.mes.content.controller.User"%>
+<%@page import="phoenix.mes.abas.AbasConnection"%>
+<%@page import="phoenix.mes.abas.AbasObjectFactory"%>
+<%@page import="phoenix.mes.content.controller.OperatingWorkstation"%>
+<%@page import="javax.security.auth.login.LoginException"%>
+<%@page import="phoenix.mes.content.Log"%>
+<%@page import="phoenix.mes.content.Log.FaliureType"%>
+<%@page import="java.sql.SQLException"%>
 
 
 <ul class='pt-2'>
 	<%
-		OutputFormatter of = (OutputFormatter) session.getAttribute("OutputFormatter");
-		List<Task> li = (List<Task>) request.getAttribute("StationList");
-		AbasConnection abasConnection = (AbasConnection) request.getAttribute("abasConnection");
-		String startDate, startDateFormated;
+		OutputFormatter of = (OutputFormatter) request.getAttribute("OutputFormatter");
+		User user = (User) request.getAttribute("User");
+		boolean isTest = (boolean) request.getAttribute("isTest");
 
-		int i = 0;
-		for (Task task : li) {
-			final Task.Details taskDetails = task.getDetails(abasConnection);
-			boolean progress = (task.getDetails(abasConnection).getStatus() == Status.IN_PROGRESS ? true : false);
-			startDate = taskDetails.getFinishDate().toString();
-			startDateFormated = startDate.substring(0, 4) + "." + startDate.substring(4, 6) + "."
-					+ startDate.substring(6, 8) + ".";
+		OperatingWorkstation ws = new OperatingWorkstation(request);
+		String taskId = (String) request.getAttribute("taskId");
 
+		AbasConnection abasConnection = null;
+		List<Task> taskList = null;
+		try {
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(),
+					of.getLocale(), isTest);
+			taskList = (List<Task>) AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection).getScheduledTasks(abasConnection);
 
-			if(task.getDetails(abasConnection).getStatus() != Status.IN_PROGRESS){
+			String startDate, startDateFormated;
+
+			int i = 0;
+			for (Task task : taskList) {
+				final Task.Details taskDetails = task.getDetails(abasConnection);
+				boolean progress = (task.getDetails(abasConnection).getStatus() == Status.IN_PROGRESS ? true
+						: false);
+				startDate = taskDetails.getFinishDate().toString();
+				startDateFormated = startDate.substring(0, 4) + "." + startDate.substring(4, 6) + "."
+						+ startDate.substring(6, 8) + ".";
+
+				if (task.getDetails(abasConnection).getStatus() != Status.IN_PROGRESS) {
 	%><li
 		class="dnd-container station-list-item sort-list-holder list-group col-12 px-0 mb-2"
 		value="<%=task.getWorkSlipId()%>"><input
@@ -55,7 +74,8 @@
 									<td><%=taskDetails.getProductSwd()%></td>
 									<td><%=taskDetails.getProductDescription()%></td>
 									<td><%=of.formatTime(taskDetails.getCalculatedProductionTime())%></td>
-									<td><%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity()) + " " + taskDetails.getStockUnit()%></td>
+									<td><%=of.formatWithoutTrailingZeroes(taskDetails.getOutstandingQuantity()) + " "
+								+ taskDetails.getStockUnit()%></td>
 								</tr>
 							</tbody>
 						</table>
@@ -72,9 +92,23 @@
 			</div>
 		</div></li>
 	<%
-	
 		i++;
+				}
 			}
-		}
 	%>
 </ul>
+<%
+	} catch (LoginException e) {
+		try {
+			new Log(request).logFaliure(FaliureType.TASK_DATA_LOAD, e.getMessage(), taskId);
+		} catch (SQLException exc) {
+		}
+	} finally {
+		try {
+			if (null != abasConnection) {
+				abasConnection.close();
+			}
+		} catch (Throwable t) {
+		}
+	}
+%>

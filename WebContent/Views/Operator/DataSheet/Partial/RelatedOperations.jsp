@@ -1,12 +1,31 @@
 <%@page import="phoenix.mes.content.utility.OutputFormatter"%>
-<%@page import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
+<%@page
+	import="phoenix.mes.content.utility.OutputFormatter.DictionaryEntry"%>
 <%@page import="java.util.List"%>
 <%@page import="phoenix.mes.abas.Task"%>
 <%@page import="phoenix.mes.abas.GenericTask.Operation"%>
+<%@page import="phoenix.mes.content.controller.User"%>
+<%@page import="phoenix.mes.abas.AbasConnection"%>
+<%@page import="phoenix.mes.abas.AbasObjectFactory"%>
+<%@page import="javax.security.auth.login.LoginException"%>
+<%@page import="phoenix.mes.content.Log"%>
+<%@page import="phoenix.mes.content.Log.FaliureType"%>
+<%@page import="java.sql.SQLException"%>
 <%
-	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
-	List<Task.Operation> data = (List<Task.Operation>)request.getAttribute("operationdata");
-	
+	OutputFormatter of = (OutputFormatter) request.getAttribute("OutputFormatter");
+	Task task = (Task) request.getAttribute("Task");
+	User user = (User) request.getAttribute("User");
+	boolean isTest = (boolean) request.getAttribute("isTest");
+	String taskId = (String) request.getAttribute("taskId");
+
+	AbasConnection abasConnection = null;
+	Task.Details taskDetails = null;
+	try {
+		abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(),
+				of.getLocale(), isTest);
+		taskDetails = task.getDetails(abasConnection);
+
+		List<Task.Operation> data = taskDetails.getFollowingOperations();
 %>
 <div class='row bom-list-full-container h-100'>
 
@@ -36,8 +55,9 @@
 		<%
 			for (Task.Operation item : data) {
 		%>
-		<div class='row bom-item-row px-2 pb-2' >
-			<div class='position-absolute bg-transparent w-100' style="height: 65px; z-index: 1000;" onclick='bomListDropDown(this)'></div>
+		<div class='row bom-item-row px-2 pb-2'>
+			<div class='position-absolute bg-transparent w-100'
+				style="height: 65px; z-index: 1000;" onclick='bomListDropDown(this)'></div>
 			<div class='col-12'>
 				<div class='row item-data-row py-2'>
 					<div class='col-1'>
@@ -47,8 +67,7 @@
 						<input class='w-100' disabled value='<%=item.getSwd()%>'>
 					</div>
 					<div class='col-4'>
-						<input class='w-100' disabled
-							value='<%=item.getDescription()%>'>
+						<input class='w-100' disabled value='<%=item.getDescription()%>'>
 					</div>
 					<div class='col-1'>
 						<input class='w-100' disabled
@@ -71,3 +90,18 @@
 		%>
 	</div>
 </div>
+<%
+	} catch (LoginException e) {
+		try {
+			new Log(request).logFaliure(FaliureType.TASK_DATA_LOAD, e.getMessage(), taskId);
+		} catch (SQLException exc) {
+		}
+	} finally {
+		try {
+			if (null != abasConnection) {
+				abasConnection.close();
+			}
+		} catch (Throwable t) {
+		}
+	}
+%>

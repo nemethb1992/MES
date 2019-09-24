@@ -15,17 +15,20 @@ public class DocumentModal extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+//		System.out.println("File Reading: ");
+//		String pdf = new Pdf("file://abas.pmhu.local/pmk/dodrive/TDO/MA/MA-FE-409_(1.0).pdf").getData();
+//		System.out.println(pdf);
+		
 		String encodedURL = response.encodeRedirectURL("/Logout");
 		getServletContext().getRequestDispatcher(encodedURL).forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String pdf = new Pdf(request.getParameter("uri")).getData();
-		System.out.println(pdf);
-//		if(null == pdf) {
-//			return;
-//		}
+		
+		String URI = request.getParameter("uri");
+		String pdf = new Pdf(URI).getData();
+		
 		request.setAttribute("URI", request.getParameter("uri"));
 		request.setAttribute("name", request.getParameter("name"));
 		request.setAttribute("pdf", pdf);

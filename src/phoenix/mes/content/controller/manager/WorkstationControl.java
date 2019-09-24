@@ -59,7 +59,7 @@ public class WorkstationControl extends HttpServlet {
 		List<Map<String, String>> finalDataList =  new ArrayList<>();
 		
 		for(String item : user.getStationAccess().getSuggestedGroups()) {
-			String pcName = pg.sqlSingleQuery("SELECT "+(of.getLocale().getLanguage() == "de"? "long_de" : "long")+" FROM profitcenter LEFT JOIN stations ON stations.pc = profitcenter.id WHERE csoport='"+item+"' ORDER BY long ASC", "long");
+			String pcName = pg.sqlSingleQuery("SELECT "+(of.getLocale().getLanguage() == "de"? "long_de" : "long")+" FROM profitcenter LEFT JOIN stations ON stations.pc = profitcenter.id WHERE csoport='"+item+"' ORDER BY "+(of.getLocale().getLanguage() == "de"? "long_de" : "long")+" ASC", (of.getLocale().getLanguage() == "de"? "long_de" : "long"));
 			
 			if(!OutputFormatter.isExists(pcList,pcName))
 			{

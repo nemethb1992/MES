@@ -1,45 +1,42 @@
 package phoenix.mes.content.utility;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.Base64;
+
+import jcifs.smb.NtlmPasswordAuthentication;
+import jcifs.smb.SmbFile;
+import jcifs.smb.SmbFileInputStream;
 
 public class Pdf {
 	protected byte[] file;
 	
 	public Pdf(String URI) {
 		
-		try {
+	    try {
 
-		String pdfFilename = convertURI(URI);
-		File f = new File(pdfFilename);
-		
-		BufferedInputStream is = new BufferedInputStream(new FileInputStream(f));
-		ByteArrayOutputStream bos = new ByteArrayOutputStream((int)f.length());
+	        SmbFile smbFile = new SmbFile(URI,NtlmPasswordAuthentication.ANONYMOUS);
 
-		int ch;
-		long actual=0;
-		while((ch=is.read())!=-1){
-		bos.write(ch);
-		actual++;
-		}
-		bos.flush();
-		bos.close();
-		this.file=bos.toByteArray();
-		}
-		catch (Exception e) {
-		e.printStackTrace();
-		}
+	        SmbFileInputStream in = new SmbFileInputStream( smbFile );
+
+			ByteArrayOutputStream out = new ByteArrayOutputStream((int)smbFile.length());
+	        
+	        byte[] b = new byte[8192];
+	        int n, tot = 0;
+	        while(( n = in.read( b )) > 0 ) {
+	            out.write( b, 0, n );
+	            tot += n;
+	        }
+	        in.close();
+	        out.close();
+	        this.file = out.toByteArray();
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 	
 	public String getData() {
 		
 		return Base64.getEncoder().encodeToString(this.file);
-	}
-	
-	public String convertURI(String URI) {
-		return URI.split("file:/")[1];
 	}
 }
