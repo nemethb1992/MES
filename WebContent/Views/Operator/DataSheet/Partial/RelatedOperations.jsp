@@ -61,26 +61,24 @@
 			<div class='col-12'>
 				<div class='row item-data-row py-2'>
 					<div class='col-1'>
-						<input class='w-100' disabled value='<%=item.getIdNo()%>'>
+						<textarea class='w-100 sheet-input-textarea' readonly><%=item.getIdNo()%></textarea>
 					</div>
 					<div class='col-2'>
-						<input class='w-100' disabled value='<%=item.getSwd()%>'>
+						<textarea class='w-100 sheet-input-textarea' readonly><%=item.getSwd()%></textarea>
 					</div>
 					<div class='col-4'>
-						<input class='w-100' disabled value='<%=item.getDescription()%>'>
+						<textarea class='w-100 sheet-input-textarea' readonly><%=item.getDescription()%></textarea>
 					</div>
 					<div class='col-1'>
-						<input class='w-100' disabled
-							value='<%=item.getWorkCenterIdNo()%>'>
+						<textarea class='w-100 sheet-input-textarea' readonly><%=item.getWorkCenterIdNo()%></textarea>
 					</div>
 					<div class='col-3'>
-						<input class='w-100' disabled
-							value='<%=item.getWorkCenterDescription()%>'>
+						<textarea class='w-100 sheet-input-textarea' readonly><%=item.getWorkCenterDescription()%></textarea>
 					</div>
 				</div>
 				<div class='row bom-item-text-row'>
 					<div class='col-12'>
-						<textarea class='w-100 h-100 item-text-textarea' disabled><%=item.getItemText()%></textarea>
+						<textarea class='w-100 h-100 item-text-textarea' readonly><%=item.getItemText()%></textarea>
 					</div>
 				</div>
 			</div>

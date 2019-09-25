@@ -58,6 +58,8 @@
 <script src="${pageContext.request.contextPath}/Public/js/script.js"></script>
 <script src="${pageContext.request.contextPath}/Public/js/language.js"></script>
 <script src="${pageContext.request.contextPath}/Public/js/jquery-ui.js"></script>
+<script src="${pageContext.request.contextPath}/Public/js/jquery-sortable.js"></script>
+<script src="${pageContext.request.contextPath}/Public/js/jquery-sortable-plus.js"></script>
 <script src="${pageContext.request.contextPath}/Public/js/datepicker.js" charset="UTF-8"></script>
 <link rel="shortcut icon" type="image/png" href="${pageContext.request.contextPath}/Public/icons/pm_logo_mini.ico"/>
 <script>

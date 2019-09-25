@@ -138,13 +138,11 @@ String displayName = (String) session.getAttribute("displayname");
 				</div>
 				<div class='sortContDiv_ListHolder row'>
 					<div class='abas-list-holder h-100   sort-list-holder  col-9 px-0'>
-						<ul class='abas-list dnd-frame dndf1 m-0 row sort-list'></ul>
+						<ol id='abaslist' class='abas-list dnd-frame dndf1 m-0 row sort-list'></ol>
 					</div>
 					<div class='ws-list-holder h-100 sort-list-holder col-3 px-0'>
 
-						<ul class='dnd-frame h-100 m-0 dndf2 station-list sort-list'>
-
-						</ul>
+						<ol id='stationlist' class='dnd-frame h-100 m-0 dndf2 station-list sort-list'></ol>
 					</div>
 				</div>
 			</div>

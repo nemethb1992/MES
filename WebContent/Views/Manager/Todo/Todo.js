@@ -283,9 +283,11 @@ function ListLoader()
 
 
 
-function workstationListLoader()
+function workstationListLoader(isMoving = false)
 {
-		$( ".dndf2" ).empty();
+		if(isMoving == false){
+			$( ".dndf2" ).empty();
+		}
 		$( ".ts_sumTime" ).val("0:00:00");
 		$.post({		
 			data: {
@@ -381,8 +383,7 @@ function StationItemSelect(item, level)
 			level: level
 		},
 		success: function (view) {
-
-
+			$( ".station-container" ).empty();
 			$( ".station-container" ).append(view);
 		}
 	});
@@ -412,55 +413,132 @@ function PushToStation(item)
 }
 
 
-function SaveStationList(){
-	console.log("SaveStationList");
-	var taskIds = [];
-    $(".station-list").children().each(function() {
-    	taskIds.push($(this).attr('value'));
-   });
-	console.log(taskIds);
+//function SaveStationList(){
+//	console.log("SaveStationList");
+//	var taskIds = [];
+//    $(".station-list").children().each(function() {
+//    	taskIds.push($(this).attr('value'));
+//   });
+//	console.log(taskIds);
+//	$.post({
+//		url:  '<%=response.encodeURL(request.getContextPath()+"/SaveStationTaskList")%>',
+//		data: {
+//			StationTaskList: taskIds
+//		},
+//		success: function () {
+//			workstationListLoader();
+//
+//		}
+//	});
+//}
+
+function MoveTask(current,targeted,next = null){
+	
 	$.post({
-		url:  '<%=response.encodeURL(request.getContextPath()+"/SaveStationTaskList")%>',
+		url:  '<%=response.encodeURL(request.getContextPath()+"/ScheduleTask")%>',
 		data: {
-			StationTaskList: taskIds
+			currentId: current,
+			targetId: targeted,
+			nextId: next
 		},
 		success: function () {
-			workstationListLoader();
-
+			workstationListLoader(true);
 		}
 	});
 }
 
 function Sortlist(){
-    $(".sort-list").sortable({
+	
+	var draggedElement;
+	var draggedIndex;
+	var targetElement;
 
-  	  group: 'no-drop',
-  	 handle: 'div.drag',
-//     revert: true,
-  	 cancel: ".station-list-table div div div div div table tbody tr td"
-    });
-    $(".abas-list").sortable({
-    	drop: false,
-    	  onDragStart: function ($item, container, _super) {
-    		    // Duplicate items of the no drop area
-    		    if(!container.options.drop)
-    		      $item.clone().insertAfter($item);
-    		    _super($item, container);
-    		  },
-    	 cancel: ".station-list-table div div div div div table tbody tr td"
-      });    
-    $(".station-list").sortable({
+	new Sortable(abaslist, {
+	    group: {
+	    name: 'shared',
+	    put: false },
+	    handle: '.drag',
+	    sort: false,
+	    animation: 150,
+		onMove: function (evt, originalEvent) {
+			draggedElement = evt.dragged;
+		},
+	});
 
-    	 cancel: ".station-list-table div div div div div table tbody tr td"
-      });
-//    $(".sort-list").disableSelection();
-    $(".station-list").droppable({
-        drop: function(event, ui){
-        	setTimeout(SaveStationList, 500);
-           }
+	new Sortable(stationlist, {
+	    group: 'shared',
+	    handle: '.drag',
+	    animation: 150,		
+	    onMove: function (evt, originalEvent) {
+	    	draggedElement = evt.dragged;
+		},
+		onChange: function(/**Event*/evt) {
+			draggedIndex = evt.newIndex;
+			if(draggedIndex != 0){
+				targetElement = $('#stationlist li').get(draggedIndex-1);
+			}else{
+				targetElement = null;
+			}
+		},
+	    onSort: function (evt) {
+	    	$(draggedElement).children().remove();
+	    	$(draggedElement).append("<h4 class='text-center p-4'><%=outputFormatter.getWord(DictionaryEntry.SORT_PROGRESS)%></h4>");
+	    	console.log($(targetElement).attr('value'));
+	    	console.log($(draggedElement).attr('value'));
+	    	console.log(draggedIndex);
+	    	MoveTask($(draggedElement).attr('value'),$(targetElement).attr('value'));
+		}
 
-    });
+	});
+
+
 }
+//    $(".sort-list").sortable({
+//
+//    	
+//    	
+//  	  group: '.sort-list',
+//  	 handle: 'div.drag',
+////     revert: true,
+//  	 cancel: ".station-list-table div div div div div table tbody tr td",
+//  	  onDragStart: function ($item, container, _super) {
+//  	    var offset = $item.offset(),
+//  	        pointer = container.rootGroup.pointer;
+//
+//  	    adjustment = {
+//  	      left: pointer.left - offset.left,
+//  	      top: pointer.top - offset.top
+//  	    };
+//
+//  	    _super($item, container);
+//  	  },
+//  	  onDrag: function ($item, position) {
+//  	    $item.css({
+//  	      left: position.left - adjustment.left,
+//  	      top: position.top - adjustment.top
+//  	    });
+//  	  }
+//    });
+//    $(".abas-list").sortable({
+//    	  onDragStart: function ($item, container, _super) {
+//    		    // Duplicate items of the no drop area
+//    		    if(!container.options.drop)
+//    		      $item.clone().insertAfter($item);
+//    		    _super($item, container);
+//    		  },
+//    	 cancel: ".station-list-table div div div div div table tbody tr td"
+//      });    
+//    $(".station-list").sortable({
+//
+//    	 cancel: ".station-list-table div div div div div table tbody tr td"
+//      });
+////    $(".sort-list").disableSelection();
+//    $(".station-list").droppable({
+//        drop: function(event, ui){
+//        	setTimeout(SaveStationList, 500);
+//           }
+//
+//    });
 
 //
 //function MoveTaskDown(item)
@@ -478,20 +556,7 @@ function Sortlist(){
 //	MoveTask(currentItemValue,nextListItem);
 //}
 
-//function MoveTask(current,targeted,next = null){
-//	
-//	$.post({
-//		url:  '<%=response.encodeURL(request.getContextPath()+"/ScheduleTask")%>',
-//		data: {
-//			currentId: current,
-//			targetId: targeted,
-//			nextId: next
-//		},
-//		success: function () {
-//			workstationListLoader();
-//		}
-//	});
-//}
+
 
 //function MoveTaskUp(item)
 //{	

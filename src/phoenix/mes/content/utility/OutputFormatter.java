@@ -113,6 +113,7 @@ public class OutputFormatter {
 		PACKING_INSTRUCTIONS("Csomagolási utasítás","Packanweisung","-"),
 		PACKING_QUANTITY("Csomagolási mennyiség","Füllmenge","-"),
 		PACKING_TOOL("Csomagolóeszköz","Packmittel","-"),
+		SORT_PROGRESS("Folyamatban...","Fortschritte...","-"),
 		CANCEL("Mégsem","Abbrechen","Cancel");
 
 		private final String hungarianText;
