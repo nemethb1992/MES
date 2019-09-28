@@ -61,20 +61,11 @@
 												</div>
 												<div class="pl-0 <%=(progress ? "d-none" : "col-1")%>">
 													<div class='row h-100'>
-														<div class='col-12 px-0'>
-															<input
-																class='h-100 w-100 task-panel-button mini-button up-task-button'
-																onclick='MoveTaskUp(this)' type='button'>
-														</div>
+
 														<div class='col-12 my-1 px-0'>
 															<input
 																class='h-100 w-100 task-panel-button mini-button remove-task-button'
 																onclick='RemoveFromStation(this)' type='button'>
-														</div>
-														<div class='col-12 px-0'>
-															<input
-																class='h-100 w-100 task-panel-button mini-button down-task-button'
-																onclick='MoveTaskDown(this)' type='button'>
 														</div>
 													</div>
 												</div>

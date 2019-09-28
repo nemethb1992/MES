@@ -249,6 +249,11 @@ function SuspendTaskFromManager(item)
 function ListLoader()
 {
 	workstationListLoader();
+	abasListLodaer();
+}
+
+function abasListLodaer(isMoving = false)
+{
 	var date = $(".datepicker_own").val();
 	if(locale == "de"){
 		date = date.split('-')[2]+"-"+date.split('-')[1]+"-"+date.split('-')[0];
@@ -261,8 +266,12 @@ function ListLoader()
 	{
 		date = null;
 	}
-	$( ".dndf1" ).empty();
-	loadingAnimation('.sortContDiv_ListHolder', 'loading');
+	if(isMoving == false){
+		$( ".dndf1" ).empty();
+	}
+	if(isMoving == false){
+		loadingAnimation('.sortContDiv_ListHolder', 'loading');
+	}
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/AbasTaskList")%>',
 		data: {
@@ -270,8 +279,9 @@ function ListLoader()
 			ws: SelectedStation
 		},
 		success: function (respond) {
-
-			loadingAnimationStop('loading');
+			if(isMoving == false){
+				loadingAnimationStop('loading');
+			}
 			$( ".dndf1" ).empty();
 			$( ".dndf1" ).append(respond);
 		},
@@ -280,8 +290,6 @@ function ListLoader()
 		}  
 	});
 }
-
-
 
 function workstationListLoader(isMoving = false)
 {
@@ -443,6 +451,7 @@ function MoveTask(current,targeted,next = null){
 		},
 		success: function () {
 			workstationListLoader(true);
+			abasListLodaer(true);
 		}
 	});
 }
@@ -462,6 +471,7 @@ function Sortlist(){
 	    animation: 150,
 		onMove: function (evt, originalEvent) {
 			draggedElement = evt.dragged;
+			
 		},
 	});
 
