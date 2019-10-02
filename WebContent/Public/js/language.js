@@ -18,7 +18,7 @@ $(document).ready(function(){
 //		}
 //	LanguageSetOnServlet(language);
 //}
-
+var inited = false;
 function selectLanguage(item)
 {
 	var page = $(item).val();
@@ -26,14 +26,26 @@ function selectLanguage(item)
 	if($.cookie("language") != language)
 	{
 		$.cookie('language', language, { expires: 365 });
+		
 		LanguageSetOnServlet(language);
+		
+		LanguageSubmit(page);
+		
+
+	}
+}
+
+function LanguageSubmit(page){
+    if (inited) {
 		if(page=="login"){
 			location.reload();
 		}
 		else{
 			  $( ".language-form" ).submit();
 		}
-	}
+   } else {
+        setTimeout(LanguageSubmit, 250);
+   }
 }
 
 function LanguageSetOnServlet(lng)
@@ -43,8 +55,10 @@ function LanguageSetOnServlet(lng)
 	    data: { 
 	     language: lng },
 	    success: function () {
+	        inited = true;
 	    }
-	});	
+	});
+
 }
 var openstate = false;
 function languageSwitchButton()

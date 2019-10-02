@@ -55,19 +55,18 @@ public class Submit extends HttpServlet {
 			User user = new User(request); 
 			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), build.isTest());
-//			Task task = (Task)session.getAttribute("Task");
-			Id AbasId = IdImpl.valueOf((String)session.getAttribute("TaskId"));
-			Task task = AbasObjectFactory.INSTANCE.createTask(AbasId,abasConnection);
-			Task.Details taskDetails = task.getDetails(abasConnection);
+			Task task = (Task)session.getAttribute("Task");
 			if(task != null)
 			{
 				task.postCompletionConfirmation(finishedQty, scrapQty, abasConnection);
 				responseStr = "submit_done";
-				if(taskDetails.getStatus() == Status.DONE || taskDetails.getStatus() == Status.INTERRUPTED) {
-					session.removeAttribute("Task");
+				Task.Details taskDetails = task.getDetails(abasConnection);
+				Status status = taskDetails.getStatus();
+				if(status == Status.DONE || status == Status.INTERRUPTED || status == Status.DELETED) {
 					responseStr = "exit";
 				}else {
-					session.setAttribute("Task", task);	
+
+					session.setAttribute("Task", task);
 				}
 			}
 		}catch(LoginException | SQLException | AbasFunctionException e)

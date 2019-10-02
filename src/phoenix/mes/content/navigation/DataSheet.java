@@ -38,6 +38,7 @@ public class DataSheet extends HttpServlet {
 //			doGet(request,response);
 //			return;
 //		}
+		String firstTask = request.getParameter("firstTask");	
 		OperatingWorkstation ws = new OperatingWorkstation(request);
 		if(ws.getGroup().equals(null))
 		{
@@ -50,8 +51,13 @@ public class DataSheet extends HttpServlet {
 			HttpSession session = request.getSession();
 			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 			User user = new User(request);
-			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(),user.getPassword(), of.getLocale(), ab.isTest());	
-			Task task = AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(),ws.getNumber(), abasConnection).startFirstScheduledTask(abasConnection);
+			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(),user.getPassword(), of.getLocale(), ab.isTest());
+			Task task = null;
+			if(firstTask != null) {
+				task = AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(),ws.getNumber(), abasConnection).startFirstScheduledTask(abasConnection);
+			}else {
+				task = (Task)session.getAttribute("Task");
+			}
 			if(task != null) {
 				WorkCenter.Details workcenter = AbasObjectFactory.INSTANCE.createWorkCenter(ws.getGroup(), abasConnection).getDetails(abasConnection);
 				session.setAttribute("WorkCenter", workcenter);

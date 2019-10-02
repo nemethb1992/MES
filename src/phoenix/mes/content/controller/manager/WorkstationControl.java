@@ -79,7 +79,7 @@ public class WorkstationControl extends HttpServlet {
 			for(String item : user.getStationAccess().getSuggestedGroups())
 			{
 				final Map<String, String> row = new HashMap<>((int)Math.ceil((1) / 0.75));
-				String segedValue = pg.sqlSingleQuery("SELECT stations.csoport FROM stations LEFT JOIN profitcenter ON stations.pc = profitcenter.id WHERE "+(null != value ? "long = '"+value+"' AND":"")+" csoport='"+item+"' ORDER BY stations.csoport", field);
+				String segedValue = pg.sqlSingleQuery("SELECT stations.csoport FROM stations LEFT JOIN profitcenter ON stations.pc = profitcenter.id WHERE "+(null != value ? (of.getLocale().getLanguage() == "de"? "long_de = '" : "long = '") +value+"' AND":"")+" csoport='"+item+"' ORDER BY stations.csoport", field);
 				if(!"".equals(segedValue))
 				{
 					row.put("divValue", segedValue);

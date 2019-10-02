@@ -96,7 +96,7 @@ public class SuspendTask extends HttpServlet {
 			}
 			if(task != null)
 			{
-				task.resume(abasConnection);
+//				task.resume(abasConnection);
 				task.suspend(abasConnection);
 				new Log(request).insert(task.getDetails(abasConnection).getWorkSlipNo(),errorText);
 				session.removeAttribute("Task");

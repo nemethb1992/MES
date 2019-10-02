@@ -25,6 +25,7 @@
 		<div class='col-4 offset-4 h-100'>
 			<form method='POST' class='h-100 '
 				action='<%=response.encodeURL(request.getContextPath() + "/DataSheet") %>'>
+				<input hidden name='firstTask' value='true' />
 				<input class='enter-btn w-100 light-shadow' type='submit'
 					value='<%=outputFormatter.getWord(DictionaryEntry.TASK_START)%>' />
 			</form>

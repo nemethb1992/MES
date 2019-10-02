@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import phoenix.mes.abas.AbasConnection;
 import phoenix.mes.abas.AbasObjectFactory;
 import phoenix.mes.abas.Task;
+import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.controller.User;
 
 /**
@@ -35,14 +36,14 @@ public class Timer extends HttpServlet {
 		HttpSession session = request.getSession();
 		BigDecimal inSecondTime = BigDecimal.ZERO;
 		Task task = (Task)session.getAttribute("Task");
+		AppBuild ab = new AppBuild(request);
 		if(null != task)
 		{
 			AbasConnection abasConnection = null;
 			try {
 				User user = new User(request);
-				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), true);
+				abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), ab.isTest());
 				Task.Details taskDetails = task.getDetails(abasConnection);
-				taskDetails.clearCache();
 				BigDecimal rawTime = taskDetails.getCalculatedProductionTime();
 
 				inSecondTime = rawTime.multiply(OutputFormatter.BIG_DECIMAL_3600);
