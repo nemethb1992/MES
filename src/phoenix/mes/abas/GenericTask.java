@@ -34,6 +34,11 @@ public interface GenericTask<C> extends Serializable {
 		String getWorkSlipNo();
 
 		/**
+		 * @return A gépcsoport hivatkozási száma.
+		 */
+		String getWorkCenterIdNo();
+
+		/**
 		 * @return A gyártási feladat befejezésének (tervezett) napja.
 		 */
 		AbasDate getFinishDate();

@@ -27,10 +27,20 @@
 	max-width: 170vh !important;
 }
 .drag{
-background-image: url(Public/icons/move.svg);
+	background-color: #80808014;
+background-image: url(Public/icons/move2.svg);
     background-size: 20px;
     background-repeat: no-repeat;
     background-position: center;
+    cursor: grab;
+}
+.todo-drag{
+	background-color: #80808014;
+background-image: url(Public/icons/curved-arrow.svg);
+    background-size: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: grab;
 }
 .pass-item-remove {
 	background-image: url(Public/icons/remove-task.svg);
@@ -409,7 +419,9 @@ TM_content_layer {
 	background: none;
 	word-wrap: break-word;
 }
-
+.dnd-input-div {
+	height: 33.3%;
+}
 .dnd-input-div input {
 	font-size: 12px;
 	border-radius: 5px;

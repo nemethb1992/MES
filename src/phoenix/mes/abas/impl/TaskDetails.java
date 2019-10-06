@@ -47,6 +47,11 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 		public String workSlipNo;
 
 		/**
+		 * A gépcsoport hivatkozási száma.
+		 */
+		public String workCenterIdNo;
+
+		/**
 		 * A gyártási feladat befejezésének (tervezett) napja.
 		 */
 		public AbasDate finishDate;
@@ -225,7 +230,12 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	/**
 	 * A gyártási feladat alapadatait gyorsítótárazó objektum.
 	 */
-	protected BasicData basicData = null;
+	protected volatile BasicData basicData = null;
+
+	/**
+	 * Segédtömb a gyártási feladat alapadatait gyorsítótárazó objektum zárolásához.
+	 */
+	private final Object[] basicDataLock = new Object[0];
 
 	/**
 	 * A művelet adatait gyorsítótárazó objektum.
@@ -339,10 +349,15 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	 * @return A gyártási feladat alapadatait gyorsítótárazó objektum.
 	 */
 	protected BasicData getBasicData() {
-		if (null == basicData) {
-			basicData = newBasicData();
+		BasicData currentBasicData = basicData;
+		if (null == currentBasicData) {
+			synchronized(basicDataLock) {
+				if (null == (currentBasicData = basicData)) {
+					basicData = currentBasicData = newBasicData();
+				}
+			}
 		}
-		return basicData;
+		return currentBasicData;
 	}
 
 	/**
@@ -429,6 +444,14 @@ public abstract class TaskDetails<C> extends LanguageDependentCache<C> implement
 	@Override
 	public String getWorkSlipNo() {
 		return getBasicData().workSlipNo;
+	}
+
+	/* (non-Javadoc)
+	 * @see phoenix.mes.abas.GenericTask.Details#getWorkCenterIdNo()
+	 */
+	@Override
+	public String getWorkCenterIdNo() {
+		return getBasicData().workCenterIdNo;
 	}
 
 	/* (non-Javadoc)

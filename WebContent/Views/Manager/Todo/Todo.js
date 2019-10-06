@@ -17,6 +17,74 @@ $(document).ready(function(){
 });
 
 
+function MoveTask(current,targeted,first = null){
+	
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/ScheduleTask")%>',
+		data: {
+			currentId: current,
+			targetId: targeted,
+			firstId: first
+		},
+		success: function () {
+			workstationListLoader(true);
+			abasListLodaer(true);
+		}
+	});
+}
+
+function Sortlist(){
+	
+	var draggedElement;
+	var draggedIndex;
+	var targetElement;
+	var firstElement = null;
+
+	new Sortable(abaslist, {
+	    group: {
+	    name: 'shared',
+	    put: false },
+	    handle: '.drag',
+	    sort: false,
+	    animation: 150,
+		onMove: function (evt, originalEvent) {
+			draggedElement = evt.dragged;
+			
+		},
+	});
+
+	new Sortable(stationlist, {
+	    group: 'shared', 
+	    handle: '.drag',
+	    animation: 150,		
+	    onMove: function (evt, originalEvent) {
+	    	draggedElement = evt.dragged;
+		},
+		onChange: function(/**Event*/evt) {
+			draggedIndex = evt.newIndex;
+			if(draggedIndex != 0){
+				targetElement = $('#stationlist li').get(draggedIndex-1);
+				firstElement = null;
+			}else{
+				targetElement = null;
+				firstElement = $($('#stationlist li').get(1)).attr('value');
+				
+			}
+		},
+	    onSort: function (evt) {
+	    	$(draggedElement).children().remove();
+	    	$(draggedElement).append("<h4 class='text-center p-4'><%=outputFormatter.getWord(DictionaryEntry.SORT_PROGRESS)%></h4>");
+	    	console.log($(targetElement).attr('value'));
+	    	console.log($(draggedElement).attr('value'));
+	    	console.log(draggedIndex);
+	    	console.log(firstElement);
+	    	MoveTask($(draggedElement).attr('value'),$(targetElement).attr('value'), firstElement);
+		}
+
+	});
+}
+
+
 
 function TaskManagerStartUp()
 {
@@ -85,17 +153,7 @@ function ButtonScriptElements()
 	});
 }
 
-function refreshButton(){
-	$('#ListRefreshBtn').prop('disabled', true);
-	$( ".ts_sumTime" ).val("0:00:00");
-	$( ".station-container" ).empty();
-	$( ".dndf1" ).empty();
-	$( ".dndf2" ).empty();
-	$(".station_label").val("<%=outputFormatter.getWord(DictionaryEntry.SELECT_A_WORKSTATION)%>");
-	datepicker();
-	SessionStoreStation();
-	FirstStationList();
-}
+
 
 function datepicker()
 {
@@ -365,6 +423,34 @@ function WorkStationItemCollect()
 		$('.appended-text').remove();
 	}
 }
+//function refreshButton(){
+//	$('#ListRefreshBtn').prop('disabled', true);
+//	$( ".ts_sumTime" ).val("0:00:00");
+//	$( ".station-container" ).empty();
+//	$( ".dndf1" ).empty();
+//	$( ".dndf2" ).empty();
+//	$(".station_label").val("<%=outputFormatter.getWord(DictionaryEntry.SELECT_A_WORKSTATION)%>");
+//	datepicker();
+//	SessionStoreStation();
+//	FirstStationList();
+//}
+var selectedPc = null;
+function refreshButton(value = null){
+	$('#ListRefreshBtn').prop('disabled', true);
+	$( ".ts_sumTime" ).val("0:00:00");
+	$( ".station-container" ).empty();
+	$( ".dndf1" ).empty();
+	$( ".dndf2" ).empty();
+	$(".station_label").val("<%=outputFormatter.getWord(DictionaryEntry.SELECT_A_WORKSTATION)%>");
+	datepicker();
+	SessionStoreStation();
+	if(value != null){
+		StationItemSelect(value,1);
+		$('.refresh_btn').attr("onclick", "refreshButton()");
+	}else{
+	FirstStationList();
+	}
+}
 
 function FirstStationList()
 {
@@ -382,6 +468,13 @@ function FirstStationList()
 
 function StationItemSelect(item, level)
 {
+	if(level == 1){
+		selectedPc = $(item).attr("value");
+	}
+	if(level == 2 && selectedPc != null){
+		$('.refresh_btn').attr("value", selectedPc);
+		$('.refresh_btn').attr("onclick", "refreshButton(this)");
+	}
 	$( ".station-container" ).empty();
 	var value = $(item).attr("value");
 	$.post({
@@ -440,69 +533,7 @@ function PushToStation(item)
 //	});
 //}
 
-function MoveTask(current,targeted,next = null){
-	
-	$.post({
-		url:  '<%=response.encodeURL(request.getContextPath()+"/ScheduleTask")%>',
-		data: {
-			currentId: current,
-			targetId: targeted,
-			nextId: next
-		},
-		success: function () {
-			workstationListLoader(true);
-			abasListLodaer(true);
-		}
-	});
-}
 
-function Sortlist(){
-	
-	var draggedElement;
-	var draggedIndex;
-	var targetElement;
-
-	new Sortable(abaslist, {
-	    group: {
-	    name: 'shared',
-	    put: false },
-	    handle: '.drag',
-	    sort: false,
-	    animation: 150,
-		onMove: function (evt, originalEvent) {
-			draggedElement = evt.dragged;
-			
-		},
-	});
-
-	new Sortable(stationlist, {
-	    group: 'shared',
-	    handle: '.drag',
-	    animation: 150,		
-	    onMove: function (evt, originalEvent) {
-	    	draggedElement = evt.dragged;
-		},
-		onChange: function(/**Event*/evt) {
-			draggedIndex = evt.newIndex;
-			if(draggedIndex != 0){
-				targetElement = $('#stationlist li').get(draggedIndex-1);
-			}else{
-				targetElement = null;
-			}
-		},
-	    onSort: function (evt) {
-	    	$(draggedElement).children().remove();
-	    	$(draggedElement).append("<h4 class='text-center p-4'><%=outputFormatter.getWord(DictionaryEntry.SORT_PROGRESS)%></h4>");
-	    	console.log($(targetElement).attr('value'));
-	    	console.log($(draggedElement).attr('value'));
-	    	console.log(draggedIndex);
-	    	MoveTask($(draggedElement).attr('value'),$(targetElement).attr('value'));
-		}
-
-	});
-
-
-}
 //    $(".sort-list").sortable({
 //
 //    	

@@ -46,6 +46,12 @@ public class ScheduleTask extends HttpServlet {
 		SelectedWorkstation ws = new SelectedWorkstation(request);
 		String currentId = request.getParameter("currentId");
 		String targetId = request.getParameter("targetId");
+		String firstId = request.getParameter("firstId");
+		boolean isFirstPlaced = false;
+		boolean firstInProgress = false;
+		if(!"".equals(firstId) && firstId != null) {
+			isFirstPlaced = true;
+		}
 		IdImpl id = (null != targetId && !"".equals(targetId) ? (IdImpl) IdImpl.valueOf(targetId) : (IdImpl) IdImpl.NULLREF);
 		AbasConnection abasConnection = null;
 		
@@ -55,10 +61,17 @@ public class ScheduleTask extends HttpServlet {
      	   	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
     		abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
         	Task task = AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(currentId), abasConnection);
+        	if(isFirstPlaced) {
+        		Task firstTask = AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(firstId), abasConnection);
+        		Status fisrtTaskStatus = firstTask.getDetails(abasConnection).getStatus();
+        		if(fisrtTaskStatus == Status.IN_PROGRESS || fisrtTaskStatus == Status.INTERRUPTED) {
+        			firstInProgress = true;
+        		}
+        	}
 //    		String nextId = request.getParameter("nextId");
 //        	boolean nextIsInProgress = ("".equals(nextId) || nextId == null ? false : ((AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(nextId), abasConnection)).getDetails(abasConnection).getStatus() == Status.IN_PROGRESS ? true : false));
 //        	if(task.getDetails(abasConnection).getStatus() != Status.IN_PROGRESS && !nextIsInProgress) {
-            if(task.getDetails(abasConnection).getStatus() != Status.IN_PROGRESS) {
+            if(task.getDetails(abasConnection).getStatus() != Status.IN_PROGRESS && !firstInProgress) {
             	task.schedule(AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection), id, abasConnection);
         	}
 		}catch(LoginException | SQLException | AbasFunctionException e)

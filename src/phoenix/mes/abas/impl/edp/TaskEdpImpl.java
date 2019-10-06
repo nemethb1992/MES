@@ -220,6 +220,11 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 			public static final String ID_NO = InfosysOw1MESTASKDATA.META.ynum9.getName();
 
 			/**
+			 * A gépcsoport hivatkozási száma.
+			 */
+			public static final String WORK_CENTER_ID_NO = InfosysOw1MESTASKDATA.META.ymgrnum.getName();
+
+			/**
 			 * A gyártási feladat befejezésének (tervezett) napja.
 			 */
 			public static final String FINISH_DATE = InfosysOw1MESTASKDATA.META.ytterm.getName();
@@ -1011,6 +1016,7 @@ public class TaskEdpImpl extends TaskImpl<EDPSession> implements Task {
 				basicData.status = Status.DELETED;
 			} else {
 				basicData.workSlipNo = result.getString(BasicDataQuery.Field.ID_NO);
+				basicData.workCenterIdNo = result.getString(BasicDataQuery.Field.WORK_CENTER_ID_NO);
 				basicData.finishDate = result.getAbasDate(BasicDataQuery.Field.FINISH_DATE);
 				basicData.status = getStatus(result);
 				basicData.productIdNo = result.getString(BasicDataQuery.Field.PRODUCT_ID_NO);

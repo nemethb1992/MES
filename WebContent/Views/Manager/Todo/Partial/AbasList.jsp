@@ -135,12 +135,16 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-1 button-holder-list">
-				<div class="row h-50 dnd-input-div drag">
+			<div class="col-1 button-holder-list">				
+			<div class="row  dnd-input-div drag todo-drag">
 <!-- 					<input class="h-100 w-100 task-panel-button task-panel-button-add" -->
 <!-- 						onclick="PushToStation(this)" type="button"> -->
 				</div>
-				<div class=" row h-50 dnd-input-div">
+				<div class="row  dnd-input-div">
+					<input class="h-100 w-100 task-panel-button task-panel-button-add"
+						onclick="PushToStation(this)" type="button">
+				</div>
+				<div class=" row  dnd-input-div">
 					<input class="h-100 w-100 task-panel-button task-panel-button-more"
 						onclick="" type="button" data-toggle="collapse"
 						data-target="#list-item-extended-content-<%=i%>"
