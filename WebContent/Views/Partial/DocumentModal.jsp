@@ -2,12 +2,11 @@
 
 	<%String uri = (String)request.getAttribute("URI"); %>
 	<%String name = (String)request.getAttribute("name"); %>
-	<%String pdf = (String)request.getAttribute("pdf"); %>
 
 <div class="modal fade my-fade" id="DocumentModal" tabindex="-1"
 	role="dialog" aria-labelledby="exampleModalCenterTitle"
 	aria-hidden="true">
-	<div class="modal-dialog modal-lg modal-dialog-centered my-0"
+	<div class="modal-dialog modal-lg modal-dialog-centered my-0 document-modal"
 		role="document">
 		<div class="modal-content" style="height: 100vh;">
 			<div class="modal-header">
@@ -18,17 +17,17 @@
 				</button>
 			</div>
 <object
-  data="data:application/pdf;base64,<%=pdf%>"
+  data="<%=response.encodeURL(request.getContextPath()+"/GetPdf?uri="+uri)%>"
   type="application/pdf"
   width="100%"
   height="100%">
-  <iframe
-    src="data:application/pdf;base64,<%=pdf%>"
-    width="100%"
-    height="100%"
-    style="border: none;">
-  </iframe>
 </object>
+<!--   <iframe -->
+<%--     src="data:application/pdf;base64,<%=pdf%>" --%>
+<!--     width="100%" -->
+<!--     height="100%" -->
+<!--     style="border: none;"> -->
+<!--   </iframe> -->
 		</div>
 	</div>
 </div>

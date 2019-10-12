@@ -61,8 +61,8 @@
 			for (BomElement bomItem : li) {
 		%>
 		<div class='row bom-item-row px-2 pb-2'>
-			<div class='position-absolute bg-transparent w-100'
-				style="height: 65px; z-index: 1000;" onclick='bomListDropDown(this)'></div>
+<!-- 			<div class='position-absolute bg-transparent w-100' -->
+<!-- 				style="height: 65px; z-index: 1000;"></div> -->
 			<div class='col-12'>
 				<div class='row item-data-row py-2'>
 					<div class='col sheet-col-small'>
@@ -84,7 +84,7 @@
 						<textarea class='w-100 sheet-input-textarea' readonly><%=bomItem.getWarehouseLocation()%></textarea>
 					</div>
 				</div>
-				<div class='row bom-item-text-row'>
+				<div class='row bom-item-text-row'  onclick='bomListDropDown(this)'>
 					<div class='col-12'>
 						<textarea class='w-100 h-100 item-text-textarea' readonly><%=bomItem.getItemText()%></textarea>
 					</div>

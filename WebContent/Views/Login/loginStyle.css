@@ -117,10 +117,12 @@
     border-top-right-radius: 10px; 
     border-bottom: 2px solid #b3b3b3;
 }
-#inp_pass
+.pass
 {
     border-bottom-left-radius: 10px; 
     border-bottom-right-radius: 10px; 
+}.fake-pass-inp{
+	display: none;
 }
 #inp_enterbutton
 {

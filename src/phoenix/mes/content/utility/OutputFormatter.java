@@ -35,9 +35,11 @@ public class OutputFormatter {
 		OPERATION_NUMEBER("Műveletszám","Arbeitsgang-Nr.","Operation number"),
 		SEARCH_WORD("Keresőszó","Suchwort","Search word"),
 		NAME("Megnevezés","Bezeichnung","Name"),
+		HALF_VIEW("Osztott képernyő","geteilter Bildschirm ","Half view"),
 		PLACE_OF_USE("Felhasználás","Verwendung","Place of use"),
 		REMAINING_TIME("Hátralévő idő","Restlaufzeit","Remaining time"),
 		FAILURE_TYPE("Hiba típusa","Fehlertyp","Failure type"),
+		PASSWORD_ASSISSTANT("Karakterek mutatása","Zeichen anzeigen","Password assistant"),
 		TASK_START("Feladat indítása","Arbeit starten","Task start"),
 		OPEN_TASK_DATASHEET("Adatlap megnyitása","Datenblatt öffnen","Open datasheet"),
 		START_TIME("Indítás ideje","Startzeit","Start time"),
@@ -113,7 +115,7 @@ public class OutputFormatter {
 		PACKING_INSTRUCTIONS("Csomagolási utasítás","Packanweisung","-"),
 		PACKING_QUANTITY("Csomagolási mennyiség","Füllmenge","-"),
 		PACKING_TOOL("Csomagolóeszköz","Packmittel","-"),
-		SORT_PROGRESS("Folyamatban...","Fortschritte...","-"),
+		SORT_PROGRESS("Folyamatban...","in Bearbeitung...","-"),
 		CANCEL("Mégsem","Abbrechen","Cancel");
 
 		private final String hungarianText;

@@ -1,5 +1,11 @@
 @charset "UTF-8";
 
+.list-content-row{
+	overflow-x: auto;
+}
+.list-item-row-size{
+	min-width: 815px;
+}
 .sheet-table{
 	font-size: 22px;
     color: black;
@@ -27,6 +33,8 @@
 	color: black;
     font-size: large;
     font-family: mediumFont;
+}.fake-pass-inp{
+	display: none;
 }
 .sheet-input-textarea {
 	font-size: 19px;
@@ -37,6 +45,9 @@
 	color: black;
 }
 
+.document-modal{
+	max-width: 80% !important;
+}
 
 #content
 {
@@ -137,7 +148,8 @@
 .left-buttons
 {
 	height: 83vh;
-	z-index: 8;
+	z-index: 8;    
+/* 	min-width: 160px; */
 }
 .operator-switch-grid
 {
@@ -148,9 +160,11 @@
     height: 80px;
     margin: 0px auto;
     padding: 6px;
+/* 	min-width: 160px; */
 }
 .timerPanel
 {
+	font-size: x-large;
 		position: absolute;
 	bottom: 10px;
 	width: 100%;
@@ -164,14 +178,26 @@
 	background-repeat: no-repeat;
 	background-position: center;
 	    background-position-x: 55%;
+/* 	min-width: 815px; */
+}
+.side-view-close-btn{
+	background-image: url(${pageContext.request.contextPath}/Public/icons/cross-mark.svg);
+	background-size: 40%;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-color: white;
+}
+.side-view-close-btn:hover{
+	background-color: #ffbfbf;
 }
 .nav-label
 {
 	font-family: mediumFont;
+	margin-bottom: 0;
     bottom: 0px;
     width: 100%;
     color: black;
-    font-size: 21px;
+    font-size: 20px;
     text-align:left;
 }
 .nav-label-modal{
@@ -324,6 +350,8 @@ background: #efefef;
 .personal-form-control:disabled
 {
 	background: transparent;
+	color:black;
+	font-size: small;
 	border: none;
 }
 .personal-form-name
@@ -533,8 +561,7 @@ background: #efefef;
 	}
 	.nav-label
 	{
-		font-size: medium;
-		text-align: center;
+		font-size: 14px;
 	}
 	
 	.nav-img-div{

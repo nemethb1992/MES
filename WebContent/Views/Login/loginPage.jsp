@@ -1,25 +1,21 @@
 
 <%
-request.setAttribute("page","login");
-String info = (String)request.getAttribute("infoTitle");
-if(info == null)
-{
-	info = "";
-}
-
-String workstationName = request.getParameter("workstation");
-if(null != workstationName && !"null".equals(workstationName))
-{
-	workstationName = workstationName.replace("!"," - ");
-}
-else{
-	try{
-		workstationName = (String)request.getSession().getAttribute("operatingWorkstation");
-		workstationName = workstationName.replace("!"," - ");
-	}catch(Exception e){
+	request.setAttribute("page", "login");
+	String info = (String) request.getAttribute("infoTitle");
+	if (info == null) {
+		info = "";
 	}
-}
 
+	String workstationName = request.getParameter("workstation");
+	if (null != workstationName && !"null".equals(workstationName)) {
+		workstationName = workstationName.replace("!", " - ");
+	} else {
+		try {
+			workstationName = (String) request.getSession().getAttribute("operatingWorkstation");
+			workstationName = workstationName.replace("!", " - ");
+		} catch (Exception e) {
+		}
+	}
 %>
 <%@include file="/Views/Header.jsp"%>
 <script><%@ include file="/Views/Login/loginScript.js"%></script>
@@ -48,7 +44,8 @@ else{
 					</div>
 					<div class='row'>
 						<div class='col'>
-							<input id='workstation_name' disabled value='<%=(workstationName != null ? workstationName : "")%>'/>
+							<input id='workstation_name' disabled
+								value='<%=(workstationName != null ? workstationName : "")%>' />
 						</div>
 					</div>
 				</div>
@@ -58,22 +55,34 @@ else{
 					src='${pageContext.request.contextPath}/Public/icons/padlock.svg'>
 			</div>
 			<form id='LR_form' method='POST'
-				action='<%=response.encodeURL(request.getContextPath()+"/Enter")%>'>
-				<input type='hidden' name='workstation' class='workstation' value='<%=request.getParameter("workstation")%>' /> 
-				<input type='hidden' name='LayoutType' class='layout' value='<%=request.getAttribute("LayoutType")%>' />
-				<input name='infoTitle' class='w-100 mt-4' value='<%=info%>' />
+				action='<%=response.encodeURL(request.getContextPath() + "/Enter")%>'>
+				<input type='hidden' name='workstation' class='workstation'
+					value='<%=request.getParameter("workstation")%>' /> <input
+					type='hidden' name='LayoutType' class='layout'
+					value='<%=request.getAttribute("LayoutType")%>' /> <input
+					name='infoTitle' readonly=true class='w-100 mt-4' value='<%=info%>' />
 
 				<div class="form-group">
-					<p id='login_title' class='w-100 w-100 h5 mt-3'><%=outputFormatter.getWord(DictionaryEntry.LOGIN)%></p>
+					<p id='login_title' class='h5 float-left'><%=outputFormatter.getWord(DictionaryEntry.LOGIN)%></p>
+					<div class="form-check ml-5 mt-2 float-right">
+						<input class="form-check-input half-view-check" type="checkbox"
+							id="disabledFieldsetCheck" onchange='passPreCheckbox()'>
+						<label class="form-check-label h6" for="disabledFieldsetCheck"><%=outputFormatter.getWord(DictionaryEntry.PASSWORD_ASSISSTANT)%></label>
+					</div>
 				</div>
 				<div class="form-group mb-0">
-					<input name='username' autocomplete="off" class='inp_login px-3 w-100'
+					<input name='username' autocomplete="off"
+						class='inp_login px-3 w-100'
 						placeholder='<%=outputFormatter.getWord(DictionaryEntry.USER_NAME)%>'
 						id='inp_username' type='text' value=''>
 				</div>
-				<div class="form-group"> 
-					<input type="text" hidden value="" name='password' id="hidden"/>
-					<input autocomplete="off" class='inp_login px-3 w-100 pass'
+				<div class="form-group">
+					<input type="password" autocomplete="off"
+						class='inp_login px-3 w-100 pass true-pass-inp' value=""
+						placeholder='<%=outputFormatter.getWord(DictionaryEntry.PASSWORD)%>'
+						name='password' id="hidden" /> 
+					<input autocomplete="off"
+						class=' inp_login px-3 w-100 pass fake-pass-inp'
 						placeholder='<%=outputFormatter.getWord(DictionaryEntry.PASSWORD)%>'
 						name="shownPassword" id='inp_pass' type='text' value=''>
 				</div>

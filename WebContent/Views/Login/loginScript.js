@@ -27,3 +27,6 @@ function passwordConfigure(){
 		    }, delay);
 		  });
 }
+
+var viewState = false;
+

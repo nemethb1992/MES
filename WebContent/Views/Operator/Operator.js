@@ -15,13 +15,17 @@ $(document).ready(function(){
 function pagesetup()
 {
 // TabControlEventHolder();
+	FrameSizeChange();
 	ApplicationCountDown();
-	setTimeout(getView, 1000);
+	getView();
 	setTimer();
 	setDateNow('.personal-date');
 	setTimeNow('.personal-time');
-	
 }
+
+
+
+
 $.urlParam = function(name){
 	var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
 	return results[1] || 0;
@@ -547,6 +551,57 @@ function openDocumentModal(item){
 		}  
 	});
 }
+ var viewState = false;
+
+function halfViewCheckbox(){
+	 if(viewState){
+		 closeSideView();
+	 }
+	 else{
+		 viewState = true;
+	 }
+}
+
+ function closeSideView(){
+	 viewState = false;
+ 	  $("#main-datasheet-col").attr("class", "col");
+		$("#DocumentModal").remove();
+		$('.document-col').remove();
+		buttonSizing(viewState);
+ }
+ 
+function openDocument(item){
+	var viewSwitch = $('.half-view-check').is(":checked");
+	if(viewSwitch){
+		openDocumetSideView(item);
+		buttonSizing(viewState);
+	}else{
+		 openDocumentModal(item);
+	}
+}
+
+function openDocumetSideView(item){
+	 viewState = true;
+	  $("#main-datasheet-col").attr("class", "col col-6");
+	var uri = $(item).val();
+	var name = $(item).html();
+	$('.mainframe-row').append('');
+	
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/DocumentSideView")%>',
+		data: {
+			uri: uri,
+			name: name
+		},
+		success: function (response) {
+			$('.document-col').remove();
+			$('.mainframe-row').append(response);
+		},
+		error: function() {
+//			alert("Sikertelen megnyitás!")
+		}  
+	});
+}
 
 function SuspendTaskFromOperator(item, secure = false)
 {
@@ -620,4 +675,35 @@ function SuspendTask(authernticated = true)
 		}
 	});
 }
+function FrameSizeChange(){
+	console.log("FrameSizeChange");
+//	new ResizeSensor(jQuery('.main-datasheet-col'), function(){ 
+//		console.log($('.main-datasheet-col').width());
+//	});
+}
+function buttonSizing(open){
+	console.log("buttonSizing - " + open);
+	if(open){
+		console.log("buttonSizing open = true");
+		  $('.nav-label').css('font-size', '14px');
+		  $('.timerPanel').css('font-size', '24px');
+		  $('.input-finished, .input-scrap, .submit-action-btn').css('font-size', 'small');
+		  $('.nav-img').css('display', 'none');
+		  $('.personal-form-control:disabled').css('font-size', '13px');
+	}else{
+		console.log("buttonSizing open = false");
+		  $('.nav-label').removeAttr('style');
+		  $('.timerPanel').removeAttr('style');
+		  $('.input-finished, .input-scrap, .submit-action-btn').removeAttr('style');
+		  $('.nav-img').removeAttr('style');
+		  $('.personal-form-control:disabled').removeAttr('style');
+	}
+}
+ 
+
+
+
+
+
+
 

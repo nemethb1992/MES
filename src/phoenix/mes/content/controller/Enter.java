@@ -34,7 +34,7 @@ public class Enter extends HttpServlet {
 		
 		String username = request.getParameter("username").toLowerCase();
 		String paramStation = request.getParameter("workstation");
-		String shownPassword = request.getParameter("shownPassword");
+//		String shownPassword = request.getParameter("shownPassword");
 		String pass = request.getParameter("password");
 		String layout = (String)request.getParameter("LayoutType");
 		request.setAttribute("LayoutType",layout);
@@ -43,7 +43,7 @@ public class Enter extends HttpServlet {
 
 		try {
 			boolean abasAccess = new AbasAuthentication().bind(username, pass, request);
-			if(!abasAccess || "".equals(shownPassword))
+			if(!abasAccess)
 			{
 				throw new LoginException();
 			}

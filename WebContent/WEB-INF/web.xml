@@ -16,6 +16,14 @@
     <servlet-name>TaskSuspendModal</servlet-name>
     <url-pattern>/TaskSuspendModal</url-pattern>
   </servlet-mapping>
+    <servlet>
+    <servlet-name>DocumentSideView</servlet-name>
+    <servlet-class>phoenix.mes.content.controller.DocumentSideView</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DocumentSideView</servlet-name>
+    <url-pattern>/DocumentSideView</url-pattern>
+  </servlet-mapping>
   <servlet>
     <servlet-name>TaskInterruptModal</servlet-name>
     <servlet-class>phoenix.mes.content.controller.TaskInterruptModal</servlet-class>

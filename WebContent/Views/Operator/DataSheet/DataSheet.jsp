@@ -39,8 +39,9 @@ OperatingWorkstation ws = new OperatingWorkstation(request);
 	
 </script>
 <div class='frame-container container-fluid h-100'>
-
-	<p class='actual-time h5'></p>
+	<div class="row mainframe-row">
+			<div id="main-datasheet-col" class="col "><div class="container"></div>
+				<p class='actual-time h5'></p>
 
 
 	<div class='row station-upper-row timer-holder'>
@@ -48,7 +49,7 @@ OperatingWorkstation ws = new OperatingWorkstation(request);
 			class='h-100 col-2 col-md-2 col-lg-2 col-xl-2 px-0'>
 			<!-- 						<img class='d-block mx-auto mt-3' -->
 			<%-- 							src='${pageContext.request.contextPath}/Public/icons/timer.svg'> --%>
-			<p class='timerPanel h2 text-center upcounter'></p>
+			<p class='timerPanel text-center upcounter'></p>
 		</div>
 		<div
 			class='button-container h-100 light-shadow col-10 col-md-10 col-lg-10 col-xl-10 px-0'>
@@ -158,7 +159,7 @@ OperatingWorkstation ws = new OperatingWorkstation(request);
 											src="${pageContext.request.contextPath}/Public/icons/TV_btn_nav1.svg" />
 									</div>
 									<div class="col-10">
-										<p class='nav-btn-1 nav-label'><%=outputFormatter.getWord(DictionaryEntry.GENERAL)%></p>
+										<p class='nav-btn-1 nav-label h6-sm'><%=outputFormatter.getWord(DictionaryEntry.GENERAL)%></p>
 									</div>
 								</div>
 							</div>
@@ -288,6 +289,9 @@ OperatingWorkstation ws = new OperatingWorkstation(request);
 			<div id='SwitchPanel' class='rightCont container-fluid'></div>
 		</div>
 	</div>
+			</div>
+<!-- 			<div class="col"><div class="container"></div></div> -->
+		</div>
 </div>
 <%@include file="/Views/Footer.jsp"%>
 

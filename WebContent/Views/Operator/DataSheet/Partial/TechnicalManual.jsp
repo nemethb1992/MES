@@ -31,8 +31,8 @@
 %>
 <div class='container-fluid h-100 px-0 py-3'>
 
-	<div class="row">
-		<div class="col">
+	<div class="row list-content-row">
+		<div class="col list-item-row-size">
 
 			<table class="table table-bordered sheet-table mpj-table">
 				<tbody>

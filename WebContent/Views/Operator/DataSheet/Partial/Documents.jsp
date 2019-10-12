@@ -19,7 +19,8 @@
 	User user = (User) request.getAttribute("User");
 	boolean isTest = (boolean) request.getAttribute("isTest");
 	String taskId = (String) request.getAttribute("taskId");
-
+	String layout = (String)session.getAttribute("Layout");
+	String classProperty = (layout.equals("operator") ? "" : "d-none");
 	AbasConnection abasConnection = null;
 	Task.Details taskDetails = null;
 	try {
@@ -27,8 +28,20 @@
 				of.getLocale(), isTest);
 		taskDetails = task.getDetails(abasConnection);
 %>
+<script>
+	$('.half-view-check').attr('checked', viewState);
+</script>
 
-<h4 class='pt-2'><%=of.getWord(DictionaryEntry.DOCUMENTS)%></h4>
+<div class='row'>
+	<div class='col d-flex'>
+		<h4 class='pt-2'><%=of.getWord(DictionaryEntry.DOCUMENTS)%></h4>
+		<div class='form-check ml-5 mt-2 <%=classProperty%>'>
+			<input class="form-check-input half-view-check " type="checkbox"
+				id="disabledFieldsetCheck" onchange='halfViewCheckbox()'> <label
+				class="form-check-label h5" for="disabledFieldsetCheck"><%=of.getWord(DictionaryEntry.HALF_VIEW)%></label>
+		</div>
+	</div>
+</div>
 <div class='list-group row dokumentum-list'>
 
 	<%
@@ -36,7 +49,7 @@
 			for (Document item : data) {
 	%>
 	<button type='button' <%=(item.getURI() == null ? "disabled" : "")%>
-		onclick='openDocumentModal(this)' value='<%=item.getURI()%>'
+		onclick='openDocument(this)' value='<%=item.getURI()%>'
 		class='document-button list-group-item list-group-item-action'><%=item.getDescription()%>
 		<%=(item.getURI() == null ? " - " + of.getWord(DictionaryEntry.MISSING_FILE) : "")%></button>
 	<%

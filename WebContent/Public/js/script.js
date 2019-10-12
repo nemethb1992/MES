@@ -132,6 +132,23 @@ function getUrlVars() {
     return vars;
 }
 
+
+function passPreCheckbox(){
+	$('.fake-pass-inp').val('');
+	$('.true-pass-inp').val('');
+	 if(viewState){
+		 console.log("true");
+		 $('.true-pass-inp').show();
+		 $('.fake-pass-inp').hide();
+		 viewState = false;
+	 }
+	 else{
+		 console.log("false");
+		 $('.fake-pass-inp').show();
+		 $('.true-pass-inp').hide();
+		 viewState = true;
+	 }
+}
 //
 //var distance = IDLE_TIMEOUT - _idleSecondsCounter;
 //var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

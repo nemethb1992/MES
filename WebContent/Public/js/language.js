@@ -19,9 +19,10 @@ $(document).ready(function(){
 //	LanguageSetOnServlet(language);
 //}
 var inited = false;
+var page = null;
 function selectLanguage(item)
 {
-	var page = $(item).val();
+	page = $(item).val();
 	var language = $(item).attr("id");
 	if($.cookie("language") != language)
 	{
@@ -35,16 +36,17 @@ function selectLanguage(item)
 	}
 }
 
-function LanguageSubmit(page){
+function LanguageSubmit(){
     if (inited) {
-		if(page=="login"){
+		if("login" == page){
 			location.reload();
 		}
 		else{
 			  $( ".language-form" ).submit();
 		}
+		return;
    } else {
-        setTimeout(LanguageSubmit, 250);
+        setTimeout(LanguageSubmit, 500);
    }
 }
 
@@ -56,6 +58,8 @@ function LanguageSetOnServlet(lng)
 	     language: lng },
 	    success: function () {
 	        inited = true;
+	    },error: function(){
+	        inited = true;
 	    }
 	});
 
@@ -63,19 +67,19 @@ function LanguageSetOnServlet(lng)
 var openstate = false;
 function languageSwitchButton()
 {
-    switch ($.cookie("language")) {
-    case "hu":
-        $(".lang_bub").css('z-index','0');
-        $("#hu").css('z-index','9999');
-        break;
-    case "en":
-        $(".lang_bub").css('z-index','0');
-        $("#en").css('z-index','9999');
-        break;
-    case "de":
-        $(".lang_bub").css('z-index','0');
-        $("#de").css('z-index','9999');
-        break;
-    }
+//    switch ($.cookie("language")) {
+//   case "hu":
+//        $(".lang_bub").css('z-index','0');
+//        $("#hu").css('z-index','9999');
+//        break;
+//    case "en":
+//        $(".lang_bub").css('z-index','0');
+//        $("#en").css('z-index','9999');
+//        break;
+//    case "de":
+//        $(".lang_bub").css('z-index','0');
+//      $("#de").c ss('z-index','9999');
+//        break;  
+//    }
 
 }

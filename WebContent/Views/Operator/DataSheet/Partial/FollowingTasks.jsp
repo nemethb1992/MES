@@ -51,7 +51,7 @@
 		<div class="container-fluid ">
 			<div class="row ">
 				<div class="col ">
-					<div class="row">
+					<div class="row list-content-row">
 						<table class="table station-list-table mb-0">
 							<thead>
 								<tr>

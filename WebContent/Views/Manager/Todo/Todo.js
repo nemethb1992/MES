@@ -32,6 +32,12 @@ function MoveTask(current,targeted,first = null){
 		}
 	});
 }
+function bomListDropDown(item)
+{
+	var parentitem = $(item).parents('.bom-item-row');
+	var itemHeight = parentitem.css("height").match(/\d+/);
+	parentitem.css({'height' : (itemHeight == 95 ? 'auto' : '95px'), 'background' : (itemHeight == 70 ? '#e4e4e4' : '#efefef')});
+}
 
 function Sortlist(){
 	
@@ -299,6 +305,27 @@ function SuspendTaskFromManager(item)
 	});
 }
 
+
+
+function openDocument(item){
+	var uri = $(item).val();
+	var name = $(item).html();
+	$.post({
+		url:  '<%=response.encodeURL(request.getContextPath()+"/DocumentModal")%>',
+		data: {
+			uri: uri,
+			name: name
+		},
+		success: function (response) {
+			$("#DocumentModal").remove();
+			$('.frame-container').append(response);
+			$('#DocumentModal').modal("show");
+		},
+		error: function() {
+//			alert("Sikertelen megnyitás!")
+		}  
+	});
+}
 //function Cancel()
 //{
 //	$('#interrupt-level1').modal('hide');
