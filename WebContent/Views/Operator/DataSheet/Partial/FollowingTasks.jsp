@@ -52,7 +52,7 @@
 			<div class="row ">
 				<div class="col ">
 					<div class="row list-content-row">
-						<table class="table station-list-table mb-0">
+						<table class="table station-list-table station-list-table-operator mb-0">
 							<thead>
 								<tr>
 									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.WORKSHEET_NO)%></th>

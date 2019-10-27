@@ -32,23 +32,23 @@
 	<div class='col-12'>
 		<div class='row bom-header-row p-2'>
 			<div class='col'>
-				<input class='w-100' disabled
+				<input class='w-100 header-label' readonly
 					value='<%=of.getWord(DictionaryEntry.OPERATION_NUMEBER)%>'>
 			</div>
 			<div class='col-2'>
-				<input class='w-100' disabled
+				<input class='w-100 header-label' readonly
 					value='<%=of.getWord(DictionaryEntry.SEARCH_WORD)%>'>
 			</div>
 			<div class='col-4'>
-				<input class='w-100' disabled
+				<input class='w-100 header-label' readonly
 					value='<%=of.getWord(DictionaryEntry.NAME)%>'>
 			</div>
 			<div class='col'>
-				<input class='w-100' disabled
+				<input class='w-100 header-label' readonly
 					value='<%=of.getWord(DictionaryEntry.WORKSTATION_GROUP)%>'>
 			</div>
 			<div class='col-3'>
-				<input class='w-100' disabled
+				<input class='w-100 header-label' readonly
 					value='<%=of.getWord(DictionaryEntry.GROUP_NAME)%>'>
 			</div>
 		</div>
@@ -57,9 +57,9 @@
 		%>
 		<div class='row bom-item-row px-2 pb-2'>
 
-			<div class='col-12'>
+			<div class='col-12 bom-container'>
 				<div class='row item-data-row py-2'>
-					<div class='col-1'>
+					<div class='col'>
 						<textarea class='w-100 sheet-input-textarea' readonly><%=item.getIdNo()%></textarea>
 					</div>
 					<div class='col-2'>
@@ -68,7 +68,7 @@
 					<div class='col-4'>
 						<textarea class='w-100 sheet-input-textarea' readonly><%=item.getDescription()%></textarea>
 					</div>
-					<div class='col-1'>
+					<div class='col'>
 						<textarea class='w-100 sheet-input-textarea' readonly><%=item.getWorkCenterIdNo()%></textarea>
 					</div>
 					<div class='col-3'>

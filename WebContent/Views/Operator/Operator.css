@@ -29,11 +29,15 @@
 	font-size: large;
 	font-family: mediumFont;
 }
+.station-list-table-operator{
+	min-width: 1100px;
+}
 .modal-title, .col-form-label{
 	color: black;
     font-size: large;
     font-family: mediumFont;
-}.fake-pass-inp{
+}
+.fake-pass-inp{
 	display: none;
 }
 .sheet-input-textarea {
@@ -268,8 +272,12 @@
 .bom-item-row{    
 background: #efefef;
     border-bottom: 1px solid #cccccc;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
     height: 95px;
+}
+.bom-container{
+	min-width: 1200px;
 }
 
 .bom-item-row input, .bom-item-row label{
@@ -578,7 +586,7 @@ background: #efefef;
 	.task-data-label {
 		font-size: 14px;
 	}
-	.bom-list-full-container textarea{
+	.bom-list-full-container textarea, .header-label{
 		font-size: 13px;
 	}
 }
@@ -588,9 +596,9 @@ background: #efefef;
 	{
 		font-size: 24px;
 	}
-	.bom-list-full-container textarea{
-		font-size: 11px;
-	}
+/* 	.bom-list-full-container textarea{ */
+/* 		font-size: 11px; */
+/* 	} */
 }
 
 @media only screen and (max-height: 750) {
