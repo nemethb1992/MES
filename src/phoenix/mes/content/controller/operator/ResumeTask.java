@@ -65,7 +65,7 @@ public class ResumeTask extends HttpServlet {
 				return;
 			}
 			task.resume(abasConnection);
-		} catch (LoginException | SQLException | AbasFunctionException e) {
+		} catch (LoginException | SQLException e) {
 			try {
 				OperatingWorkstation ws = new OperatingWorkstation(request);
 				String workstation = "";
@@ -74,6 +74,19 @@ public class ResumeTask extends HttpServlet {
 				}
 				new Log(request).logFaliure(FaliureType.TASK_RESUME, e.getMessage(),workstation);
 			}catch(SQLException exc) {
+			}
+		} catch (AbasFunctionException e) {
+			int errorCode = e.getErrorCode();
+			if (errorCode != 6 && errorCode != 7 && errorCode != 8) {
+				try {
+					OperatingWorkstation ws = new OperatingWorkstation(request);
+					String workstation = "";
+					if (ws != null) {
+						workstation = ws.group + " - " + ws.no;
+					}
+					new Log(request).logFaliure(FaliureType.TASK_SUBMIT, Log.getErrorText(errorCode), workstation);
+				} catch (SQLException exc) {
+				}
 			}
 		}finally
 		{

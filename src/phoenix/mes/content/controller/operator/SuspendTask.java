@@ -101,7 +101,7 @@ public class SuspendTask extends HttpServlet {
 				new Log(request).insert(task.getDetails(abasConnection).getWorkSlipNo(),errorText);
 				session.removeAttribute("Task");
 			}
-		}catch(LoginException | AbasFunctionException | SQLException e)
+		}catch(LoginException | SQLException e)
 		{
 			System.out.println(e);
     		try {
@@ -112,6 +112,19 @@ public class SuspendTask extends HttpServlet {
 				}
 				new Log(request).logFaliure(FaliureType.TASK_SUSPEND, e.getMessage(),workstation);
 			}catch(SQLException exc) {
+			}
+		} catch (AbasFunctionException e) {
+			int errorCode = e.getErrorCode();
+			if (errorCode != 6 && errorCode != 7 && errorCode != 8) {
+				try {
+					OperatingWorkstation ws = new OperatingWorkstation(request);
+					String workstation = "";
+					if (ws != null) {
+						workstation = ws.group + " - " + ws.no;
+					}
+					new Log(request).logFaliure(FaliureType.TASK_SUBMIT, Log.getErrorText(errorCode), workstation);
+				} catch (SQLException exc) {
+				}
 			}
 		}finally
 		{

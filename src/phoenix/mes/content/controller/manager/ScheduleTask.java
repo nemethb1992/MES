@@ -19,6 +19,7 @@ import phoenix.mes.abas.GenericTask.Status;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.Log;
 import phoenix.mes.content.Log.FaliureType;
+import phoenix.mes.content.controller.OperatingWorkstation;
 import phoenix.mes.content.controller.SelectedWorkstation;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
@@ -74,14 +75,26 @@ public class ScheduleTask extends HttpServlet {
             if(task.getDetails(abasConnection).getStatus() != Status.IN_PROGRESS && !firstInProgress) {
             	task.schedule(AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection), id, abasConnection);
         	}
-		}catch(LoginException | SQLException | AbasFunctionException e)
+		}catch(LoginException | SQLException e)
     	{
     		System.out.println(e);			
     		try {
 				new Log(request).logFaliure(FaliureType.TASK_LIST_NAVIGATION, e.getMessage());
 			}catch(SQLException exc) {
 			}
-    	}finally
+    	} catch (AbasFunctionException e) {
+			int errorCode = e.getErrorCode();
+			if (errorCode != 6 && errorCode != 7 && errorCode != 8) {
+				try {
+					String workstation = "";
+					if (ws != null) {
+						workstation = ws.group + " - " + ws.no;
+					}
+					new Log(request).logFaliure(FaliureType.TASK_SUBMIT, Log.getErrorText(errorCode), workstation);
+				} catch (SQLException exc) {
+				}
+			}
+		}finally
     	{
     		try
     		{

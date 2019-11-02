@@ -28,74 +28,64 @@
 	List<BomElement> li = taskDetails.getBom();
 %>
 
-<div class='row bom-list-full-container h-100'>
+<ul class='pt-2 '>
 
-	<div class='col-12'>
-		<div class='row bom-header-row p-2'>
-			<div class='col'>
-				<input class='w-100 header-label' readonly
-					value='<%=of.getWord(DictionaryEntry.ARTICLE)%>'>
-			</div>
-			<div class='col'>
-				<input class='w-100 header-label' readonly
-					value='<%=of.getWord(DictionaryEntry.SEARCH_WORD)%>'>
-			</div>
-			<div class='col-4'>
-				<input class='w-100 header-label' readonly
-					value='<%=of.getWord(DictionaryEntry.NAME)%> 1'>
-			</div>
-			<div class='col'>
-				<input class='w-100 header-label' readonly
-					value='<%=of.getWord(DictionaryEntry.NAME)%> 2'>
-			</div>
-			<div class='col'>
-				<input class='w-100 header-label' readonly
-					value='<%=of.getWord(DictionaryEntry.PLUG_IN_QUANTITY)%>'>
-			</div>
-			<div class='col'>
-				<input class='w-100 header-label' readonly
-					value='<%=of.getWord(DictionaryEntry.WAREHOUSE)%>'>
-			</div>
-		</div>
 		<%
 			for (BomElement bomItem : li) {
 		%>
-		<div class='row bom-item-row px-2 pb-2'>
-<!-- 			<div class='position-absolute bg-transparent w-100' -->
-<!-- 				style="height: 65px; z-index: 1000;"></div> -->
-			<div class='col-12 bom-container'>
-				<div class='row item-data-row py-2'>
-					<div class='col sheet-col-small'>
-						<textarea class='w-100 sheet-input-textarea' readonly><%=bomItem.getIdNo()%></textarea>
+	<li
+		class="dnd-container station-list-item sort-list-holder  list-content-row list-group col-12 px-0 mb-2">
+		<div class="container-fluid station-list-table-operator">
+			<div class="row ">
+				<div class="col ">
+					<div class="row">
+						<table
+							class="table station-list-table  mb-0">
+							<thead>
+								<tr>
+									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.ARTICLE)%></th>
+									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.SEARCH_WORD)%></th>
+									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.NAME)%> 1</th>
+									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.NAME)%> 2</th>
+									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.PLUG_IN_QUANTITY)%></th>
+									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.WAREHOUSE)%></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><%=bomItem.getIdNo()%></td>
+									<td><%=bomItem.getSwd()%></td>
+									<td><%=bomItem.getDescription()%></td>
+									<td><%=bomItem.getDescription2()%></td>
+									<td><%=of.formatWithoutTrailingZeroes(bomItem.getQuantityPerProduct())%> <%=bomItem.getStockUnit()%></td>
+									<td><%=bomItem.getWarehouseLocation()%></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
-					<div class='col'>
-						<textarea class='w-100 sheet-input-textarea' readonly><%=bomItem.getSwd()%></textarea>
-					</div>
-					<div class='col-4'>
-						<textarea class='w-100 sheet-input-textarea' readonly><%=bomItem.getDescription()%></textarea>
-					</div>
-					<div class='col'>
-						<textarea class='w-100 sheet-input-textarea' readonly><%=bomItem.getDescription2()%></textarea>
-					</div>
-					<div class='col sheet-col-small'>
-						<textarea class='w-100 sheet-input-textarea' readonly><%=of.formatWithoutTrailingZeroes(bomItem.getQuantityPerProduct())%> <%=bomItem.getStockUnit()%></textarea>
-					</div>
-					<div class='col sheet-col-small'>
-						<textarea class='w-100 sheet-input-textarea' readonly><%=bomItem.getWarehouseLocation()%></textarea>
-					</div>
-				</div>
-				<div class='row bom-item-text-row'  onclick='bomListDropDown(this)'>
-					<div class='col-12'>
-						<textarea class='w-100 h-100 item-text-textarea' readonly><%=bomItem.getItemText()%></textarea>
+					<div class="row">
+						<div class='col pb-1'>
+							<div class='row bom-item-text-row'
+								onclick='bomListDropDown(this)'>
+								<div class='col-12'>
+									<textarea class='w-100 h-100 item-text-textarea' readonly><%=bomItem.getItemText()%></textarea>
+								</div>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
 		</div>
-		<%
-			}
-		%>
-	</div>
-</div>
+	</li>
+
+	<%
+		}
+	%>
+</ul>
+
+
+
 <%
 	} catch (LoginException e) {
 		try {

@@ -27,66 +27,61 @@
 
 		List<Task.Operation> data = taskDetails.getFollowingOperations();
 %>
-<div class='row bom-list-full-container h-100'>
 
-	<div class='col-12'>
-		<div class='row bom-header-row p-2'>
-			<div class='col'>
-				<input class='w-100 header-label' readonly
-					value='<%=of.getWord(DictionaryEntry.OPERATION_NUMEBER)%>'>
-			</div>
-			<div class='col-2'>
-				<input class='w-100 header-label' readonly
-					value='<%=of.getWord(DictionaryEntry.SEARCH_WORD)%>'>
-			</div>
-			<div class='col-4'>
-				<input class='w-100 header-label' readonly
-					value='<%=of.getWord(DictionaryEntry.NAME)%>'>
-			</div>
-			<div class='col'>
-				<input class='w-100 header-label' readonly
-					value='<%=of.getWord(DictionaryEntry.WORKSTATION_GROUP)%>'>
-			</div>
-			<div class='col-3'>
-				<input class='w-100 header-label' readonly
-					value='<%=of.getWord(DictionaryEntry.GROUP_NAME)%>'>
-			</div>
-		</div>
-		<%
-			for (Task.Operation item : data) {
-		%>
-		<div class='row bom-item-row px-2 pb-2'>
+<ul class='pt-2 '>
 
-			<div class='col-12 bom-container'>
-				<div class='row item-data-row py-2'>
-					<div class='col'>
-						<textarea class='w-100 sheet-input-textarea' readonly><%=item.getIdNo()%></textarea>
+	<%
+		for (Task.Operation item : data) {
+	%>
+	<li
+		class="dnd-container station-list-item sort-list-holder list-content-row  list-group col-12 px-0 mb-2">
+		<div class="container-fluid station-list-table-operator">
+			<div class="row ">
+				<div class="col ">
+					<div class="row">
+						<table
+							class="table station-list-table  mb-0">
+							<thead>
+								<tr>
+									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.OPERATION_NUMEBER)%></th>
+									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.SEARCH_WORD)%></th>
+									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.NAME)%></th>
+									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.WORKSTATION_GROUP)%></th>
+									<th style="border: transparent" scope="col"><%=of.getWord(DictionaryEntry.GROUP_NAME)%></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><%=item.getIdNo()%></td>
+									<td><%=item.getSwd()%></td>
+									<td><%=item.getDescription()%></td>
+									<td><%=item.getWorkCenterIdNo()%></td>
+									<td><%=item.getWorkCenterDescription()%></td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
-					<div class='col-2'>
-						<textarea class='w-100 sheet-input-textarea' readonly><%=item.getSwd()%></textarea>
-					</div>
-					<div class='col-4'>
-						<textarea class='w-100 sheet-input-textarea' readonly><%=item.getDescription()%></textarea>
-					</div>
-					<div class='col'>
-						<textarea class='w-100 sheet-input-textarea' readonly><%=item.getWorkCenterIdNo()%></textarea>
-					</div>
-					<div class='col-3'>
-						<textarea class='w-100 sheet-input-textarea' readonly><%=item.getWorkCenterDescription()%></textarea>
-					</div>
-				</div>
-				<div class='row bom-item-text-row' onclick='bomListDropDown(this)'>
-					<div class='col-12'>
-						<textarea class='w-100 h-100 item-text-textarea' readonly><%=item.getItemText()%></textarea>
+					<div class="row">
+						<div class='col pb-1'>
+							<div class='row bom-item-text-row'
+								onclick='bomListDropDown(this)'>
+								<div class='col-12'>
+									<textarea class='w-100 h-100 item-text-textarea' readonly><%=item.getItemText()%></textarea>
+								</div>
+							</div>
+						</div>
+
 					</div>
 				</div>
 			</div>
 		</div>
-		<%
-			}
-		%>
-	</div>
-</div>
+	</li>
+
+	<%
+		}
+	%>
+</ul>
+
 <%
 	} catch (LoginException e) {
 		try {

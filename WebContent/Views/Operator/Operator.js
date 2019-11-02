@@ -293,9 +293,10 @@ function closeNavButtons()
 
 function bomListDropDown(item)
 {
-	var parentitem = $(item).parents('.bom-item-row');
-	var itemHeight = parentitem.css("height").match(/\d+/);
-	parentitem.css({'height' : (itemHeight == 95 ? 'auto' : '95px'), 'background' : (itemHeight == 70 ? '#e4e4e4' : '#efefef')});
+//	var parentitem = $(item).parents('.bom-item-row');
+	var itemHeight = $(item).css("height").match(/\d+/);
+	console.log(itemHeight);
+	$(item).css({'height' : (itemHeight == 46 ? '250px' : '46px')});
 }
 
 String.prototype.toHHMMSS = function () {

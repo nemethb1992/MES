@@ -6,12 +6,37 @@ import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 
+import phoenix.mes.abas.AbasFunctionException;
 import phoenix.mes.content.controller.OperatingWorkstation;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.controller.Workstation;
 
 
 public class Log {
+	
+	
+	public static String getErrorText(int errorCode) {
+		switch(errorCode) {
+		  case 1:
+		  case 2:
+		  case 3:
+		  case 4:
+			  return "Érvénytelen bemenetek!";
+		  case 5:
+			  return "A művelet az Abas-ban meghiúsult!";
+		  case 6:
+		  case 7:
+			  return "Hibás bemeneti érték! Kérjük, próbálja újra.";
+		  case 8:
+			  return "Zárolás az adatbázisban! Kérjük, próbálja újra.";
+		  case 9:
+			  return "Általános hiba! Kérjük, próbálja újra.";
+		  case 10:
+			  return "Mélyebb szintű hiba lépett fel az Abas-ban a funkció végrehajtása során. Kérjük, próbálja újra.";
+		  default:
+			  return "Ismeretlen hiba lépett fel a művelet végrehajtása során!";
+		}
+	}
 	
 	public enum FaliureType{
 		APPLICATION(0,1,"Alkalmazás hiba"),
