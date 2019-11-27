@@ -41,10 +41,12 @@ public class UnsuspendTask extends HttpServlet {
 		String taskID = (String) request.getParameter("TaskID");
 		OutputFormatter of = (OutputFormatter) session.getAttribute("OutputFormatter");
 		Task task = null;
+		String responseStr ="";
 		Task.Details taskDetails = null;
 		AbasConnection abasConnection = null;
+		User user = null;
 		try {
-			User user = new User(request);
+			user = new User(request);
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(),
 					user.getPassword(), of.getLocale(), new AppBuild(request).isTest());
 			Id AbasId = IdImpl.valueOf(taskID);
@@ -65,7 +67,11 @@ public class UnsuspendTask extends HttpServlet {
 					if(ws != null) {
 						workstation = ws.group + " - " + ws.no;
 					}
-					new Log(request).logFaliure(FaliureType.TASK_SUBMIT, Log.getErrorText(errorCode),workstation);
+
+					String abasErrorText = Log.getErrorText(errorCode);
+					responseStr = "abasError";
+					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_SUBMIT, e.toString(), workstation);
+					request.setAttribute("abasError", abasErrorText);
 				}catch(SQLException exc) {
 				}	
 			}
@@ -80,6 +86,9 @@ public class UnsuspendTask extends HttpServlet {
 			}
 			response.getWriter().write("true");
 		}
+		response.setContentType("text/plain"); 
+		response.setCharacterEncoding("UTF-8"); 
+		response.getWriter().write(responseStr);
 	}
 
 }

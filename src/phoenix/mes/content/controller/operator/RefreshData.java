@@ -48,9 +48,9 @@ public class RefreshData extends HttpServlet {
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 		String responseStr = "null";
 		AbasConnection abasConnection = null;
-
+		User user = null;
 		try {
-			User user = new User(request); 				
+			user = new User(request); 				
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
 			Id AbasId = IdImpl.valueOf((String)session.getAttribute("TaskId"));
 			Task task = AbasObjectFactory.INSTANCE.createTask(AbasId,abasConnection);		
@@ -70,7 +70,7 @@ public class RefreshData extends HttpServlet {
 				if(ws != null) {
 					workstation = ws.group + " - " + ws.no;
 				}
-				new Log(request).logFaliure(FaliureType.TASK_REFRESH, e.getMessage(),workstation);
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_REFRESH, e.toString(),workstation);
 			}catch(SQLException exc) {
 			}
 		}finally

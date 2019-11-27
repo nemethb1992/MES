@@ -399,9 +399,16 @@ function SubmitTask(item)
 				setTimeout(getView, 1000);
 				setTimer();
 			}else if(response == "error"){
+
+
 				alert("Lejelentesi hiba!");
 				$(item).prop('disabled', false);
-			}else if(response == "exit"){
+			}
+			else if(response == "abasError")
+			{
+				alert('<%=request.getAttribute("abasError")%>');
+			}
+			else if(response == "exit"){
 				$(".refresh-form").submit();
 			}
 		}
@@ -449,7 +456,11 @@ function ResumeTask(item)
 		data:{
 			taskId: id
 		},
-		success: function () {
+		success: function (response) {
+			if(response == "abasError")
+			{
+			alert('<%=request.getAttribute("abasError")%>');
+			}
 		}
 	});
 }
@@ -492,6 +503,10 @@ function InterruptTask(id)
 			TaskId: id
 		},
 		success: function () {
+		if(response == "abasError")
+		{
+		alert('<%=request.getAttribute("abasError")%>');
+		}else{
 			$.post({
 				url:  '<%=response.encodeURL(request.getContextPath()+"/TaskInterruptModal")%>',
 				data: {
@@ -511,6 +526,8 @@ function InterruptTask(id)
 					return false;
 				}  
 			});
+		}
+
 		}
 	});
 }
@@ -631,11 +648,14 @@ function SuspendTaskFromOperator(item, secure = false)
 			if(response == "true"){
 				$('#SuspendModal').modal("hide");
 				$('.interrupt-form').submit();
-			}else
+			}else if(response == "abasError")
 				{
-				alert(response);
+				alert('<%=request.getAttribute("abasError")%>');
 				$(item).prop('disabled', false);
 				}
+			else{
+				$(item).prop('disabled', false);
+			}
 		}
 	});
 }
@@ -669,9 +689,9 @@ function SuspendTask(authernticated = true)
 		success: function (response) {
 			if(response == "true"){
 				$('.interrupt-form').submit();
-			}else
+			}else if(response == "abasError")
 				{
-				alert(response);
+				alert('<%=request.getAttribute("abasError")%>');
 				}
 		}
 	});

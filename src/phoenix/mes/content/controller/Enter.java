@@ -39,7 +39,7 @@ public class Enter extends HttpServlet {
 		String layout = (String)request.getParameter("LayoutType");
 		request.setAttribute("LayoutType",layout);
 		OutputFormatter outputFormatter = (OutputFormatter)session.getAttribute("OutputFormatter") != null ? (OutputFormatter)session.getAttribute("OutputFormatter") : OutputFormatter.forRequest(request);
-		
+		User user = null;
 
 		try {
 			boolean abasAccess = new AbasAuthentication().bind(username, pass, request);
@@ -47,7 +47,7 @@ public class Enter extends HttpServlet {
 			{
 				throw new LoginException();
 			}
-			User user = new User(request,username,pass);
+			user = new User(request,username,pass);
 			if(!user.hasAccess())
 			{
 				throw new LoginException();
@@ -100,7 +100,7 @@ public class Enter extends HttpServlet {
 			getServletContext().getRequestDispatcher(null == nextPage ? "/Views/WelcomePage/WelcomePage.jsp" : nextPage).forward(request, response);
 		} catch ( NamingException | LoginException | SQLException t) {
 			try {
-				new Log(request).logFaliure(FaliureType.LOGIN, t.getMessage());
+				new Log(request).logFaliure(username, FaliureType.LOGIN, t.toString());
 			}catch(SQLException e) {
 			}
 			request.setAttribute("infoTitle", outputFormatter.getWord(DictionaryEntry.LOGIN_FAILED));

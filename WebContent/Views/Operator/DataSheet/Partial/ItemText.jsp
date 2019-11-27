@@ -48,7 +48,7 @@
 <%
 	} catch (LoginException e) {
 		try {
-			new Log(request).logFaliure(FaliureType.TASK_DATA_LOAD, e.getMessage(), taskId);
+			new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_DATA_LOAD, e.toString(), taskId);
 		} catch (SQLException exc) {
 		}
 	} finally {

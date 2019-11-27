@@ -48,6 +48,7 @@ public class SuspendTask extends HttpServlet {
 		String secureParam = request.getParameter("secure");
 		String taskId = request.getParameter("taskId");
 		String errorText = request.getParameter("errorText");
+		String responseStr ="true";
 		boolean secure = (secureParam.equals("true") ? true : false);
 
 		response.setContentType("text/plain"); 
@@ -110,7 +111,7 @@ public class SuspendTask extends HttpServlet {
 				if(ws != null) {
 					workstation = ws.group + " - " + ws.no;
 				}
-				new Log(request).logFaliure(FaliureType.TASK_SUSPEND, e.getMessage(),workstation);
+				new Log(request).logFaliure(username,FaliureType.TASK_SUSPEND, e.toString(),workstation);
 			}catch(SQLException exc) {
 			}
 		} catch (AbasFunctionException e) {
@@ -122,7 +123,10 @@ public class SuspendTask extends HttpServlet {
 					if (ws != null) {
 						workstation = ws.group + " - " + ws.no;
 					}
-					new Log(request).logFaliure(FaliureType.TASK_SUBMIT, Log.getErrorText(errorCode), workstation);
+					String abasErrorText = Log.getErrorText(errorCode);
+					responseStr = "abasError";
+					new Log(request).logFaliure(username,FaliureType.TASK_SUSPEND, e.toString(), workstation);
+					request.setAttribute("abasError", abasErrorText);
 				} catch (SQLException exc) {
 				}
 			}
@@ -134,7 +138,9 @@ public class SuspendTask extends HttpServlet {
 				}
 			} catch (Throwable t) {
 			}
-			response.getWriter().write("true");
+			response.setContentType("text/plain"); 
+			response.setCharacterEncoding("UTF-8"); 
+			response.getWriter().write(responseStr);
 		}
 
 	}

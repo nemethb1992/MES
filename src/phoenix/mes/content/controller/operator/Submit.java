@@ -48,9 +48,9 @@ public class Submit extends HttpServlet {
 		String responseStr = "null";
 		BigDecimal finishedQty = new BigDecimal(request.getParameter("finishedQty"));
 		BigDecimal scrapQty = new BigDecimal(request.getParameter("scrapQty"));
-		
+		User user = null;
 		try {
-			User user = new User(request); 
+			user = new User(request); 
 			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), build.isTest());
 			Task task = (Task)session.getAttribute("Task");
@@ -77,7 +77,7 @@ public class Submit extends HttpServlet {
 				if(ws != null) {
 					workstation = ws.group + " - " + ws.no;
 				}
-				new Log(request).logFaliure(FaliureType.TASK_SUBMIT, e.getMessage(),workstation);
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_SUBMIT, e.toString(),workstation);
 			}catch(SQLException exc) {
 			}
 		} catch (AbasFunctionException e) {
@@ -89,7 +89,10 @@ public class Submit extends HttpServlet {
 					if (ws != null) {
 						workstation = ws.group + " - " + ws.no;
 					}
-					new Log(request).logFaliure(FaliureType.TASK_SUBMIT, Log.getErrorText(errorCode), workstation);
+					String errorText = Log.getErrorText(errorCode);
+					responseStr = "abasError";
+					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_SUBMIT, e.toString(), workstation);
+					request.setAttribute("abasError", errorText);
 				} catch (SQLException exc) {
 				}
 			}

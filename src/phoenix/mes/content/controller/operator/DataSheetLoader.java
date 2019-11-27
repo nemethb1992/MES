@@ -42,6 +42,7 @@ public class DataSheetLoader extends HttpServlet {
 		String page = null;
 		String view = "";
 		String state = "";
+		User user = null;
 		try {
 			HttpSession session = request.getSession();
 
@@ -49,7 +50,7 @@ public class DataSheetLoader extends HttpServlet {
 			boolean isTest = new AppBuild(request).isTest();
 			
 
-			User user = new User(request);
+			user = new User(request);
 			OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 			Task.Details taskDetails = null;
 			
@@ -75,7 +76,7 @@ public class DataSheetLoader extends HttpServlet {
 			}catch(LoginException e)
 			{			
 				try {
-					new Log(request).logFaliure(FaliureType.TASK_DATA_LOAD, e.getMessage());
+					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_DATA_LOAD, e.toString());
 				}catch(SQLException exc) {
 				}
 			}finally
@@ -135,7 +136,7 @@ public class DataSheetLoader extends HttpServlet {
 		}catch(SQLException e)
 		{			
 			try {
-				new Log(request).logFaliure(FaliureType.TASK_DATA_LOAD, e.getMessage(),taskId);
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_DATA_LOAD, e.toString(),taskId);
 			}catch(SQLException exc) {
 			}
 		}

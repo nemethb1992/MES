@@ -43,8 +43,9 @@ public class AbasTaskList extends HttpServlet {
 		AbasConnection abasConnection = null;
 		String date = request.getParameter("date");
 		AbasDate abasDate = (date.isEmpty() ? AbasDate.INFINITY : AbasDate.valueOf(date));
+		User user = null;
 		try {
-			User user = new User(request);
+			user = new User(request);
 			OutputFormatter of = (OutputFormatter)request.getSession().getAttribute("OutputFormatter");
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
 			List<Task> task = (List<Task>)AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection).getUnassignedTasks(abasDate, abasConnection);
@@ -55,7 +56,7 @@ public class AbasTaskList extends HttpServlet {
 		}catch(LoginException | SQLException e){
 			System.out.println(e);
 			try {
-				new Log(request).logFaliure(FaliureType.TASK_LIST_LOAD, e.getMessage());
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()), FaliureType.TASK_LIST_LOAD, e.toString());
 			}catch(SQLException exc) {
 			}
 		}finally

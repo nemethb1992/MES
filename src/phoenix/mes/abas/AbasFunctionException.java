@@ -57,4 +57,12 @@ public class AbasFunctionException extends Exception {
 		return errorCode;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Throwable#toString()
+	 */
+	@Override
+	public String toString() {
+		return (super.toString() + " [MES API error code: " + errorCode + "]");
+	}
+
 }

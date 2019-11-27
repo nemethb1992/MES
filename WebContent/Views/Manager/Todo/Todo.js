@@ -12,8 +12,9 @@ $(document).ready(function(){
 	
 	
 	
-	//for test
-//	clickOnStation("<div class='workstation-container col-12 px-0' value='234PG!1!Szerel' onclick='clickOnStation(this)'></div>");
+	// for test
+// clickOnStation("<div class='workstation-container col-12 px-0'
+// value='234PG!1!Szerel' onclick='clickOnStation(this)'></div>");
 });
 
 
@@ -26,7 +27,11 @@ function MoveTask(current,targeted,first = null){
 			targetId: targeted,
 			firstId: first
 		},
-		success: function () {
+		success: function (response) {
+			if(response == "abasError")
+				{
+					alert('<%=request.getAttribute("abasError")%>');
+				}
 			workstationListLoader(true);
 			abasListLodaer(true);
 		}
@@ -66,7 +71,7 @@ function Sortlist(){
 	    onMove: function (evt, originalEvent) {
 	    	draggedElement = evt.dragged;
 		},
-		onChange: function(/**Event*/evt) {
+		onChange: function(/** Event */evt) {
 			draggedIndex = evt.newIndex;
 			if(draggedIndex != 0){
 				targetElement = $('#stationlist li').get(draggedIndex-1);
@@ -187,13 +192,13 @@ function ModalDataSheetTabButtonClic(item)
 	$(item).show();
 	var id = $(item).val();
 	var tab = $(item).attr("id").split('-')[2];
-//	if(tab != layoutState){
-//		layoutState = tab;
+// if(tab != layoutState){
+// layoutState = tab;
 		getModalDataSheetView(tab, id);
-//	}
-//	else{
-//		return;
-//	}
+// }
+// else{
+// return;
+// }
 }
 
 function getModalDataSheetView(tab = 1, id)
@@ -243,7 +248,7 @@ function openDataSheetModal(item){
 		success: function (response) {
 			$("#DataSheetModal").remove();
 			$('.frame-container').append(response);
-//			document.body.innerHTML += response;
+// document.body.innerHTML += response;
 			$('#DataSheetModal').modal("show");
 			getModalDataSheetView(1,id);
 		},
@@ -322,14 +327,14 @@ function openDocument(item){
 			$('#DocumentModal').modal("show");
 		},
 		error: function() {
-//			alert("Sikertelen megnyitás!")
+// alert("Sikertelen megnyitás!")
 		}  
 	});
 }
-//function Cancel()
-//{
-//	$('#interrupt-level1').modal('hide');
-//}
+// function Cancel()
+// {
+// $('#interrupt-level1').modal('hide');
+// }
 
 function ListLoader()
 {
@@ -450,17 +455,17 @@ function WorkStationItemCollect()
 		$('.appended-text').remove();
 	}
 }
-//function refreshButton(){
-//	$('#ListRefreshBtn').prop('disabled', true);
-//	$( ".ts_sumTime" ).val("0:00:00");
-//	$( ".station-container" ).empty();
-//	$( ".dndf1" ).empty();
-//	$( ".dndf2" ).empty();
-//	$(".station_label").val("<%=outputFormatter.getWord(DictionaryEntry.SELECT_A_WORKSTATION)%>");
-//	datepicker();
-//	SessionStoreStation();
-//	FirstStationList();
-//}
+// function refreshButton(){
+// $('#ListRefreshBtn').prop('disabled', true);
+// $( ".ts_sumTime" ).val("0:00:00");
+// $( ".station-container" ).empty();
+// $( ".dndf1" ).empty();
+// $( ".dndf2" ).empty();
+// $(".station_label").val("<%=outputFormatter.getWord(DictionaryEntry.SELECT_A_WORKSTATION)%>");
+// datepicker();
+// SessionStoreStation();
+// FirstStationList();
+// }
 var selectedPc = null;
 function refreshButton(value = null){
 	$('#ListRefreshBtn').prop('disabled', true);
@@ -521,7 +526,7 @@ function clickOnStation(item)
 {	
 	var station = $(item).attr("value");
 	$('#ListRefreshBtn').prop('disabled', false);
-//	SessionStoreStation(station);	
+// SessionStoreStation(station);
 	SelectedStation = station;
 	$(this).css({'background-image':'url(Public/icons/computerSignRed.svg)','background-color' : '#ebebeb','border-left':'5px solid #ff6666'});
 	$(".station_label").val(station.split("!")[2] + "  (" + station.split("!")[0] +"-"+ station.split("!")[1]+")");
@@ -541,115 +546,116 @@ function PushToStation(item)
 }
 
 
-//function SaveStationList(){
-//	console.log("SaveStationList");
-//	var taskIds = [];
-//    $(".station-list").children().each(function() {
-//    	taskIds.push($(this).attr('value'));
-//   });
-//	console.log(taskIds);
-//	$.post({
-//		url:  '<%=response.encodeURL(request.getContextPath()+"/SaveStationTaskList")%>',
-//		data: {
-//			StationTaskList: taskIds
-//		},
-//		success: function () {
-//			workstationListLoader();
+// function SaveStationList(){
+// console.log("SaveStationList");
+// var taskIds = [];
+// $(".station-list").children().each(function() {
+// taskIds.push($(this).attr('value'));
+// });
+// console.log(taskIds);
+// $.post({
+// url:
+// '<%=response.encodeURL(request.getContextPath()+"/SaveStationTaskList")%>',
+// data: {
+// StationTaskList: taskIds
+// },
+// success: function () {
+// workstationListLoader();
 //
-//		}
-//	});
-//}
+// }
+// });
+// }
 
 
-//    $(".sort-list").sortable({
+// $(".sort-list").sortable({
 //
 //    	
 //    	
-//  	  group: '.sort-list',
-//  	 handle: 'div.drag',
-////     revert: true,
-//  	 cancel: ".station-list-table div div div div div table tbody tr td",
-//  	  onDragStart: function ($item, container, _super) {
-//  	    var offset = $item.offset(),
-//  	        pointer = container.rootGroup.pointer;
+// group: '.sort-list',
+// handle: 'div.drag',
+// // revert: true,
+// cancel: ".station-list-table div div div div div table tbody tr td",
+// onDragStart: function ($item, container, _super) {
+// var offset = $item.offset(),
+// pointer = container.rootGroup.pointer;
 //
-//  	    adjustment = {
-//  	      left: pointer.left - offset.left,
-//  	      top: pointer.top - offset.top
-//  	    };
+// adjustment = {
+// left: pointer.left - offset.left,
+// top: pointer.top - offset.top
+// };
 //
-//  	    _super($item, container);
-//  	  },
-//  	  onDrag: function ($item, position) {
-//  	    $item.css({
-//  	      left: position.left - adjustment.left,
-//  	      top: position.top - adjustment.top
-//  	    });
-//  	  }
-//    });
-//    $(".abas-list").sortable({
-//    	  onDragStart: function ($item, container, _super) {
-//    		    // Duplicate items of the no drop area
-//    		    if(!container.options.drop)
-//    		      $item.clone().insertAfter($item);
-//    		    _super($item, container);
-//    		  },
-//    	 cancel: ".station-list-table div div div div div table tbody tr td"
-//      });    
-//    $(".station-list").sortable({
+// _super($item, container);
+// },
+// onDrag: function ($item, position) {
+// $item.css({
+// left: position.left - adjustment.left,
+// top: position.top - adjustment.top
+// });
+// }
+// });
+// $(".abas-list").sortable({
+// onDragStart: function ($item, container, _super) {
+// // Duplicate items of the no drop area
+// if(!container.options.drop)
+// $item.clone().insertAfter($item);
+// _super($item, container);
+// },
+// cancel: ".station-list-table div div div div div table tbody tr td"
+// });
+// $(".station-list").sortable({
 //
-//    	 cancel: ".station-list-table div div div div div table tbody tr td"
-//      });
-////    $(".sort-list").disableSelection();
-//    $(".station-list").droppable({
-//        drop: function(event, ui){
-//        	setTimeout(SaveStationList, 500);
-//           }
+// cancel: ".station-list-table div div div div div table tbody tr td"
+// });
+// // $(".sort-list").disableSelection();
+// $(".station-list").droppable({
+// drop: function(event, ui){
+// setTimeout(SaveStationList, 500);
+// }
 //
-//    });
+// });
 
 //
-//function MoveTaskDown(item)
-//{
-//	var task = $(item).parents('.dnd-container');
+// function MoveTaskDown(item)
+// {
+// var task = $(item).parents('.dnd-container');
 //	
-//	var index = task.index();
-//	if(index == StationListCount()-1)
-//		{
-//			return;
-//		}
+// var index = task.index();
+// if(index == StationListCount()-1)
+// {
+// return;
+// }
 //	
-//	var currentItemValue = task.children('.workSlipId').val();
-//	var nextListItem = task.next().children('.workSlipId').val();
-//	MoveTask(currentItemValue,nextListItem);
-//}
+// var currentItemValue = task.children('.workSlipId').val();
+// var nextListItem = task.next().children('.workSlipId').val();
+// MoveTask(currentItemValue,nextListItem);
+// }
 
 
 
-//function MoveTaskUp(item)
-//{	
-//	var task = $(item).parents('.dnd-container');
-//	var targeted, current, next;
-//	var index = task.index();
+// function MoveTaskUp(item)
+// {
+// var task = $(item).parents('.dnd-container');
+// var targeted, current, next;
+// var index = task.index();
 //	
-//	if(index == 0)
-//	{
-//		return;
-//	}
-//	else{
-//		if(index == 1)
-//		{
-//			targeted = null;
-//		}
-//		else
-//		{
-//			targeted = task.prev().prev().children('.workSlipId').val();
-//		}
-//		next = task.prev().children('.workSlipId').val();
-//		current = task.children('.workSlipId').val();
-//		MoveTask(current,targeted,next);
-//	}
-//}
+// if(index == 0)
+// {
+// return;
+// }
+// else{
+// if(index == 1)
+// {
+// targeted = null;
+// }
+// else
+// {
+// targeted = task.prev().prev().children('.workSlipId').val();
+// }
+// next = task.prev().children('.workSlipId').val();
+// current = task.children('.workSlipId').val();
+// MoveTask(current,targeted,next);
+// }
+// }
 
 function AddTask(current,targeted){
 	
@@ -659,7 +665,11 @@ function AddTask(current,targeted){
 			currentId: current,
 			targetId: targeted
 		},
-		success: function () {
+		success: function (response) {
+				if(response == "abasError")
+				{
+				alert('<%=request.getAttribute("abasError")%>');
+				}
 			ListLoader();
 		}
 	});
@@ -673,7 +683,11 @@ function RemoveFromStation(item)
 		data: {
 			workSlipId: value,
 		},
-		success: function () {
+		success: function (response) {
+			if(response == "abasError")
+			{
+			alert('<%=request.getAttribute("abasError")%>');
+			}
 			ListLoader();
 		} 
 	});

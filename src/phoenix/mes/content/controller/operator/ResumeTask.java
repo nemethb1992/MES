@@ -47,11 +47,13 @@ public class ResumeTask extends HttpServlet {
 		String taskId = request.getParameter("taskId");
 		
 		HttpSession session = request.getSession();
+		String responseStr ="true";
 
 		OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
 		AbasConnection abasConnection = null;
+		User user = null;
 		try { 
-			User user = new User(request);       	
+			user = new User(request);       	
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
 			Task task = null;
 			Id AbasId = null;
@@ -72,7 +74,7 @@ public class ResumeTask extends HttpServlet {
 				if(ws != null) {
 					workstation = ws.group + " - " + ws.no;
 				}
-				new Log(request).logFaliure(FaliureType.TASK_RESUME, e.getMessage(),workstation);
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_RESUME, e.toString(),workstation);
 			}catch(SQLException exc) {
 			}
 		} catch (AbasFunctionException e) {
@@ -84,7 +86,10 @@ public class ResumeTask extends HttpServlet {
 					if (ws != null) {
 						workstation = ws.group + " - " + ws.no;
 					}
-					new Log(request).logFaliure(FaliureType.TASK_SUBMIT, Log.getErrorText(errorCode), workstation);
+					String abasErrorText = Log.getErrorText(errorCode);
+					responseStr = "abasError";
+					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_RESUME, e.toString(), workstation);
+					request.setAttribute("abasError", abasErrorText);
 				} catch (SQLException exc) {
 				}
 			}
@@ -96,7 +101,9 @@ public class ResumeTask extends HttpServlet {
 				}
 			} catch (Throwable t) {
 			}
-			response.getWriter().write("true");
+			response.setContentType("text/plain"); 
+			response.setCharacterEncoding("UTF-8"); 
+			response.getWriter().write(responseStr);
 		}
 	}
 

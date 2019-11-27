@@ -49,18 +49,19 @@ public class UnScheduleTask extends HttpServlet {
 
 		HttpSession session = request.getSession();
 		String workSlipId = request.getParameter("workSlipId");
+		String responseStr ="";
 		OutputFormatter of = (OutputFormatter) session.getAttribute("OutputFormatter");
 		AbasConnection abasConnection = null;
-
+		User user = null;
 		try {
-			User user = new User(request);
+			user = new User(request);
 			abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(),
 					of.getLocale(), ab.isTest());
 			Task task = AbasObjectFactory.INSTANCE.createTask(IdImpl.valueOf(workSlipId), abasConnection);
 			task.unschedule(abasConnection);
 		} catch (LoginException | SQLException e) {
 			try {
-				new Log(request).logFaliure(FaliureType.TASK_LIST_NAVIGATION, e.getMessage());
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_LIST_NAVIGATION, e.toString());
 			} catch (SQLException exc) {
 			}
 		} catch (AbasFunctionException e) {
@@ -72,7 +73,10 @@ public class UnScheduleTask extends HttpServlet {
 					if (ws != null) {
 						workstation = ws.group + " - " + ws.no;
 					}
-					new Log(request).logFaliure(FaliureType.TASK_SUBMIT, Log.getErrorText(errorCode), workstation);
+					String abasErrorText = Log.getErrorText(errorCode);
+					responseStr = "abasError";
+					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_LIST_NAVIGATION, e.toString(), workstation);
+					request.setAttribute("abasError", abasErrorText);
 				} catch (SQLException exc) {
 				}
 			}
@@ -82,6 +86,10 @@ public class UnScheduleTask extends HttpServlet {
 			} catch (Exception e) {
 			}
 		}
+
+		response.setContentType("text/plain"); 
+		response.setCharacterEncoding("UTF-8"); 
+		response.getWriter().write(responseStr);
 	}
 
 }

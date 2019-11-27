@@ -102,7 +102,7 @@ public class Log {
 		pg.dbClose();
 		return result;
 	}
-	public boolean logFaliure(FaliureType faliureType, String description, String... workstation) {
+	public boolean logFaliure(String username, FaliureType faliureType, String description, String... workstation) {
 		try {
 			String date = new SimpleDateFormat("yyyy.MM.dd hh.mm").format(Calendar.getInstance().getTime());
 			PostgreSql pg = new PostgreSql(new AppBuild(request).isTest());

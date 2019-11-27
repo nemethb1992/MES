@@ -50,14 +50,15 @@ public class ScheduleTask extends HttpServlet {
 		String firstId = request.getParameter("firstId");
 		boolean isFirstPlaced = false;
 		boolean firstInProgress = false;
+		String responseStr ="";
 		if(!"".equals(firstId) && firstId != null) {
 			isFirstPlaced = true;
 		}
 		IdImpl id = (null != targetId && !"".equals(targetId) ? (IdImpl) IdImpl.valueOf(targetId) : (IdImpl) IdImpl.NULLREF);
 		AbasConnection abasConnection = null;
-		
+		User user = null;
     	try {
-			User user = new User(request);
+			user = new User(request);
     		HttpSession session = request.getSession();
      	   	OutputFormatter of = (OutputFormatter)session.getAttribute("OutputFormatter");
     		abasConnection = AbasObjectFactory.INSTANCE.openAbasConnection(user.getUsername(), user.getPassword(), of.getLocale(), ab.isTest());
@@ -74,12 +75,13 @@ public class ScheduleTask extends HttpServlet {
 //        	if(task.getDetails(abasConnection).getStatus() != Status.IN_PROGRESS && !nextIsInProgress) {
             if(task.getDetails(abasConnection).getStatus() != Status.IN_PROGRESS && !firstInProgress) {
             	task.schedule(AbasObjectFactory.INSTANCE.createWorkStation(ws.getGroup(), ws.getNumber(), abasConnection), id, abasConnection);
-        	}
+            	responseStr = "success";                               	
+            }
 		}catch(LoginException | SQLException e)
     	{
     		System.out.println(e);			
     		try {
-				new Log(request).logFaliure(FaliureType.TASK_LIST_NAVIGATION, e.getMessage());
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()), FaliureType.TASK_LIST_NAVIGATION, e.toString());
 			}catch(SQLException exc) {
 			}
     	} catch (AbasFunctionException e) {
@@ -90,7 +92,10 @@ public class ScheduleTask extends HttpServlet {
 					if (ws != null) {
 						workstation = ws.group + " - " + ws.no;
 					}
-					new Log(request).logFaliure(FaliureType.TASK_SUBMIT, Log.getErrorText(errorCode), workstation);
+					String errorText = Log.getErrorText(errorCode);
+		    		responseStr = "abasError";
+					new Log(request).logFaliure((user == null? "null" : user.getUsername()), FaliureType.TASK_SUBMIT, e.toString(), workstation);
+					request.setAttribute("abasError", errorText);
 				} catch (SQLException exc) {
 				}
 			}
@@ -103,5 +108,9 @@ public class ScheduleTask extends HttpServlet {
     		catch(Exception e)
     		{}
     	}
+
+		response.setContentType("text/plain"); 
+		response.setCharacterEncoding("UTF-8"); 
+		response.getWriter().write(responseStr); 
 	}
 }

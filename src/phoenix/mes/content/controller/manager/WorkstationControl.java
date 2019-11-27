@@ -36,9 +36,10 @@ public class WorkstationControl extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+		User user = null;
 		try {
 		AppBuild ab = new AppBuild(request);
-		User user = new User(request);
+		user = new User(request);
 		OutputFormatter of = (OutputFormatter)request.getSession().getAttribute("OutputFormatter");
 
 		
@@ -153,7 +154,7 @@ public class WorkstationControl extends HttpServlet {
 		
 		} catch (SQLException | LoginException e) {
     		try {
-				new Log(request).logFaliure(FaliureType.WORKSTATION_LIST_LOAD, e.getMessage());
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.WORKSTATION_LIST_LOAD, e.toString());
 			}catch(SQLException exc) {
 			}
 			return;
