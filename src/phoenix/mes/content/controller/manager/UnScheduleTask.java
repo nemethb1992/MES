@@ -61,7 +61,7 @@ public class UnScheduleTask extends HttpServlet {
 			task.unschedule(abasConnection);
 		} catch (LoginException | SQLException e) {
 			try {
-				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_LIST_NAVIGATION, e.toString());
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_LIST_NAVIGATION, e.toString(),workSlipId);
 			} catch (SQLException exc) {
 			}
 		} catch (AbasFunctionException e) {
@@ -75,7 +75,7 @@ public class UnScheduleTask extends HttpServlet {
 					}
 					String abasErrorText = Log.getErrorText(errorCode);
 					responseStr = "abasError";
-					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_LIST_NAVIGATION, e.toString(), workstation);
+					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_LIST_NAVIGATION, e.toString(),workSlipId, workstation);
 					request.setAttribute("abasError", abasErrorText);
 				} catch (SQLException exc) {
 				}

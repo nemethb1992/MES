@@ -111,7 +111,7 @@ public class SuspendTask extends HttpServlet {
 				if(ws != null) {
 					workstation = ws.group + " - " + ws.no;
 				}
-				new Log(request).logFaliure(username,FaliureType.TASK_SUSPEND, e.toString(),workstation);
+				new Log(request).logFaliure(username,FaliureType.TASK_SUSPEND, e.toString(),taskId,workstation);
 			}catch(SQLException exc) {
 			}
 		} catch (AbasFunctionException e) {
@@ -125,7 +125,7 @@ public class SuspendTask extends HttpServlet {
 					}
 					String abasErrorText = Log.getErrorText(errorCode);
 					responseStr = "abasError";
-					new Log(request).logFaliure(username,FaliureType.TASK_SUSPEND, e.toString(), workstation);
+					new Log(request).logFaliure(username,FaliureType.TASK_SUSPEND, e.toString(),taskId, workstation);
 					request.setAttribute("abasError", abasErrorText);
 				} catch (SQLException exc) {
 				}

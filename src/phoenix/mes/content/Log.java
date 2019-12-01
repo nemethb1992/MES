@@ -102,11 +102,11 @@ public class Log {
 		pg.dbClose();
 		return result;
 	}
-	public boolean logFaliure(String username, FaliureType faliureType, String description, String... workstation) {
+	public boolean logFaliure(String username, FaliureType faliureType, String description, String workslipid, String... workstation) {
 		try {
 			String date = new SimpleDateFormat("yyyy.MM.dd hh.mm").format(Calendar.getInstance().getTime());
 			PostgreSql pg = new PostgreSql(new AppBuild(request).isTest());
-			String command = "INSERT INTO application_log (workstation,title,type_id,description,date,region) VALUES('"+(workstation.length>0 ? workstation[0] : "")+"','"+getFaliureTitle(faliureType)+"',"+getFaliureNo(faliureType)+",'"+description+"','"+date+"',"+getFaliureRegion(faliureType)+")";
+			String command = "INSERT INTO application_log (workstation,title,type_id,description,date,region,username,workslipid) VALUES('"+(workstation.length>0 ? workstation[0] : "")+"','"+getFaliureTitle(faliureType)+"',"+getFaliureNo(faliureType)+",'"+description+"','"+date+"',"+getFaliureRegion(faliureType)+",'"+username+"','"+workslipid+"')";
 			pg.sqlUpdate(command);
 			pg.dbClose();
 		}catch(Exception e) {

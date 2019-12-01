@@ -100,7 +100,7 @@ public class Enter extends HttpServlet {
 			getServletContext().getRequestDispatcher(null == nextPage ? "/Views/WelcomePage/WelcomePage.jsp" : nextPage).forward(request, response);
 		} catch ( NamingException | LoginException | SQLException t) {
 			try {
-				new Log(request).logFaliure(username, FaliureType.LOGIN, t.toString());
+				new Log(request).logFaliure(username, FaliureType.LOGIN, t.toString(),"");
 			}catch(SQLException e) {
 			}
 			request.setAttribute("infoTitle", outputFormatter.getWord(DictionaryEntry.LOGIN_FAILED));

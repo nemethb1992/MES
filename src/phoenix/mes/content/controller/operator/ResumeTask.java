@@ -74,7 +74,7 @@ public class ResumeTask extends HttpServlet {
 				if(ws != null) {
 					workstation = ws.group + " - " + ws.no;
 				}
-				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_RESUME, e.toString(),workstation);
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_RESUME, e.toString(),taskId,workstation);
 			}catch(SQLException exc) {
 			}
 		} catch (AbasFunctionException e) {
@@ -88,7 +88,7 @@ public class ResumeTask extends HttpServlet {
 					}
 					String abasErrorText = Log.getErrorText(errorCode);
 					responseStr = "abasError";
-					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_RESUME, e.toString(), workstation);
+					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_RESUME, e.toString(),taskId, workstation);
 					request.setAttribute("abasError", abasErrorText);
 				} catch (SQLException exc) {
 				}

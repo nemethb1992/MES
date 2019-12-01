@@ -76,7 +76,7 @@ public class DataSheetLoader extends HttpServlet {
 			}catch(LoginException e)
 			{			
 				try {
-					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_DATA_LOAD, e.toString());
+					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_DATA_LOAD, e.toString(),taskId);
 				}catch(SQLException exc) {
 				}
 			}finally

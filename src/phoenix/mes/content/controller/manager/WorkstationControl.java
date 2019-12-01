@@ -154,7 +154,7 @@ public class WorkstationControl extends HttpServlet {
 		
 		} catch (SQLException | LoginException e) {
     		try {
-				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.WORKSTATION_LIST_LOAD, e.toString());
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.WORKSTATION_LIST_LOAD, e.toString(),"");
 			}catch(SQLException exc) {
 			}
 			return;

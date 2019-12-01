@@ -56,7 +56,7 @@ public class AbasTaskList extends HttpServlet {
 		}catch(LoginException | SQLException e){
 			System.out.println(e);
 			try {
-				new Log(request).logFaliure((user == null? "null" : user.getUsername()), FaliureType.TASK_LIST_LOAD, e.toString());
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()), FaliureType.TASK_LIST_LOAD, e.toString(),"",ws.getGroup()+ ws.getNumber());
 			}catch(SQLException exc) {
 			}
 		}finally
