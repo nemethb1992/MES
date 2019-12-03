@@ -60,6 +60,7 @@ public class WorkstationControl extends HttpServlet {
 		List<Map<String, String>> finalDataList =  new ArrayList<>();
 		
 		for(String item : user.getStationAccess().getSuggestedGroups()) {
+			
 			String pcName = pg.sqlSingleQuery("SELECT "+(of.getLocale().getLanguage() == "de"? "long_de" : "long")+" FROM profitcenter LEFT JOIN stations ON stations.pc = profitcenter.id WHERE csoport='"+item+"' ORDER BY "+(of.getLocale().getLanguage() == "de"? "long_de" : "long")+" ASC", (of.getLocale().getLanguage() == "de"? "long_de" : "long"));
 			
 			if(!OutputFormatter.isExists(pcList,pcName))
@@ -71,7 +72,7 @@ public class WorkstationControl extends HttpServlet {
 		if(level == "0" && pcList.size() <= 1) {
 			level = "1";
 		}
-		
+		java.util.Collections.sort(pcList);
 		
 		switch (level) {
 		case "1":
@@ -154,7 +155,7 @@ public class WorkstationControl extends HttpServlet {
 		
 		} catch (SQLException | LoginException e) {
     		try {
-				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.WORKSTATION_LIST_LOAD, e.toString(),"");
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.WORKSTATION_LIST_LOAD, e.toString(),null);
 			}catch(SQLException exc) {
 			}
 			return;
