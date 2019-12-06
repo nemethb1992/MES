@@ -2,6 +2,8 @@ package phoenix.mes.content.controller.operator;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.Map;
 
 import javax.security.auth.login.LoginException;
 import javax.servlet.ServletException;
@@ -21,6 +23,7 @@ import phoenix.mes.abas.GenericTask.Status;
 import phoenix.mes.content.AppBuild;
 import phoenix.mes.content.Log;
 import phoenix.mes.content.Log.FaliureType;
+import phoenix.mes.content.PostgreSql;
 import phoenix.mes.content.controller.User;
 import phoenix.mes.content.utility.OutputFormatter;
 import phoenix.mes.content.utility.RenderView;
@@ -42,6 +45,7 @@ public class DataSheetLoader extends HttpServlet {
 		String page = null;
 		String view = "";
 		String state = "";
+		String errorText = "";
 		User user = null;
 		try {
 			HttpSession session = request.getSession();
@@ -68,10 +72,13 @@ public class DataSheetLoader extends HttpServlet {
 					task = (Task)session.getAttribute("Task");
 				}
 				taskDetails =  task.getDetails(abasConnection);
+				taskId = task.getWorkSlipId().toString();
 				if((Status.INTERRUPTED).equals(taskDetails.getStatus()))
 				{
 					state = "interrupted";
-					request.setAttribute("error-text", "Hiba!");
+					PostgreSql pg = new PostgreSql(new AppBuild(request).isTest());
+					List<Map<String, String>> errorStr = pg.sqlQuery("select text from log where workslipno='" + taskDetails.getWorkSlipNo() + "' ORDER BY id DESC LIMIT 1", "text");
+					errorText = errorStr.get(0).get("text");
 				}
 			}catch(LoginException e)
 			{			
@@ -140,9 +147,11 @@ public class DataSheetLoader extends HttpServlet {
 			}catch(SQLException exc) {
 			}
 		}
-		String[] returnObject = new String[2];
+		String[] returnObject = new String[4];
 		returnObject[0] = view;
 		returnObject[1] = state;
+		returnObject[2] = taskId;
+		returnObject[3] = errorText;
 		String json = new Gson().toJson(returnObject);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

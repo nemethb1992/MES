@@ -49,6 +49,7 @@ public class InterruptTask extends HttpServlet {
 		HttpSession session = request.getSession();
 		String taskId = request.getParameter("TaskId");
 		String responseStr ="true";
+		String errorText = request.getParameter("errorText");
 		AbasConnection abasConnection = null;
 		User user = null;
 		try {
@@ -66,6 +67,8 @@ public class InterruptTask extends HttpServlet {
 			}
 			if (task != null) {
 				task.interrupt(abasConnection);
+
+				new Log(request).insert(task.getDetails(abasConnection).getWorkSlipNo(),errorText);
 			}
 		} catch (LoginException | SQLException e) {
 			System.out.println(e);

@@ -48,7 +48,7 @@ function getView(tab = 1)
 			if(response != "")
 			{
 				if(response[1] == "interrupted"){
-					OpenInterruptModal_2();
+					OpenInterruptModal_2(response[2], response[3]);
 				}
 			}
 			else
@@ -473,11 +473,29 @@ function ResumeTask(item)
 // $('#interrupt-level1').modal('show');
 // }
 //
-// function OpenInterruptModal_2()
-// {
-// $('#interrupt-level2').modal({backdrop: 'static', keyboard: false});
-// $('#interrupt-level2').modal('show');
-// }
+ function OpenInterruptModal_2(id, errText)
+ {
+
+		$.post({
+			url:  '<%=response.encodeURL(request.getContextPath()+"/TaskInterruptModal")%>',
+			data: {
+				TaskID: id,
+				errorText: errText 
+			},
+			success: function (response) {
+				$(".modal-backdrop").remove();
+				$("#SuspendModal").remove();
+				$("#SuspendValidationModal").remove();
+				$('.frame-container').append(response);
+				$('#SuspendValidationModal').modal({backdrop: 'static', keyboard: false});
+				$('#SuspendValidationModal').modal("show");
+				return true;
+			},
+			error: function() {
+				return false;
+			}  
+		});
+ }
 
 function openInterruptModal(item){	
 	var text = $(".error-text").val();
@@ -500,9 +518,10 @@ function InterruptTask(id)
 	$.post({
 		url:  '<%=response.encodeURL(request.getContextPath()+"/InterruptTask")%>',
 		data:{
-			TaskId: id
+			TaskId: id,
+			errorText: text
 		},
-		success: function () {
+		success: function (response) {
 		if(response == "abasError")
 		{
 		alert('<%=request.getAttribute("abasError")%>');
