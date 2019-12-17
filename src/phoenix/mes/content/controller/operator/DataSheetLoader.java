@@ -83,7 +83,8 @@ public class DataSheetLoader extends HttpServlet {
 			}catch(LoginException e)
 			{			
 				try {
-					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_DATA_LOAD, e.toString(),taskId);
+					String stackTrace = Log.getStackTraceString(e);
+					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_DATA_LOAD,stackTrace, e.toString(),taskId);
 				}catch(SQLException exc) {
 				}
 			}finally
@@ -143,7 +144,8 @@ public class DataSheetLoader extends HttpServlet {
 		}catch(SQLException e)
 		{			
 			try {
-				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_DATA_LOAD, e.toString(),taskId);
+				String stackTrace = Log.getStackTraceString(e);
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_DATA_LOAD,stackTrace, e.toString(),taskId);
 			}catch(SQLException exc) {
 			}
 		}

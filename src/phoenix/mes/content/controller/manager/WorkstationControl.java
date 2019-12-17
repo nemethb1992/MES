@@ -155,7 +155,8 @@ public class WorkstationControl extends HttpServlet {
 		
 		} catch (SQLException | LoginException e) {
     		try {
-				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.WORKSTATION_LIST_LOAD, e.toString(),null);
+				String stackTrace = Log.getStackTraceString(e);
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.WORKSTATION_LIST_LOAD,stackTrace, e.toString(),null);
 			}catch(SQLException exc) {
 			}
 			return;

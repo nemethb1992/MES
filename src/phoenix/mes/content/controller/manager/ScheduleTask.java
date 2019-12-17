@@ -81,7 +81,8 @@ public class ScheduleTask extends HttpServlet {
     	{
     		System.out.println(e);			
     		try {
-				new Log(request).logFaliure((user == null? "null" : user.getUsername()), FaliureType.TASK_LIST_NAVIGATION, e.toString(),currentId);
+				String stackTrace = Log.getStackTraceString(e);
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()), FaliureType.TASK_LIST_NAVIGATION,stackTrace, e.toString(),currentId);
 			}catch(SQLException exc) {
 			}
     	} catch (AbasFunctionException e) {
@@ -93,8 +94,9 @@ public class ScheduleTask extends HttpServlet {
 						workstation = ws.group + " - " + ws.no;
 					}
 					String errorText = Log.getErrorText(errorCode);
+					String stackTrace = Log.getStackTraceString(e);
 		    		responseStr = "abasError";
-					new Log(request).logFaliure((user == null? "null" : user.getUsername()), FaliureType.TASK_SUBMIT, e.toString(),currentId, workstation);
+					new Log(request).logFaliure((user == null? "null" : user.getUsername()), FaliureType.TASK_SUBMIT,stackTrace, e.toString(),currentId, workstation);
 					request.setAttribute("abasError", errorText);
 				} catch (SQLException exc) {
 				}

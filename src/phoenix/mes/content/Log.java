@@ -1,5 +1,7 @@
 package phoenix.mes.content;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,6 +16,13 @@ import phoenix.mes.content.controller.Workstation;
 
 public class Log {
 	
+	public static String getStackTraceString(Exception e) 
+	{
+		StringWriter sw = new StringWriter();
+		e.printStackTrace(new PrintWriter(sw));
+		String exceptionAsString = sw.toString();
+		return exceptionAsString;
+	}
 	
 	public static String getErrorText(int errorCode) {
 		switch(errorCode) {
@@ -102,11 +111,11 @@ public class Log {
 		pg.dbClose();
 		return result;
 	}
-	public boolean logFaliure(String username, FaliureType faliureType, String description, String workslipid, String... workstation) {
+	public boolean logFaliure(String username, FaliureType faliureType,String stackTrace, String description, String workslipid, String... workstation) {
 		try {
 			String date = new SimpleDateFormat("yyyy.MM.dd hh.mm").format(Calendar.getInstance().getTime());
 			PostgreSql pg = new PostgreSql(new AppBuild(request).isTest());
-			String command = "INSERT INTO application_log (workstation,title,type_id,description,date,region,username,workslipid) VALUES('"+(workstation.length>0 ? workstation[0] : "")+"','"+getFaliureTitle(faliureType)+"',"+getFaliureNo(faliureType)+",'"+description+"','"+date+"',"+getFaliureRegion(faliureType)+",'"+username+"','"+workslipid+"')";
+			String command = "INSERT INTO application_log (workstation,title,type_id,description,date,region,username,workslipid,stacktrace) VALUES('"+(workstation.length>0 ? workstation[0] : "")+"','"+getFaliureTitle(faliureType)+"',"+getFaliureNo(faliureType)+",'"+description+"','"+date+"',"+getFaliureRegion(faliureType)+",'"+username+"','"+workslipid+"','"+stackTrace+"')";
 			pg.sqlUpdate(command);
 			pg.dbClose();
 		}catch(Exception e) {

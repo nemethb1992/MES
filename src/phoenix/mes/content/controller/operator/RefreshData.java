@@ -71,7 +71,8 @@ public class RefreshData extends HttpServlet {
 				if(ws != null) {
 					workstation = ws.group + " - " + ws.no;
 				}
-				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_REFRESH, e.toString(),taskId,workstation);
+				String stackTrace = Log.getStackTraceString(e);
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_REFRESH,stackTrace, e.toString(),taskId,workstation);
 			}catch(SQLException exc) {
 			}
 		}finally

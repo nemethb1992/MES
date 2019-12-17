@@ -69,8 +69,9 @@ public class UnsuspendTask extends HttpServlet {
 					}
 
 					String abasErrorText = Log.getErrorText(errorCode);
+					String stackTrace = Log.getStackTraceString(e);
 					responseStr = "abasError";
-					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_SUBMIT, e.toString(),taskID, workstation);
+					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_SUBMIT,stackTrace, e.toString(),taskID, workstation);
 					request.setAttribute("abasError", abasErrorText);
 				}catch(SQLException exc) {
 				}	

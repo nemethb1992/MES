@@ -78,7 +78,8 @@ public class InterruptTask extends HttpServlet {
 				if (ws != null) {
 					workstation = ws.group + " - " + ws.no;
 				}
-				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_INTERRUP, e.toString(),taskId, workstation);
+				String stackTrace = Log.getStackTraceString(e);
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_INTERRUP,stackTrace, e.toString(),taskId, workstation);
 			} catch (SQLException exc) {
 			}
 		} catch (AbasFunctionException e) {
@@ -91,8 +92,9 @@ public class InterruptTask extends HttpServlet {
 						workstation = ws.group + " - " + ws.no;
 					}
 					String abasErrorText = Log.getErrorText(errorCode);
+					String stackTrace = Log.getStackTraceString(e);
 					responseStr = "abasError";
-					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_INTERRUP, e.toString(),taskId, workstation);
+					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_INTERRUP,stackTrace, e.toString(),taskId, workstation);
 					request.setAttribute("abasError", abasErrorText);
 				} catch (SQLException exc) {
 				}

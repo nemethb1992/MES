@@ -1,5 +1,7 @@
 package phoenix.mes.content.controller;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.sql.SQLException;
 
 import javax.naming.NamingException;
@@ -100,8 +102,10 @@ public class Enter extends HttpServlet {
 			getServletContext().getRequestDispatcher(null == nextPage ? "/Views/WelcomePage/WelcomePage.jsp" : nextPage).forward(request, response);
 		} catch ( NamingException | LoginException | SQLException t) {
 			try {
-				new Log(request).logFaliure(username, FaliureType.LOGIN, t.toString(),null);
+				String stackTrace = Log.getStackTraceString(t);
+				new Log(request).logFaliure(username, FaliureType.LOGIN, stackTrace, t.toString(),null);
 			}catch(SQLException e) {
+
 			}
 			request.setAttribute("infoTitle", outputFormatter.getWord(DictionaryEntry.LOGIN_FAILED));
 			getServletContext().getRequestDispatcher("/Views/Login/loginPage.jsp").forward(request, response);

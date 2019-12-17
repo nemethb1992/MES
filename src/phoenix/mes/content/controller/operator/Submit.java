@@ -77,7 +77,8 @@ public class Submit extends HttpServlet {
 				if(ws != null) {
 					workstation = ws.group + " - " + ws.no;
 				}
-				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_SUBMIT, e.toString(),null,workstation);
+				String stackTrace = Log.getStackTraceString(e);
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_SUBMIT,stackTrace, e.toString(),null,workstation);
 			}catch(SQLException exc) {
 			}
 		} catch (AbasFunctionException e) {
@@ -90,8 +91,9 @@ public class Submit extends HttpServlet {
 						workstation = ws.group + " - " + ws.no;
 					}
 					String errorText = Log.getErrorText(errorCode);
+					String stackTrace = Log.getStackTraceString(e);
 					responseStr = "abasError";
-					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_SUBMIT, e.toString(),null, workstation);
+					new Log(request).logFaliure((user == null? "null" : user.getUsername()),FaliureType.TASK_SUBMIT,stackTrace, e.toString(),null, workstation);
 					request.setAttribute("abasError", errorText);
 				} catch (SQLException exc) {
 				}

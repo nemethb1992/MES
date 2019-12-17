@@ -66,7 +66,8 @@ public class SaveStationTaskList extends HttpServlet {
     	{
     		System.out.println(e);			
     		try {
-				new Log(request).logFaliure((user == null? "null" : user.getUsername()), FaliureType.TASK_LIST_NAVIGATION, e.toString(),null);
+				String stackTrace = Log.getStackTraceString(e);
+				new Log(request).logFaliure((user == null? "null" : user.getUsername()), FaliureType.TASK_LIST_NAVIGATION,stackTrace, e.toString(),null);
 			}catch(SQLException exc) {
 			}
     	} catch (AbasFunctionException e) {
@@ -79,7 +80,8 @@ public class SaveStationTaskList extends HttpServlet {
 					}
 					String abasErrorText = Log.getErrorText(errorCode);
 					responseStr = "abasError";
-					new Log(request).logFaliure((user == null? "null" : user.getUsername()), FaliureType.TASK_SUBMIT, e.toString(),null, workstation);
+					String stackTrace = Log.getStackTraceString(e);
+					new Log(request).logFaliure((user == null? "null" : user.getUsername()), FaliureType.TASK_SUBMIT,stackTrace, e.toString(),null, workstation);
 					request.setAttribute("abasError", abasErrorText);
 				} catch (SQLException exc) {
 				}
